@@ -11,7 +11,6 @@ window.$ = require('jquery');
 window.jQuery = require('jquery');
 window.Swal = require('sweetalert2');
 window.toastr = require('toastr');
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

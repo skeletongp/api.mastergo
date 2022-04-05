@@ -4,7 +4,9 @@
             <span> Editar registro</span>
         </x-slot>
         <x-slot name="button">
-            <span class="fas fa-pen-to-square text-green-600"></span>
+            <span data-tooltip-target="editId{{ $user->id }}" data-tooltip-style="light"
+                class="far fa-pen-square fa-xl text-green-600"></span>
+            <x-tooltip id="editId{{ $user->id }}">Editar registro</x-tooltip>
         </x-slot>
         <form wire:submit.prevent="updateUser">
             <div class="  pb-6 flex items-center space-x-3">
@@ -18,39 +20,64 @@
                 </div>
             </div>
             <div class="  pb-6 flex items-end space-x-3">
-                <div class="w-2/3">
+                <div class="w-full">
                     <x-input label="Correo Electrónico" id="email{{ $user->id }}" type="email"
                         wire:model.defer="user.email" />
                     <x-input-error for="user.email"></x-input-error>
                 </div>
-                <div class="w-1/3">
+                <div class="w-full">
                     <x-input label="No. Teléfono" id="phone{{ $user->id }}" wire:model.defer="user.phone" />
                     <x-input-error for="user.phone"></x-input-error>
                 </div>
             </div>
-            <div class="  pb-6 ">
+            <div class="  pb-6 flex items-end space-x-3">
                 <div class="w-full">
                     <label for="avatar{{ $user->id }}" class="flex items-center space-x-4 pb-2 cursor-pointer">
                         <span class="fas fa-image text-xl"></span>
                         <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen/Avatar</span>
-                        @if ($avatar)
-                            <span class="shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño del archivo:
-                                {{ Universal::formatNumber($avatar->getSize() / 1024) }} KB</span>
-                        @endif
+
                         <input wire:model="avatar" type="file" class="hidden" name="avatar"
                             id="avatar{{ $user->id }}" accept="image/png, image/gif, image/jpeg">
                     </label>
                 </div>
-                <hr>
+
                 <x-input-error for="avatar"></x-input-error>
             </div>
+
+            @can('Asignar Roles')
+                <div class="w-full">
+                    <label for="form.id">Rol de usuario</label>
+                    <div class="w-full py-2"></div>
+                    <x-select id="role{{ $user->id }}" wire:model.defer="role" class="">
+                        <option value=""></option>
+                        <option
+                            {{ count($user->getRoleNames()) ? ($user->getRoleNames()[0] == 'Administrador' ? 'selected' : '') : '' }}
+                            value="Administrador">Administrador</option>
+                        @foreach ($roles as $name)
+                            <option value="{{ $name }}">{{ $name }}</option>
+                        @endforeach
+                    </x-select>
+                    <x-input-error for="role"></x-input-error>
+                </div>
+                <hr>
+            @else
+                <input type="hidden" name="role" wire:model.defer="role">
+            @endcan
 
             <div class="py-3 flex justify-between items-center">
                 <div>
                     @if ($avatar)
-                        <div class="w-12 h-12 rounded-full bg-cover"
-                            style="background-image: url({{ $avatar->temporaryUrl() }})">
-                        </div>
+                        <label for="avatar{{ $user->id }}">
+                            <div for="avatar{{ $user->id }}" class="w-12 h-12 rounded-full bg-cover cursor-pointer"
+                                style="background-image: url({{ $avatar->temporaryUrl() }})">
+                            </div>
+                        </label>
+                    @else
+                        <label for="avatar{{ $user->id }}">
+                            <div for="avatar{{ $user->id }}" class="w-12 h-12 rounded-full bg-cover cursor-pointer"
+                                style="background-image: url({{ $user->avatar }})">
+                            </div>
+                        </label>
                     @endif
                     <div class="">
                         <x-button class="space-x-2 z-50 text-sm flex items-center" wire:target="avatar" wire:loading>

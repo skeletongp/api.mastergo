@@ -3,8 +3,9 @@
         {{ Breadcrumbs::render('users') }}
     @endslot
 
-    <div class=" w-full ">
-        <div class="inline-block py-2 w-full min-h-max h-full relative sm:px-6 lg:px-8">
+    <div class=" w-full mx-auto ">
+
+        <div class="mx-auto py-2 w-max min-h-max h-full relative sm:px-6 lg:px-8">
             <livewire:users.table-user />
         </div>
     </div>

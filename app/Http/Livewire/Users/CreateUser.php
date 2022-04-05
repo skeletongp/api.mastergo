@@ -3,18 +3,26 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\Store;
-use Illuminate\Support\Facades\Config;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class CreateUser extends Component
 {
-    public $form, $avatar, $photo_path;
+    public $form, $avatar, $photo_path, $store_id, $role;
     use WithFileUploads;
     public function render()
     {
-
-        return view('livewire.users.create-user');
+        $store=auth()->user()->store;
+        $this->store_id=$store->id;
+        $roles=$store->roles()->pluck('name');
+        $places=$store->places()->pluck('name','id');
+        $this->form['place_id']=array_key_first($places->toArray());
+        return view('livewire.users.create-user',
+        [
+            'roles'=>$roles,
+            'places'=>$places
+        ]);
     }
 
     protected $rules = [
@@ -24,21 +32,26 @@ class CreateUser extends Component
         'form.username' => 'required|string|max:35|unique:users,username',
         'form.password' => 'required|string|min:8',
         'form.phone' => 'required|string|max:25',
-        'avatar' => 'max:2048'
+        'form.place_id' => 'required|numeric|exists:places,id',
+        'avatar' => 'max:2048',
+        'store_id'=>'required|exists:stores,id',
+        'role'=>'required|exists:roles,name'
     ];
 
     public function createUser()
     {
         $this->validate();
-        $store=Store::first();
+        $store=auth()->user()->store;
         $user= $store->users()->create($this->form);
         if ($this->photo_path) {
             $user->image()->create([
                 'path'=>$this->photo_path
             ]);
         }
+        $this->assignStore($user);
+        
         $this->reset();
-        $this->emit('reloadUsers', $user->username);
+        $this->emit('refreshLivewireDatatable');
     }
     public function updatedAvatar()
     {
@@ -46,4 +59,5 @@ class CreateUser extends Component
         $photo = $this->avatar->storeAs('avatars', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
     }
+    
 }

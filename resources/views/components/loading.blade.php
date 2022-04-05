@@ -1,9 +1,3 @@
-<div style="z-index: 150" {{$attributes->merge(['class'=>' h-screen w-screen hidden flex justify-center  items-start  top-0 left-0 fixed '])}}>
-    <x-button class="space-x-2 z-50 text-xl">
-        <div class="animate-spin">
-            <span class="fa fa-spinner ">
-            </span>
-        </div>
-        <h1>Procesando</h1>
-    </x-button>
+<div class="top-0 bottom-0 left-0 right-0 flex items-center justify-center fixed " style="z-index: 1800">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 </div>

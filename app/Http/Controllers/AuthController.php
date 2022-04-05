@@ -11,7 +11,7 @@ class AuthController extends Controller
     public function login()
     {
         if (auth()->user()) {
-            return view('home');
+            return view('welcome');
         }
         return view('auth.login');;
     }
@@ -20,11 +20,19 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'exists:users,username'
         ]);
-        if (Auth::attempt($request->only('username', 'password'))) {
+        if (Auth::attempt($request->only('username', 'password'), false)) {
             $request->session()->regenerate();
             return redirect()->intended(route('home'));
         }
-        Session::flash('msg','Datos inválidos');
+        Session::flash('msg','error| Los datos ingresados son incorrectos');
+        return redirect()->route('login');
+    }
+    public function logout()
+    {
+        if (Auth::check()) {
+           Auth::logout();
+        }
+        Session::flash('msg','success| La sesión ha sido cerrada');
         return redirect()->route('login');
     }
 }

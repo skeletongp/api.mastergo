@@ -1,16 +1,40 @@
-<div x-data="{open : false}" @click.away="open = false">
-    <button @click="open = true" @mouseover="open = true"
-        class="text-gray-600 font-medium rounded-lg text-lg px-4 py-2.5 text-center inline-flex items-center  shadow-sm hover:text-gray-800 hover:bg-gray-200 w-48"
-        type="button">
-        {{ $title }}
-        <span class="fas fa-angle-down ml-2"></span>
-    </button>
+@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white'])
 
-    <div x-show="open" x-transition:enter.scale.80 x-transition:leave.scale.90
-        class=" z-10 absolute w-44 text-lg list-none bg-white rounded divide-y divide-gray-100  dark:bg-gray-700">
-        <ul class="py-1" aria-labelledby="dropdownButton">
-            {{ $slot }}
-        </ul>
+@php
+switch ($align) {
+    case 'left':
+        $alignmentClasses = 'origin-top-left left-0';
+        break;
+    case 'top':
+        $alignmentClasses = 'origin-top';
+        break;
+    case 'right':
+    default:
+        $alignmentClasses = 'origin-top-right right-0';
+        break;
+}
+
+switch ($width) {
+    case '48':
+        $width = 'w-48';
+        break;
+}
+@endphp
+
+<div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
+    <div @click="open = ! open" class="drop-trigger cursor-pointer overflow-hidden overflow-ellipsis whitespace-nowrap w-full select-none flex justify-between items-center">
+        {{ $trigger }}
+        <span class="fas fa-angle-down ml-4 transform" :class="open?' rotate-180' : 'rotate-0'" x-transition></span>
     </div>
 
+    <div x-show="open" x-transition:enter="transition ease-out duration-400" x-cloak
+        x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-400" x-transition:leave-start="transform opacity-100 scale-100"
+        x-transition:leave-end="transform opacity-0 scale-95"
+        class="absolute z-50 mt-2 {{ $width }} rounded-md  {{ $alignmentClasses }}" 
+        {{-- @click="open = false" --}}>
+        <ul class="rounded-md shadow-xl  {{ $contentClasses }}">
+            {{ $content }}
+        </ul>
+    </div>
 </div>

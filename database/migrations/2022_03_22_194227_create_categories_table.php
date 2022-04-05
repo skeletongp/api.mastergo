@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uid');
+            $table->string('name')->comment('Identificador de la categoría');
+            $table->string('descrption')->comment('Para entender su natureleza y facilitar las búsqueda');
+            $table->foreignId('store_id')->comment('Tienda a la que pertenece la categoría')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

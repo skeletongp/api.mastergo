@@ -7,13 +7,13 @@
                 <span class="w-8">
                     <x-input label="" class="text-center" type="number" wire:model.lazy="perPage"></x-input>
                 </span>
-                <span>de {{ $users->total() }}</span>
+                <span class="hidden md:block">de {{ $users->total() }}</span>
             </div>
-            <div class="max-w-xs w-full">
+            <div class="max-w-xs w-full ml-4">
                 <x-input type="search" wire:model="search" id="searchUser" label="Buscar"></x-input>
             </div>
         </div>
-        <div class="max-w-6xl">
+        <div class="max-w-6xl overflow-x-auto">
             <table class=" ">
                 <thead class="bg-gray-100 dark:bg-gray-700">
                     <tr>
@@ -53,8 +53,8 @@
                                     class="{{ $sortField == 'phone' ? ($sortAsc ? 'fas fa-angle-up' : 'fas fa-angle-down') : 'fas fa-angle-down' }}"></span>
                             </div>
                         </th>
-                        <th scope="col" class="relative py-3 px-6">
-                            <span class="sr-only">Edit</span>
+                        <th scope="col" class="relative py-3 px-6 tracking-wider uppercase text-lg bg-gray-100">
+                            <span class="">Acciones</span>
                         </th>
                     </tr>
                 </thead>
@@ -82,27 +82,55 @@
                                 <td class="py-2 px-6 text-lg text-gray-500 whitespace-nowrap dark:text-gray-400">
                                     {{ $user->phone }}
                                 </td>
-                                <td class="py-2 px-6 text-lg fo0 whitespace-normal-ellipsis"
-                                    wire:loading.class="bg-red-100" wire:target="deleteUser({{ $user->id }})">
-                                    <div class="flex items-center space-x-4">
-                                        <livewire:users.edit-user :user="$user" :wire:key="uniqid()" />
-                                        <livewire:users.delete-user :user_id="$user->id" :wire:key="uniqid()" />
-                                        
-                                    </div>
+                                <td class="py-2 px-6 text-lg " wire:loading.class="bg-red-100"
+                                    wire:target="deleteUser({{ $user->id }})">
+                                    @if (!$user->hasRole('Super Admin'))
+                                        <div class="flex flex-row items-center space-x-2">
+                                            <div>
+                                                <livewire:users.edit-user :user="$user" :wire:key="uniqid()" />
+                                            </div>
+                                            
+                                            @if (!$user->hasRole('Administrador') || auth()->user()->hasRole('Super Admin'))
+                                            @can('Asignar Permisos')
+                                                <div>
+                                                    <livewire:users.assign-permission :user="$user"
+                                                        :wire:key="uniqid().'id'" />
+                                                </div>
+                                            @endcan
+                                                @can('Borrar Usuarios')
+                                                <div>
+                                                    <livewire:general.delete-model :model="$user" event="reloadUsers"
+                                                        title="Usuario" permission="Borrar usuarios"
+                                                        :wire:key="uniqid()" />
+                                                </div>
+                                                @endcan
+                                            @endif
+
+                                        </div>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
                         @if ($users->hasPages())
                             <tr>
                                 <td colspan="5" class="p-3">
-                                    {{ $users->withQueryString()->links('vendor.livewire.tailwind') }}
+                                    {{ $users->links('vendor.livewire.tailwind') }}
                                 </td>
                             </tr>
                         @endif
+                    @else
+                        <tr>
+                            <td colspan="5">
+                                <h1 class="uppercase font-bold text-2xl text-center py-4">No se encontró ningún usuario
+                                </h1>
+                            </td>
+                        </tr>
                     @endif
 
                 </tbody>
             </table>
 
         </div>
+
     </div>

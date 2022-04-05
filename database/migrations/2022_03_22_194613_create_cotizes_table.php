@@ -15,6 +15,16 @@ return new class extends Migration
     {
         Schema::create('cotizes', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uid');
+            $table->date('day');
+            $table->decimal('amount')->comment('Cantidad real de la venta');
+            $table->decimal('discount')->comment('Descuento general de la cotización');
+            $table->decimal('total')->comment('Monto total de la cotización menos descuentos y más impuestos');
+            $table->foreignId('user_id')->comment('Usuario que genera la venta')->constrained();
+            $table->foreignId('client_id')->comment('Cliente que hace la compra')->constrained();
+            $table->foreignId('place_id')->comment('Sucursal a la que pertenece la compra')->constrained();
+            $table->foreignId('store_id')->comment('Tienda a la que pertenece la compra')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -176,6 +176,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
+        App\Providers\BladeServiceProvider::class,
 
     ],
 
@@ -192,6 +194,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Universal'=> App\Http\Helper\Universal::class,
+        'Role'=> Spatie\Permission\Models\Role::class,
+        'Permission'=> Spatie\Permission\Models\Permission::class
     ])->toArray(),
 
 ];

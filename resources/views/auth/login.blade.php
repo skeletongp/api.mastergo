@@ -1,102 +1,211 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>
-        @if (isset($titlte))
-            {{ $title }}
-        @else
-            {{ env('APP_NAME') }} | Iniciar Sesión
-        @endif
-    </title>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
 
-
-    {{-- Fonts --}}
-
-
-    {{-- Styles --}}
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/fa/css/all.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
-
-    {{-- Scripts --}}
-
-    <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
-
-    @livewireStyles
-    @laravelPWA
-
-</head>
-
-<body class="flex">
-    <main class="h-screen w-screen flex flex-col items-center justify-center">
-        <div class="p-4 max-w-sm w-full shadow-lg shadow-blue-100">
-            <img src="{{ asset('images/logo.png') }}" class="h-32 mx-auto p-4" alt="logo">
-            <h1 class="mt-4 mb-8 text-center font-bold text-xl uppercase">
-                Accede a tu cuenta
-            </h1>
-            @if (Session::has('msg'))
-            @endif
-            <form action="{{ route('login.store') }}" method="POST" class="space-y-8">
-                @csrf
-                <div>
-                    <x-input label="Nombre de usuario" name="username" id="username" required>
-                        <x-slot name="icon">
-                            <span class="fas fa-user text-blue-600 text-2xl pr-6"></span>
-                        </x-slot>
-                    </x-input>
-                    <x-input-error for="username"></x-input-error>
-                </div>
-                <div>
-                    <x-input label="Contraseña" type="password" id="password" name="password" required>
-                        <x-slot name="icon">
-                            <span class="fas fa-lock text-blue-600 text-2xl pr-6"></span>
-                        </x-slot>
-                    </x-input>
-                    <x-input-error for="password"></x-input-error>
-                </div>
-                <div class="flex justify-end">
-                    <x-button class="uppercase text-xl font-bold text-black">Acceder</x-button>
-                </div>
-            </form>
-            <div class="flex flex-row space-x-2 mt-4 mb-3 items-center">
-                <hr class="w-full">
-                <span class="whitespace-nowrap text-lg font-semibold">TAMBIÉN PUEDES</span>
-                <hr class="w-full">
-            </div>
-            <div class="flex justify-center">
-                <x-button class="flex space-x-2 items-center bg-red-600 hover:bg-red-700 hover:opacity-80  uppercase ">
-                    <span class="fab fa-google text-white "></span>
-                    <span class="text-white ">Acceder con google</span>
-                </x-button>
-            </div>
-        </div>
-    </main>
-    @livewireScripts
-    <style>
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <style media="screen">
+        *,
+        *:before,
+        *:after {
+            padding: 0;
             margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #080710;
+        }
+
+        .background {
+            width: 430px;
+            height: 520px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape:first-child {
+            background: linear-gradient(#1845ad,
+                    #23a2f6);
+            left: -80px;
+            top: -80px;
+        }
+
+        .shape:last-child {
+            background: linear-gradient(to right,
+                    #ff512f,
+                    #f09819);
+            right: -30px;
+            bottom: -80px;
+        }
+
+        form {
+            height: 520px;
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.13);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+            padding: 50px 35px;
+        }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 30px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        ::placeholder {
+            color: #e5e5e5;
+        }
+
+        button {
+            margin-top: 50px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .social {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .social div {
+            background: red;
+            width: 150px;
+            border-radius: 3px;
+            padding: 5px 10px 10px 5px;
+            background-color: rgba(255, 255, 255, 0.27);
+            color: #eaf0fb;
+            text-align: center;
+        }
+
+        .social div:hover {
+            background-color: rgba(255, 255, 255, 0.47);
+        }
+
+        .social .fb {
+            margin-left: 25px;
+        }
+
+        .social i {
+            margin-right: 4px;
         }
 
     </style>
+</head>
 
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form action="{{ route('login.store') }}" method="POST">
+        @csrf
+        <h3>INICIAR SESIÓN</h3>
+
+        <label for="username">Nombre de Usuario</label>
+        <input type="text" placeholder="Ingrese su nombre de usuario" name="username" id="username">
+        <x-input-error for="username"></x-input-error>
+        <label for="password">Password</label>
+        <input type="password" placeholder="Ingrese su contraseña" name="password" id="password">
+        <x-input-error for="password"></x-input-error>
+        <button>Acceder</button>
+        <div class="social">
+            <div class="go"><i class="fab fa-google"></i> Google</div>
+        </div>
+    </form>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
-        @if (!Session::has('msg'))
-        toastr.options.preventDuplicates = true;
-        toastr.options.positionClass = 'toast-bottom-center';
-            toastr.error('{{ session('msg') }}')
-        @endif
-    </script>
+        msg = '{{ Session::get('msg') }}';
+        colors = {
+            "success": {
+                "text": 'text-green-700',
+                "bg": 'bg-green-100'
+            },
+            'error': {
+                "text": 'text-red-700',
+                "bg": 'bg-red-100'
+            },
+            'warning': {
+                "text": 'text-yellow-700',
+                "bg": 'bg-yellow-100'
+            },
+            'info': {
+                text: 'text-blue-700',
+                "bg": 'bg-blue-100'
+            }
+        };
+        if (msg) {
+            msg = msg.split('|');
 
+            Swal.fire({
+                title: `<div class="p-4 mb-4 text-lg uppercase ${colors[msg[0]]['text']} ${colors[msg[0]]['bg']} rounded-lg font-bold" role="alert"> ${msg[1]}</div>`,
+                icon: msg[0],
+                showConfirmButton: false,
+                timer: 2000,
+                position: 'top-end',
+            });
+        }
+    </script>
 </body>
 
 </html>

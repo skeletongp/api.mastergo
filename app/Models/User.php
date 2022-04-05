@@ -5,22 +5,20 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SearchableTrait;
+    use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+   
     protected $fillable = [
         'name',
         'lastname',
@@ -32,18 +30,12 @@ class User extends Authenticatable
         'store_id',
     ];
     protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         *
-         * @var array
-         */
+        
         'columns' => [
             'name' => 10,
-            'lastname' => 10,
-            'email' => 2,
-            'username' => 5,
+            'lastname' => 5,
+            'email' => 1,
+            'username' => 3,
 
         ]
     ];
@@ -101,4 +93,35 @@ class User extends Authenticatable
             get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
         );
     }
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class, 'store_users');
+    }
+
+   
+    public function getStoreAttribute()
+    {
+        $store=$this->stores()->where('stores.id', session('store_id'))->first();
+        if (!is_null(session('store_id')) && $store) {
+            return $store;
+        }
+        return $this->stores->first();
+    }
+    public function getPlacesAttribute()
+    {
+        return $this->store->places;
+    }
+
+    public function getPlaceAttribute()
+    {
+        $place=$this->store->places()->where('id', session('place_id'))->first();
+        if (!is_null(session('place_id')) && $place) {
+            return $place;
+        }
+        $place=$this->store->places()->where('id', $this->place_id)->first();
+        return $place;
+    }
+    
+   
 }

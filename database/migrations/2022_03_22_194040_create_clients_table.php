@@ -20,9 +20,10 @@ return new class extends Migration
             $table->string('email',100)->unique();
             $table->string('address',255)->comment('Dirección del cliente');
             $table->string('phone',25);
-            $table->decimal('limit',11,2)->default(0)->comment('Crédito límite del cliente');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('RNC')->nullable();
+            $table->decimal('limit',11,4)->default(0)->comment('Crédito límite del cliente');
             $table->foreignId('store_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
