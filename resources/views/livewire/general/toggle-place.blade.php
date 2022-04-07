@@ -1,5 +1,7 @@
-<x-modal :open="!request()->session()->has('place_id') && auth()->user()->store->places->count()>1">
-    <x-slot name="button"></x-slot>
+<x-modal :open="!cache()->get('place_id_'.auth()->user()->id) && auth()->user()->store->places->count()>1">
+    <x-slot name="button">
+        Cambiar Sucursal
+    </x-slot>
     <x-slot name="title">Selecciona una sucursal</x-slot>
     <x-select wire:model="place_id">
         <option value=""></option>

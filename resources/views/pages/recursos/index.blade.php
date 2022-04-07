@@ -8,7 +8,7 @@
             <div class="flex justify-end pb-2">
                 <livewire:recursos.create-recurso />
             </div>
-            <livewire:products.table-product />
+            <livewire:recursos.table-recurso />
         </div>
     </div>
 

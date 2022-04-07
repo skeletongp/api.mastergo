@@ -31,7 +31,7 @@
                 activeRoute="settings.*" />
             <div class="w-full pt-4"></div>
 
-            <x-dropitem text="Contactos" icon="far fa-users" :routes="['users.*', 'clients.*']">
+            <x-dropitem text="Contactos" icon="far fa-users" :routes="['users.*', 'clients.*','providers.*']">
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-user-tie fa-lg' text='Usuarios'
                     activeRoute="users.*" scope="Usuarios"/>
                 <x-side-link routeName='clients.index' icon='far w-10 text-center fa-users fa-lg' text='Clientes'
@@ -49,13 +49,13 @@
                     activeRoute="home.*" scope="Pedidos"/>
             </x-dropitem>
 
-            <x-dropitem text="Inventario" icon=" far fa-cabinet-filing" :routes="['products.*']">
+            <x-dropitem text="Inventario" icon=" far fa-cabinet-filing" :routes="['products.*','recursos.*','Procesos.*']">
                 <x-side-link routeName='products.index' icon='far w-10 text-center fa-layer-group fa-lg'
                     text='Productos' activeRoute="products.*" scope="Productos" />
                 <x-side-link routeName='recursos.index' icon='far w-10 text-center fa-warehouse-alt fa-lg' text='Recursos'
                     activeRoute="recursos.*" scope="Recursos"/>
-                <x-side-link routeName='users.index' icon='far w-10 text-center fa-copy fa-lg' text='Procesos'
-                    activeRoute="home.*" scope="Procesos" />
+                <x-side-link routeName='procesos.index' icon='far w-10 text-center fa-copy fa-lg' text='Procesos'
+                    activeRoute="procesos.*" scope="Procesos" />
             </x-dropitem>
 
             <x-dropitem text="Informes" icon="far fa-file-alt">

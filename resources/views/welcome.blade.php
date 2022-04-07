@@ -2,13 +2,18 @@
     @slot('bread')
         {{ Breadcrumbs::render('home') }}
     @endslot
-    <h1 class="text-red-400">Hola mundo</h1>
-    <div class="grid grid-cols-4 gap-8">
-        @foreach (auth()->user()->store->users as $user)
+    <div class="px-4 my-4 ">
+        <livewire:general.toggle-place />
+    </div>
+    <div class="grid grid-cols-4 gap-6 px-4">
+        @foreach ($users as $user)
             <div
                 class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
-                    <img class="rounded-t-lg w-48 mx-auto p-4" src="{{ $user->avatar }}" alt="">
+                    <div class="bg-center mx-auto bg-cover w-28 h-28 rounded-full" style="background-image: url({{$user->image->path }})">
+
+                    </div>
+                    
                 </a>
                 <div class="p-5">
                     <a href="#">

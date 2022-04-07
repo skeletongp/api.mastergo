@@ -1,7 +1,7 @@
 <div class="px-4 mt-8" x-data="{ open: false }" x-cloak>
     <h1 class="uppercase text-xl text-center font-bold mb-4 mt-8">Roles del sistema</h1>
 
-    <div class=" overflow-x-auto shadow-md sm:rounded-lg">
+    <div class=" overflow-x-auto shadow-md sm:rounded-lg" x-data="{ selectAll: false, open: false }">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-lg text-gray-600 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -25,7 +25,7 @@
                         class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700 ">
                         <th scope="row"
                             class="px-6 py-2 font-medium text-gray-900 dark:text-white whitespace-nowrap  cursor-pointer"
-                            wire:click="$set('role_name','{{ $rol->name }}')">
+                            @click=" open = true" wire:click="$set('role_name','{{ $rol->name }}')">
                             {{ preg_replace('/[0-9]+/', '', $rol->name) }}
                         </th>
                         <td class="px-6 py-2  cursor-pointer" wire:click="$set('role_name','{{ $rol->name }}')">
@@ -47,7 +47,7 @@
 
         @can('Asignar Permisos')
             @if ($role_name)
-                <div class=" p-8" x-data="{ selectAll: false, open: false }">
+                <div class=" p-8" >
                     <h1 class="text-center uppercase font-bold text-xl mt-4 mb-6 flex justify-between items-center cursor-pointer"
                         @click="open = !open">
                         <span>Gestionar permisos de {{ preg_replace('/[0-9]+/', '', $role_name) }}</span>

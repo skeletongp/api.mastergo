@@ -6,9 +6,10 @@ use Livewire\Component;
 
 class CreateRecurso extends Component
 {
-    public $form;
+    public $form, $units;
     public function render()
     {
+        $this->units=auth()->user()->store->units->pluck('name','id');
         return view('livewire.recursos.create-recurso');
     }
 
@@ -18,16 +19,18 @@ class CreateRecurso extends Component
         'form.cost' => 'required|numeric|min:1',
         'form.cant' => 'required|numeric|min:1',
         'form.unit_id' => 'required|numeric|exists:units,id',
-        'form.store_id' => 'required|numeric|exists:stores,id',
-        'form.place_id' => 'required|numeric|exists:place,id',
+        'form.place_id' => 'required|numeric|exists:places,id',
     ];
 
     public function createRecurso()
     {
-        $this->form['store_id']=auth()->user()->store->id;
         $this->form['place_id']=auth()->user()->place->id;
-        dd($this->form);
         $this->validate();
+        $store=auth()->user()->store;
+        $store->recursos()->create($this->form);
+        $this->reset('form');
+        $this->emit('showAlert','Recurso registrado exitosamente','success');
+        $this->emit('refreshLivewireDatatable');
 
     }
 }

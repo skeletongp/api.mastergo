@@ -10,8 +10,8 @@
                 </div>
                 <div>
                     <div wire:ignore class="space-y-2">
-                        <label for="editor">Descripción del producto</label>
-                        <textarea class="hidden" required id="editor" wire:model.defer="form.description"></textarea>
+                        <label >Descripción del producto</label>
+                        <textarea class="hidden"  id="editor" wire:model.defer="form.description"></textarea>
                     </div>
                     <x-input-error for="form.description"></x-input-error>
                 </div>
@@ -198,7 +198,6 @@
                     .then(editor => {
                         $('#editor').removeClass("hidden");
                         editor.config.removePlugins = 'uploadImage'
-                        console.log(editor.config._config.toolbar)
                         editor.model.document.on('change:data', () => {
                             @this.set('form.description', editor.getData());
                         })

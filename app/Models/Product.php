@@ -81,5 +81,24 @@ class Product extends Model
             get:fn()=>$places
         );
     }
+    public function recursos()
+    {
+        return $this->belongsToMany(Recurso::class, 'proceso_recursos')->withPivot('cant')->withTimestamps();
+    }
+    public function procesos()
+    {
+        return $this->belongsToMany(Proceso::class, 'proceso_product_units')->withPivot('due','obtained','eficiency')->withTimestamps();
+    }
+    public function procunits()
+    {
+        return $this->belongsToMany(Unit::class, 'proceso_product_units')->withPivot('due','obtained','eficiency')
+        ->withTimestamps();
+    }
+
+    public function scopeProcunit($query, $proceso_id)
+    {
+        return $this->procunits()->where('proceso_id', $proceso_id)->first();
+    }
+    
     
 }

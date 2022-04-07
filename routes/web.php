@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\SettingController;
@@ -37,7 +38,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['web'])->group(function () {
         Route::get('/', function () {
-            return view('welcome');
+            $users=auth()->user()->store->users()->with('image')->paginate(8);
+            return view('welcome', compact('users'));
         })->name('home');
 
         Route::controller(UserController::class)->group(function () {
@@ -71,6 +73,13 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(RecursoController::class)->group(function(){
             Route::get('recursos','index')->name('recursos.index');
+            Route::get('recursos/{recurso}','show')->name('recursos.show');
+        });
+
+        Route::controller(ProcesoController::class)->group(function(){
+            Route::get('procesos','index')->name('procesos.index');
+            Route::get('procesos/create','create')->name('procesos.create');
+            Route::get('procesos/{proceso}','show')->name('procesos.show');
         });
 
         Route::get('uid', function () {

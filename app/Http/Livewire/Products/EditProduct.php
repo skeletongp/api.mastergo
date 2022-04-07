@@ -85,6 +85,7 @@ class EditProduct extends Component
             $unit->pivot->delete();
             $this->emit('showAlert', 'Precio removido exitosamente', 'success');
             $this->emit('reloadEditProduct');
+            return;
         }
         $this->emit('showAlert', 'No se puede eliminar la única medida registrada', 'error');
         return;

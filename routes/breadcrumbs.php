@@ -34,7 +34,7 @@ Breadcrumbs::for('products.create', function ($trail) {
 });
 Breadcrumbs::for('products.show', function ($trail, $product) {
     $trail->parent('products');
-    $trail->push('Detalles', route('products.show', $product));
+    $trail->push('Detalles -> '.$product->name, route('products.show', $product));
 });
 Breadcrumbs::for('products.sum', function ($trail) {
     $trail->parent('products');
@@ -49,6 +49,24 @@ Breadcrumbs::for('products.edit', function ($trail, $product) {
 Breadcrumbs::for('recursos', function ($trail) {
     $trail->parent('home');
     $trail->push('Recursos', route('recursos.index'));
+});
+Breadcrumbs::for('recursos.show', function ($trail, $recurso) {
+    $trail->parent('recursos');
+    $trail->push('Detalles -> '.$recurso->name, route('recursos.show', $recurso));
+});
+
+/* Recursos */
+Breadcrumbs::for('procesos', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Procesos', route('procesos.index'));
+});
+Breadcrumbs::for('procesos.create', function ($trail) {
+    $trail->parent('procesos');
+    $trail->push('Create Proceso', route('procesos.create'));
+});
+Breadcrumbs::for('procesos.show', function ($trail, $proceso) {
+    $trail->parent('procesos');
+    $trail->push('Detalles -> '.$proceso->name, route('procesos.show', $proceso));
 });
 /* Ajustes */
 Breadcrumbs::for('settings', function ($trail) {

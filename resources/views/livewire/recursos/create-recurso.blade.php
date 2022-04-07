@@ -1,5 +1,5 @@
 <div>
-    <x-modal open="true" maxWidth="max-w-lg">
+    <x-modal maxWidth="max-w-lg">
         <x-slot name="button">
             <span class="fas w-6 text-center fa-plus mr-2"></span>
             <span> Crear Recurso</span>
@@ -9,21 +9,25 @@
         <div class="py-4">
             <form action="" wire:submit.prevent="createRecurso" class="space-y-4">
                 <div>
-                    <x-input label="Nombre del recurso" wire:mode.defer="form.name" id="form.r.name"></x-input>
+                    <x-input label="Nombre del recurso" wire:model.defer="form.name" id="form.r.name"></x-input>
                     <x-input-error for="form.name"></x-input-error>
                 </div>
                 <div >
                     <div wire:ignore class="space-y-2">
-                        <label for="editor">Descripción del recurso</label>
-                        <textarea class="hidden" required id="editor" wire:model.defer="form.description"></textarea>
+                        <label >Descripción del recurso</label>
+                        <textarea class="hidden"  id="editor" wire:model.defer="form.description"></textarea>
                     </div>
                     <x-input-error for="form.description"></x-input-error>
                 </div>
                 <div class="flex space-x-4 items-end">
                     <div class="w-2/4">
-                        <x-select>
+                        <x-select wire:model.defer="form.unit_id" id="form.r.unit_id">
                             <option value="">Medida</option>
+                            @foreach ($units as $id => $unit)
+                            <option value="{{$id}}">{{$unit}}</option>
+                            @endforeach
                         </x-select>
+                        <x-input-error for="form.unit_id"></x-input-error>
                     </div>
                     <div class="w-1/4">
                         <x-input type="number" id="form.r.cant" label="Cantidad" wire:model.defer="form.cant"></x-input>
@@ -61,7 +65,6 @@
                     .then(editor => {
                         $('#editor').removeClass("hidden");
                         editor.config.removePlugins = 'uploadImage'
-                        console.log(editor.config._config.toolbar)
                         editor.model.document.on('change:data', () => {
                             @this.set('form.description', editor.getData());
                         })

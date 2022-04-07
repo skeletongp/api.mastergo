@@ -30,7 +30,7 @@
                                         wire:model="permissionsSelected" value="{{ $perm }}"
                                         class="w-6 h-6 text-blue-600 rounded-full bg-gray-100  border-gray-300 focus:ring-blue-500  cursor-pointer disabled:cursor-default disabled:ring-gray-500 disabled:text-gray-500"
                                         x-bind:checked="selectAll"
-                                        {{$rolePermissions->contains($perm)?'disabled':''}}
+                                        {{in_array($perm, $rolePermissions)?'disabled':''}}
                                         >
                                     <label for="perm{{ $id }}"
                                         class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300 cursor-pointer">

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name')->commet('Nombre identificador del proceso');
             $table->timestamp('start_at')->comment('Momento en que inicia el proceso');
             $table->timestamp('end_at')->comment('Momento en que termina el proceso')->nullable();
-            $table->enum('status',['Sin procesar','Procesado','Descartado'])->comment('Cómo se encuentra el recurso');
+            $table->enum('status',['Sin procesar','Procesado','Descartado','En Proceso'])->comment('Cómo se encuentra el recurso');
             $table->foreignId('user_id')->comment('Usuario responsable del proceso')->constrained();
             $table->foreignId('place_id')->comment('Usuario responsable del proceso')->constrained();
             $table->softDeletes();

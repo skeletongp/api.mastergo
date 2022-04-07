@@ -21,10 +21,8 @@ class SearchField extends Component
             $this->users = $store->users()->search($this->search)
                 ->paginate(4);
 
-            $this->clients = DB::table('atrionstore.clients')
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->paginate(4);
-                $this->resetPage();
+            $this->clients = $store->clients()->search($this->search)
+            ->paginate(4);;
 
         $data = [
             'users' => $this->users,

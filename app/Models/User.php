@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use Ramsey\Uuid\Uuid;
@@ -30,7 +31,6 @@ class User extends Authenticatable
         'store_id',
     ];
     protected $searchable = [
-        
         'columns' => [
             'name' => 10,
             'lastname' => 5,
@@ -102,11 +102,13 @@ class User extends Authenticatable
    
     public function getStoreAttribute()
     {
-        $store=$this->stores()->where('stores.id', session('store_id'))->first();
-        if (!is_null(session('store_id')) && $store) {
+        $store=Cache::get('store_'.$this->id);
+        if (!is_null($store) ) {
             return $store;
         }
-        return $this->stores->first();
+        $store=$this->stores()->where('stores.id', $this->place_id)->first();
+        Cache::put('store_'.$this->id,$store);
+        return $store;
     }
     public function getPlacesAttribute()
     {
@@ -115,11 +117,11 @@ class User extends Authenticatable
 
     public function getPlaceAttribute()
     {
-        $place=$this->store->places()->where('id', session('place_id'))->first();
-        if (!is_null(session('place_id')) && $place) {
+        $place=Cache::get('place_'.$this->id);
+        if (!is_null($place) ) {
             return $place;
         }
-        $place=$this->store->places()->where('id', $this->place_id)->first();
+        $place=$this->store->places()->first();
         return $place;
     }
     

@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\General;
 
+use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -23,7 +25,9 @@ class ToggleStore extends Component
     }
     public function updatedStoreId()
     {
-        request()->session()->put('store_id',$this->store_id);
+        $store=Store::where('id',$this->store_id)->first();
+        Cache::put('store_'.auth()->user()->id, $store);
+        Cache::forget('place_'.auth()->user()->id);
         return redirect(url()->previous());
     }
     public function reloadToggleStore()

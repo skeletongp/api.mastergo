@@ -35,4 +35,12 @@ class Place extends Model
     {
         return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price','stock','cost','id');
     }
+    public function recursos()
+    {
+        return $this->hasMany(Recurso::class);
+    }
+    public function procesos()
+    {
+        return $this->hasMany(Proceso::class);
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Users;
 
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 
@@ -15,17 +17,15 @@ class AssignPermission extends Component
 
     public function mount()
     {
-        $this->rolePermissions = $this->user->roles()->first()->permissions->pluck('name');
-
-        $userPermissions=$this->user->permissions->pluck('name');
-        $this->permissionsSelected=$this->rolePermissions->union($userPermissions);
-        $this->permissions = Permission::pluck('name', 'id');
+       
+        $this->permissionsSelected=$this->user->getPermissionsViaRoles()->pluck('name');
+        $spatiePermissionCache=Cache::get('spatie.permission.cache');
+        $this->permissions = Arr::pluck($spatiePermissionCache,'n','i');
         $this->selectAll = count($this->permissionsSelected) === count($this->permissions);
     }
 
     public function render()
     {
-        $this->permissions = Permission::pluck('name', 'id');
         return view('livewire.users.assign-permission');
     }
     public function changePermissions()

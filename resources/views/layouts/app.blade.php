@@ -56,11 +56,11 @@
 
             {{-- Content --}}
             <main class="pl-0  flex">
-
+                <div class="hidden" id="generalLoad">
+                    <x-loading></x-loading>
+                </div>
                 <section class=" w-full bg-white ">
-                    <div class="absolute hidden">
-                        <livewire:general.toggle-place />
-                    </div>
+                   
                     {{ $slot }}
                 </section>
             </main>
@@ -199,6 +199,9 @@
             if (statusCode !== 500) {
                 return false;
             }
+        })
+        $('.load').on('click', function(){
+            $('#generalLoad').removeClass('hidden');
         })
     </script>
 

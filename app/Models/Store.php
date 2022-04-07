@@ -21,7 +21,7 @@ class Store extends Model
         'uid', 'name', 'address', 'email', 'phone', 'logo', 'expire_at', 'rnc'
     ];
     protected $searchable = [
-        
+
         'columns' => [
             'name' => 10,
             'address' => 10,
@@ -33,13 +33,13 @@ class Store extends Model
     {
         return 'uid';
     }
-    
+
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
             $model->uid = (string) Uuid::uuid4();
-            $model->expires_at=Carbon::parse(now())->addMonth();
+            $model->expires_at = Carbon::parse(now())->addMonth();
         });
     }
     public function users()
@@ -49,16 +49,16 @@ class Store extends Model
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'store_roles');
+        return $this->belongsToMany(Role::class, 'store_roles');
     }
     public function image()
     {
-       return $this->morphOne(Image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable');
     }
     public function logo(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
+            get: fn () => $this->image ? $this->image->path : env('NO_IMAGE')
         );
     }
     public function places()
@@ -87,6 +87,10 @@ class Store extends Model
     }
     public function scope()
     {
-        return $this->morphToMany(Scope::class, 'scopeable','model_has_scopes');
+        return $this->morphToMany(Scope::class, 'scopeable', 'model_has_scopes');
+    }
+    public function recursos()
+    {
+        return $this->hasMany(Recurso::class);
     }
 }
