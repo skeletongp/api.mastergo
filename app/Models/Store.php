@@ -87,7 +87,7 @@ class Store extends Model
     }
     public function scope()
     {
-        return $this->morphToMany(Scope::class, 'scopeable', 'model_has_scopes');
+        return $this->morphToMany(Scope::class, 'scopeable', 'model_has_scopes')->withTimestamps();
     }
     public function recursos()
     {

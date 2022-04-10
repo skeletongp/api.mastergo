@@ -10,4 +10,8 @@ class InvoiceController extends Controller
     {
         return view('pages.invoices.index');
     }
+    public function create()
+    {
+        return view('pages.invoices.create');
+    }
 }

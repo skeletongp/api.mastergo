@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Scope extends Model
 {
     use HasFactory;
+
+    protected $primaryKey="name";
+    public $incrementing = false;
+    protected $keyType = 'string';  
+    
     protected $fillable=[
-        'name'
+        'name',
+        'created_at',
+        'updated_at'
     ];
 
     public function scopeable()

@@ -10,8 +10,8 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Models\Store;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Scope;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(InvoiceController::class)->group(function () {
             Route::get('/invoices', 'index')->name('invoices.index');
+            Route::get('/invoices/create', 'create')->name('invoices.create');
         });
 
         Route::controller(ProductController::class)->group(function () {
@@ -82,12 +83,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('procesos/{proceso}','show')->name('procesos.show');
         });
 
-        Route::get('uid', function () {
-            $users = User::get();
-            foreach ($users as $key => $user) {
-                $user->stores()->sync(Store::first());
-            }
-            return $users;
-        });
+        
     });
+   
+});
+Route::get('uid', function () {
+    
 });

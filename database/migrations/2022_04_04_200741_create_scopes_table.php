@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('scopes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
+            $table->string('name', 45)->primary();
             $table->string('guard')->default('web');
             $table->timestamps();
         });

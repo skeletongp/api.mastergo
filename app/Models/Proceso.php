@@ -31,11 +31,11 @@ class Proceso extends Model
     }
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'proceso_product_units')->withPivot('due', 'obtained', 'eficiency', 'unit_id')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'proceso_product_units')->withPivot('id','due', 'obtained', 'eficiency', 'unit_id')->withTimestamps();
     }
     public function units()
     {
-        return $this->belongsToMany(Unit::class, 'proceso_product_units')->withPivot('due', 'obtained', 'eficiency', 'unit_id')->withTimestamps();
+        return $this->belongsToMany(Unit::class, 'proceso_product_units')->withPivot('id','due', 'obtained', 'eficiency', 'unit_id')->withTimestamps();
     }
     public function eficiency(): Attribute
     {

@@ -10,10 +10,13 @@
                 @foreach ($procesos as $proc)
                     <div wire:click="setProcess('{{ $proc->id }}')" id="divproceso"
                         class="flex load flex-col relative overflow-hidden w-full px-4 mb-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $proceso->id == $proc->id ? 'text-blue-700' : '' }}">
-                        <div class="absolute top-0 bottom-0 left-0 bg-gray-100 my-2 z-10" style="right: {{100-Universal::formatNumber($proc->eficiency)}}%">
+
+                        {{-- Indicador de progreso --}}
+                        <div class="absolute top-0 bottom-0 left-0 bg-green-500 opacity-30 my-2 z-10"
+                            style="right: {{ 100 - Universal::formatNumber($proc->eficiency) }}%">
 
                         </div>
-                        <span class=  " z-20 text-base w-full overflow-hidden overflow-ellipsis whitespace-nowrap pr-4">
+                        <span class=" z-20 text-base w-full overflow-hidden overflow-ellipsis whitespace-nowrap pr-4">
                             {{ $proc->name }}
                         </span>
                         <span class=" z-20 text-base">
@@ -43,7 +46,7 @@
     <div class="w-full h-full  pl-0" x-data="{ open: true }">
         @if ($procesos->count() && $proceso)
             <div class="mx-auto ">
-                
+
                 <div class="flex justify-end items-center py-2  space-x-4 bg-gray-100 pr-4 rounded-tr-lg">
                     <h1 class="text-center font-bold uppercase text-xl w-full">Productos Esperados</h1>
                     <x-button>
@@ -64,7 +67,8 @@
                     </x-dropdown>
                 </div>
                 <div class="w-full relative px-12 py-8 space-y-8" style=" height:215.4mm">
-                    @foreach ($proceso->products()->with('procunits')->get() as $product)
+                    @foreach ($proceso->products()->with('procunits')->get()
+    as $product)
                         <div class="flex space-x-4">
                             <div class="w-full">
                                 <x-input class="w-full" id="pv.name" label="Producto" readonly
@@ -72,7 +76,7 @@
                             </div>
                             <div>
                                 <x-input id="pv.unit" label="Medida" readonly
-                                    value="{{ $product->procUnit('2')->name }}"></x-input>
+                                    value="{{ $product->procUnit($proceso->id)->name }}"></x-input>
                             </div>
                             <div>
                                 <x-input id="pv.due" label="Esperado" readonly value="{{ $product->pivot->due }}">
@@ -83,10 +87,12 @@
                                     value="{{ $product->pivot->obtained }}"></x-input>
                             </div>
                             <form action="" class="flex space-x-4 w-full"
-                                wire:submit.prevent="setObtained({{ $product->id }})">
-                                <x-input id="pv.add{{ $product->id }}" type="number" required min="1"
-                                    class="text-blue-400" label="Añadir"
-                                    wire:model.defer="productos.{{ $product->id }}"></x-input>
+                                wire:submit.prevent="setObtained({{ $product->pivot->id }})">
+                                <div class="max-w-[5rem]">
+                                    <x-input id="pv.add{{ $product->id . rand(0, 9) }}" type="number" required min="1"
+                                        class="text-blue-400" label="Añadir"
+                                        wire:model.defer="productos.{{ $product->id }}"></x-input>
+                                </div>
                                 <x-button>
                                     <span class="far fa-sync"></span>
                                 </x-button>

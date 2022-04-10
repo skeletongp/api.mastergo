@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('utility',11,4)->comment('Ganancia que deja este detalle (cant*price)-(cant*cost)');
             $table->foreignId('product_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->constrained()->nullable();
             $table->foreignId('store_id')->constrained();
             $table->foreignId('place_id')->constrained();
             $table->morphs('detailable');

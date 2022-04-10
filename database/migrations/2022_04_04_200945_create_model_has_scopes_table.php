@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Scope;
 
 return new class extends Migration
 {
@@ -14,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('model_has_scopes', function (Blueprint $table) {
-            $table->foreignId('scope_id')->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Scope::class,'scope_name')->references('name')->on('scopes')->constrained()->onDelete('cascade');
             $table->morphs('scopeable');
            
             $table->timestamps();

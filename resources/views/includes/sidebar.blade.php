@@ -40,7 +40,7 @@
                     activeRoute="home.*" scope="Proveedores"/>
             </x-dropitem>
 
-            <x-dropitem text="Facturación" icon="far fa-copy">
+            <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*']">
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
                     text='Facturas' activeRoute="invoices.*" scope="Facturas" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
@@ -59,7 +59,6 @@
             </x-dropitem>
 
             <x-dropitem text="Informes" icon="far fa-file-alt">
-              
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-chart-pie fa-lg'
                     text='Estadísticas' activeRoute="invoices.*" scope="Estadísticas"/>
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-chart-line fa-lg'
@@ -69,7 +68,6 @@
             </x-dropitem>
 
             <x-dropitem text="Finanzas" icon="far fa-wallet">
-              
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-chart-line fa-lg' text='Ingresos'
                     activeRoute="invoices.*" scope="Ingresos"/>
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Gastos'

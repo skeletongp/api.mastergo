@@ -22,6 +22,10 @@ Breadcrumbs::for('invoices', function ($trail) {
     $trail->parent('home');
     $trail->push('Facturas', route('invoices.index'));
 });
+Breadcrumbs::for('invoices.create', function ($trail) {
+    $trail->parent('invoices');
+    $trail->push('Nueva Factura', route('invoices.create'));
+});
 
 /* Productos */
 Breadcrumbs::for('products', function ($trail) {

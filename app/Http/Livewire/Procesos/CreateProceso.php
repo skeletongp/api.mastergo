@@ -56,6 +56,7 @@ class CreateProceso extends Component
     public function updatedRecursoId()
     {
         $this->selRecurso = $this->recursos->find($this->recursoId);
+        $this->units=$this->selRecurso->units;
     }
     public function updatedProductId()
     {
@@ -75,8 +76,10 @@ class CreateProceso extends Component
     }
     public function addProduct()
     {
-
-        if (!in_array($this->productId, array_column($this->fProducts, 'product_id'))) {
+        $existingProduct = array_filter($this->fProducts, function($val){
+            return ($val['product_id']==$this->productId and $val['unit_id']==$this->productUnit);
+        });
+        if (empty($existingProduct)) {
             array_push($this->fProducts, [
                 'product_id' => $this->productId,
                 'due' => $this->productDue,
@@ -84,8 +87,18 @@ class CreateProceso extends Component
                 'name' => $this->selProduct->name,
                 'unitname' => $this->units->find($this->productUnit)->symbol,
             ]);
+        } else{
+            $this->getExistingProduct();
         }
+        
         $this->reset('productId', 'productDue', 'productUnit', 'selProduct');
+    }
+    public function getExistingProduct()
+    {
+        $existingProduct = array_filter($this->fProducts, function($val){
+            return ($val['product_id']==$this->productId and $val['unit_id']==$this->productUnit);
+        });
+        $this->fProducts[array_key_first($existingProduct)]['due']=$this->productDue;
     }
     public function removeRecurso($recurso)
     {

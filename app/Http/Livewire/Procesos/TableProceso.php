@@ -25,7 +25,9 @@ class TableProceso extends LivewireDatatable
     {
         return 
         [
-            Column::name('id')->defaultSort('asc')->linkTo('procesos'),
+            Column::callback('id', function($id){
+                return view('components.view', ['url'=>route('procesos.show', $id)] );
+            }),
             Column::name('name')->label('Nombre')->searchable(),
             DateColumn::name('start_at')->label('Inicio')->searchable(),
             Column::raw('sum(proceso_product_units.due) AS Esperado')->label('Esperado')->searchable(),

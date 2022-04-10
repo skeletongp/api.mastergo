@@ -1,10 +1,10 @@
-@props(['label'])
+@props(['label','idTT'=>''])
 @php
 if (empty($attributes['id'])) {
     $attributes['id'] = 'input';
 }
 @endphp
-<div class="relative z-0 w-full group ">
+<div class="relative z-0 w-full group " data-tooltip-target="{{$idTT}}" data-tooltip-style="light" >
     <input step="any"
         {{ $attributes->merge(['class' =>'block py-2.5 px-0 w-full text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer']) }}
         placeholder=" " />

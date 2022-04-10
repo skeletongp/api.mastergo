@@ -30,13 +30,16 @@ class ProcesoShow extends Component
     }
     public function setObtained($product)
     {
-       $prod=$this->proceso->products()->with('units')->find($product);
-       $product=$prod->pivot;
-       $cant=$this->productos[$product->product_id];
-       $product->obtained=$cant+$product->obtained;
-       $product->eficiency=($product->obtained/ $product->due)*100;
-       $this->sumProduct($prod, $product->unit_id, $cant);
-       $product->save();
+       $produ=$this->proceso->products()->with('units')
+       ->wherePivot('id', $product)
+       ->first()
+       ;
+       $pivot=$produ->pivot;
+       $cant=$this->productos[$pivot->product_id];
+       $pivot->obtained=$cant+$pivot->obtained;
+       $pivot->eficiency=($pivot->obtained/ $pivot->due)*100;
+       $this->sumProduct($produ, $pivot->unit_id, $cant);
+       $pivot->save();
        $this->reset('productos');
        $this->emit('showAlert', 'Monto actualizado correctamente','success');
        $this->finishProceso();
