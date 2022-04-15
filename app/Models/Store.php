@@ -93,4 +93,12 @@ class Store extends Model
     {
         return $this->hasMany(Recurso::class);
     }
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+    public function providers()
+    {
+        return $this->hasMany(Provider::class);
+    }
 }

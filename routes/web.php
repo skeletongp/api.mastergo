@@ -9,10 +9,13 @@ use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Http\Helper\Universal;
+use App\Models\Invoice;
 use App\Models\Store;
 use App\Models\Scope;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +41,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['web'])->group(function () {
         Route::get('/', function () {
-            $users=auth()->user()->store->users()->with('image')->paginate(8);
+            $users = auth()->user()->store->users()->with('image')->paginate(8);
             return view('welcome', compact('users'));
         })->name('home');
 
@@ -50,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(InvoiceController::class)->group(function () {
             Route::get('/invoices', 'index')->name('invoices.index');
             Route::get('/invoices/create', 'create')->name('invoices.create');
+            Route::get('/invoices/orders', 'orders')->name('orders');
+            
         });
 
         Route::controller(ProductController::class)->group(function () {
@@ -72,21 +77,23 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/settings', 'index')->name('settings.index');
         });
 
-        Route::controller(RecursoController::class)->group(function(){
-            Route::get('recursos','index')->name('recursos.index');
-            Route::get('recursos/{recurso}','show')->name('recursos.show');
+        Route::controller(RecursoController::class)->group(function () {
+            Route::get('recursos', 'index')->name('recursos.index');
+            Route::get('recursos/{recurso}', 'show')->name('recursos.show');
         });
 
-        Route::controller(ProcesoController::class)->group(function(){
-            Route::get('procesos','index')->name('procesos.index');
-            Route::get('procesos/create','create')->name('procesos.create');
-            Route::get('procesos/{proceso}','show')->name('procesos.show');
+        Route::controller(ProcesoController::class)->group(function () {
+            Route::get('procesos', 'index')->name('procesos.index');
+            Route::get('procesos/create', 'create')->name('procesos.create');
+            Route::get('procesos/{proceso}', 'show')->name('procesos.show');
         });
-
-        
     });
-   
 });
 Route::get('uid', function () {
-    
+    $invoice = Invoice::first();
+    $data = [
+        'invoice' => $invoice,
+    ];
+    $pdf = PDF::loadView('pages.invoices.thermal', $data)->setPaper('80mm', 'portrait');
+   return  $pdf->stream('invoice.pdf');
 });

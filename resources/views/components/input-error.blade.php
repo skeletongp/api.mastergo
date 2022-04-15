@@ -5,8 +5,8 @@
             {{ $slot }}
         </p>
     @else
-        <p {{ $attributes->merge(['class' => 'text-base text-red-600 opacity-50 w-full overflow-hidden overflow-ellipsis whitespace-nowrap']) }}>
-            {{ $message }}
+        <p {{ $attributes->merge(['class' => 'text-base text-red-600 opacity-50 w-full overflow-hidden overflow-ellipsis whitespace-nowrap pr-2']) }} title="{{$message}}">
+            {!! $message !!}
         </p>
     @endif
 @enderror

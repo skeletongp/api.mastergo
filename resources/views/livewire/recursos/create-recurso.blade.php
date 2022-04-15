@@ -12,6 +12,15 @@
                     <x-input label="Nombre del recurso" wire:model.defer="form.name" id="form.r.name"></x-input>
                     <x-input-error for="form.name"></x-input-error>
                 </div>
+                <div>
+                        <x-select wire:model.defer="form.provider_id" id="form.r.provider_id">
+                            <option value="">Proveedor</option>
+                            @foreach ($providers as $id => $provider)
+                            <option value="{{$id}}">{{$provider}}</option>
+                            @endforeach
+                        </x-select>
+                        <x-input-error for="form.provider_id"></x-input-error>
+                </div>
                 <div >
                     <div wire:ignore class="space-y-2">
                         <label >Descripción del recurso</label>

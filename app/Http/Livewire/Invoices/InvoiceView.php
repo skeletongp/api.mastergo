@@ -8,26 +8,31 @@ use Livewire\WithPagination;
 
 class InvoiceView extends Component
 {
-    public $pdfPath, $perPage=7;
+    public $pdfLetter, $pdfThermal, $perPage=7, $thermal=true;
     use WithPagination;
     protected $queryString = [
-        'pdfPath', 'perPage', 
+        'pdfLetter', 'pdfThermal', 'perPage', 
         
     ];
     public function render()
     {
-        $invoices = DB::table('atrionstore.invoices')->paginate($this->perPage?:7);
-        foreach ($invoices as $ind => $invoice) {
-            $invoice->pdf = asset("storage/invoices/fct000000{$ind}.pdf");
-        }
-        if ($invoices->count() && !$this->pdfPath) {
-            $this->pdfPath = $invoices->first()->pdf;
+        $invoices = auth()->user()->place->invoices()->orderBy('id','desc')->paginate();
+        
+        if ($invoices->count() && !$this->pdfThermal) {
+            $this->pdfThermal = $invoices->first()->pdfThermal;
+            $this->pdfLetter = $invoices->first()->pdfLetter;
         }
         return view('livewire.invoices.invoice-view', ['invoices' => $invoices]);
     }
-    public function setPDF($path)
+    public function setPDF($thermal,$letter)
     {
-            $this->pdfPath=$path;
+            $this->pdfLetter=$letter;
+            $this->pdfThermal=$thermal;
             $this->render();
+    }
+    public function toggleThermal()
+    {
+        $this->thermal=!$this->thermal;
+        $this->render();
     }
 }

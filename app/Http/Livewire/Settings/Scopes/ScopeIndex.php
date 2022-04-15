@@ -13,7 +13,7 @@ class ScopeIndex extends Component
     public function mount()
     {
         $this->store=auth()->user()->store;
-        $this->scopes=Scope::pluck('name','id');
+        $this->scopes=Scope::pluck('name');
         foreach($this->scopes as $id=> $scope){
             if($this->store->hasScope($scope)){
                $this->scopesSelected[$id]=$scope;

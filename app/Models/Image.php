@@ -13,8 +13,8 @@ class Image extends Model
 
     protected $fillable = [
         'path',
-        'imagable_id',
-        'imagable_type',
+        'imageable_id',
+        'imageable_type',
     ];
 
     public function imageable()

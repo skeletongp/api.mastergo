@@ -40,13 +40,13 @@
                     activeRoute="home.*" scope="Proveedores"/>
             </x-dropitem>
 
-            <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*']">
+            <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*','orders']">
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
                     text='Facturas' activeRoute="invoices.*" scope="Facturas" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
                     text='Cotizaciones' activeRoute="home.*" scope="Cotizaciones"/>
-                <x-side-link routeName='users.index' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'
-                    activeRoute="home.*" scope="Pedidos"/>
+                <x-side-link routeName='orders' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'
+                    activeRoute="orders" scope="Pedidos"/>
             </x-dropitem>
 
             <x-dropitem text="Inventario" icon=" far fa-cabinet-filing" :routes="['products.*','recursos.*','Procesos.*']">
@@ -73,6 +73,9 @@
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Gastos'
                     activeRoute="home.*" scope="Gastos"/>
             </x-dropitem>
+
+            <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
+            activeRoute="home.*"/>
         </ul>
     </div>
 </aside>

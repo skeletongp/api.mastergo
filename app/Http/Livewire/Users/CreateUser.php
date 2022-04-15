@@ -34,7 +34,6 @@ class CreateUser extends Component
         'form.phone' => 'required|string|max:25',
         'form.place_id' => 'required|numeric|exists:places,id',
         'avatar' => 'max:2048',
-        'store_id'=>'required|exists:stores,id',
         'role'=>'required|exists:roles,name'
     ];
 
@@ -49,7 +48,6 @@ class CreateUser extends Component
             ]);
         }
         $this->assignStore($user);
-        
         $this->reset();
         $this->emit('refreshLivewireDatatable');
     }
@@ -58,6 +56,11 @@ class CreateUser extends Component
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->avatar->storeAs('avatars', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
+    }
+    public function assignStore(User $user)
+    {
+        $store=auth()->user()->store;
+        $store->users()->save($user);
     }
     
 }

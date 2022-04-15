@@ -2,6 +2,8 @@
 
 namespace App\Http\Helper;
 
+use Cloudinary\Cloudinary;
+
 class Universal
 {
     public static function formatNumber($number)
@@ -21,5 +23,20 @@ class Universal
             return asset($photo);
         }
         return $link;
+    }
+    public static function upPDFToCloud($path)
+    {
+        $cloudinary = new Cloudinary(
+            [
+                'cloud' => [
+                    'cloud_name' => env('CLOUD_NAME'),
+                    'api_key'    => env('CLOUD_API_KEY'),
+                    'api_secret' => env('CLOUD_API_SECRET'),
+                ],
+            ]
+        );
+      
+        $path = $cloudinary->uploadApi()->upload($path);
+        return json_decode(json_encode($path))->url;
     }
 }

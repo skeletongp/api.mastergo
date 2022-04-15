@@ -16,6 +16,7 @@ class Client extends Model
         'name',
         'lastname',
         'email',
+        'fullname',
         'address',
         'RNC',
         'phone',
@@ -30,6 +31,13 @@ class Client extends Model
             'email' => 1,
         ]
     ];
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function($model){
+            $model->fullname = (string) rtrim($model->lastname).', '.$model->name;
+        });
+    }
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');

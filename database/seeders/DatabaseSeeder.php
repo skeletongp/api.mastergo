@@ -32,23 +32,92 @@ class DatabaseSeeder extends Seeder
             'path' => 'https://pbs.twimg.com/profile_images/1706139939/image_400x400.jpg',
         ]);
 
-        $store->units()->create([
-            'name' => 'Unidad',
-            'symbol' => 'UND'
+        $unit = $store->units()->create([
+            'name' => 'Libra',
+            'symbol' => 'Lb'
         ]);
-        $store->taxes()->create([
+       $tax= $store->taxes()->create([
             'name' => 'ITBIS',
             'rate' => 0.18
         ]);
-
-
+        $products = [
+            [
+                'name' => 'Chuleta ahumada',
+                'description' => '<p><b>Chuleta</b> de cerdo precocida</p>'
+            ],
+            [
+                'name' => 'Costillitas',
+                'description' => '<p><b>Costillas</b> de cerdo </p>'
+            ],
+            [
+                'name' => 'Longaniza',
+                'description' => '<p><b>Longaniza</b> de cerdo con picante </p>'
+            ],
+            [
+                'name' => 'Masita',
+                'description' => '<p><b>Masita</b> de cerdo con picante </p>'
+            ],
+            [
+                'name' => 'Tocineta',
+                'description' => '<p><b>Tocineta</b> de cerdo </p>'
+            ],
+            [
+                'name' => 'Pinguilín',
+                'description' => '<p><b>Pinguilín</b> de cerdo </p>'
+            ],
+            [
+                'name' => 'Muslo',
+                'description' => '<p><b>Muslo</b> de cerdo </p>'
+            ],
+            [
+                'name' => 'Derivados de la barrigada',
+                'description' => '<p><b>Barrigada</b> de cerdo </p>'
+            ],
+            [
+                'name' => 'Bistec de res',
+                'description' => '<p>Bistec de red artesanal </p>'
+            ],
+            [
+                'name' => 'Filete de res',
+                'description' => '<p>Filete de red artesanal </p>'
+            ],
+            [
+                'name' => 'Tocineta de res',
+                'description' => '<p>Tocineta de red artesanal </p>'
+            ],
+        ];
+        
         $data = [
             'name' => $store->name . ' | Sede Principal',
             'phone' => $store->phone,
-
+            
         ];
         $store->places()->create($data);
+        $provider = $store->providers()->create([
+            'name' => 'Proveedor',
+            'lastname' => 'Genérico ',
+            'email' => 'pgenerico@ahumadosh.com',
+            'address' => 'Sin Dirección',
+            'phone' => '8098765432',
+            'RNC' => '00000000',
+            'limit' => 0,
+        ]);
+        foreach($products as $prod){
+            $product=$store->products()->create($prod);
+            $product->taxes()->sync($tax);
+            $price=rand(41,54);
+            $cost=rand(30,39);
+            $product->units()->attach($unit,
+            [
+                'place_id'=>1,
+                'cost'=>$cost,
+                'price'=>$price,
+                'margin'=>($price/$cost)-1,
+                'stock'=>rand(7,19)
 
+            ]);
+            $product->providers()->attach($provider);
+        };
         $user = $store->users()->create([
             'name' => 'Ismael',
             'lastname' => 'Contreras ',
@@ -59,7 +128,16 @@ class DatabaseSeeder extends Seeder
             'place_id' => $store->places()->first()->id
         ]);
 
-
+        $client = $store->clients()->create([
+            'name' => 'Cliente',
+            'lastname' => 'Genérico ',
+            'email' => 'generico@ahumadosh.com',
+            'address' => 'Sin Dirección',
+            'phone' => '8098765432',
+            'RNC' => '00000000',
+            'limit' => 5750,
+        ]);
+       
         $user->image()->create([
             'path' => 'https://definicion.de/wp-content/uploads/2016/02/avatar.jpg',
         ]);

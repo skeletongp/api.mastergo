@@ -14,4 +14,8 @@ class InvoiceController extends Controller
     {
         return view('pages.invoices.create');
     }
+    public function orders()
+    {
+        return view('pages.invoices.orders');
+    }
 }

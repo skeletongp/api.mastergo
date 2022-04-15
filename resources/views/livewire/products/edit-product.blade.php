@@ -8,8 +8,22 @@
             <div class="w-full" wire:ignore>
                 <textarea wire:model.defer="product.description" id="editor"></textarea>
             </div>
-            <div class="flex justify-end">
-                <x-button>
+            <div class="  pb-6 flex items-end space-x-3">
+                <div class="w-full">
+                    <label for="photo{{ $product->id }}" class="flex items-center space-x-4 pb-2 cursor-pointer">
+                        <span class="fas fa-image text-xl"></span>
+                        <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Foto del producto</span>
+                        <input wire:model="photo" type="file" class="hidden" name="photo"
+                            id="photo{{ $product->id }}" accept="image/png, image/gif, image/jpeg">
+                    </label>
+                    <x-input-error for="photo"></x-input-error>
+                </div>
+                <div class="w-[3rem] h-[3rem] rounded-full bg-center bg-cover" style="background-image: url({{$photo?$photo->temporaryUrl() : $product->photo}})">
+
+                </div>
+            </div>
+            <div class="flex justify-end"  >
+                <x-button wire:loading.attr="disabled">
                     Actualizar
                 </x-button>
             </div>

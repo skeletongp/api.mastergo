@@ -21,7 +21,9 @@ class Recurso extends Model
         'cost',
         'store_id',
         'place_id',
-        'unit_id'
+        'unit_id',
+        'provider_id',
+
     ];  
     public static function boot()
     {

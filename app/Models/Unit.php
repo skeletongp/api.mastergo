@@ -29,6 +29,12 @@ class Unit extends Model
             set: fn($value)=>strtoupper($value)
         );
     }
+    public function name() : Attribute
+    {
+        return new Attribute(
+            set: fn($value)=>ucfirst(strtolower($value))
+        );
+    }
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_place_units')->withPivot('price','stock','cost','id');

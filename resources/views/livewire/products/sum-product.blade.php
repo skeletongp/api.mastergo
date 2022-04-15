@@ -1,8 +1,8 @@
 <div class="max-w-4xl shadow-xl p-4">
     <form action="" wire:submit.prevent="addProduct">
         <div class="flex space-x-4 items-end pt-8 relative">
-            <div class="w-3/6" wire:ignore>
-                <x-select class="selectProduct"  wire:model.defer="form.product_id">
+            <div class="w-3/6" >
+                <x-select class="selectProduct" wire:model.defer="form.product_id">
                     <option value=""></option>
                     @foreach ($products as $id => $product)
                         <option value="{{ $id }}">{{ $product }}</option>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="flex justify-end mt-4">
                     <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
-                    wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
+                        wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
                 </div>
             </div>
         @endif
@@ -108,6 +108,27 @@
                 $('.selectMedida').on('change', function(e) {
                     var data = $(this).select2("val");
                     @this.set('form.unit', data);
+                });
+            });
+            Livewire.hook('element.updated', function() {
+                $(document).ready(function() {
+                    $('.selectProduct').select2({
+                        placeholder: "Seleccione un producto",
+                        allowClear: true
+                    });
+                    $('.selectProduct').on('change', function(e) {
+                        var data = $(this).select2("val");
+                        @this.set('form.product_id', data);
+                        @this.emit('getUnits');
+                    });
+                    $('.selectMedida').select2({
+                        placeholder: "Indique la medida",
+                        allowClear: true
+                    });
+                    $('.selectMedida').on('change', function(e) {
+                        var data = $(this).select2("val");
+                        @this.set('form.unit', data);
+                    });
                 });
             });
         </script>

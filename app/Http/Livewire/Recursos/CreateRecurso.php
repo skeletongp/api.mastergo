@@ -6,20 +6,22 @@ use Livewire\Component;
 
 class CreateRecurso extends Component
 {
-    public $form, $units;
+    public $form, $units, $providers;
     public function render()
     {
         $this->units=auth()->user()->store->units->pluck('name','id');
+        $this->providers=auth()->user()->store->providers->pluck('fullname','id');
         return view('livewire.recursos.create-recurso');
     }
 
     protected $rules = [
-        'form.name' => 'required|string|min:7|max:50',
+        'form.name' => 'required|string|min:5|max:50',
         'form.description' => 'required|string',
         'form.cost' => 'required|numeric|min:1',
         'form.cant' => 'required|numeric|min:1',
         'form.unit_id' => 'required|numeric|exists:units,id',
         'form.place_id' => 'required|numeric|exists:places,id',
+        'form.provider_id' => 'required|numeric|exists:places,id',
     ];
 
     public function createRecurso()

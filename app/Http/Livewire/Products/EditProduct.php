@@ -6,12 +6,13 @@ use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditProduct extends Component
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests, WithFileUploads;
     public Product $product;
-    public $units, $unit;
+    public $units, $unit, $photo, $photo_path;
     public $taxes, $taxSelected = [];
 
     protected $listeners = ['reloadEditProduct'];
@@ -40,6 +41,7 @@ class EditProduct extends Component
     protected $rules = [
         'product.name' => 'required',
         'product.description' => 'required',
+        'photo'=>'max:2048'
 
     ];
     protected $rules2 = [
@@ -50,6 +52,11 @@ class EditProduct extends Component
     public function updateProduct()
     {
         $this->validate();
+        if ($this->photo_path) {
+            $this->product->image()->updateOrCreate(['imageable_id'=>$this->product->id],[
+                'path'=>$this->photo_path
+            ]);
+        }
         $this->product->save();
         $this->emit('showAlert', 'Producto actualizado correctamente', 'success');
     }
@@ -90,7 +97,12 @@ class EditProduct extends Component
         $this->emit('showAlert', 'No se puede eliminar la única medida registrada', 'error');
         return;
     }
-
+    public function updatedPhoto()
+    {
+        $ext = pathinfo($this->photo->getFileName(), PATHINFO_EXTENSION);
+        $photo = $this->photo->storeAs('/productos', date('Y_m_d_H_i_s') . '.' . $ext);
+        $this->photo_path = asset("storage/{$photo}");
+    }
     public function reloadEditProduct()
     {
         $this->redirect(url()->previous());

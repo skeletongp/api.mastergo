@@ -26,17 +26,19 @@ class TableRecurso extends LivewireDatatable
     public function columns()
     {
         $canDelete = auth()->user()->hasPermissionTo('Borrar Recursos');
+        $canEdit = auth()->user()->hasPermissionTo('Editar Recursos');
         return [
+            Column::checkbox(),
             Column::callback(['id','uid'], function($id){
                 return view('components.view', ['url'=>route('recursos.show',$id)]);
             }),
-            Column::name('name')->label('Nombre')->searchable(),
+            Column::name('name')->label('Nombre')->searchable()->editable($canEdit),
             Column::name('description')->label('Descripción')->searchable(),
             Column::name('units.name')->label('Medida'),
-            Column::name('cant')->label('Cantidad')->searchable(),
+            Column::name('cant')->label('Cantidad')->searchable()->name('cant')->editable($canEdit),
             Column::callback('cost', function ($cost) {
                 return '$' . Universal::formatNumber($cost);
-            })->label('Costo')->searchable(),
+            })->label('Costo')->searchable()->name('cost')->editable(),
             Column::callback(['cant','cost'], function($cant, $cost){
                 return '$'.Universal::formatNumber($cant*$cost);
             })->label('Total'),

@@ -22,7 +22,6 @@ class Place extends Model
         });
     }
 
-    
     function user()
     {
         return $this->belongsTo(User::class);
@@ -42,5 +41,9 @@ class Place extends Model
     public function procesos()
     {
         return $this->hasMany(Proceso::class);
+    }
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

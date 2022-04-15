@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\UserEvent;
+use App\Observers\UserObserver;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +22,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes;
 
    
+
     protected $fillable = [
         'name',
         'lastname',
@@ -29,6 +32,7 @@ class User extends Authenticatable
         'phone',
         'avatar',
         'store_id',
+        'place_id',
     ];
     protected $searchable = [
         'columns' => [
@@ -48,9 +52,7 @@ class User extends Authenticatable
     public static function boot()
     {
         parent::boot();
-        self::creating(function ($model) {
-            $model->uid = (string) Uuid::uuid4();
-        });
+        self::observe(new UserObserver);
     }
     /**
      * The attributes that should be hidden for serialization.
@@ -70,12 +72,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function fullname(): Attribute
-    {
-        return new Attribute(
-            get: fn () => $this->name . ' ' . $this->lastname
-        );
-    }
+
     public function password(): Attribute
     {
         return new Attribute(
@@ -90,7 +87,13 @@ class User extends Authenticatable
     public function avatar(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
+            get: fn () => $this->image ? $this->image->path : env('NO_IMAGE')
+        );
+    }
+    public function name(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => $value
         );
     }
 
@@ -99,15 +102,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Store::class, 'store_users');
     }
 
-   
+
     public function getStoreAttribute()
     {
-        $store=Cache::get('store_'.$this->id);
-        if (!is_null($store) ) {
+        $store = Cache::get('store_' . $this->id);
+        if (!is_null($store)) {
             return $store;
         }
-        $store=$this->stores()->where('stores.id', $this->place_id)->first();
-        Cache::put('store_'.$this->id,$store);
+        $store = $this->stores()->where('stores.id', $this->place_id)->first();
+        Cache::put('store_' . $this->id, $store);
         return $store;
     }
     public function getPlacesAttribute()
@@ -117,13 +120,12 @@ class User extends Authenticatable
 
     public function getPlaceAttribute()
     {
-        $place=Cache::get('place_'.$this->id);
-        if (!is_null($place) ) {
+        $place = Cache::get('place_' . $this->id);
+        if (!is_null($place)) {
             return $place;
         }
-        $place=$this->store->places()->first();
+        $place = $this->store->places()->first();
+        Cache::put('place_' . $this->id, $place);
         return $place;
     }
-    
-   
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type', array_keys(Invoice::TYPES));
             $table->string('prefix');
             $table->string('number');
+            $table->string('ncf');
             $table->enum('status',['disponible','usado','anulado']);
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('client_id')->nullable()->constrained();

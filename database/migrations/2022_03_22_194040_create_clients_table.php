@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',50)->comment('Primer nombre del cliente');
             $table->string('lastname',75)->comment('Apellidos');
+            $table->string('fullname',75)->comment('Nombre y Apellidos');
             $table->string('email',100)->unique();
             $table->string('address',255)->comment('Dirección del cliente');
             $table->string('phone',25);

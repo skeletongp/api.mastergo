@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 use Ramsey\Uuid\Uuid;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, SearchableTrait;
 
 
     protected $fillable=[
@@ -20,7 +21,12 @@ class Product extends Model
         'description',
         'store_id',
     ];
-
+    protected $searchable = [
+        'columns' => [
+            'name' => 10,
+            'description' => 5,
+        ]
+    ];
     public static function boot()
     {
         parent::boot();
@@ -41,7 +47,7 @@ class Product extends Model
 
     public function units()
     {
-        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price','stock','cost');
+        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('id','price','stock','cost');
     }
 
     public function places()
@@ -98,6 +104,10 @@ class Product extends Model
     public function scopeProcunit($query, $proceso_id)
     {
         return $this->procunits()->where('proceso_id', $proceso_id)->first();
+    }
+    public function providers()
+    {
+        return $this->belongsToMany(Provider::class, 'product_providers');
     }
     
     

@@ -8,11 +8,12 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use Mediconesystems\LivewireDatatables\Traits\CanPinRecords;
 use Spatie\Permission\Models\Role;
 
 class TableUser extends LivewireDatatable
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests, CanPinRecords;
     public $exportable = true;
     public $name = "Tabla Usuarios";
     public  $hideable = "select";
@@ -29,9 +30,11 @@ class TableUser extends LivewireDatatable
     {
         $canEdit = auth()->user()->hasPermissionTo('Editar Usuarios');
         return [
+            Column::checkbox(),
             NumberColumn::name('id')->defaultSort('asc'),
-            Column::name('name')->label('Nombre')->searchable()->editable($canEdit),
-            Column::name('lastname')->label('Apellido')->searchable()->editable($canEdit),
+            Column::name('fullname')->label('Nombre Completo')->searchable(),
+            Column::name('name')->label('Nombre')->searchable()->editable($canEdit)->hide(),
+            Column::name('lastname')->label('Apellido')->searchable()->editable($canEdit)->hide(),
             Column::name('email')->label('Correo Electrónico')->searchable()->editable($canEdit),
             Column::name('phone')->label('Teléfono')->searchable()->editable($canEdit),
             Column::name('roles.name')->label('Rol')->searchable(),
@@ -53,4 +56,6 @@ class TableUser extends LivewireDatatable
         return
             'whitespace-normal text-base text-gray-900 px-6 py-2';
     }
+   
+    
 }
