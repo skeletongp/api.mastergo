@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'default_time_format' => 'H:i',
+    'default_time_format' => 'H:i A',
     'default_date_format' => 'd/m/Y',
 
     /*

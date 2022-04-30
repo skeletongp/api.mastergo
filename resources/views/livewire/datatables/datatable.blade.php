@@ -1,6 +1,6 @@
 <div >
     @includeIf($beforeTableSlot)
-    <div class="relative" style="min-height: 48rem">
+    <div class="relative" >
         <div class="flex items-center justify-between mb-1">
             <div class="flex items-center h-10">
                 @if($this->searchableColumns()->count())
@@ -35,9 +35,8 @@
 
                 @if(count($this->massActionsOptions))
                     <div class="flex items-center justify-center space-x-1">
-                        <label for="datatables_mass_actions">{{ __('With selected') }}:</label>
-                        <select wire:model="massActionOption" class="px-3 text-xs font-medium tracking-wider uppercase bg-white border border-green-400 space-x-2 rounded-md leading-4 focus:outline-none" id="datatables_mass_actions">
-                            <option value="">{{ __('Choose...') }}</option>
+                        <select wire:change="massActionOptionHandler" wire:model="massActionOption" class="px-3 text-xs font-medium tracking-wider uppercase bg-white border border-green-400 space-x-2 rounded-md leading-4 focus:outline-none" id="datatables_mass_actions">
+                            <option value="">{{ __('Opciones...') }}</option>
                             @foreach($this->massActionsOptions as $group => $items)
                                 @if(!$group)
                                     @foreach($items as $item)
@@ -52,10 +51,10 @@
                                 @endif
                             @endforeach
                         </select>
-                        <button
+                       {{--  <button
                             wire:click="massActionOptionHandler"
                             class="flex items-center px-4 py-2 text-xs font-medium tracking-wider text-green-500 uppercase bg-white border border-green-400 rounded-md leading-4 hover:bg-green-200 focus:outline-none" type="submit" title="Submit"
-                        >Go</button>
+                        >Ir</button> --}}
                     </div>
                 @endif
 
@@ -151,7 +150,7 @@
                             @foreach($this->columns as $column)
                                 @if($column['hidden'])
                                     @if($hideable === 'inline')
-                                        <div class="table-cell w-5 @unless($column['wrappable']) whitespace-nowrap truncate @endunless overflow-hidden align-middle"></div>
+                                        <div class="table-cell w-5 @unless($column['wrappable']) whitespace-nowrap truncate @endunless overflow-hidden align-middle align-middle"></div>
                                     @endif
                                 @elseif($column['type'] === 'checkbox')
                                     @include('datatables::checkbox', ['value' => $row->checkbox_attribute])
@@ -159,7 +158,7 @@
                                     @include('datatables::label')
                                 @else
 
-                                    <div class="table-cell px-6 py-2 @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
+                                    <div class="table-cell px-6 py-2 @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
                                         {!! $row->{$column['name']} !!}
                                     </div>
                                 @endif
@@ -173,7 +172,7 @@
                                 @unless($column['hidden'])
                                     @if ($column['summary'])
                                         <div class="table-cell px-6 py-2 @unless ($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
-                                            {{ $this->summarize($column['name']) }}
+                                            {!! $this->summarize($column['name']) !!}
                                         </div>
                                     @else
                                         <div class="table-cell"></div>

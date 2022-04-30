@@ -13,7 +13,7 @@ use Spatie\Permission\Models\Role;
 
 class TableUser extends LivewireDatatable
 {
-    use AuthorizesRequests, CanPinRecords;
+    use AuthorizesRequests;
     public $exportable = true;
     public $name = "Tabla Usuarios";
     public  $hideable = "select";
@@ -30,7 +30,6 @@ class TableUser extends LivewireDatatable
     {
         $canEdit = auth()->user()->hasPermissionTo('Editar Usuarios');
         return [
-            Column::checkbox(),
             NumberColumn::name('id')->defaultSort('asc'),
             Column::name('fullname')->label('Nombre Completo')->searchable(),
             Column::name('name')->label('Nombre')->searchable()->editable($canEdit)->hide(),

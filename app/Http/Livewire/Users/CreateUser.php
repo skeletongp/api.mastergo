@@ -48,6 +48,7 @@ class CreateUser extends Component
             ]);
         }
         $this->assignStore($user);
+        setContable($user, '102');
         $this->reset();
         $this->emit('refreshLivewireDatatable');
     }

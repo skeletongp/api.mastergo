@@ -1,5 +1,5 @@
 <div x-data="{ open: {{ isset($open) && $open ? 'true' : 'false' }}, working: false }" x-cloak wire:key="delete-{{ $value }}">
-    <span x-on:click="open = true">
+    <span x-on:click="open = true" class="flex justify-center">
         <button class="p-1 text-red-600 rounded hover:bg-red-600 hover:text-white"><x-icons.trash /></button>
     </span>
 

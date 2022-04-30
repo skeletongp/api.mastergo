@@ -10,7 +10,7 @@
                     <li class="font-bold uppercase text-blue-200 ">Usuarios</li>
                     <hr>
                     @foreach ($users as $user)
-                    <x-toast icon="fas fa-user text-blue-500" id="t{{ $user->id }}">
+                    <x-toast icon="fas fa-user text-blue-500" id="u{{ $user->id }}">
                         <x-slot name="text">
                             <a href="">{{ $user->name }}</a>
                         </x-slot>
@@ -23,9 +23,24 @@
                     <li class="font-bold uppercase text-blue-200 ">Clientes</li>
                     <hr>
                     @foreach ($clients as $client)
-                        <x-toast icon="fas fa-user text-blue-500" id="t{{ $client->id }}">
+                        <x-toast icon="fas fa-user text-blue-500" id="c{{ $client->id }}">
                             <x-slot name="text">
                                 <a href="">{{ $client->name }}</a>
+                            </x-slot>
+                        </x-toast>
+                    @endforeach
+                </ul>
+            @endif
+            @if ($products->count() && $search)
+                <ul class="py-4 space-y-2 ">
+                    <li class="font-bold uppercase text-blue-200 ">Productos</li>
+                    <hr>
+                    @foreach ($products as $product)
+                        <x-toast  id="p{{ $product->id }}">
+                            <x-slot name="text">
+                                <a href="{{route('products.show', $product)}}" title=" {{ $product->name.' '.$product->units()->first()->stock.' '.$product->units()->first()->symbol }}">
+                                    {{ $product->name.' '.$product->units()->first()->stock.' '.$product->units()->first()->symbol }}
+                                </a>
                             </x-slot>
                         </x-toast>
                     @endforeach

@@ -22,11 +22,11 @@ class ProductDetail extends Component
         $wTax=[];
         foreach($price as $in=> $priz){
           
-            $price[$in]='$'.Universal::formatNumber($priz);
+            $price[$in]='$'.formatNumber($priz);
             foreach ($taxes as $ind=> $tax) {
                 $wTax[$ind]=$priz*$tax;
             }
-            $price[$in]=$price[$in].'+$'.Universal::formatNumber((array_sum($wTax)));
+            $price[$in]=$price[$in].'+$'.formatNumber((array_sum($wTax)));
         }
         return $price;
     }

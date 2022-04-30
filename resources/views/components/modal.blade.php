@@ -13,7 +13,7 @@
         x-transition:enter-start="-translate-y-full opacity-0" x-transition:enter-end="opacity-100 -translate-y-0"
         x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 -translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-full" @click.away="open = false"
-        class="w-full z-50 flex justify-center items-center  h-full md:inset-0 {{$fitVerticalContainer?'':'min-h-[54rem]'}} mx-auto absolute " >
+        class="w-full z-50 flex justify-center items-center bg-gray-900 bg-opacity-5  h-full md:inset-0 {{$fitVerticalContainer?'':'min-h-screen'}} mx-auto absolute " style="z-index: 1800">
 
         {{-- Modal Container --}}
         <div

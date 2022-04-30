@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -36,16 +37,39 @@ class Invoice extends Model
     {
         return $this->morphMany(Detail::class, 'detailable');
     }
+   
     public function store()
     {
         return $this->belongsTo(Store::class);
     }
     public function client()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Client::class);
+    }
+    public function comprobante()
+    {
+        return $this->belongsTo(Comprobante::class);
     }
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+    public function contable()
+    {
+        return $this->belongsTo(User::class, 'contable_id');
+    }
+    public function pdfs()
+    {
+        return $this->morphMany(Filepdf::class, 'fileable');
+    }
+    public function incomes()
+    {
+        return $this->morphMany(Income::class, 'incomeable');
+    }
+
+    public function taxes()
+    {
+        return $this->belongsToMany(Tax::class, 'invoice_taxes')->withPivot('amount');
+    }
+   
 }

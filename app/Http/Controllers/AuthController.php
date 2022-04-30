@@ -23,6 +23,7 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt($request->only('username', 'password'), false)) {
             $request->session()->regenerate();
+            session()->put('place_id',auth()->user()->place->id);
             if (!Cache::has('scopes_' . auth()->user()->store->id)) {
                 Cache::put(
                     'scopes_' . auth()->user()->store->id,
@@ -41,6 +42,7 @@ class AuthController extends Controller
             Cache::forget('store' . auth()->user()->id);
             Auth::logout();
         }
+        session()->flush();
         Session::flash('msg', 'success| La sesión ha sido cerrada');
         return redirect()->route('login');
     }

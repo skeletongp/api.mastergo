@@ -173,13 +173,13 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        
+        Milon\Barcode\BarcodeServiceProvider::class,
     ],
 
     /*
@@ -194,10 +194,11 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Universal'=> App\Http\Helper\Universal::class,
         'Role'=> Spatie\Permission\Models\Role::class,
         'Permission'=> Spatie\Permission\Models\Permission::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
     ])->toArray(),
 
 ];

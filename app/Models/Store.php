@@ -55,6 +55,7 @@ class Store extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+   
     public function logo(): Attribute
     {
         return new Attribute(
@@ -100,5 +101,9 @@ class Store extends Model
     public function providers()
     {
         return $this->hasMany(Provider::class);
+    }
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Invoices;
 
+use App\Events\NewInvoice;
 use App\Http\Helper\Universal;
 use App\Http\Traits\Livewire\WithPagination;
 use App\Models\Detail;
@@ -15,31 +16,33 @@ use Livewire\Component;
 class CreateInvoice extends Component
 {
     use WithPagination;
-    public $form, $maxCant = 0, $search, $open=false;
+    public $form, $maxCant = 0, $search, $open=false, $scanned;
     public $details = [];
 
     public $producto;
-
     public  $unit;
-
     protected $listeners = ['selProducto', 'addItems'];
 
-    protected $queryString = ['search'];
+    protected $queryString = ['search','details'];
 
     function rules() {
         return  [
             'form.product_id' => 'numeric|required|exists:products,id',
-            'form.cant' => 'numeric|min:0.001|required|max:'.Universal::formatNumber($this->maxCant),
+            'form.cant' => 'numeric|min:0.001|required|max:'.formatNumber($this->maxCant),
             'form.price' => 'numeric|min:0.01|required',
             'form.cost' => 'numeric|min:0.01|required',
         ];
     }
 
-   
+    public function mount()
+    {
+        $this->form['cant']='0.000';
+    }
 
     public function render()
     {
-        $products = auth()->user()->store->products()->orderBY('name')->search($this->search)->with('units')->paginate(9);
+        $products = auth()->user()->store->products()->orderBY('name')->search($this->search)->with('units','image')->paginate(9);
+       
         return view('livewire.invoices.create-invoice', compact('products'));
     }
     public function updatedSearch()
@@ -87,7 +90,7 @@ class CreateInvoice extends Component
     {
         $this->producto = Product::where('id', $id)->first();
         $this->form['unit_id'] = $this->producto->units()->first()->pivot->id;
-        $this->updatedForm('', 'unit_id');
+        $this->updatedForm(' ', 'unit_id');
         $this->render();
     }
    
@@ -96,35 +99,36 @@ class CreateInvoice extends Component
         unset($this->details[$id]);
     }
 
-    public function updatedForm($val, $key)
+    public function updatedForm($value, $key)
     {
         switch ($key) {
             case 'unit_id':
                 $this->unit = $this->producto->units()->wherePivot('id', $this->form['unit_id'])->first();
-                $this->form['price'] = Universal::formatNumber($this->unit->pivot->price);
+                $this->form['price'] = str_replace(',','',formatNumber($this->unit->pivot->price));
                 $this->form['cost'] = $this->unit->pivot->cost;
-                $this->maxCant = Universal::formatNumber($this->unit->pivot->stock);
+                $this->maxCant = formatNumber($this->unit->pivot->stock);
                 break;
-            
             default:
                 # code...
                 break;
         }
     }
+   
     public function sendInvoice()
     {
-        //   dd(array_column($this->details, 'taxes'));
         $user = auth()->user();
         $invoice = $user->store->invoices()->create(
             [
-                'amount' => array_sum(array_column($this->details, 'total')),
+                'amount' => array_sum(array_column($this->details, 'subtotal')),
                 'discount' => 0,
-                'total' =>  array_sum(array_column($this->details, 'total')),
+                'total' =>  array_sum(array_column($this->details, 'subtotal')),
                 'payed' => 0,
-                'rest' =>  array_sum(array_column($this->details, 'total')),
+                'rest' =>  array_sum(array_column($this->details, 'subtotal')),
                 'efectivo' => 0,
                 'tarjeta' => 0,
+                'tax' => 0,
                 'transferencia' => 0,
+                'day' => date('Y-m-d'),
                 'seller_id' => $user->id,
                 'contable_id' => $user->id,
                 'place_id' => $user->place->id,
@@ -134,7 +138,7 @@ class CreateInvoice extends Component
             ]
         );
         $this->createDetails($invoice);
-        //$this->createPDF($invoice);
+        event(new NewInvoice($invoice));
 
         $this->reset('form', 'details', 'producto');
         $this->emit('showAlert', 'Factura enviada exitosamente', 'success');
@@ -150,7 +154,7 @@ class CreateInvoice extends Component
             $taxes = $detail['taxes'];
             $detail = Detail::create(Arr::except($detail, 'taxes'));
             $detail->taxes()->sync($taxes);
-            $detail->taxtotal = $detail->taxes->sum('rate') * $detail->total;
+            $detail->taxtotal = $detail->taxes->sum('rate') * $detail->subtotal;
             $detail->save();
             $this->restStock($detail['unit_id'], $detail['cant']);
         }
@@ -162,19 +166,17 @@ class CreateInvoice extends Component
         $unit->pivot->stock = $unit->stock - $cant;
         $unit->pivot->save();
     }
-    public function createPDF($invoice)
+    public function setFromScan()
     {
-        $data = [
-            'invoice' => $invoice,
-        ];
-        $pdf = PDF::loadView('pages.invoices.letter', $data);
-        $pdf2 = PDF::loadView('pages.invoices.thermal', $data);
-        file_put_contents('storage/invoices/' . $invoice->number . '-letter.pdf', $pdf->output());
-        file_put_contents('storage/invoices/' . $invoice->number . '-thermal.pdf', $pdf2->output());
-        $path = asset('storage/invoices/' . $invoice->number . '-letter.pdf');
-        $path2 = asset('storage/invoices/' . $invoice->number . '-thermal.pdf');
-        $invoice->pdfLetter = $path;
-        $invoice->pdfThermal = $path2;
-        $invoice->save();
+       $scanned=explode('.',substr($this->scanned, 1),4);
+       $this->selProducto($scanned[0]);
+       $this->form['product_id']=$scanned[0];
+       $this->form['unit_id']=$scanned[1];
+       $this->form['cant']=$scanned[2];
+       $this->form['cost']=$scanned[3];
+        $this->setProduct($this->form['product_id']);
+       $this->updatedForm(13, 'unit_id');
+       $this->addItems();
     }
+   
 }

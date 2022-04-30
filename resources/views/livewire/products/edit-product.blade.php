@@ -1,4 +1,5 @@
 <div class="w-full flex space-x-4 items-start">
+    
     <div class="w-full h-full shadow-xl p-4 ">
         <form wire:submit.prevent="updateProduct" class="space-y-4 max-w-xl w-full ">
             <h1 class="text-center pb-4 uppercase font-bold text-xl">Información del producto</h1>
@@ -29,12 +30,12 @@
             </div>
         </form>
     </div>
-
+    
     <div class="w-full h-full shadow-xl p-4">
         @can('Cambiar Precios')
         <livewire:products.product-new-price :product="$product" />
      @endcan    
-        <div class="py-4">
+     <div class="py-4">
             <hr>
         </div>
         {{-- Product Price --}}
@@ -54,7 +55,7 @@
                             <div class="max-w-xs">
                                 <x-input label="Precio" type="number" id="price{{ $unit->id }}"
                                     wire:model.defer="unit.{{ $unit->symbol}}.price"></x-input>
-                                <x-input-error for="unit.{{ $unit->symbol}}.price"></x-input-error>
+                                    <x-input-error for="unit.{{ $unit->symbol}}.price"></x-input-error>
                             </div>
                             <div class="max-w-xs">
                                 <x-button>
@@ -118,6 +119,6 @@
                     console.error(error);
                 });
 
-        });
+            });
     </script>
 @endpush

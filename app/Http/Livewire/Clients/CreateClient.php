@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Clients;
 
 use App\Models\Client;
+use App\Models\CountMain;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -41,6 +42,8 @@ class CreateClient extends Component
                 'path' => $this->photo_path
             ]);
         }
+        $client->name=$client->fullname;
+        
         $this->reset();
         $this->emit('showAlert', 'Cliente registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
@@ -50,5 +53,7 @@ class CreateClient extends Component
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->avatar->storeAs('clients', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
+
     }
+     
 }

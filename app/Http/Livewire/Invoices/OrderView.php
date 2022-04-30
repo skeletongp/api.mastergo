@@ -14,6 +14,7 @@ class OrderView extends LivewireDatatable
 {
     use AuthorizesRequests;
 
+   
     public function builder()
     {
         $invoices = auth()->user()->place->invoices()->with('seller','details','details.taxes')
@@ -27,7 +28,7 @@ class OrderView extends LivewireDatatable
         return [
             Column::name('number')->label("Nº. Pedido"),
             Column::callback('amount', function ($amount) {
-                return '$' . Universal::formatNumber($amount);
+                return '$' . formatNumber($amount);
             })->label("Subtotal"),
             Column::name('seller.name')->callback(['uid', 'day'], function ($uid) use ($invoices) {
                 $result = $this->arrayFind($invoices, 'uid', $uid);

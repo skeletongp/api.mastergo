@@ -1,6 +1,6 @@
-<aside class=" h-full w-64 hidden lg:block" aria-label="Sidebar">
+<aside class=" h-full  w-64 hidden lg:block " aria-label="Sidebar">
     <div class="h-full overflow-y-auto py-4 px-3 pl-4 bg-gray-50 rounded dark:bg-gray-800">
-        <ul class=" h-full space-y-0">
+        <ul class=" h-full space-y-0 min-h-[50rem]">
             <li>
                 <x-dropdown>
                     <x-slot name="trigger">
@@ -31,51 +31,55 @@
                 activeRoute="settings.*" />
             <div class="w-full pt-4"></div>
 
-            <x-dropitem text="Contactos" icon="far fa-users" :routes="['users.*', 'clients.*','providers.*']">
+            <x-dropitem text="Contactos" icon="far fa-users" :routes="['users.*', 'clients.*', 'providers.*']">
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-user-tie fa-lg' text='Usuarios'
-                    activeRoute="users.*" scope="Usuarios"/>
+                    activeRoute="users.*" scope="Usuarios" />
                 <x-side-link routeName='clients.index' icon='far w-10 text-center fa-users fa-lg' text='Clientes'
-                    activeRoute="clients.*" scope="Clientes"/>
+                    activeRoute="clients.*" scope="Clientes" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-user-tag fa-lg' text='Proveedores'
-                    activeRoute="home.*" scope="Proveedores"/>
+                    activeRoute="home.*" scope="Proveedores" />
             </x-dropitem>
 
-            <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*','orders']">
+            <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders']">
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
                     text='Facturas' activeRoute="invoices.*" scope="Facturas" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
-                    text='Cotizaciones' activeRoute="home.*" scope="Cotizaciones"/>
+                    text='Cotizaciones' activeRoute="home.*" scope="Cotizaciones" />
                 <x-side-link routeName='orders' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'
-                    activeRoute="orders" scope="Pedidos"/>
+                    activeRoute="orders" scope="Pedidos" />
             </x-dropitem>
 
-            <x-dropitem text="Inventario" icon=" far fa-cabinet-filing" :routes="['products.*','recursos.*','Procesos.*']">
+            <x-dropitem text="Inventario" icon=" far fa-cabinet-filing" :routes="['products.*', 'recursos.*', 'Procesos.*']">
                 <x-side-link routeName='products.index' icon='far w-10 text-center fa-layer-group fa-lg'
                     text='Productos' activeRoute="products.*" scope="Productos" />
-                <x-side-link routeName='recursos.index' icon='far w-10 text-center fa-warehouse-alt fa-lg' text='Recursos'
-                    activeRoute="recursos.*" scope="Recursos"/>
+                <x-side-link routeName='recursos.index' icon='far w-10 text-center fa-warehouse-alt fa-lg'
+                    text='Recursos' activeRoute="recursos.*" scope="Recursos" />
                 <x-side-link routeName='procesos.index' icon='far w-10 text-center fa-copy fa-lg' text='Procesos'
                     activeRoute="procesos.*" scope="Procesos" />
             </x-dropitem>
 
             <x-dropitem text="Informes" icon="far fa-file-alt">
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-chart-pie fa-lg'
-                    text='Estadísticas' activeRoute="invoices.*" scope="Estadísticas"/>
+                    text='Estadísticas' activeRoute="invoices.*" scope="Estadísticas" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-chart-line fa-lg'
-                    text='Reportes' activeRoute="home.*" scope="Reportes"/>
+                    text='Reportes' activeRoute="home.*" scope="Reportes" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-download fa-lg' text='Exportaciones'
-                    activeRoute="home.*" scope="Exportaciones"/>
+                    activeRoute="home.*" scope="Reportes" />
+                <x-side-link routeName='reports.general_daily' icon='far w-10 text-center fa-download fa-lg' text='Diario General'
+                    activeRoute="home.*" scope="Reportes" />
+                    <x-side-link routeName='reports.general_mayor' icon='far w-10 text-center fa-download fa-lg' text='Balanza General'
+                    activeRoute="home.*" scope="Reportes" />
             </x-dropitem>
 
             <x-dropitem text="Finanzas" icon="far fa-wallet">
                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-chart-line fa-lg' text='Ingresos'
-                    activeRoute="invoices.*" scope="Ingresos"/>
+                    activeRoute="invoices.*" scope="Ingresos" />
                 <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Gastos'
-                    activeRoute="home.*" scope="Gastos"/>
+                    activeRoute="home.*" scope="Gastos" />
             </x-dropitem>
 
             <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
-            activeRoute="home.*"/>
+                activeRoute="home.*" />
         </ul>
     </div>
 </aside>

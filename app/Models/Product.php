@@ -29,9 +29,14 @@ class Product extends Model
     ];
     public static function boot()
     {
+       
         parent::boot();
         self::creating(function ($model) {
+            $store=optional(auth()->user())->store?:Store::first();
+            $num=$store->products()->count()+1;
+            $code=str_pad($num,3,'0', STR_PAD_LEFT);
             $model->uid = (string) Uuid::uuid4();
+            $model->code=$code;
         });
     }
 
@@ -101,9 +106,10 @@ class Product extends Model
         ->withTimestamps();
     }
 
-    public function scopeProcunit($query, $proceso_id)
+    public function scopeProcunit($query, $unit_id)
     {
-        return $this->procunits()->where('proceso_id', $proceso_id)->first();
+        //dd($this->procunits);
+        return $this->procunits()->where('unit_id', $unit_id)->first();
     }
     public function providers()
     {

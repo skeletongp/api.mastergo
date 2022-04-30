@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uid');
             $table->string('name')->comment('Identificador de la categoría');
-            $table->string('descrption')->comment('Para entender su natureleza y facilitar las búsqueda');
+            $table->string('description')->comment('Para entender su natureleza y facilitar las búsqueda');
             $table->foreignId('store_id')->comment('Tienda a la que pertenece la categoría')->constrained();
             $table->softDeletes();
             $table->timestamps();

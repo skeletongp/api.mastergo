@@ -33,13 +33,11 @@ class TableClient extends LivewireDatatable
             Column::raw("CONCAT(clients.name,' ',clients.lastname) AS Nombre Completo")->searchable(),
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
             Column::callback(['limit'], function($limit){
-                return '$'. Universal::formatNumber($limit);
+                return '$'. formatNumber($limit);
             })->label('Crédito')->searchable()->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Documento')->searchable()->headerAlignCenter()->hide(),
-            Column::callback(['id', 'name'], function ($id, $name) {
-                return view('pages.clients.actions', ['client'=>Client::where('id', $id)->first()]);
-            })->label('Edición')->unsortable()->excludeFromExport()->unsortable()->headerAlignCenter(),
+            Column::name('created_at')->label('Acciones')->unsortable()->excludeFromExport()->unsortable()->headerAlignCenter(),
         ];
     }
 }

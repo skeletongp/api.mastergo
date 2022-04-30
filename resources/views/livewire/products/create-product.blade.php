@@ -41,7 +41,7 @@
                             <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen</span>
                             @if ($photo)
                                 <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                                    {{ Universal::formatNumber($photo->getSize() / 1024) }} KB</span>
+                                    {{ formatNumber($photo->getSize() / 1024) }} KB</span>
                             @endif
                             <input wire:model="photo" type="file" class="hidden" name="photo" id="photo"
                                 accept="image/png, image/gif, image/jpeg">
@@ -144,13 +144,13 @@
                                                 {{ $units[$uniSel['unit_id']] }}
                                             </th>
                                             <td class="px-6 py-2  cursor-pointer">
-                                                {{ Universal::formatNumber($uniSel['price']) }}
+                                                {{ formatNumber($uniSel['price']) }}
                                             </td>
                                             <td class="px-6 py-2  cursor-pointer">
-                                                {{ Universal::formatNumber($uniSel['cost']) }}
+                                                {{ formatNumber($uniSel['cost']) }}
                                             </td>
                                             <td class="px-6 py-2  cursor-pointer">
-                                                {{ Universal::formatNumber($uniSel['margin'] * 100) }}%
+                                                {{ formatNumber($uniSel['margin'] * 100) }}%
                                             </td>
                                             <td class="px-6 py-2">
                                                 <div class="flex space-x-4 w-max mx-auto cursor-pointer ">

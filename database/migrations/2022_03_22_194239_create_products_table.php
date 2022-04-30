@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uid');
             $table->string('name')->comment('Identificador en texto');
+            $table->string('code')->comment('Código de inventario del producto');
             $table->text('description')->comment('Detalles opcionales del producto, para facilitar su búsqueda')->nullable();
             $table->foreignId('store_id')->comment('Tienda a la que pertenece el producto')->constrained();
             $table->enum('type',['Producto','Servicio']);

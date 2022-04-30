@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'San Lorenzo de Los Minas, no. 70',
             'email' => 'ahumadoshs@gmail.com',
             'phone' => '8095086221',
+            'rnc'=>'132487524',
             'expires_at' => Carbon::now()->addMonths(3)
         ]);
         $store->image()->create([
@@ -92,7 +93,7 @@ class DatabaseSeeder extends Seeder
             'phone' => $store->phone,
             
         ];
-        $store->places()->create($data);
+        $place=$store->places()->create($data);
         $provider = $store->providers()->create([
             'name' => 'Proveedor',
             'lastname' => 'Genérico ',
@@ -105,15 +106,15 @@ class DatabaseSeeder extends Seeder
         foreach($products as $prod){
             $product=$store->products()->create($prod);
             $product->taxes()->sync($tax);
-            $price=rand(41,54);
-            $cost=rand(30,39);
+            $price=rand(75,125);
+            $cost=rand(39,75);
             $product->units()->attach($unit,
             [
                 'place_id'=>1,
                 'cost'=>$cost,
                 'price'=>$price,
                 'margin'=>($price/$cost)-1,
-                'stock'=>rand(7,19)
+                'stock'=>rand(15,45)
 
             ]);
             $product->providers()->attach($provider);
@@ -144,12 +145,25 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 RoleSeeder::class,
-                ScopeSeeder::class
+                ScopeSeeder::class,
+                CountMainSeeder::class,
             ]
         );
+        setContable($client, '101');
+        setContable($tax, '202', 'ITBIS por Pagar');
+        setContable($tax, '103', $tax->name.' por Cobrar');
         $user->assignRole('Super Admin');
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
+        setContable($place, '100','Efectivo en Caja', $place->id);
+        setContable($place, '100','Efectivo en Banco', $place->id);
+        setContable($place, '100','Efectivo en Cheques', $place->id);
+        setContable($place, '100','Otros Efectivos', $place->id);
+        setContable($place, '400','Ingresos por Ventas', $place->id);
+        setContable($place, '401','Descuento en Ventas', $place->id);
+        setContable($place, '401','Devolución en Ventas', $place->id);
+        setContable($place, '402','Otros Ingresos', $place->id);
+
         User::factory(400)->create()->each(function ($us) use ($store) {
             $num = rand(1, 250);
             $us->image()->create([

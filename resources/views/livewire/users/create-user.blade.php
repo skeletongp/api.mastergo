@@ -28,7 +28,7 @@
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-input label="Nombre de usuario" id="username" wire:model.defer="form.username" />
+                        <x-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.defer="form.username" />
                         <x-input-error for="form.username" />
                     </div>
                     <div class="w-full">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="  pb-6 flex items-end space-y-0 space-x-3">
                     <div class="w-full">
-                        <x-input label="No. Teléfono" id="phone" wire:model.defer="form.phone" />
+                        <x-input type="tel" label="No. Teléfono" id="phone" wire:model.defer="form.phone" />
                         <x-input-error for="form.phone" />
                     </div>
                     <div class="w-full pb-0">
@@ -73,7 +73,7 @@
                             <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen/Avatar</span>
                             @if ($avatar)
                                 <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                                    {{ Universal::formatNumber($avatar->getSize() / 1024) }} KB</span>
+                                    {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
                             @endif
                             <input wire:model="avatar" type="file" class="hidden" name="avatar" id="avatar"
                                 accept="image/png, image/gif, image/jpeg">

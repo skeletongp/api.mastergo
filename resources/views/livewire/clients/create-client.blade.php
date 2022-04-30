@@ -64,7 +64,7 @@
                             <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen/Avatar</span>
                             @if ($avatar)
                                 <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                                    {{ Universal::formatNumber($avatar->getSize() / 1024) }} KB</span>
+                                    {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
                             @endif
                             <input wire:model="avatar" type="file" class="hidden" name="avatar"
                                 id="client_avatar" accept="image/png, image/gif, image/jpeg">

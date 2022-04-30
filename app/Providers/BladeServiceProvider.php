@@ -31,6 +31,7 @@ class BladeServiceProvider extends ServiceProvider
                 $scopes=Cache::get('scopes_'.auth()->user()->store->id);
             } else {
                $scopes=auth()->user()->store->scope->pluck('name');
+               Cache::put('scopes_'.auth()->user()->store->id, $scopes);
             }
             if (!$name) {
                 return true;

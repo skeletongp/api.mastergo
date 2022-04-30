@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Products;
 
 use App\Models\Product;
+use App\Models\Store;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -15,6 +16,9 @@ class CreateProduct extends Component
     public  $unitSelected = [], $taxSelected = [], $placeSelected = [];
     public $unit_id, $unit_price, $unit_cost, $unit_margin;
     public $photo, $photo_path;
+    public $activeTab="infoproduct";
+
+    protected $queryString=['activeTab','unitSelected'];
 
     protected $rules = [
         'form.name' => 'required|string|max:35',
@@ -32,6 +36,10 @@ class CreateProduct extends Component
     ];
     public function mount()
     {
+        $store=optional(auth()->user())->store?:Store::first();
+        $num=$store->products()->count()+1;
+        $code=str_pad($num,3,'0', STR_PAD_LEFT);
+        $this->form['code']=$code;
         array_push($this->placeSelected, auth()->user()->place->id);
     }
     public function render()

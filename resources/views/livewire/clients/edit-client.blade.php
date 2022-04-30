@@ -11,24 +11,24 @@
         <form wire:submit.prevent="updateClient">
             <div class="  pb-6 flex items-end space-x-3">
                 <div class="w-full">
-                    <x-input label="Primer nombre" id="client.name" wire:model.defer="client.name" />
+                    <x-input label="Primer nombre" id="client.{{$client->id}}name" wire:model.defer="client.name" />
                     <x-input-error for="client.name" />
                 </div>
                 <div class="w-full">
-                    <x-input label="Apellidos" id="client.lastname" wire:model.defer="client.lastname" />
+                    <x-input label="Apellidos" id="client.{{$client->id}}lastname" wire:model.defer="client.lastname" />
                     <x-input-error for="client.lastname" />
                 </div>
             </div>
             <div class="  pb-6 flex items-end space-x-3">
                 <div class="w-full">
-                    <x-input label="Correo Electrónico" id="client.email" type="email"
+                    <x-input label="Correo Electrónico" id="client.{{$client->id}}email" type="email"
                         wire:model.defer="client.email" />
                     <x-input-error for="client.email" />
                 </div>
             </div>
             <div class="  pb-6 flex items-end space-x-3">
                 <div class="w-full">
-                    <x-input label="Dirección" id="client.address" wire:model.defer="client.address" />
+                    <x-input label="Dirección" id="client.{{$client->id}}address" wire:model.defer="client.address" />
                     <x-input-error for="client.address" />
                 </div>
 
@@ -36,21 +36,21 @@
            
             <div class="  pb-6 flex items-end space-x-3">
                 <div class="w-full">
-                    <x-input label="RNC/Cédula" id="client.RNC" type="number" wire:model.defer="client.RNC" />
+                    <x-input label="RNC/Cédula" id="client.{{$client->id}}RNC" type="number" wire:model.defer="client.RNC" />
                     <x-input-error for="client.RNC" />
                 </div>
                 @can('Asignar Créditos')
                     <div class="w-full">
-                        <x-input label="Crédito" type="number" id="client.limit" wire:model.defer="client.limit" />
+                        <x-input label="Crédito" type="number" id="client.{{$client->id}}limit" wire:model.defer="client.limit" />
                         <x-input-error for="client.limit" />
                     </div>
                 @else
-                    <input type="hidden" name="client.limit" wiere.model="client.limit" x-bind:value="0.00" id="client.limit">
+                    <input type="hidden" name="client.limit" wiere.model="client.limit" x-bind:value="0.00" id="client.{{$client->id}}limit">
                 @endcan
             </div>
             <div class="  pb-6 flex items-end space-y-0 space-x-3">
                 <div class="w-full">
-                    <x-input label="No. Teléfono" id="client.phone" wire:model.defer="client.phone" />
+                    <x-input label="No. Teléfono" id="client.{{$client->id}}phone" wire:model.defer="client.phone" />
                     <x-input-error for="client.phone" />
                 </div>
                 
@@ -62,7 +62,7 @@
                         <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen/Avatar</span>
                         @if ($avatar)
                             <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                                {{ Universal::formatNumber($avatar->getSize() / 1024) }} KB</span>
+                                {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
                         @endif
                         <input wire:model="avatar" type="file" class="hidden" name="avatar"
                             id="client_avatar" accept="image/png, image/gif, image/jpeg">

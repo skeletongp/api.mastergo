@@ -5,6 +5,7 @@
         <div class="flex space-x-4 items-end">
             <div class="w-full">
                 <x-select wire:model.defer="form.type" id="comprobante.type">
+                    <option value="" class="text-gray-300">SELECCIONE UN TIPO</option>
                     @foreach (App\Models\Invoice::TYPES as $name => $type)
                         @if ($type !== 'B00')
                             <option value="{{ $name }}">{{ $name }}</option>

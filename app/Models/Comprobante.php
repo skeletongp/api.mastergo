@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,4 +21,11 @@ class Comprobante extends Model
         'place_id',
         'client_id'
     ];
+    
+    public function number() : Attribute
+    {
+        return new Attribute(
+            get: fn()=>$this->attributes['prefix'].$this->attributes['number']
+        );
+    }
 }

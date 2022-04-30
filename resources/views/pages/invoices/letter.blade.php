@@ -9,7 +9,7 @@
         if ($invoice->store_id == 18 && $invoice->rest < 1) {
             $img = asset('/images/sello.png');
         } else {
-            if ($invoice->status =='PENDIENTE') {
+            if ($invoice->status == 'PENDIENTE') {
                 $img = asset('/images/pendiente.png');
             } else {
                 $img = asset('/images/pagado.png');
@@ -18,16 +18,20 @@
         if ($invoice->type == 'cotize') {
             $img = asset('/images/cotizacion.png');
         }
-        $detItbis = false;
-        if ($invoice->ncf || ($invoice->type == 'cotize' && $invoice->store->rnc)) {
-            $detItbis = true;
-        }
+        
     @endphp
     <style>
+        @page{
+            size: 215.4mm 255mm;
+        }
         body {
             font-family: Arial, Helvetica, sans-serif;
             text-align: center;
+            border: 1px solid #eee;
             color: #777;
+            padding-top: 15px;
+            border-top: 22px solid #054853;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         }
 
         .sello {
@@ -68,12 +72,9 @@
             max-width: 800px;
             margin: auto;
             padding: 5px;
-            border: 1px solid #eee;
-            border-top: 20px solid #1EB8CE;
-            border-bottom: 20px solid #1EB8CE;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            padding-top: 0;
+           
             font-size: 14px;
-            line-height: 20px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             color: #555;
         }
@@ -137,10 +138,13 @@
 
         .total {
             padding: 0px;
+            font-size: x-small;
+            line-height: 14px;
         }
 
         .total td {
             padding: -10px !important;
+
         }
 
 
@@ -173,20 +177,23 @@
 
 
 
-<body >
+<body>
+    <div style="position: absolute; right:4; top: 0; color:white; z-index:50; ">
+        {{ date_format($invoice->updated_at, 'H:i A') }}
+    </div>
     <div class="sello"></div>
-    <div class="invoice-box" style="position: relative;">
+    <div class="invoice-box" id="box" style="position: relative;">
         <div style="right: 15px; top: 30px; position: absolute; ">
             <div style=" overflow:hidden">
                 {!! $invoice->barcode !!}
             </div>
         </div>
-        <div style="position: absolute;  top:50px; text-align:center; width: 100%; ">
+        <div style="position: absolute;  top:20px; text-align:center; width: 100%; ">
             <b style="text-transform: uppercase; font-size:x-large; font-weight:bold; padding-bottom:10px">
                 {{ $invoice->store->name }}</b><br />
-            {!! $invoice->store->rnc ? '<b>RNC:</b> ' . $invoice->store->rnc . '<br />' : '' !!}
-            <b>TEL:</b> {{ $invoice->store->phone }}<br />
-            {{ $invoice->store->users()->first()->email }}<br />
+            {!! $invoice->store->rnc ? '<b>RNC  :</b> ' . $invoice->store->rnc . '<br />' : '' !!}
+            <b>TEL:</b> {{ $invoice->store->phone }} <br>
+            <b>EMAIL: </b>{{ $invoice->store->email }}<br />
             {{ $invoice->store->address }}
         </div>
         <br>
@@ -206,84 +213,93 @@
             </tr>
 
             <tr class="information">
-                <td colspan="{{ $detItbis ? '5' : '4' }}">
+                <td colspan="{{ $invoice->comprobante ? '5' : '4' }}">
                     <table>
                         <tr>
                             <td colspan="2" style="border-right: .3px solid #ccc; border-bottom: .3px solid #ccc; ">
                                 <div>
                                     {!! $invoice->ncf ? '<b>NCF:' . $invoice->ncf . '</b> <br />' : '' !!}
-                                    {{ $invoice->num }}<br />
-                                    <b>Fecha:</b> {{ date_format(date_create($invoice->day), 'd-m-Y') }}<br />
+                                    <b>Fact. Nº. </b>{{ $invoice->number }}<br />
+                                    <b>Fecha:</b> {{ date_format(date_create($invoice->day), 'd/m/Y') }}<br />
                                     <b>Vence:</b>
-                                    {{ date_format(\Carbon\Carbon::create($invoice->day)->addMonth(), 'd-m-Y') }}
+                                    {{ date_format(\Carbon\Carbon::create($invoice->day)->addMonth(), 'd/m/Y') }}
                                     <br />
-                                    <b>Forma:</b>
-                                    {{ $invoice->pay_mode }}
+                                    <b>Forma de pago:</b>
+                                    {{ $invoice->payway }}
                                 </div>
                             </td>
                             <td colspan="2" style="border-bottom: .3px solid #ccc; ">
                                 <div style="text-align:right; ">
-                                    <b>{{ $invoice->type == 'sale' ? 'CLIENTE' : 'COTIZADO A' }}</b> <br>
-                                    {{ $invoice->client->name }}<br />
-                                    {!! $invoice->client->rnc ? '<b>RNC/CED:</b> ' . $invoice->client->rnc . '<br />' : '' !!}
-                                    <b>TEL:</b> {{ $invoice->client->phone }}<br />
+                                    <b>{{ 'CLIENTE' }}</b> <br>
+                                    {{ $invoice->client->fullname }}<br />
+                                    {!! $invoice->client->RNC ? '<b>RNC /CED:</b> ' . $invoice->client->RNC . '<br />' : '' !!}
+                                    <b>TEL:</b> {{ $invoice->client->phone }} <br>
                                     {{ $invoice->client->address ?: 'Dirección N/D' }}
                                 </div>
                             </td>
                         </tr>
                     </table>
-                    <div style="width:100%; height:10px">
+
                 </td>
             </tr>
             <tr>
-                @if ($invoice->store->rnc && !$invoice->ncf)
-                    <td colspan="{{$detItbis?'5':'4'}}"
-                        style="text-transform:uppercase; font-weight:bold; font-size:large; text-align:center; padding-bottom: 15px">
-                        CONDUCE / COTIZACIÓN
+                @if ($invoice->store->rnc)
+                    <td colspan="{{ $invoice->comprobante ? '5' : '4' }}"
+                        style="text-transform:uppercase; font-weight:bold; font-size:large; text-align:center; padding: 15px">
+                        {{ array_search($invoice->type, App\Models\Invoice::TYPES) }}
+
                     </td>
                 @else
-                    <td colspan="{{$detItbis?'5':'4'}}"
+                    <td colspan="{{ $invoice->comprobante ? '5' : '4' }}"
                         style="text-transform:uppercase; font-weight:bold; font-size:large; text-align:center; padding-bottom: 15px">
-                        {{ $invoice->ncf ? $invoice->title : ($invoice->type == 'sale' ? 'factura' : 'Cotización') }}
+                        {{ $invoice->ncf ? $invoice->title : ($invoice->type == 'sale' ? 'Factura' : 'Cotización') }}
                     </td>
                 @endif
             </tr>
 
             <tr class="heading">
-                <td>Cant.</td>
-                <td>
+                <td >Cant.</td>
+                <td >
                     Descripción
                 </td>
                 <td style="text-align:right"">Precio</td>
                 <td style=" text-align:right"">Subtotal</td>
-                @if ($detItbis)
-                    <td style=" text-align:right">ITBIS</td>
+                @if ($invoice->comprobante)
+                    <td style=" text-align:right">IMP.</td>
                 @endif
             </tr>
 
-            @forelse ($invoice->details as $detail)
+            @forelse ($invoice->details as $ind=> $detail)
                 <tr class="item">
-                    <td style=" width:13%;">
-                        <div style="padding-right: 20px">{{ \Universal::formatNumber($detail->cant) }}</div>
+                    <td style=" width:13%; text-align:right;">
+                        <div style="padding-right: 20px">{{ \formatNumber($detail->cant) }}</div>
                     </td>
                     <td style=" width:54%;">{{ $detail->product->name }}</td>
-                    <td style=" width: 25%; text-align:right;">${{ \Universal::formatNumber($detail->price) }}</td>
+                    <td style=" width: 25%; text-align:right;">${{ \formatNumber($detail->price) }}</td>
                     <td style=" width: 25%; text-align:right;">
-                        ${{ \Universal::formatNumber($detail->cant * $detail->price) }}
+                        ${{ \formatNumber($detail->subtotal) }}
                     </td>
-                    @if ($detItbis)
+                    @if ($invoice->comprobante)
                         <td style=" width: 20%; text-align:right">
-                            {!! $detail->itbis > 0 ? '$' . \Universal::formatNumber($detail->itbis) : '<i>Exento</i>' !!}
+                            ${!! \formatNumber($detail->taxtotal) !!}
 
                         </td>
                     @endif
                 </tr>
-
+                {{-- @if ($ind == 14)
+                    <tr>
+                        <td colspan="100%">
+                            <h1 style="page-break-after: always; text-align:center">
+                                <h1>Sigue en otra página</h1>
+                            </h1>
+                        </td>
+                    </tr>
+                @endif --}}
             @empty
             @endforelse
-            <tr class="total" style="font-weight: bold; text-transform: uppercase; ">
+            <tr class="total" style="font-weight: bold; text-transform: uppercase; font-size:small">
                 <td style="text-align: left; padding-top:15px ">
-                    <div>{{ Universal::formatNumber($invoice->details->sum('cant')) }}</div>
+                    <div>{{ formatNumber($invoice->details->count()) }}</div>
                 </td>
                 <td style="text-align: left; padding-top:15px  ">
                     <div>Artículos</div>
@@ -292,11 +308,11 @@
                     <div></div>
                 </td>
                 <td style="text-align: right; padding-top:15px  ">
-                    <div>${{ \Universal::formatNumber($invoice->subtotal)}}</div>
+                    <div>${{ \formatNumber($invoice->amount) }}</div>
                 </td>
-                @if ($detItbis)
+                @if ($invoice->comprobante)
                     <td style=" width: 20%; text-align:right; padding-top:15px ">
-                        {!! \Universal::formatNumber($invoice->itbis) !!}
+                        {!! \formatNumber($invoice->tax) !!}
 
                     </td>
                 @endif
@@ -304,6 +320,7 @@
             </tr>
         </table>
         <br>
+
         <table class="totales">
             <tr class="total" style="font-weight: bold; ">
                 <td colspan="2"></td>
@@ -311,20 +328,24 @@
                     <div>SUBTOTAL</div>
                 </td>
                 <td style="text-align: right">
-                    <div>${{ \Universal::formatNumber($invoice->subtotal) }}</div>
+                    <div>${{ \formatNumber($invoice->amount) }}</div>
                 </td>
             </tr>
-            @if ($detItbis)
-                )
-                <tr class="total" style="font-weight: bold">
-                    <td colspan="2"></td>
-                    <td style="text-align: right;">
-                        <div>ITBIS</div>
-                    </td>
-                    <td style="text-align: right">
-                        <div><span style="color:blue">+</span> ${{ \Universal::formatNumber($invoice->itbis) }}</div>
-                    </td>
-                </tr>
+            @if ($invoice->comprobante)
+                @foreach ($invoice->taxes as $tax)
+                    <tr class="total" style="line-height: 14px">
+                        <td colspan="2" style="padding-top:-10px"></td>
+                        <td style="text-align: right; padding-top:-10px">
+                            {{ $tax->name }}
+
+                        </td>
+                        <td style="text-align: right; padding-top:-10px">
+                            ${{ \formatNumber($tax->pivot->amount) }}
+                        </td>
+                    </tr>
+                @endforeach
+
+
             @endif
             <tr class="total" style="font-weight: bold;">
                 <td colspan="2"></td>
@@ -332,93 +353,109 @@
                     <div>{{ $invoice->discount >= 0 ? 'DESCUENTO' : 'RECARGO' }}</div>
                 </td>
                 <td style="text-align: right; ">
-                    <div><span>{{ $invoice->discount > 0 ? '-' : ($invoice->discount < 0 ? '+' : '') }}</span>
-                        ${{ \Universal::formatNumber(abs($invoice->discount)) }}
-                    </div>
+                    (${{ \formatNumber(abs($invoice->discount)) }})
                 </td>
             </tr>
-
-
             <tr class="" style="font-weight: bold; font-size:medium">
                 <td colspan="2"></td>
-                <td style="text-align: right; border-top: 1px solid #777;">
+                <td style="text-align: right; border-top: 1px solid #777; padding-bottom:15px">
                     <div>TOTAL</div>
                 </td>
-                <td style="text-align: right; border-top: 1px solid #777;">
-                    <div>${{ \Universal::formatNumber($invoice->total) }}</div>
+                <td style="text-align: right; border-top: 1px solid #777; padding-bottom:15px">
+                    <div>${{ \formatNumber($invoice->total) }}</div>
                 </td>
             </tr>
-            @if ($invoice->rest > 0)
-                <tr class="" style="font-weight: bold; font-size:medium">
+            @if ($invoice->efectivo >= 0)
+                <tr class="" style="font-weight: bold; ">
                     <td colspan="2"></td>
-                    <td style="text-align: right; padding-top:15px">
-                        <div>ABONADO</div>
+                    <td style="text-align: right; ">
+                        <div>EFECTIVO</div>
                     </td>
-                    <td style="text-align: right; padding-top:15px">
-                        <div>${{ \Universal::formatNumber($invoice->payed) }}</div>
-                    </td>
-                </tr>
-                <tr class="" style="font-weight: bold; font-size:medium; color:red">
-                    <td colspan="2"></td>
-                    <td style="text-align: right;">
-                        <div>RESTA</div>
-                    </td>
-                    <td style="text-align: right;">
-                        <div>${{ \Universal::formatNumber($invoice->rest) }}</div>
+                    <td style="text-align: right; ">
+                        <div>${{ \formatNumber($invoice->efectivo) }}</div>
                     </td>
                 </tr>
             @endif
-
+            @if ($invoice->tarjeta > 0)
+                <tr class="total" style="font-weight: bold; ">
+                    <td colspan="2"></td>
+                    <td style="text-align: right; ">
+                        <div>TARJETA</div>
+                    </td>
+                    <td style="text-align: right; x">
+                        <div>${{ \formatNumber($invoice->tarjeta) }}</div>
+                    </td>
+                </tr>
+            @endif
+            @if ($invoice->transferencia > 0)
+                <tr class="total" style="font-weight: bold; ">
+                    <td colspan="2"></td>
+                    <td style="text-align: right; ">
+                        <div>TRANSFERENCIA</div>
+                    </td>
+                    <td style="text-align: right; ">
+                        <div>${{ \formatNumber($invoice->transferencia) }}</div>
+                    </td>
+                </tr>
+            @endif
+            @if ($invoice->rest > 0)
+                <tr class="total" style="font-weight: bold; ">
+                    <td colspan="2"></td>
+                    <td class="td-total text-right" style="text-align: right; padding-top:10px">
+                        <b>PENDIENTE</b>
+                    </td>
+                    <td class="td-total text-right" style="text-align: right; padding-top:10px">
+                        <b> ${{ formatNumber($invoice->rest) }}</b>
+                    </td>
+                </tr>
+            @else
+                <tr class="" style="font-weight: bold; font-size:small">
+                    <td colspan="2"></td>
+                    <td class="td-total text-right" style="text-align: right; padding-top:2px">
+                        <b>CAMBIO</b>
+                    </td>
+                    <td class="td-total text-right" style="text-align: right; padding-top:2px">
+                        <b> ${{ formatNumber($invoice->cambio) }}</b>
+                    </td>
+                </tr>
+            @endif
         </table>
 
         <table>
             <tr>
-                <td style="padding-top: 60px; ">
+                <td style="padding-top: 30px; ">
                     <div
-                        style="border-top: solid 1px #222; padding-top: 4px; width:max-content; text-align:center; margin-right: 20px">
+                        style="border-top: solid 1px #222; padding-top: 4px; width:100%; text-align:center; margin-right: 20px">
                         ENTREGADO POR</div>
                 </td>
-                <td style="padding-top: 60px;">
+                <td style="padding-top: 30px;">
                     <div
-                        style="border-top: solid 1px #222; padding-top: 4px; width:max-content; text-align:center; margin-left: 10px">
+                        style="border-top: solid 1px #222; padding-top: 4px; width:100%; text-align:center; margin-left: 10px">
                         RECIBIDO POR</div>
                 </td>
             </tr>
         </table>
+        <table>
+            <tr>
+                <td colspan="4" style="padding-top: 10px; text-align:center">
+                    @if ($invoice->note && $invoice->note != '***')
+                        <div
+                            style=" padding-top: 0px; width:100%; text-align:center; margin-right: 20px; text-transform:uppercase; font-weight:bold">
+                            {{ $invoice->note }}</div>
+                    @endif
+                    <div style=" padding-top: 0px; width:100%; text-align:center; margin-right: 20px">
+                        SUJETO A POLÍTICAS DE NO DEVOLUCIÓN</div>
+                    <div style=" padding-top: 0px; width:100%; text-align:center; margin-right: 20px">
+                        GRACIAS POR PREFERIRNOS</div>
+                </td>
 
-        @if ($invoice->type == 'cotize')
-            <table>
-                <tr>
-                    <td colspan="4" style="padding-top: 10px; ">
-                        @if ($invoice->note && $invoice->note != '***')
-                            <div
-                                style=" padding-top: 0px; width:max-content; text-align:center; margin-right: 20px; text-transform:uppercase">
-                                {{ $invoice->note }}</div>
-                        @endif
-                        <div style=" padding-top: 4px; width:max-content; text-align:center; margin-right: 20px">
-                            LOS PRECIOS DE ESTA COTIZACIÓN ESTÁN SUJETOS A CAMBIOS</div>
-                    </td>
+            </tr>
+        </table>
 
-                </tr>
-            </table>
-        @else
-            <table>
-                <tr>
-                    <td colspan="4" style="padding-top: 10px; ">
-                        @if ($invoice->note && $invoice->note != '***')
-                            <div
-                                style=" padding-top: 0px; width:max-content; text-align:center; margin-right: 20px; text-transform:uppercase">
-                                {{ $invoice->note }}</div>
-                        @endif
-                        <div style=" padding-top: 0px; width:max-content; text-align:center; margin-right: 20px">
-                            SUJETO A POLÍTICAS DE NO DEVOLUCIÓN</div>
-                        <div style=" padding-top: 0px; width:max-content; text-align:center; margin-right: 20px">
-                            GRACIAS POR PREFERIRNOS</div>
-                    </td>
-
-                </tr>
-            </table>
-        @endif
+    </div>
+    <div style="position: absolute; right:4; bottom: 0; color:black; z-index:50; text-align:right">
+        <b> VENDEDOR:</b> {{ $invoice->seller->lastname . ', ' . substr($invoice->seller->name, 0, 1) . '.' }}
+        <b> CAJERO:</b> {{ $invoice->contable->lastname . ', ' . substr($invoice->contable->name, 0, 1) . '.' }}
     </div>
     <footer>
         <table style="width: 100%">
@@ -443,4 +480,8 @@
 
 </body>
 
+
 </html>
+<script type="text/javascript">
+    alert('hola');
+</script>

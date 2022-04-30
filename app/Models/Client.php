@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\ClientObserver;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Client extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait;
+
 
     protected $fillable = [
         'name',
@@ -34,9 +36,7 @@ class Client extends Model
     public static function boot()
     {
         parent::boot();
-        self::creating(function($model){
-            $model->fullname = (string) rtrim($model->lastname).', '.$model->name;
-        });
+        self::observe(new ClientObserver);
     }
     public function image()
     {
@@ -47,5 +47,9 @@ class Client extends Model
         return new Attribute(
             get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
         );
+    }
+    public function contable()
+    {
+        return $this->morphOne(Count::class,'contable');
     }
 }

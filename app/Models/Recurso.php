@@ -51,7 +51,7 @@ class Recurso extends Model
     }
     public function getCostPriceAttribute()
     {
-        return '$'.Universal::formatNumber($this->cost);
+        return '$'.formatNumber($this->cost);
     }
     public function scopeTotal($query)
     {

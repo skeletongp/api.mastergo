@@ -35,11 +35,11 @@
 </head>
 
 <body class=" antialised ">
-    <div class="hidden xl:flex relative h-full w-screen ">
-        <div class="sticky left-0 top-0 z-50 h-screen bg-gray-50 p-2" style="z-index: 80">
+    <div class="hidden xl:flex relative ">
+        <div class="sticky left-0 top-8 h-full  z-50 px-2" style="z-index: 80">
             @include('includes.sidebar')
         </div>
-        <div class="w-full ">
+        <div class="w-full min-h-[50rem] ">
             {{-- Navbar --}}
             <header class="sticky top-0 z-50 w-full mx-auto py-2 bg-white">
                 @include('includes.header')
@@ -49,24 +49,17 @@
                     @endif
                 </div>
             </header>
-
-            {{-- Sidebar --}}
-
-
             {{-- Content --}}
             <main class="pl-0  flex">
                 <div class="hidden" id="generalLoad">
                     <x-loading></x-loading>
                 </div>
                 <section class=" w-full bg-white ">
-
                     {{ $slot }}
                 </section>
             </main>
-
             {{-- Foot --}}
             <footer>
-
             </footer>
         </div>
     </div>
@@ -78,13 +71,14 @@
             aplique zoom out al sistema</h1>
     </div>
     @livewireScripts
-    
+
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{asset('js/formatPhoneNumber.js')}}"></script>
 
     @stack('js')
 
@@ -152,6 +146,16 @@
         })
         $('.load').on('click', function() {
             $('#generalLoad').removeClass('hidden');
+        })
+        id = {{ auth()->user()->place->id }}
+        var channel = Echo.channel(`invoices.${id}`);
+        channel.listen("NewInvoice", function(data) {
+            Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
+        });
+        $(document).ready(function() {
+            $('input[type=tel]').each(function() {
+                $(this).formatPhoneNumber({format: '(###) ###-####'})
+            })
         })
     </script>
 

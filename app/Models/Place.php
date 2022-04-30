@@ -34,6 +34,10 @@ class Place extends Model
     {
         return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price','stock','cost','id');
     }
+    public function contable()
+    {
+        return $this->morphMany(Count::class, 'contable');
+    }
     public function recursos()
     {
         return $this->hasMany(Recurso::class);
@@ -45,5 +49,41 @@ class Place extends Model
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
+    }
+    public function counts()
+    {
+        return $this->hasMany(Count::class);
+    }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+    public function outcomes()
+    {
+        return $this->hasMany(Outcome::class);
+    }
+    public function cash()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','100-01')->first();
+    }
+    public function bank()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','100-02')->first();
+    }
+    public function check()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','100-03')->first();
+    }
+    public function other()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','100-04')->first();
     }
 }

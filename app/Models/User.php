@@ -101,6 +101,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Store::class, 'store_users');
     }
+    
+    public function contable()
+    {
+        return $this->morphMany(Count::class, 'contable');
+    }
 
 
     public function getStoreAttribute()
@@ -109,7 +114,7 @@ class User extends Authenticatable
         if (!is_null($store)) {
             return $store;
         }
-        $store = $this->stores()->where('stores.id', $this->place_id)->first();
+        $store = $this->stores()->where('stores.id', $this->place_id)->with('clients','products')->first();
         Cache::put('store_' . $this->id, $store);
         return $store;
     }

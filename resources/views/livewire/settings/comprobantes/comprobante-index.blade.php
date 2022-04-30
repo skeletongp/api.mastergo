@@ -1,4 +1,4 @@
-<div class="px-4 mt-8" x-data="{ open: false }" x-cloak>
+<div class="px-4 mt-8" x-cloak>
     <h1 class="font-semibold text-left uppercase mb-6">Comprobantes registrados</h1>
     <div class="overflow-hidden shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -30,18 +30,19 @@
                             wire:click="$set('comprobantee_name','{{ $comprobante->name }}')">
                             {{ $comprobante->type }}
                         </th>
-                        <td class="px-6 py-2  cursor-pointer" >
-                            {{ $comprobante->prefix.$comprobante->number }}
+                        <td class="px-6 py-2  cursor-pointer">
+                            {{ $comprobante->prefix . $comprobante->number }}
                         </td>
-                        <td class="px-6 py-2  cursor-pointer" >
+                        <td class="px-6 py-2  cursor-pointer">
                             {{ $comprobante->status }}
                         </td>
                         <td class="px-6 py-2">
                             <div class="flex space-x-4 w-max mx-auto ">
-                                @if ($comprobante->name !== 'Unidad')
+                                <div class="relative">
                                     <livewire:general.delete-model title="Registro" permission="Borrar Comprobantes"
-                                        :model="$comprobante" event="reloadComprobantes" :wire:key="uniqid().'comprobante'" />
-                                @endif
+                                        :model="$comprobante" event="reloadComprobantes"
+                                        :wire:key="uniqid().'comprobante'" />
+                                </div>
                             </div>
                         </td>
                     </tr>

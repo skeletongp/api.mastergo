@@ -8,9 +8,10 @@ use Livewire\Component;
 class SumProduct extends Component
 {
     public $products, $units, $form, $productAdded = [];
+    public $setCost=false;
 
     protected $listeners=['getUnits'];
-
+    protected $queryString = ['productAdded'];
     public function mount()
     {
         $this->products = auth()->user()->place->products->pluck('name', 'id');
@@ -55,6 +56,7 @@ class SumProduct extends Component
     public function sumCant()
     {
         $this->validate();
+        $amount=0;
         foreach ($this->productAdded as $added) {
             $unit = auth()->user()->place->units()
                 ->where('product_id', $added['product_id'])
@@ -62,7 +64,12 @@ class SumProduct extends Component
            
             $unit->pivot->stock = $unit->stock + $added['cant'];
             $unit->pivot->save();
+            $amount+=$added['cant']*$unit->cost;
         }
+        if ($this->setCost) {
+            setOutcome($amount, 'Ingreso de productos a inventario','N/A');
+        }
+
         $this->reset('form','productAdded');
         $this->emit('showAlert','Productos añadidos al stock','success');
     }
@@ -71,4 +78,5 @@ class SumProduct extends Component
         $prod=Product::find($this->form['product_id']);
         $this->units=$prod->units()->distinct('name')->pluck('name','units.id');
     }
+    
 }

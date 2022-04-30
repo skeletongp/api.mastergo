@@ -14,13 +14,12 @@
         x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-400" x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95">
-        <div class="bg-white w-full absolute">
+        <div class="bg-white w-full absolute shadow-xl pl-1 pr-2 pb-3 rounded-xl">
             {{ $slot }}
         </div>
     </div>
     <div class="py-2">
         <hr class="">
-
     </div>
 </div>
 @endscope

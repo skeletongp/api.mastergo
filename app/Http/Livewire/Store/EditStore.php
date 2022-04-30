@@ -37,9 +37,10 @@ class EditStore extends Component
     {
         $this->validate();
         if ($this->photo_path) {
-            $this->store->image()->update([
-                'path' => $this->photo_path
-            ]);
+            $this->store->image()->updateOrCreate(
+                ['imageable_id' => $this->store->id, 'imageable_type' => 'App\Models\Store'],
+                ['path' => $this->photo_path]
+            );
         }
         $this->store->save();
         $this->emit('showAlert', 'Datos actualizados correctamente', 'success');

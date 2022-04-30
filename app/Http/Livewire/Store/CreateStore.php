@@ -48,6 +48,7 @@ class CreateStore extends Component
         $this->emitUp('reloadSettingStore');
         $this->emit('showAlert', 'Negocio registrado exitosamente', 'success');
     }
+  
 
     public function updatedLogo()
     {
@@ -62,7 +63,19 @@ class CreateStore extends Component
             'phone'=>$store->phone,
             'user_id'=>auth()->user()->id,
         ];
-        $store->places()->create($data);
+       $place= $store->places()->create($data);
+       $this->setCounts($place);
+    }
+    public function setCounts($place)
+    {
+        setContable($place, '100','Efectivo en Caja', $place->id);
+        setContable($place, '100','Efectivo en Banco', $place->id);
+        setContable($place, '100','Efectivo en Cheques', $place->id);
+        setContable($place, '100','Otros Efectivos', $place->id);
+        setContable($place, '400','Ingresos por Ventas', $place->id);
+        setContable($place, '401','Descuento en Ventas', $place->id);
+        setContable($place, '401','Devolución en Ventas', $place->id);
+        setContable($place, '402','Otros Ingresos', $place->id);
     }
     public function createUnit(Store $store)
     {
@@ -78,7 +91,9 @@ class CreateStore extends Component
             'name'=>'ITBIS',
             'rate'=>0.18,
         ];
-        $store->taxes()->create($data);
+       $tax=$store->taxes()->create($data);
+       setContable($tax, '202', $tax->name.' por Pagar');
+       setContable($tax, '103', $tax->name.' por Cobrar');
     }
     public function createClient(Store $store)
     {

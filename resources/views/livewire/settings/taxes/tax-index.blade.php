@@ -26,7 +26,7 @@
                             {{ $tax->name }}
                         </th>
                         <td class="px-6 py-2  cursor-pointer">
-                            {{ Universal::formatNumber($tax->rate*100) }}%
+                            {{ formatNumber($tax->rate*100) }}%
                         </td>
                         <td class="px-6 py-2">
                             <div class="flex space-x-4 w-max mx-auto ">

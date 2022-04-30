@@ -2,20 +2,21 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RecursoController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
-use App\Http\Helper\Universal;
 use App\Models\Invoice;
-use App\Models\Store;
-use App\Models\Scope;
-use Carbon\Carbon;
+use App\Models\Proceso;
+use App\Models\User;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,10 +41,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['web'])->group(function () {
-        Route::get('/', function () {
-            $users = auth()->user()->store->users()->with('image')->paginate(8);
-            return view('welcome', compact('users'));
-        })->name('home');
+        Route::get('/', [DashboardController::class, 'index'])->name('home');
 
         Route::controller(UserController::class)->group(function () {
 
@@ -54,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/invoices', 'index')->name('invoices.index');
             Route::get('/invoices/create', 'create')->name('invoices.create');
             Route::get('/invoices/orders', 'orders')->name('orders');
-            
+            Route::get('/invoices/show/{invoice}', 'show')->name('invoices.show');
         });
 
         Route::controller(ProductController::class)->group(function () {
@@ -87,13 +85,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('procesos/create', 'create')->name('procesos.create');
             Route::get('procesos/{proceso}', 'show')->name('procesos.show');
         });
+        Route::controller(ReportController::class)->group(function () {
+            Route::get('general_daily', 'general_daily')->name('reports.general_daily');
+            Route::get('general_mayor', 'general_mayor')->name('reports.general_mayor');
+        });
     });
 });
 Route::get('uid', function () {
-    $invoice = Invoice::first();
-    $data = [
-        'invoice' => $invoice,
-    ];
-    $pdf = PDF::loadView('pages.invoices.thermal', $data)->setPaper('80mm', 'portrait');
-   return  $pdf->stream('invoice.pdf');
+
+    $invoice = Invoice::whereNotNull('client_id')->orderBy('id','desc')->firstOrFail();
+    $pdf = App::make('dompdf.wrapper');
+    
+    $pdf->loadview('pages.invoices.letter', compact('invoice'));
+    return $pdf->stream();
 });

@@ -12,16 +12,7 @@
                 </x-upload-progress>
                 <div class="flex flex-col space-y-6 items-center">
                     {{-- Foto anterior --}}
-                    @if ($photo_prev)
-                        <label for="logoSet" class="cursor-pointer">
-                            <div class="w-48 h-48 bg-center bg-cover mb-12 pb-4 flex items-end justify-center"
-                                style="background-image: url({{ $photo_prev }})">
-                            </div>
-                        </label>
-
-                        <span class="far fa-angle-double-down text-4xl">
-                        </span>
-                    @endif
+                    
 
                     {{-- Foto actual --}}
                     <label for="logoSet" class="cursor-pointer">
@@ -61,7 +52,7 @@
             </div>
             <div class="flex space-x-4 items-center">
                 <div class="w-full">
-                    <x-input class="text-2xl" label="No. Teléfono" wire:model.defer="store.phone"
+                    <x-input type="tel" class="text-2xl" label="No. Teléfono" wire:model.defer="store.phone"
                     id="store.phone">
                 </x-input>
                 <x-input-error for="store.phone"></x-input-error>

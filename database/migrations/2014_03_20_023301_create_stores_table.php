@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('phone',25);
             $table->string('phone2',25)->nullable();
             $table->decimal('price');
-            $table->string('RNC')->nullable();
+            $table->string('rnc')->nullable();
             $table->timestamp('expires_at')->comment('Para el control de mensualidad del sistema');
             $table->softDeletes();
             $table->timestamps();

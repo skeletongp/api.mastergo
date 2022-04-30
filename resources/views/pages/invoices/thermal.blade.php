@@ -14,7 +14,7 @@
             <div class="logo">
             </div>
             <h1 class="biz-name   ">
-                Nombre del Negocio
+                {{ $invoice->store->name }}
             </h1>
             <hr>
             <h2 class="biz-rnc subtitle ">
@@ -32,7 +32,7 @@
             <tr class="invoice-data">
                 <td class="data-left" colspan="2">
                     <h2 class="sale-type subtitle">
-                        Venta a Crédito
+                        {{ $invoice->rest > 0 ? 'Venta a Crédito' : 'Venta de Contado' }}
                     </h2>
                     <h2 class="data-detail subtitle">
                         <b>FECHA</b>: 12-04-2022
@@ -43,10 +43,12 @@
                 </td>
                 <td class="data-right" colspan="2">
                     <h2 class="pay-type subtitle">
-                        Pago por tarjeta
+                        {{ $invoice->payway }}
                     </h2>
                     <h2 class="data-detail subtitle">
-                        <b>NCF</b>: B0100000007
+                        @if ($invoice->comprobante)
+                            <b>NCF</b>: {{ $invoice->comprobante->number }}
+                        @endif
                     </h2>
                     <h2 class="data-detail subtitle">
                         <b>Fct. Nº</b>: {{ $invoice->number }}
@@ -74,23 +76,23 @@
                 </td>
                 <td class="data-right" colspan="2">
                     <h2 class="subtitle client-name">
-                        {{ strlen('Alexandra Altagracia Santos Rodríguez') > 25? substr('Alexandra Altagracia Santos Rodríguez', 0, 25) . '...': 'Alexandra Altagracia Santos Rodríguez' }}
+                        {{ strlen($invoice->client->fullname) > 25? substr($invoice->client->fullname, 0, 25) . '...': $invoice->client->fullname }}
                     </h2>
                     <h2 class="data-detail ">
-                        {{ $invoice->seller->email ?: 'No Disponible' }}
+                        {{ $invoice->client->rnc ?: 'No Disponible' }}
                     </h2>
                     <h2 class="data-detail ">
-                        {{ $invoice->seller->rnc ?: 'No Disponible' }}
+                        {{ $invoice->client->address ?: 'No Disponible' }}
                     </h2>
                     <h2 class="data-detail subtitle">
-                        {{ $invoice->seller->phone }}
+                        {{ $invoice->client->phone }}
                     </h2>
                 </td>
             </tr>
         </table>
         <div>
             <h1 class="invoice-type">
-                Factura de Consumo Final
+                {{ array_search($invoice->type, App\Models\Invoice::TYPES) }}
             </h1>
         </div>
         <div class="invoice-details">
@@ -100,46 +102,114 @@
                         <th class="th-details">Cant</th>
                         <th class="th-details">Detalle</th>
                         <th class="th-details">$$$</th>
-                        <th class="th-details">Subt.</th>
+                        <th class="th-details text-right">Subt.</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $taxes = [];
+                    @endphp
                     @foreach ($invoice->details as $detail)
+                        @php
+                            $rate = $detail
+                                ->taxes()
+                                ->select(DB::raw('taxes.rate as tax, taxes.name'))
+                                ->pluck('tax', 'name')
+                                ->toArray();
+                            foreach ($rate as $key => $value) {
+                                $rate[$key] = $value * $detail->subtotal;
+                            }
+                            array_push($taxes, $rate);
+                        @endphp
                         <tr class="tr-detail">
-                            <td class=" td-details text-center">{{ Universal::formatNumber($detail->cant) }}</td>
+                            <td class=" td-details text-center">{{ formatNumber($detail->cant) }}</td>
                             <td class="td-details text-center">
                                 {{ $detail->product->name }}
                             </td>
-                            <td class=" td-details text-center">${{ Universal::formatNumber($detail->price) }}</td>
-                            <td class=" td-details text-center">${{ Universal::formatNumber($detail->subtotal) }}
+                            <td class=" td-details text-center">${{ formatNumber($detail->price) }}</td>
+                            <td class=" td-details text-right">${{ formatNumber($detail->total) }}
                             </td>
                         </tr>
                     @endforeach
-
+                    @php
+                        $finalTaxes = [];
+                        foreach ($taxes as $tax) {
+                            foreach ($tax as $key => $value) {
+                                if (!array_key_exists($key, $finalTaxes)) {
+                                    $finalTaxes[$key] = $value;
+                                } else {
+                                    $finalTaxes[$key] = $finalTaxes[$key] + $value;
+                                }
+                            }
+                        }
+                    @endphp
                     <tr>
-                        <td class="td-total text-right" colspan="3">
+                        <td class="td-total text-right" style="padding-top:15px" colspan="3">
                             <b>SUBTOTAL</b>
                         </td>
-                        <td class="td-total text-right">
-                            ${{ Universal::formatNumber($invoice->details->sum('subtotal')) }}
+                        <td class="td-total text-right" style="padding-top:15px">
+                            ${{ formatNumber($invoice->amount) }}
                         </td>
                     </tr>
+
+                    @if ($invoice->comprobante)
+
+                        @foreach ($invoice->taxes as $tax)
+                            <tr>
+                                <td class="td-total text-right" style="" colspan="3">
+                                        <div style="margin-top:-1px; margin-bottom:-1px">{{ $tax->name }}</div>
+                                </td>
+                                <td class="td-total text-right" style="">
+                                        <div style="margin-top:-1px; margin-bottom:-1px">
+                                            ${{ formatNumber($tax->pivot->amount) }}
+                                        </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     <tr>
-                        <td class="td-total text-right" colspan="3">
-                            <b>IMPUESTOS</b>
+                        <td class="td-total text-right" style="padding-top:10px" colspan="3">
+                            <b>DESCUENTO</b>
                         </td>
-                        <td class="td-total text-right">
-                            ${{ Universal::formatNumber($invoice->details->sum('total')-$invoice->details->sum('subtotal')) }}
+                        <td class="td-total text-right" style="padding-top:10px">
+                            (${{ formatNumber($invoice->discount) }})
                         </td>
                     </tr>
-                    <tr  class="tr-final">
+                    <tr class="tr-final">
                         <td class="td-total text-right" colspan="3">
                             <b>TOTAL</b>
                         </td>
                         <td class="td-total text-right">
-                           <b> ${{ Universal::formatNumber($invoice->details->sum('total')) }}</b>
+                            <b> ${{ formatNumber($invoice->total) }}</b>
                         </td>
                     </tr>
+                    <tr class="">
+                        <td class="td-total text-right" style="padding-top:15px" colspan="3">
+                            <b>PAGADO</b>
+                        </td>
+                        <td class="td-total text-right" style="padding-top:15px">
+                            <b> ${{ formatNumber($invoice->payed) }}</b>
+                        </td>
+                    </tr>
+                    @if ($invoice->rest > 0)
+                        <tr class="">
+                            <td class="td-total text-right" colspan="3">
+                                <b>PENDIENTE</b>
+                            </td>
+                            <td class="td-total text-right">
+                                <b> ${{ formatNumber($invoice->rest) }}</b>
+                            </td>
+                        </tr>
+                    @else
+                        <tr class="">
+                            <td class="td-total text-right" colspan="3">
+                                <b>CAMBIO</b>
+                            </td>
+                            <td class="td-total text-right">
+                                <b> ${{ formatNumber($invoice->cambio) }}</b>
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
 
             </table>
@@ -247,8 +317,10 @@
     }
 
     .invoice-type {
-        font-size: small;
+        font-size: x-small;
         line-height: 8px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         text-transform: uppercase;
         text-align: center;
     }
@@ -285,9 +357,17 @@
         font-size: xx-small;
         padding: 3px 5px 0px 12px;
     }
-    .tr-final{
+
+    .tr-final,
+    .tr-pagado {
         border-top: solid .2px #ddd
     }
+
+    .tr-pagado>td {
+        padding-top: 10px;
+        border-top: solid .2px #eee
+    }
+
     .text-center {
         text-align: center;
     }
@@ -295,6 +375,7 @@
     .text-left {
         text-align: left;
     }
+
     .text-right {
         text-align: right;
     }

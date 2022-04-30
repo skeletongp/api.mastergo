@@ -43,7 +43,7 @@ class Unit extends Model
     public function price() : Attribute
     {
         return new Attribute(
-            get:fn($value)=> ' $'.Universal::formatNumber($this->pivot->price)
+            get:fn($value)=> ' $'.formatNumber($this->pivot->price)
         );
     }
     public function plainPrice() : Attribute
@@ -61,7 +61,7 @@ class Unit extends Model
     public function stock() : Attribute
     {
         return new Attribute(
-            get:fn($value)=> Universal::formatNumber($this->pivot->stock)
+            get:fn($value)=> formatNumber($this->pivot->stock)
         );
     }
    

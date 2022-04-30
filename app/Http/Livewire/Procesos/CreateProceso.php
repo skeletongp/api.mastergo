@@ -96,7 +96,7 @@ class CreateProceso extends Component
     public function getExistingProduct()
     {
         $existingProduct = array_filter($this->fProducts, function($val){
-            return ($val['product_id']==$this->productId and $val['unit_id']==$this->productUnit);
+            return ($val['product_id']==$this->productId && $val['unit_id']==$this->productUnit);
         });
         $this->fProducts[array_key_first($existingProduct)]['due']=$this->productDue;
     }

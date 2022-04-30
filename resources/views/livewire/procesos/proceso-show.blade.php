@@ -13,7 +13,7 @@
 
                         {{-- Indicador de progreso --}}
                         <div class="absolute top-0 bottom-0 left-0 bg-green-500 opacity-30 my-2 z-10"
-                            style="right: {{ 100 - Universal::formatNumber($proc->eficiency) }}%">
+                            style="right: {{ 100 - formatNumber($proc->eficiency) }}%">
 
                         </div>
                         <span class=" z-20 text-base w-full overflow-hidden overflow-ellipsis whitespace-nowrap pr-4">
@@ -27,7 +27,7 @@
                         </span>
                         <div class=" z-20 absolute right-2 top-8 flex flex-col  text-right">
                             <span class=" text-2xl font-bold">
-                                {{ Universal::formatNumber($proc->eficiency) }}%
+                                {{ formatNumber($proc->eficiency) }}%
                             </span>
                             <span class=" z-20 text-base">
                                 {{ date_format(date_create($proc->start_at), 'd-m-Y') }}
@@ -76,7 +76,7 @@
                             </div>
                             <div>
                                 <x-input id="pv.unit" label="Medida" readonly
-                                    value="{{ $product->procUnit($proceso->id)->name }}"></x-input>
+                                    value="{{ $product->procUnit($product->pivot->unit_id)->name }}"></x-input>
                             </div>
                             <div>
                                 <x-input id="pv.due" label="Esperado" readonly value="{{ $product->pivot->due }}">
@@ -89,8 +89,8 @@
                             <form action="" class="flex space-x-4 w-full"
                                 wire:submit.prevent="setObtained({{ $product->pivot->id }})">
                                 <div class="max-w-[5rem]">
-                                    <x-input id="pv.add{{ $product->id . rand(0, 9) }}" type="number" required min="1"
-                                        class="text-blue-400" label="Añadir"
+                                    <x-input id="pv.add{{ $product->id . rand(0, 50) }}" type="number" required
+                                        min="1" class="text-blue-400" label="Añadir"
                                         wire:model.defer="productos.{{ $product->id }}"></x-input>
                                 </div>
                                 <x-button>

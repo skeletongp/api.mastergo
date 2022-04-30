@@ -32,4 +32,8 @@ class Tax extends Model
             set:fn($value)=>strtoupper($value)
         );
     }
+    public function contable()
+    {
+        return $this->morphMany(Count::class, 'contable');
+    }
 }

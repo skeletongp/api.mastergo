@@ -1,7 +1,7 @@
 <div class="max-w-4xl shadow-xl p-4">
     <form action="" wire:submit.prevent="addProduct">
         <div class="flex space-x-4 items-end pt-8 relative">
-            <div class="w-3/6" >
+            <div class="w-3/6">
                 <x-select class="selectProduct" wire:model.defer="form.product_id">
                     <option value=""></option>
                     @foreach ($products as $id => $product)
@@ -63,7 +63,7 @@
                                         {{ $added['product_name'] }}
                                     </th>
                                     <td class="px-6 py-2  cursor-pointer">
-                                        {{ Universal::formatNumber($added['cant']) }}
+                                        {{ formatNumber($added['cant']) }}
                                     </td>
                                     <td class="px-6 py-2  cursor-pointer">
                                         {{ $units[$added['unit']] }}
@@ -82,9 +82,13 @@
 
 
                 </div>
-                <div class="flex justify-end mt-4">
+                <div class="flex items-center justify-end mt-4">
+                    <div class="mr-6">
+                        <x-toggle label="Registrar gasto" id="setCost" wire:model.defer="setCost"></x-toggle>
+                    </div>
                     <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
                         wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
+
                 </div>
             </div>
         @endif

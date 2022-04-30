@@ -4,7 +4,7 @@
     @endslot
 
     <div class=" w-full ">
-        <div class=" mx-auto py-2 w-max min-h-max h-full relative sm:px-6 lg:px-8">
+        <div class=" mx-auto py-2 w-full min-h-max h-full relative sm:px-6 lg:px-8">
            <livewire:products.create-product />
         </div>
     </div>
