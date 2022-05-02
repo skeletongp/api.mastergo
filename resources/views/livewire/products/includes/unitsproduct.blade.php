@@ -1,62 +1,62 @@
 <form action="" id="form2" wire:submit.prevent="addUnit" class="mt-4 flex space-x-4 max-w-5xl mx-auto">
-   <div class="w-1/2">
-    <div class="flex space-x-4 items-end">
-        <div class="w-full">
-            <label for="unit_id">Precio por Medida</label>
-            <x-select name="unit_id" wire:model.defer="unit_id" id="unit_id">
-                <option value=""></option>
-                @foreach ($units as $id => $unit)
-                    <option value="{{ $id }}">{{ $unit }}</option>
-                @endforeach
-            </x-select>
-            <x-input-error for="unit_id"></x-input-error>
-        </div>
-        <div>
-            <x-input id="min" wire.model.defer="min" label="Cant. Min."></x-input>
-        </div>
-
-        
-    </div>
-    <div class="flex space-x-4 items-start">
-        <div class="pt-4">
-            <x-input label="Costo" type="number" step="any" min="0"  id="unit_cost" name="unit_cost"
-                wire:model.lazy="unit_cost"></x-input>
-            <x-input-error for="unit_cost"></x-input-error>
-        </div>
-        <div class="pt-4">
-            <x-input label="Precio Mayor" type="number" step="any" min="0"  id="unit_price" name="unit_price"
-                wire:model.lazy="unit_price"></x-input>
-            <x-input-error for="unit_price"></x-input-error>
-        </div>
-        <div class="pt-4">
-            <x-input label="Precio Detalle" type="number" step="any" min="0"  id="unit_price" name="unit_price"
-                wire:model.lazy="unit_price"></x-input>
-            <x-input-error for="unit_price"></x-input-error>
-        </div>
-        <div class="pt-4">
-            <x-input label="Margin (%)" type="number" step="any" min="0"  id="unit_margin"
-                name="unit_margin" wire:model.lazy="unit_margin"></x-input>
-            <x-input-error for="unit_price"></x-input-error>
-        </div>
-    </div>
-    <div class="p-2 pr-0 flex justify-end">
-        <x-button class=" uppercase disabled:bg-gray-200 text-xs" wire:loading.attr='disabled' form="form2">
-            <div class="animate-spin mr-2" wire:loading wire:target="addUnit">
-                <span class="fa fa-spinner ">
-                </span>
+    <div class="w-1/2">
+        <div class="flex space-x-4 items-end">
+            <div class="w-full">
+                <label for="unit_id">Precio por Medida</label>
+                <x-select name="unit_id" wire:model.defer="unit_id" id="unit_id">
+                    <option value=""></option>
+                    @foreach ($units as $id => $unit)
+                        <option value="{{ $id }}">{{ $unit }}</option>
+                    @endforeach
+                </x-select>
+                <x-input-error for="unit_id">Requerido</x-input-error>
             </div>
-            Añadir
-        </x-button>
+            <div>
+                <x-input id="unit_min" wire:model.defer="unit_min" label="Cant. Min."></x-input>
+                <x-input-error for="unit_min">Requerido</x-input-error>
+            </div>
+
+
+        </div>
+        <div class="flex space-x-4 items-start">
+            <div class="pt-4">
+                <x-input label="Costo" type="number" step="any" min="0" id="unit_cost" name="unit_cost"
+                    wire:model.lazy="unit_cost"></x-input>
+                <x-input-error for="unit_cost">Verifique el costo</x-input-error>
+            </div>
+            <div class="pt-4">
+                <x-input label="Precio Mayor" type="number" step="any" min="0" id="unit_price_mayor"
+                    name="unit_price_mayor" wire:model.lazy="unit_price_mayor"></x-input>
+                <x-input-error for="unit_price_mayor">Verifique el precio</x-input-error>
+            </div>
+            <div class="pt-4">
+                <x-input label="Precio Detalle" type="number" step="any" min="0" id="unit_price_menor"
+                    name="unit_price_menor" wire:model.lazy="unit_price_menor"></x-input>
+                <x-input-error for="unit_price_menor">Verifique el precio</x-input-error>
+            </div>
+            <div class="pt-4">
+                <x-input label="Margin (%)" type="number" step="any" min="0" id="unit_margin" name="unit_margin"
+                    wire:model.lazy="unit_margin"></x-input>
+                <x-input-error for="unit_margin">Verifique el margen</x-input-error>
+            </div>
+        </div>
+        <div class="p-2 pr-0 flex justify-end">
+            <x-button class=" uppercase disabled:bg-gray-200 text-xs" wire:loading.attr='disabled' form="form2">
+                <div class="animate-spin mr-2" wire:loading wire:target="addUnit">
+                    <span class="fa fa-spinner ">
+                    </span>
+                </div>
+                Añadir
+            </x-button>
+        </div>
+        <x-input-error for="unitSelected">Añada por lo menos un precio por medida</x-input-error>
     </div>
-    <x-input-error for="unitSelected">Añada por lo menos un precio por medida</x-input-error>
-   </div>
     <div class="mt-4 w-1/2">
         @if (count($unitSelected))
             <div class="" x-data="{ open: false }" x-cloak>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead
-                            class=" text-gray-600 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class=" text-gray-600 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     Unidad
@@ -87,7 +87,7 @@
                                         {{ $units[$uniSel['unit_id']] }}
                                     </th>
                                     <td class="px-6 py-2  cursor-pointer">
-                                        {{ formatNumber($uniSel['price']) }}
+                                        {{ formatNumber($uniSel['price_menor']) }}
                                     </td>
                                     <td class="px-6 py-2  cursor-pointer">
                                         {{ formatNumber($uniSel['cost']) }}
@@ -115,11 +115,17 @@
 </form>
 <div class="bottom-0 absolute w-full">
     <div class="p-2 pr-0 flex justify-between w-full">
-        <x-button wire:click="$set('activeTab','infoproduct')" disabled="{{$activeTab=='infoproduct'}}" class="uppercase disabled:bg-gray-200 text-xs" wire:loading.attr='disabled'>
+        <x-button wire:click="$set('activeTab','infoproduct')" disabled="{{ $activeTab == 'infoproduct' }}"
+            class="uppercase disabled:bg-gray-200 text-xs">
             Anterior
         </x-button>
-        <x-button wire:click="$set('activeTab','cantproduct')" disabled="{{$activeTab=='cantproduct'}}" class="uppercase disabled:bg-gray-200 text-xs" wire:loading.attr='disabled' >
-            Siguiente
+        <x-button wire:click="createProduct" class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
+            wire:loading.attr='disabled'>
+            <div class="animate-spin mr-2" wire:loading wire:target="createProduct">
+                <span class="fa fa-spinner ">
+                </span>
+            </div>
+            <span>Guardar</span>
         </x-button>
     </div>
 </div>

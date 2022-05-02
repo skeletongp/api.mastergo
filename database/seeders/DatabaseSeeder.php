@@ -106,15 +106,19 @@ class DatabaseSeeder extends Seeder
         foreach($products as $prod){
             $product=$store->products()->create($prod);
             $product->taxes()->sync($tax);
-            $price=rand(75,125);
+            $price_mayor=rand(75,125);
+            $price_menor=$price_mayor*1.15;
             $cost=rand(39,75);
+            $stock=rand(105,500);
             $product->units()->attach($unit,
             [
                 'place_id'=>1,
                 'cost'=>$cost,
-                'price'=>$price,
-                'margin'=>($price/$cost)-1,
-                'stock'=>rand(15,45)
+                'price_mayor'=>$price_mayor,
+                'price_menor'=>$price_menor,
+                'min'=>$stock*0.25,
+                'margin'=>($price_menor/$cost)-1,
+                'stock'=>$stock
 
             ]);
             $product->providers()->attach($provider);

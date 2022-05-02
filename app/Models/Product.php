@@ -52,7 +52,7 @@ class Product extends Model
 
     public function units()
     {
-        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('id','price','stock','cost');
+        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('id','price_menor','price_mayor','min','stock','cost');
     }
 
     public function places()

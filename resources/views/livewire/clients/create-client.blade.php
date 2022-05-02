@@ -38,8 +38,8 @@
                
                 <div class="  pb-6 flex items-end space-x-3">
                     <div class="w-full">
-                        <x-input label="RNC/Cédula" id="client.RNC" type="number" wire:model.defer="form.RNC" />
-                        <x-input-error for="form.RNC" />
+                        <x-input label="RNC/Cédula" id="client.RNC" type="number" wire:model.defer="form.rnc" />
+                        <x-input-error for="form.rnc" />
                     </div>
                     @can('Asignar Créditos')
                         <div class="w-full">

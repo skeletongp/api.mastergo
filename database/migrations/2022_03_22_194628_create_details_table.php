@@ -21,6 +21,9 @@ return new class extends Migration
             $table->decimal('total',11,4)->comment('Total de lo que hace el detalle');
             $table->decimal('cost',11,4)->comment('Costo que tenía el producto al momento de ser añadido');
             $table->decimal('taxtotal',11,4)->comment('Total de impuestos del detalle');
+            $table->decimal('discount',11,4)->comment('Descontado al producto en dinero');
+            $table->decimal('discount_rate',11,4)->comment('Descontado al producto en porciento');
+            $table->enum('price_type',['mayor','detalle'])->comment('Tipo de precio que se cobró (Al por mayor o detalle)');
             $table->decimal('utility',11,4)->comment('Ganancia que deja este detalle (cant*price)-(cant*cost)');
             $table->foreignId('product_id')->constrained();
             $table->foreignId('user_id')->constrained();

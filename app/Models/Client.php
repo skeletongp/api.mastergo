@@ -20,7 +20,7 @@ class Client extends Model
         'email',
         'fullname',
         'address',
-        'RNC',
+        'rnc',
         'phone',
         'limit',
         'store_id',
@@ -46,6 +46,12 @@ class Client extends Model
     {
         return new Attribute(
             get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
+        );
+    }
+    public function balance(): Attribute
+    {
+        return new Attribute(
+            get: fn () => formatNumber($this->limit)
         );
     }
     public function contable()

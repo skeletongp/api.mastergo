@@ -18,7 +18,9 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained();
             $table->foreignId('unit_id')->constrained();
             $table->foreignId('place_id')->constrained();
-            $table->decimal('price',11,4)->comment('Precio de venta del producto');
+            $table->decimal('price_mayor',11,4)->comment('Precio del producto al por mayor');
+            $table->decimal('price_menor',11,4)->comment('Precio del producto al detalle');
+            $table->decimal('min',11,4)->comment('Cantidad mínima para considerar un producto al por mayor');
             $table->decimal('cost',11,4)->comment('Costo base del producto (valor de compra)');
             $table->decimal('margin',11,4)->comment('Ganancia porcentual que genera el producto');
             $table->decimal('stock',11,4)->comment('Cantidad de disponible de esta unidad)');

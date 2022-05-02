@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Client;
+use App\Models\Store;
 use Illuminate\Support\Facades\Cache;
 
 class ClientObserver
@@ -16,7 +17,11 @@ class ClientObserver
         Cache::forget('clients' . $client->store_id);
         Cache::forget('store_' . $client->store_id);
         Cache::forget('place_' . $client->store_id);
+        $store=optional(auth()->user())->store?:Store::first();
+        $num=$store->clients()->count()+1;
+        $code=str_pad($num,4,'0', STR_PAD_LEFT);
         $client->fullname = (string) rtrim($client->lastname).', '.$client->name;
+        $client->code = $code;
     }
    
     public function updated(Client $client)

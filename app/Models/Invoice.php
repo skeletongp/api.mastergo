@@ -26,11 +26,11 @@ class Invoice extends Model
         });
     }
     const TYPES = [
-        'DOCUMENTO DE CONDUCE' => 'B00',
-        'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',
         'COMPROBANTE DE CONSUMIDOR FINAL' => 'B02',
+        'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',
         'COMPROBANTE DE RÉGIMEN ESPECIAL' => 'B14',
-        'COMPROBANTE GUBERNAMENTAL' => 'B15'
+        'COMPROBANTE GUBERNAMENTAL' => 'B15',
+        'DOCUMENTO DE CONDUCE' => 'B00',
     ];
 
     public function details()

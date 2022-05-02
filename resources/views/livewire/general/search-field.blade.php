@@ -39,7 +39,7 @@
                         <x-toast  id="p{{ $product->id }}">
                             <x-slot name="text">
                                 <a href="{{route('products.show', $product)}}" title=" {{ $product->name.' '.$product->units()->first()->stock.' '.$product->units()->first()->symbol }}">
-                                    {{ $product->name.' '.$product->units()->first()->stock.' '.$product->units()->first()->symbol }}
+                                    {{ $product->code}} -    {{ $product->name}}
                                 </a>
                             </x-slot>
                         </x-toast>

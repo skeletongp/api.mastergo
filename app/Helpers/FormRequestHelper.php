@@ -19,6 +19,17 @@ function orderConfirmRules() :Array
         'form.type' => 'required',
     ];
 }
+function invoiceCreateRules(){
+    return  [
+        'form.product_id' => 'numeric|required|exists:products,id',
+        'cant' => 'numeric|min:0.001|required',
+        'price' => 'numeric|min:0.01|required',
+        'form.total' => 'numeric|min:0.01|required',
+        'discount' => 'numeric|min:0|required',
+        'form.cost' => 'numeric|min:0.01|required',
+        'client'=>'required',
+    ];
+}
 function verifyClientLimit(Client $client, $rest){
     return $client->limit>=$rest;
 }

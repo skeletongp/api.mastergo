@@ -16,12 +16,13 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name',50)->comment('Primer nombre del cliente');
+            $table->string('code',50)->comment('Código del cliente basado en tres cifra');
             $table->string('lastname',75)->comment('Apellidos');
             $table->string('fullname',75)->comment('Nombre y Apellidos');
             $table->string('email',100)->unique();
             $table->string('address',255)->comment('Dirección del cliente');
             $table->string('phone',25);
-            $table->string('RNC')->nullable();
+            $table->string('rnc')->nullable();
             $table->decimal('limit',11,4)->default(0)->comment('Crédito límite del cliente');
             $table->foreignId('store_id')->constrained();
             $table->softDeletes();

@@ -24,7 +24,7 @@ class CreateClient extends Component
         'form.address' => 'required|string|max:100',
         'form.limit' => 'required|numeric|min:0',
         'form.phone' => 'required|string|max:25',
-        'form.RNC' => 'string|max:25',
+        'form.rnc' => 'string|max:25',
         'form.store_id' => 'required|numeric|exists:stores,id',
     ];
     public function createClient()
@@ -42,6 +42,7 @@ class CreateClient extends Component
                 'path' => $this->photo_path
             ]);
         }
+        $this->emit('realoadClients');
         $client->name=$client->fullname;
         
         $this->reset();
