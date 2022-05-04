@@ -9,10 +9,11 @@ use Illuminate\Support\Arr;
 
 trait GenerateInvoiceTrait
 {
+    public $number, $condition = "DE CONTADO", $type, $vence, $seller, $compAvail=true;
+
     public function createDetails($invoice)
     {
         foreach ($this->details as $ind => $detail) {
-            dd($detail);
             unset($this->details[$ind]['product_name']);
             unset($this->details[$ind]['unit_name']);
             unset($this->details[$ind]['id']);
@@ -40,33 +41,50 @@ trait GenerateInvoiceTrait
     }
     public function sendInvoice()
     {
+        $total=array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
-
+        if ($this->condition!='DE CONTADO' && $this->verifyCredit($total, $this->client['limit'])) {
+            $this->emit('showAlert', 'El cliente no tiene balance suficiente', 'error');
+            return false;
+        }
         $invoice = $user->store->invoices()->create(
             [
-                'amount' => array_sum(array_column($this->details, 'subtotal')),
-                'discount' => 0,
-                'total' =>  array_sum(array_column($this->details, 'subtotal')),
-                'payed' => 0,
-                'rest' =>  array_sum(array_column($this->details, 'subtotal')),
-                'efectivo' => 0,
-                'tarjeta' => 0,
-                'tax' => 0,
-                'transferencia' => 0,
+
                 'day' => date('Y-m-d'),
                 'seller_id' => $user->id,
+                'condition'=>$this->condition,
+                'expires_at'=>$this->vence,
                 'contable_id' => $user->id,
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
+                'client_id' => $this->client['id'],
                 'status' => 'waiting',
                 'type' => Invoice::TYPES['DOCUMENTO DE CONDUCE'],
             ]
         );
+        $this->createPayment($invoice);
         $this->createDetails($invoice);
         event(new NewInvoice($invoice));
-
-        $this->reset('form', 'details', 'producto');
+        $this->reset('form', 'details', 'producto', 'price', 'client','client_code');
+        $this->mount();
         $this->emit('showAlert', 'Factura enviada exitosamente', 'success');
+    }
+    public function createPayment($invoice)
+    {
+        $data = [
+            'ncf'=>'',
+            'amount' => array_sum(array_column($this->details, 'subtotal')),
+            'discount' => 0,
+            'total' =>  array_sum(array_column($this->details, 'subtotal')),
+            'payed' => 0,
+            'rest' =>  array_sum(array_column($this->details, 'subtotal')),
+            'cambio' =>  0,
+            'efectivo' => 0,
+            'tarjeta' => 0,
+            'tax' => 0,
+            'transferencia' => 0,
+        ];
+       $invoice->payments()->save(setPayment($data));
     }
     public function restStock($pivotUnitId, $cant)
     {
@@ -75,5 +93,8 @@ trait GenerateInvoiceTrait
         $unit->pivot->stock = $unit->stock - $cant;
         $unit->pivot->save();
     }
-
+    public function verifyCredit($amount, $credit)
+    {
+       return !$amount>$credit;
+    }
 }

@@ -2,6 +2,7 @@
 
 use App\Models\Count;
 use App\Models\CountMain;
+use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -70,4 +71,8 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable)
     if ($outcomeable) {
         $outcomeable->outcomes()->save($outcome);
     }
+}
+function setPayment($data){
+    $payment=Payment::create($data);
+    return $payment;
 }

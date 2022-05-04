@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Invoices\Includes;
 trait DetailsSectionTrait
 {
     public $producto;
+    public $product, $product_code, $product_name, $products;
     public function setProduct($product_code)
     {
         $code = str_pad($product_code, 3, '0', STR_PAD_LEFT);
@@ -21,9 +22,10 @@ trait DetailsSectionTrait
             $this->unit_id = $product->units->first()->pivot->id;
             $this->product = collect($productLoad);
             $this->product_code = $code;
+            $this->product_name = $product->name;
             $this->updatedUnitId();
         } else {
-            $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total');
+            $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name','taxTotal');
         }
     }
     public function addItems()
@@ -35,9 +37,11 @@ trait DetailsSectionTrait
         $this->form['subtotal'] =  $this->cant * $this->price;
         $this->form['discount_rate'] =  ($this->discount / 100);
         $this->form['discount'] = ($this->form['subtotal'] * ($this->discount / 100));
-        $this->form['totalTax'] = $this->totalTax;
-        $this->form['total'] = ($this->form['subtotal'] - $this->form['discount']) + $this->totalTax;
+        $this->form['taxTotal'] = $this->taxTotal;
+        $this->form['total'] = ($this->form['subtotal'] - $this->form['discount']) + $this->taxTotal;
+        $this->validate();
         $this->form['utility'] = ($this->form['cant'] * $this->form['price']) - ($this->form['cant'] * $this->form['cost']);
+        $this->form['unit_id'] = $this->unit_id;
         $this->form['user_id'] = auth()->user()->id;
         $this->form['store_id'] = auth()->user()->store->id;
         $this->form['place_id'] = auth()->user()->place->id;
@@ -45,10 +49,9 @@ trait DetailsSectionTrait
         $this->form['product_code'] = $this->product['code'];
         $this->form['taxes'] = $this->product['taxes'];
 
-        $this->validate();
         array_push($this->details, $this->form);
         $this->emit('addDetailToJS', $this->details);
-        $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total');
+        $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name','taxTotal');
     }
     public function removeItem($id)
     {
@@ -67,16 +70,20 @@ trait DetailsSectionTrait
                 $this->form['price_type'] = 'detalle';
             }
             $this->form['cost'] = $unit->pivot->cost;
-            $this->form['unit_name'] = $unit->name;
+            $this->form['unit_name'] = $unit->symbol;
             $discount = 0;
             if ($this->discount) {
                 $discount = $this->discount;
             }
             $sub = str_replace(',', '', formatNumber(($this->cant * $this->price) * (1 - ($discount / 100))));
             if ($this->product) {
-                $this->totalTax = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
+                $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
             }
-            $this->total = str_replace(',', '', formatNumber($sub + $this->totalTax));
+            $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
         }
+    }
+    public function updatedProductCode()
+    {
+        $this->setProduct($this->product_code);
     }
 }

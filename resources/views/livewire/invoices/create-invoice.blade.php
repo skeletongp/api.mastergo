@@ -1,5 +1,5 @@
 <div class="flex space-x-8 divide-x divide-red-100">
-    <div class="w-max flex flex-col space-y-4">
+    <div class="w-max flex flex-col max-w-6xl space-y-4">
         <div class="flex space-x-8">
             {{-- Client Section --}}
             @include('livewire.invoices.includes.clientsection')
@@ -18,7 +18,7 @@
             </div>
         @endif
     </div>
-    <div class="max-w-sm w-full px-4">
+    <div class=" w-full px-2">
         @include('livewire.invoices.includes.totalsection')
     </div>
 

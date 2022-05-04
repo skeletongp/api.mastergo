@@ -16,22 +16,21 @@ use Livewire\Component;
 use App\Http\Livewire\Invoices\Includes\ClientSectionTrait;
 use App\Http\Livewire\Invoices\Includes\DetailsSectionTrait;
 use App\Http\Livewire\Invoices\Includes\GenerateInvoiceTrait;
+use App\Http\Livewire\Invoices\Includes\InvoiceData;
 use Carbon\Carbon;
 
 class CreateInvoice extends Component
 {
-    use WithPagination, ClientSectionTrait, GenerateInvoiceTrait, DetailsSectionTrait;
-    public $form = [], $cant = 0, $price, $discount=0, $total, $totalTax=0, $scanned;
+    use WithPagination, ClientSectionTrait, GenerateInvoiceTrait, DetailsSectionTrait, InvoiceData;
+    public $form = [], $cant = 0, $price, $discount=0, $total, $taxTotal=0, $scanned;
     public $client, $client_code, $clients;
-    public $product, $product_code, $products;
-    public $number, $condition = "DE CONTADO", $type, $vence, $seller;
     public $details = [];
 
     public $producto;
     public  $unit, $unit_id;
     protected $listeners = ['selProducto', 'addItems', 'realoadClients'];
 
-    protected $queryString = [ 'details','client','client_code'];
+    protected $queryString = [ 'details','client','client_code', 'vence','condition','type'];
 
     function rules()
     {
@@ -41,8 +40,9 @@ class CreateInvoice extends Component
     {
         $store = auth()->user()->store;
         $this->vence = Carbon::now()->addDays(30)->format('Y-m-d');
-        $this->clients = $store->clients()->orderBy('lastname')->pluck('fullname', 'code');
+        $this->condition = 'DE CONTADO';
         $this->number = str_pad($store->invoices()->count() + 1, 7, '0', STR_PAD_LEFT);
+        $this->clients = $store->clients()->orderBy('lastname')->pluck('fullname', 'code');
         $this->seller = auth()->user()->fullname;
     }
     public function render()
@@ -62,4 +62,5 @@ class CreateInvoice extends Component
     {
         $this->changeClient();
     }
+    
 }

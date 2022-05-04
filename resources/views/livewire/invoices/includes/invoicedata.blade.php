@@ -1,4 +1,4 @@
-<div class="max-w-sm grid grid-cols-2 gap-x-4">
+<div class="w-full grid grid-cols-2 gap-x-4">
     <div class="space-y-2">
         <div class="pt-1">
             <x-base-input id="number" wire:model="number" disabled class="text-right py-0" label="Pedido Nº.">
@@ -31,5 +31,8 @@
                     <option value="{{ $type }}">{{ $ind }}</option>
                 @endforeach
         </x-base-select>
+        @if (!$compAvail)
+        <span class="text-red-400">Tipo de comprobante no disponible</span>
+    @endif
     </div>
 </div>

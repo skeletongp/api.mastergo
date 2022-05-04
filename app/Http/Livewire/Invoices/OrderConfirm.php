@@ -15,46 +15,24 @@ use Livewire\Component;
 
 class OrderConfirm extends Component
 {
-    public  $form, $compAvail = true, $clients;
-    public Client $client;
+    public  $form, $compAvail = true;
 
     public function mount($invoice)
     {
         $this->form = $invoice;
+        $this->form=array_merge($this->form, $invoice['payments'][0]);
         $this->form['efectivo'] = $this->form['rest'];
         $this->updatedForm($this->form['efectivo'], 'efectivo');
     }
     public function render()
     {
-        /*   dd($this->getListeners()); */
-        if (Cache::get('clients' . auth()->user()->store->id)) {
-            $clients = Cache::get('clients' . auth()->user()->store->id);
-        } else {
-            $clients = auth()->user()->store->clients;
-            Cache::put('clients' . auth()->user()->store->id, $clients);
-        }
-        $this->clients = $clients->pluck('fullname', 'id');
+      
         return view('livewire.invoices.order-confirm');
     }
     public function updatedForm($value, $key)
     {
         switch ($key) {
-            case 'type':
-                if ($value != 'B00') {
-                    $this->compAvail = $this->checkComprobante($value);
-                    if (!$this->compAvail) {
-                        $this->form['type'] = 'B00';
-                    }
-                }
-                if ($this->form['type'] !== 'B00' && $this->form['type'] !== 'B14') {
-                    $taxTotal = floatval(array_sum(array_column($this->form['details'], 'taxtotal')));
-                    $this->form['tax'] = round($taxTotal, 2);
-                } else {
-                    $this->form['tax'] = 0;
-                }
-                $this->form['efectivo'] =  round($this->form['amount'] + $this->form['tax'] - $this->form['discount'], 2);
-                $this->updatedForm(round($this->form['efectivo'], 2), 'efectivo');
-                break;
+           
             case 'efectivo':
             case 'tarjeta':
             case 'transferencia':
@@ -87,20 +65,7 @@ class OrderConfirm extends Component
         }
     }
 
-    public function checkComprobante($type): bool
-    {
-        $comprobante = auth()->user()->store->comprobantes()
-            ->where('type', array_search($type, Invoice::TYPES))->where('status', 'disponible')
-            ->orderBy('number')->first();
-        if ($comprobante) {
-            $this->form['comprobante_id'] = $comprobante->id;
-            $this->form['type'] = $type;
-            return true;
-        } else {
-            $this->form['type'] = 'B00';
-            return false;
-        };
-    }
+   
     public function payInvoice()
     {
         $this->validate(orderConfirmRules());

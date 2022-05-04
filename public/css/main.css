@@ -6,7 +6,14 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+select{
+    -webkit-appearance: none;
+  padding: 0.1em 1.3em 0.1em 0.4em;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 1em;
+  background-image: none; 
+}
 .lds-ring {
     display: inline-block;
     position: relative;

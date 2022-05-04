@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>
-        @if (isset($titlte))
+        @if (isset($title))
             {{ $title }}
         @else
-            {{ env('APP_NAME') }}
+            {{ env('APP_NAME') .' | '. auth()->user()->store->name }}
         @endif
     </title>
 
@@ -35,13 +35,14 @@
 </head>
 
 <body class=" antialised ">
-    <div class="hidden xl:flex relative ">
-        <div class="sticky left-0 top-8 h-full  z-50 px-2" style="z-index: 80">
-            @include('includes.sidebar')
-        </div>
+    <div class="hidden md:flex relative max-w-7xl mx-auto ">
+       
         <div class="w-full min-h-[50rem] ">
+            <div class="sticky left-0 top-0  z-50 px-2" style="z-index: 80">
+                @include('includes.sidebar')
+            </div>
             {{-- Navbar --}}
-            <header class="sticky top-0 z-50 w-full mx-auto py-2 bg-white">
+            <header class="sticky top-[4.5rem] z-50 w-full mx-auto py-2 bg-white">
                 @include('includes.header')
                 <div class=" w-full bg-gray-50 py-1 px-4">
                     @if (isset($bread))
@@ -54,7 +55,7 @@
                 <div class="hidden" id="generalLoad">
                     <x-loading></x-loading>
                 </div>
-                <section class=" w-full bg-white ">
+                <section class=" w-full mx-auto max-w-7xl bg-white ">
                     {{ $slot }}
                 </section>
             </main>
@@ -64,7 +65,7 @@
         </div>
     </div>
 
-    <div class="flex justify-center items-center xl:hidden w-screen h-screen">
+    <div class="flex justify-center items-center sm:hidden w-screen h-screen">
         <h1 class=" font-bold text-3xl uppercase text-center max-w-lg leading-12">Este tamaño de pantalla no es
             compatible. Utilice un monitor más
             grande o

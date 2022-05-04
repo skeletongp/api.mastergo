@@ -1,4 +1,4 @@
-<div class="max-w-lg space-y-2">
+<div class="w-full space-y-2">
     <div class="flex space-x-4">
         <div class="flex space-x-2 relative">
             <x-base-input class="text-sm uppercase" inputClass="py-0" wire:model.lazy="client_code" id="client_code" label="Cód. Cliente" type="number"></x-base-input>

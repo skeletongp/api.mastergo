@@ -1,5 +1,7 @@
 <?php
+
 use Cloudinary\Cloudinary;
+
 function formatNumber($number)
 {
     $number = floatval(str_replace(',', '', $number));
@@ -32,4 +34,17 @@ function upPDFToCloud($path)
 
     $path = $cloudinary->uploadApi()->upload($path);
     return json_decode(json_encode($path))->url;
+}
+
+/* @params Invoices $array, Related $key, Field $value */
+/* Return Field´s Value from Related */
+function arrayFind(array $array, $key, $value)
+{
+    $result = 0;
+    foreach ($array as $ind => $item) {
+        if ($array[$ind][$key] == $value) {
+            $result = $item;
+        }
+    }
+    return $result;
 }

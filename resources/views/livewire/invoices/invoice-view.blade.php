@@ -39,11 +39,13 @@
             @else
             @endif
         </div>
+
         <div class="w-full h-full  pl-0" x-data="{ open: true }">
+
             @if ($invoices->count())
                 <div class="mx-auto ">
                     <div class="flex justify-end items-center pb-2 pt-1 space-x-4 bg-gray-100 pr-4 rounded-tr-lg">
-                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300 z-[150]"
+                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300 z-[50]"
                             wire:click="toggleThermal" data-tooltip-target="paperSize" data-tooltip-style="light">
                             <span class="far fa-exchange-alt"></span>
                         </a>
@@ -60,8 +62,8 @@
                     </div>
                     <div class="w-full relative px-12 " style=" height:215.4mm">
                         <embed class="mx-auto h-full  " id="pdfObj"
-                            src="{{ $thermal ? $pdfThermal : $pdfLetter }}#zoom=100" width="100%" height="100%"
-                            type="application/pdf" />
+                            src="{{ $thermal ? $pdfThermal : $pdfLetter }}#toolbar=1&navpanes=0&scrollbar=0&zoom=100"
+                            width="100%" height="100%" type="application/pdf" />
 
 
                     </div>
@@ -74,5 +76,18 @@
             @endif
 
         </div>
-      
+        @push('js')
+            <script>
+                $(document).ready(function() {
+                    try {
+                        window.print()
+                        console.log('prueba')
+                    } catch (error) {
+                        console.log(error)
+                    }
+
+                })
+            </script>
+        @endpush
+
     </div>

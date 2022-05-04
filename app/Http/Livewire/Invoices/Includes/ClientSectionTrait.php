@@ -16,7 +16,9 @@ trait ClientSectionTrait
                 'phone'=>$client->phone,
                 'email'=>$client->email,
                 'rnc'=>$client->rnc,
+                'id'=>$client->id,
                 'balance'=>'$'.formatNumber($client->limit),
+                'limit'=>$client->limit,
             ];
         }
         $this->client_code=$code;

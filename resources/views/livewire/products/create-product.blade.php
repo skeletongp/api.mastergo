@@ -18,7 +18,7 @@
         </ul>
     </div>
 
-    <div class="pt-4 h-full min-h-[36rem] relative ">
+    <div class="pt-4 h-full min-h-[28rem] relative ">
         @include("livewire.products.includes.$activeTab")
     </div>
 
