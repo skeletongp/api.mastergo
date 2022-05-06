@@ -15,10 +15,11 @@ class OrderView extends LivewireDatatable
 {
     use AuthorizesRequests;
     public $hideable="select";
+    public $perPage=5;
    
     public function builder()
     {
-        $invoices = auth()->user()->place->invoices()->with('seller','client','details','details.taxes', 'payments')
+        $invoices = auth()->user()->place->invoices()->with('seller','client','details','details.taxes', 'payment')
             ->orderBy('invoices.id', 'desc')->where('status', 'waiting');
         return $invoices;
     }
@@ -29,7 +30,7 @@ class OrderView extends LivewireDatatable
         return [
             Column::name('number')->label("Nro."),
             TimeColumn::name('created_at')->label("Hora")->hide(),
-            Column::callback('payments.amount:sum', function ($amount) {
+            Column::callback('payment.amount:sum', function ($amount) {
                 return '$' . formatNumber($amount);
             })->label("Subtotal"),
             Column::name('client.name')->callback(['uid', 'client_id'], function ($uid) use ($invoices) {

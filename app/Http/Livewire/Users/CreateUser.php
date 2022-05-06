@@ -47,9 +47,10 @@ class CreateUser extends Component
                 'path'=>$this->photo_path
             ]);
         }
-        $this->assignStore($user);
+        $user->assignRole($this->role);
         setContable($user, '102');
         $this->reset();
+        $this->emit('showAlert','Usuario registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');
     }
     public function updatedAvatar()
@@ -58,10 +59,6 @@ class CreateUser extends Component
         $photo = $this->avatar->storeAs('avatars', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
     }
-    public function assignStore(User $user)
-    {
-        $store=auth()->user()->store;
-        $store->users()->save($user);
-    }
+   
     
 }

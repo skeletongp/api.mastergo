@@ -32,7 +32,7 @@
             <tr class="invoice-data">
                 <td class="data-left" colspan="2">
                     <h2 class="sale-type subtitle">
-                        {{ $invoice->rest > 0 ? 'Venta a Crédito' : 'Venta de Contado' }}
+                        <b>Condición</b>:{{ $invoice->condition}}
                     </h2>
                     <h2 class="data-detail subtitle">
                         <b>FECHA</b>: 12-04-2022
@@ -101,7 +101,8 @@
                     <tr>
                         <th class="th-details">Cant</th>
                         <th class="th-details">Detalle</th>
-                        <th class="th-details">$$$</th>
+                        <th class="th-details">Prec.</th>
+                        <th class="th-details">desc</th>
                         <th class="th-details text-right">Subt.</th>
                     </tr>
                 </thead>
@@ -122,33 +123,23 @@
                             array_push($taxes, $rate);
                         @endphp
                         <tr class="tr-detail">
-                            <td class=" td-details text-center">{{ formatNumber($detail->cant) }}</td>
+                            <td class=" td-details text-center">{{ formatNumber($detail->cant) }} <sup>{{$detail->unit->symbol}}</sup></td>
                             <td class="td-details text-center">
                                 {{ $detail->product->name }}
                             </td>
                             <td class=" td-details text-center">${{ formatNumber($detail->price) }}</td>
+                            <td class=" td-details text-center">{{ formatNumber($detail->discount_rate*100) }}%</td>
                             <td class=" td-details text-right">${{ formatNumber($detail->total) }}
                             </td>
                         </tr>
                     @endforeach
-                    @php
-                        $finalTaxes = [];
-                        foreach ($taxes as $tax) {
-                            foreach ($tax as $key => $value) {
-                                if (!array_key_exists($key, $finalTaxes)) {
-                                    $finalTaxes[$key] = $value;
-                                } else {
-                                    $finalTaxes[$key] = $finalTaxes[$key] + $value;
-                                }
-                            }
-                        }
-                    @endphp
+                   
                     <tr>
-                        <td class="td-total text-right" style="padding-top:15px" colspan="3">
+                        <td class="td-total text-right" style="padding-top:15px" colspan="4">
                             <b>SUBTOTAL</b>
                         </td>
                         <td class="td-total text-right" style="padding-top:15px">
-                            ${{ formatNumber($invoice->amount) }}
+                            ${{ formatNumber($invoice->payment->amount) }}
                         </td>
                     </tr>
 
@@ -156,7 +147,7 @@
 
                         @foreach ($invoice->taxes as $tax)
                             <tr>
-                                <td class="td-total text-right" style="" colspan="3">
+                                <td class="td-total text-right" style="" colspan="4">
                                         <div style="margin-top:-1px; margin-bottom:-1px">{{ $tax->name }}</div>
                                 </td>
                                 <td class="td-total text-right" style="">
@@ -168,45 +159,45 @@
                         @endforeach
                     @endif
                     <tr>
-                        <td class="td-total text-right" style="padding-top:10px" colspan="3">
+                        <td class="td-total text-right" style="padding-top:10px" colspan="4">
                             <b>DESCUENTO</b>
                         </td>
                         <td class="td-total text-right" style="padding-top:10px">
-                            (${{ formatNumber($invoice->discount) }})
+                            (${{ formatNumber($invoice->payment->discount) }})
                         </td>
                     </tr>
                     <tr class="tr-final">
-                        <td class="td-total text-right" colspan="3">
+                        <td class="td-total text-right" colspan="4">
                             <b>TOTAL</b>
                         </td>
                         <td class="td-total text-right">
-                            <b> ${{ formatNumber($invoice->total) }}</b>
+                            <b> ${{ formatNumber($invoice->payment->total) }}</b>
                         </td>
                     </tr>
                     <tr class="">
-                        <td class="td-total text-right" style="padding-top:15px" colspan="3">
+                        <td class="td-total text-right" style="padding-top:15px" colspan="4">
                             <b>PAGADO</b>
                         </td>
                         <td class="td-total text-right" style="padding-top:15px">
-                            <b> ${{ formatNumber($invoice->payed) }}</b>
+                            <b> ${{ formatNumber($invoice->payment->payed) }}</b>
                         </td>
                     </tr>
                     @if ($invoice->rest > 0)
                         <tr class="">
-                            <td class="td-total text-right" colspan="3">
+                            <td class="td-total text-right" colspan="4">
                                 <b>PENDIENTE</b>
                             </td>
                             <td class="td-total text-right">
-                                <b> ${{ formatNumber($invoice->rest) }}</b>
+                                <b> ${{ formatNumber($invoice->payment->rest) }}</b>
                             </td>
                         </tr>
                     @else
                         <tr class="">
-                            <td class="td-total text-right" colspan="3">
+                            <td class="td-total text-right" colspan="4">
                                 <b>CAMBIO</b>
                             </td>
                             <td class="td-total text-right">
-                                <b> ${{ formatNumber($invoice->cambio) }}</b>
+                                <b> ${{ formatNumber($invoice->payment->cambio) }}</b>
                             </td>
                         </tr>
                     @endif

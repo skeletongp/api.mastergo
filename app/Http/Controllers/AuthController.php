@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -14,7 +15,9 @@ class AuthController extends Controller
         if (auth()->user()) {
             return view('welcome');
         }
-        return view('auth.login');;
+        $store=Store::find(env('STORE_ID',1))->with('users')->first();
+        $users=$store->users()->where('loggeable','yes')->pluck('fullname','username');
+        return view('auth.login', compact('users'));;
     }
     public function store(Request $request)
     {

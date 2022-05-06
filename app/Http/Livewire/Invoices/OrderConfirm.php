@@ -20,13 +20,13 @@ class OrderConfirm extends Component
     public function mount($invoice)
     {
         $this->form = $invoice;
-        $this->form=array_merge($this->form, $invoice['payments'][0]);
+        $this->form=array_merge($this->form, $invoice['payment']);
         $this->form['efectivo'] = $this->form['rest'];
+        $this->form['contable_id'] = auth()->user()->id;
         $this->updatedForm($this->form['efectivo'], 'efectivo');
     }
     public function render()
     {
-      
         return view('livewire.invoices.order-confirm');
     }
     public function updatedForm($value, $key)
@@ -39,10 +39,7 @@ class OrderConfirm extends Component
                 $this->form['payed'] = $this->form['efectivo'] +
                     $this->form['tarjeta'] + $this->form['transferencia'];
                 break;
-            case 'client_id':
-                if ($value) {
-                    $this->client = Client::find(intval($value));
-                }
+            
             default:
                 # code...
                 break;
@@ -69,11 +66,11 @@ class OrderConfirm extends Component
     public function payInvoice()
     {
         $this->validate(orderConfirmRules());
-        if (!verifyClientLimit($this->client, $this->form['rest'])) {
-            $this->emit('showAlert', 'El cliente no tiene crédito disponible', 'warning');
-            return;
-        }
         $invoice = Invoice::find($this->form['id']);
+        if ($invoice->condition=='De Contado' && $this->form['rest']>0) {
+            $this->emit('showAlert','Está factura debe ser saldada', 'warning');
+            return ;
+        }
 
         if ($this->form['rest'] <= 0 && $this->form['status'] != 'entregado') {
             $this->form['status'] = 'pagado';
@@ -82,15 +79,17 @@ class OrderConfirm extends Component
         }
         $pagos = ['Efectivo' => $invoice->efectivo, 'Tarjeta' => $invoice->tarjeta, 'Transferencia' => $invoice->transferencia];
         $this->form['payway'] = array_search(max($pagos), $pagos);
-        $invoice->update(Arr::except($this->form, ['seller', 'pivot', 'details', 'id']));
-        if ($invoice->rest > 0) {
+        $payment=$invoice->payment;
+        $invoice->update(Arr::only($this->form, ['note', 'status', 'payway', 'contable_id']));
+        $payment->update(Arr::only($this->form, ['efectivo', 'tarjeta', 'transferencia', 'payed', 'rest','cambio']));
+        if ($payment->rest > 0) {
             setContable($invoice->client, '101');
         }
-        setIncome($invoice, 'Ingreso por venta Factura Nº. ' . $invoice->number, $invoice->payed);
+        setIncome($invoice, 'Ingreso por venta Factura Nº. ' . $invoice->number, $payment->payed);
         if ($invoice->comprobante) {
             $this->setTaxes($invoice);
         }
-        $this->setTransaction($invoice, $invoice->client);
+        $this->setTransaction($invoice, $payment, $invoice->client);
         setPDFPath($invoice);
 
         $this->closeComprobante($invoice->comprobante, $invoice);
@@ -125,13 +124,13 @@ class OrderConfirm extends Component
         }
     }
 
-    public function setTransaction($invoice, $client)
+    public function setTransaction($invoice, $payment, $client)
     {
         $place = auth()->user()->place;
         $creditable = $place->counts()->where('code', '400-01')->first();
         $ref = $invoice->comprobante ?: $invoice;
         $ref = $ref->number;
-        $moneys = array($invoice->efectivo, $invoice->tarjeta, $invoice->transferencia, $invoice->rest);
+        $moneys = array($payment->efectivo, $payment->tarjeta, $payment->transferencia, $payment->rest);
         $max = array_search(max($moneys), $moneys);
         $toTax=null;
         switch ($max) {
@@ -166,7 +165,7 @@ class OrderConfirm extends Component
             setTransaction('Reg. retención de ' . $tax->name, $ref, $tax->pivot->amount,   $toTax, $tax->contable()->first());
         }
         $client->update([
-            'limit' => $client->limit - $invoice->rest
+            'limit' => $client->limit - $invoice->payment->rest
         ]);
     }
 }

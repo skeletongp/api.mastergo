@@ -19,14 +19,12 @@ function orderConfirmRules() :Array
         'form.type' => 'required',
     ];
 }
-function invoiceCreateRules(){
+function invoiceCreateRules($stock){
     return  [
         'form.product_id' => 'numeric|required|exists:products,id',
-        'cant' => 'numeric|min:0.001|required',
+        'cant' => 'numeric|min:0.001|required|max:'.$stock,
         'price' => 'numeric|min:0.01|required',
-        'form.total' => 'numeric|min:0.01|required',
         'discount' => 'numeric|min:0|required',
-        'form.cost' => 'numeric|min:0.01|required',
         'client'=>'required',
     ];
 }

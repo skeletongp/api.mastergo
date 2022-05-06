@@ -16,17 +16,17 @@
         </div>
     </div>
     <div class="w-full">
-        <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.address" id="client.address" label="Dirección"></x-base-input>
+        <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.address" id="clt.address" label="Dirección"></x-base-input>
     </div>
-    <div class="flex space-x-4 ">
+    <div class="flex space-x-2 ">
         <div class="w-full ">
-            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.phone" id="client.phone" label="Nº. Teléfono" type="number"></x-base-input>
+            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.phone" id="clt.phone" label="Nº. Teléfono" type="tel"></x-base-input>
         </div>
         <div class="w-full">
-            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.rnc" id="client.rnc" label="RNC/CÉD."></x-base-input>
+            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.rnc" id="clt.rnc" label="RNC/CÉD."></x-base-input>
         </div>
-        <div class="w-full">
-            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.balance" id="client.balance" label="Balance"></x-base-input>
+        <div class="">
+            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.balance" id="clt.balance" label="Balance"></x-base-input>
         </div>
     </div>
 </div>

@@ -38,7 +38,7 @@ class CreateProduct extends Component
     ];
     public function mount()
     {
-        $store=optional(auth()->user())->store?:Store::first();
+        $store=auth()->user()->store;
         $num=$store->products()->count()+1;
         $code=str_pad($num,3,'0', STR_PAD_LEFT);
         $this->form['code']=$code;

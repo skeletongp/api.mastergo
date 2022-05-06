@@ -24,6 +24,7 @@ class InvoiceController extends Controller
     {
         $data = [
             'invoice' => $invoice,
+            'payment'=>$invoice->payment
         ];
         $pdf=App::make('dompdf.wrapper');
         $pdf->loadview('pages.invoices.letter', $data)->setPaper('80mm', 'portrait');

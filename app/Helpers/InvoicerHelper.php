@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\App;
 function setPDFPath($invoice)
 {
     $data = [
-        'invoice' => $invoice,
+        'invoice' => $invoice->load('details'),
+        'payment'=>$invoice->payment
     ];
     $PDF = App::make('dompdf.wrapper');
     $PDF2 = App::make('dompdf.wrapper');

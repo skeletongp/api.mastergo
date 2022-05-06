@@ -3,13 +3,19 @@
 <div>
     <x-modal>
         <x-slot name="title">
+          <div class="flex justify-between items-center">
             <span> Nuevo Cliente</span>
+            
+          </div>
         </x-slot>
         <x-slot name="button">
                 <span class="fas w-6 text-center fa-user-plus mr-2"></span>
                 <span> Cliente</span>
         </x-slot>
-        <div>
+        <div class="relative pt-8">
+            <div class="absolute right-2 top-0 font-bold text-lg">
+                <span>Cód.: {{$form['code']}}</span>
+            </div>
             <form wire:submit.prevent="createClient">
                 <div class="  pb-6 flex items-end space-x-3">
                     <div class="w-full">
@@ -52,7 +58,7 @@
                 </div>
                 <div class="  pb-6 flex items-end space-y-0 space-x-3">
                     <div class="w-full">
-                        <x-input label="No. Teléfono" id="client.phone" wire:model.defer="form.phone" />
+                        <x-input type="tel" label="No. Teléfono" id="client.phone" wire:model.defer="form.phone" />
                         <x-input-error for="form.phone" />
                     </div>
                     

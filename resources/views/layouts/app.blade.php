@@ -39,7 +39,7 @@
        
         <div class="w-full min-h-[50rem] ">
             <div class="sticky left-0 top-0  z-50 px-2" style="z-index: 80">
-                @include('includes.sidebar')
+                @include('includes.menubar')
             </div>
             {{-- Navbar --}}
             <header class="sticky top-[4.5rem] z-50 w-full mx-auto py-2 bg-white">

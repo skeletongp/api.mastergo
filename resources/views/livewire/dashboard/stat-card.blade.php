@@ -1,20 +1,54 @@
-<div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-    <a href="#">
-        <div class="bg-center mx-auto bg-cover w-28 h-28 rounded-full">
-            <span class="{{$icon}}"></span>
+    <div class=" w-full">
+        <div style="height: 22rem" class="p-4 shadow-xl">
+            <canvas id="myChart" ></canvas>
         </div>
-
-    </a>
-    <div class="p-5">
-        <a href="#">
-            <h5
-                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {{ $title }}</h5>
-        </a>
-        <a 
-            class="inline-flex items-center justify-end space-x-4 py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            <span> {{$value}}</span>
-            
-        </a>
     </div>
-</div>
+    @push('js')
+        <script>
+            $(document).ready(function() {
+
+                const labels = @this.data['labels'];
+
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Balance de Hoy',
+                        backgroundColor: ['#33ae23', '#991111'],
+                        borderColor: ['#33ae23', '#991111'],
+                        data: @this.data['values'],
+                    }]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Balance de Hoy',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            legend: {
+                                display: true,
+                                labels: {
+                                    color: '#000',
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+                const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                );
+            })
+        </script>
+    @endpush

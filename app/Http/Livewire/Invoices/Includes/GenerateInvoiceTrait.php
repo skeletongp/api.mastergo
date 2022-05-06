@@ -19,7 +19,7 @@ trait GenerateInvoiceTrait
             unset($this->details[$ind]['id']);
             $detail['detailable_id'] = $invoice->id;
             $detail['detailable_type'] = Invoice::class;
-            $taxes = $detail['taxes'];
+            $taxes = empty($detail['taxes'])?[]:$detail['taxes'];
             $detail = Detail::create(Arr::except($detail, 'taxes'));
             $detail->taxes()->sync($taxes);
             $detail->taxtotal = $detail->taxes->sum('rate') * $detail->subtotal;
@@ -74,7 +74,7 @@ trait GenerateInvoiceTrait
         $data = [
             'ncf'=>'',
             'amount' => array_sum(array_column($this->details, 'subtotal')),
-            'discount' => 0,
+            'discount' => array_sum(array_column($this->details, 'discount')),
             'total' =>  array_sum(array_column($this->details, 'subtotal')),
             'payed' => 0,
             'rest' =>  array_sum(array_column($this->details, 'subtotal')),
@@ -84,7 +84,7 @@ trait GenerateInvoiceTrait
             'tax' => 0,
             'transferencia' => 0,
         ];
-       $invoice->payments()->save(setPayment($data));
+       $invoice->payment()->save(setPayment($data));
     }
     public function restStock($pivotUnitId, $cant)
     {

@@ -32,10 +32,7 @@ class CreateInvoice extends Component
 
     protected $queryString = [ 'details','client','client_code', 'vence','condition','type'];
 
-    function rules()
-    {
-        return invoiceCreateRules();
-    }
+   
     public function mount()
     {
         $store = auth()->user()->store;
@@ -62,5 +59,9 @@ class CreateInvoice extends Component
     {
         $this->changeClient();
     }
-    
+    public function refresh()
+    {
+        $this->reset('form', 'details', 'producto', 'price', 'client','client_code','condition');
+        $this->render();
+    }
 }

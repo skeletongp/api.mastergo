@@ -53,7 +53,7 @@ class TableUser extends LivewireDatatable
     public function cellClasses($row, $column)
     {
         return
-            'whitespace-normal text-base text-gray-900 px-6 py-2';
+            'whitespace-normal  text-gray-900 px-6 py-2';
     }
    
     

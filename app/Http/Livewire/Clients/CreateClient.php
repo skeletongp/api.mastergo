@@ -15,6 +15,10 @@ class CreateClient extends Component
     public function render()
     {
 
+        $store=auth()->user()->store;
+        $num=$store->clients()->count()+1;
+        $code=str_pad($num,3,'0', STR_PAD_LEFT);
+        $this->form['code']=$code;
         return view('livewire.clients.create-client');
     }
     protected $rules = [
@@ -46,6 +50,7 @@ class CreateClient extends Component
         $client->name=$client->fullname;
         
         $this->reset();
+        $this->render();
         $this->emit('showAlert', 'Cliente registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
     }

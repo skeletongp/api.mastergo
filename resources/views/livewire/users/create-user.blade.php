@@ -46,7 +46,6 @@
                         <label for="role">Rol de usuario</label>
                         <x-select id="frole" wire:model.defer="role" class=" select2">
                             <option value=""></option>
-                            <option value="Administrador">Administrador</option>
                             @foreach ($roles as $name)
                                 <option value="{{ $name }}">{{ $name }}</option>
                             @endforeach

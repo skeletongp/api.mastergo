@@ -9,6 +9,7 @@ window._ = require('lodash');
 window.axios = require('axios');
 window.$ = require('jquery');
 window.jQuery = require('jquery');
+window.Chart =  require('chart.js/auto').default;;
 window.Swal = require('sweetalert2');
 window.toastr = require('toastr');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

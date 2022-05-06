@@ -37,9 +37,9 @@ class Invoice extends Model
     {
         return $this->morphMany(Detail::class, 'detailable');
     }
-    public function payments()
+    public function payment()
     {
-        return $this->morphMany(Payment::class, 'payable');
+        return $this->morphOne(Payment::class, 'payable');
     }
     public function store()
     {

@@ -58,7 +58,7 @@
                     </div>
                     <div class="flex space-x-4 items-center">
                         <div class="w-full">
-                            <x-input type="tel" class="text-2xl tel" label="No. Teléfono" wire:model.defer="form.phone"
+                            <x-input type="tel" class="text-2xl " label="No. Teléfono" wire:model.defer="form.phone"
                                 id="form.phone">
                             </x-input>
                             <x-input-error for="form.phone"></x-input-error>

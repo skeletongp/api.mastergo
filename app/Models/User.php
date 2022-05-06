@@ -30,6 +30,7 @@ class User extends Authenticatable
         'username',
         'password',
         'phone',
+        'logueable',
         'avatar',
         'store_id',
         'place_id',

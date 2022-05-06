@@ -5,7 +5,14 @@ namespace App\Http\Livewire\Invoices\Includes;
 trait DetailsSectionTrait
 {
     public $producto;
-    public $product, $product_code, $product_name, $products;
+    public $product, $product_code, $product_name, $products, $stock, $unit;
+
+
+    function rules()
+    {
+        return invoiceCreateRules($this->stock);
+    }
+
     public function setProduct($product_code)
     {
         $code = str_pad($product_code, 3, '0', STR_PAD_LEFT);
@@ -25,23 +32,22 @@ trait DetailsSectionTrait
             $this->product_name = $product->name;
             $this->updatedUnitId();
         } else {
-            $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name','taxTotal');
+            $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name', 'taxTotal');
         }
     }
     public function addItems()
     {
-        // $this->removeIfExists();
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
         $this->form['price'] = $this->price;
+        $this->validate();
         $this->form['subtotal'] =  $this->cant * $this->price;
         $this->form['discount_rate'] =  ($this->discount / 100);
         $this->form['discount'] = ($this->form['subtotal'] * ($this->discount / 100));
         $this->form['taxTotal'] = $this->taxTotal;
         $this->form['total'] = ($this->form['subtotal'] - $this->form['discount']) + $this->taxTotal;
-        $this->validate();
         $this->form['utility'] = ($this->form['cant'] * $this->form['price']) - ($this->form['cant'] * $this->form['cost']);
-        $this->form['unit_id'] = $this->unit_id;
+        $this->form['unit_id'] = $this->unit->id;
         $this->form['user_id'] = auth()->user()->id;
         $this->form['store_id'] = auth()->user()->store->id;
         $this->form['place_id'] = auth()->user()->place->id;
@@ -50,17 +56,36 @@ trait DetailsSectionTrait
         $this->form['taxes'] = $this->product['taxes'];
 
         array_push($this->details, $this->form);
-        $this->emit('addDetailToJS', $this->details);
-        $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name','taxTotal');
+        $this->emit('focusCode');
+        $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name', 'taxTotal');
     }
     public function removeItem($id)
     {
         unset($this->details[$id]);
+        $this->details=array_values($this->details);
+        foreach ($this->details as $ind => $det) {
+            $this->details[$ind]['id']=$ind;
+        }
+    }
+    public function checkStock()
+    {
+        $exist = array_keys(array_column($this->details, 'product_id'), $this->form['product_id']);
+        if ($exist) {
+            foreach ($exist as $key) {
+
+                if ($this->details[$key]['unit_id'] == $this->unit->id) {
+                    $this->stock = $this->stock - $this->details[$key]['cant'];
+                }
+                $this->details = array_values($this->details);
+            }
+        }
     }
     public function updatedUnitId()
     {
         $unit = auth()->user()->place->units()->wherePivot('id', $this->unit_id)->first();
+        $this->unit=$unit;
         if ($unit) {
+            $this->stock = $unit->pivot->stock;
             if ($this->cant >= $unit->pivot->min) {
                 $this->price = formatNumber($unit->pivot->price_mayor);
 
@@ -75,9 +100,11 @@ trait DetailsSectionTrait
             if ($this->discount) {
                 $discount = $this->discount;
             }
-            $sub = str_replace(',', '', formatNumber(($this->cant * $this->price) * (1 - ($discount / 100))));
+            $sub = str_replace(',', '', formatNumber(($this->cant ?: 0 * $this->price) * (1 - ($discount / 100))));
             if ($this->product) {
                 $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
+            $this->checkStock();
+
             }
             $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
         }

@@ -218,11 +218,11 @@
                         <tr>
                             <td colspan="2" style="border-right: .3px solid #ccc; border-bottom: .3px solid #ccc; ">
                                 <div>
-                                    {!! $invoice->ncf ? '<b>NCF:' . $invoice->ncf . '</b> <br />' : '' !!}
+                                    {!! $invoice->ncf ? '<b>NCF:' . $payment->ncf . '</b> <br />' : '' !!}
                                     <b>Fact. Nº. </b>{{ $invoice->number }}<br />
                                     <b>Fecha:</b> {{ date_format(date_create($invoice->day), 'd/m/Y') }}<br />
                                     <b>Vence:</b>
-                                    {{ date_format(\Carbon\Carbon::create($invoice->day)->addMonth(), 'd/m/Y') }}
+                                    {{ date_format(\Carbon\Carbon::create($invoice->expires_at), 'd/m/Y') }}
                                     <br />
                                     <b>Forma de pago:</b>
                                     {{ $invoice->payway }}
@@ -230,7 +230,7 @@
                             </td>
                             <td colspan="2" style="border-bottom: .3px solid #ccc; ">
                                 <div style="text-align:right; ">
-                                    <b>{{ 'CLIENTE' }}</b> <br>
+                                    <b>{{ 'DIRIGIDA A:' }}</b> <br>
                                     {{ $invoice->client->fullname }}<br />
                                     {!! $invoice->client->RNC ? '<b>RNC /CED:</b> ' . $invoice->client->RNC . '<br />' : '' !!}
                                     <b>TEL:</b> {{ $invoice->client->phone }} <br>
@@ -272,7 +272,7 @@
             @forelse ($invoice->details as $ind=> $detail)
                 <tr class="item">
                     <td style=" width:13%; text-align:right;">
-                        <div style="padding-right: 20px">{{ \formatNumber($detail->cant) }}</div>
+                        <div style="padding-right: 20px">{{ \formatNumber($detail->cant)}}<sup>{{$detail->unit->symbol}}</sup></div>
                     </td>
                     <td style=" width:54%;">{{ $detail->product->name }}</td>
                     <td style=" width: 25%; text-align:right;">${{ \formatNumber($detail->price) }}</td>
@@ -308,7 +308,7 @@
                     <div></div>
                 </td>
                 <td style="text-align: right; padding-top:15px  ">
-                    <div>${{ \formatNumber($invoice->amount) }}</div>
+                    <div>${{ \formatNumber($payment->amount) }}</div>
                 </td>
                 @if ($invoice->comprobante)
                     <td style=" width: 20%; text-align:right; padding-top:15px ">
@@ -328,7 +328,7 @@
                     <div>SUBTOTAL</div>
                 </td>
                 <td style="text-align: right">
-                    <div>${{ \formatNumber($invoice->amount) }}</div>
+                    <div>${{ \formatNumber($payment->amount) }}</div>
                 </td>
             </tr>
             @if ($invoice->comprobante)
@@ -350,10 +350,10 @@
             <tr class="total" style="font-weight: bold;">
                 <td colspan="2"></td>
                 <td style="text-align: right; ">
-                    <div>{{ $invoice->discount >= 0 ? 'DESCUENTO' : 'RECARGO' }}</div>
+                    <div>{{ $payment->discount >= 0 ? 'DESCUENTO' : 'RECARGO' }}</div>
                 </td>
                 <td style="text-align: right; ">
-                    (${{ \formatNumber(abs($invoice->discount)) }})
+                    (${{ \formatNumber(abs($payment->discount)) }})
                 </td>
             </tr>
             <tr class="" style="font-weight: bold; font-size:medium">
@@ -362,50 +362,50 @@
                     <div>TOTAL</div>
                 </td>
                 <td style="text-align: right; border-top: 1px solid #777; padding-bottom:15px">
-                    <div>${{ \formatNumber($invoice->total) }}</div>
+                    <div>${{ \formatNumber($payment->total) }}</div>
                 </td>
             </tr>
-            @if ($invoice->efectivo >= 0)
+            @if ($payment->efectivo >= 0)
                 <tr class="" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td style="text-align: right; ">
                         <div>EFECTIVO</div>
                     </td>
                     <td style="text-align: right; ">
-                        <div>${{ \formatNumber($invoice->efectivo) }}</div>
+                        <div>${{ \formatNumber($payment->efectivo) }}</div>
                     </td>
                 </tr>
             @endif
-            @if ($invoice->tarjeta > 0)
+            @if ($payment->tarjeta > 0)
                 <tr class="total" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td style="text-align: right; ">
                         <div>TARJETA</div>
                     </td>
                     <td style="text-align: right; x">
-                        <div>${{ \formatNumber($invoice->tarjeta) }}</div>
+                        <div>${{ \formatNumber($payment->tarjeta) }}</div>
                     </td>
                 </tr>
             @endif
-            @if ($invoice->transferencia > 0)
+            @if ($payment->transferencia > 0)
                 <tr class="total" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td style="text-align: right; ">
                         <div>TRANSFERENCIA</div>
                     </td>
                     <td style="text-align: right; ">
-                        <div>${{ \formatNumber($invoice->transferencia) }}</div>
+                        <div>${{ \formatNumber($payment->transferencia) }}</div>
                     </td>
                 </tr>
             @endif
-            @if ($invoice->rest > 0)
+            @if ($payment->rest > 0)
                 <tr class="total" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td class="td-total text-right" style="text-align: right; padding-top:10px">
                         <b>PENDIENTE</b>
                     </td>
                     <td class="td-total text-right" style="text-align: right; padding-top:10px">
-                        <b> ${{ formatNumber($invoice->rest) }}</b>
+                        <b> ${{ formatNumber($payment->rest) }}</b>
                     </td>
                 </tr>
             @else
@@ -415,7 +415,7 @@
                         <b>CAMBIO</b>
                     </td>
                     <td class="td-total text-right" style="text-align: right; padding-top:2px">
-                        <b> ${{ formatNumber($invoice->cambio) }}</b>
+                        <b> ${{ formatNumber($payment->cambio) }}</b>
                     </td>
                 </tr>
             @endif

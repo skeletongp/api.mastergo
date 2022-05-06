@@ -38,19 +38,22 @@
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-[3.5rem]">
                         <x-base-input placeholder="Cód." class=" border-none" type="number"
-                            wire:model.lazy="product_code" label="">
+                            wire:model.lazy="product_code" id="code" label=""  wire:keydown.enter="$emit('focusCant')">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-48">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " readonly placeholder="Nombre del producto"
-                            wire:model="product_name" label=""></x-base-input>
+                        <x-base-input id="pr_name"
+                        class="uppercase border-none text-center bg-transparent " disabled placeholder="Nombre del producto"
+                        wire:model="product_name" label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number" placeholder="Cant." wire:model.lazy="cant"
+                        <x-tooltip id="ttStock">Disp.: {{formatNumber($this->stock)}}</x-tooltip>
+                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number" placeholder="Cant." wire:model.lazy="cant" wire:keydown.enter="addItems"  id="cant"
+                        data-tooltip-target="ttStock" data-tooltip-style="light"
                             label=""></x-base-input>
                     </div>
                 </td>
@@ -71,25 +74,25 @@
 
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " readonly placeholder="Precio" wire:model="price" label="">
+                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled placeholder="Precio" wire:model="price" id="pr_price" label="">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number" placeholder="Desc." wire:model="discount"
+                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number" placeholder="Desc." wire:model="discount" wire:keydown.enter="addItems" id="pr_discount"
                             label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
-                        <x-base-input class="uppercase border-none text-center bg-transparent p-0" readonly placeholder="Tax" wire:model="taxTotal" label="">
+                        <x-base-input class="uppercase border-none text-center bg-transparent p-0" disabled placeholder="Tax" wire:model="taxTotal" label="" id="pr_tax">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " readonly placeholder="Total" wire:model="total" label="">
+                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled placeholder="Total" wire:model="total" label="" id="pr_total">
                         </x-base-input>
                     </div>
                 </td>
@@ -121,16 +124,16 @@
                             {{ $det['unit_name'] }}
                         </td>
 
-                        <td class="px-2  text-base border border-gray-200 text-right text-right">
+                        <td class="px-2  text-base border border-gray-200 text-right">
                             {{ '$' . formatNumber($det['price']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right text-right">
+                        <td class="px-2  text-base border border-gray-200 text-right">
                             {{ formatNumber($det['discount_rate'] * 100) . '%' }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right text-right">
+                        <td class="px-2  text-base border border-gray-200 text-right">
                             ${{ formatNumber($det['taxTotal']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right font-bold text-right ">
+                        <td class="px-2  text-base border border-gray-200 font-bold text-right ">
                             {{ '$' . formatNumber($det['total']) }}
                         </td>
                         <td class="px-2  text-base border border-gray-200 text-right ">
@@ -165,10 +168,18 @@
                     ${{ formatNumber(array_sum(array_column($details,'total'))) }}
                 </td>
                 <td class="px-2 py-4 text-base  border-gray-200 text-right ">
-                   
                 </td>
             </tr>
             @endif
     </table>
-    {{-- {{dd($details)}} --}}
+    @push('js')
+        <script>
+            Livewire.on('focusCode', function(){
+                $('#code').focus();
+            })
+            Livewire.on('focusCant', function(){
+                $('#cant').focus();
+            })
+        </script>
+    @endpush
 </div>

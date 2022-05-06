@@ -93,9 +93,9 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::get('uid', function () {
 
-    $invoice = Invoice::whereNotNull('client_id')->orderBy('id','desc')->firstOrFail();
+    $invoice = Invoice::whereNotNull('pdfThermal')->with('details','details.unit')->orderBy('id','desc')->firstOrFail();
     $pdf = App::make('dompdf.wrapper');
-    
-    $pdf->loadview('pages.invoices.letter', compact('invoice'));
+    $payment=$invoice->payment;
+    $pdf->loadview('pages.invoices.letter', compact('invoice','payment'));
     return $pdf->stream();
 });

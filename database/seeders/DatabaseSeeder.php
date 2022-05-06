@@ -37,6 +37,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Libra',
             'symbol' => 'Lb'
         ]);
+        $unit2 = $store->units()->create([
+            'name' => 'Quintal',
+            'symbol' => 'Qt'
+        ]);
        $tax= $store->taxes()->create([
             'name' => 'ITBIS',
             'rate' => 0.18
@@ -105,7 +109,7 @@ class DatabaseSeeder extends Seeder
         ]);
         foreach($products as $prod){
             $product=$store->products()->create($prod);
-            $product->taxes()->sync($tax);
+           // $product->taxes()->sync($tax);
             $price_mayor=rand(75,125);
             $price_menor=$price_mayor*1.15;
             $cost=rand(39,75);
@@ -121,6 +125,17 @@ class DatabaseSeeder extends Seeder
                 'stock'=>$stock
 
             ]);
+            $product->units()->attach($unit2,
+            [
+                'place_id'=>1,
+                'cost'=>$cost*1.75,
+                'price_mayor'=>$price_mayor*1.175,
+                'price_menor'=>$price_menor*1.75,
+                'min'=>$stock*0.15,
+                'margin'=>(($price_menor*1.75)/$cost)-1,
+                'stock'=>$stock
+
+            ]);
             $product->providers()->attach($provider);
         };
         $user = $store->users()->create([
@@ -129,6 +144,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'mastergo@atriontechsd.com',
             'username' => 'mastergo',
             'password' => 'mastergo',
+            'phone' => '8298041907',
+            'loggeable'=>'yes',
+            'place_id' => $store->places()->first()->id
+        ]);
+        $user2 = $store->users()->create([
+            'name' => 'Estefany',
+            'lastname' => 'Fernández ',
+            'email' => 'admin@ahumadosmyl.com',
+            'username' => 'estefany',
+            'password' => 'estefany',
+            'loggeable'=>'yes',
             'phone' => '8298041907',
             'place_id' => $store->places()->first()->id
         ]);
@@ -157,6 +183,7 @@ class DatabaseSeeder extends Seeder
         setContable($tax, '202', 'ITBIS por Pagar');
         setContable($tax, '103', $tax->name.' por Cobrar');
         $user->assignRole('Super Admin');
+        $user2->assignRole('Administrador');
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
         setContable($place, '100','Efectivo en Caja', $place->id);

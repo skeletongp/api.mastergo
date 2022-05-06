@@ -3,7 +3,7 @@
         <ul class=" h-full space-y-0 flex justify-between space-x-4">
             <div>
                 <li>
-                    <x-dropdown>
+                    <x-dropdown alignmentClasses="left">
                         <x-slot name="trigger">
                             <div
                                 class="uppercase flex items-center p-2 text-base font-bold cursor-pointer  rounded-lg  hover:bg-gray-200  ">
@@ -17,7 +17,7 @@
                         <x-slot name="content">
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
-                                <x-button class="flex space-x-3 items-center">
+                                <x-button class=" bg-transparent text-black flex space-x-3 items-center">
                                     <span class="far fa-sign-out-alt"></span>
                                     <span> Cerrar sesión</span>
                                 </x-button>
@@ -75,8 +75,10 @@
                     <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg'
                         text='Gastos' activeRoute="home.*" scope="Gastos" />
                 </x-dropitem>
-                <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
-                    activeRoute="home.*" />
+                @can('Crear Permisos-')
+                    <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
+                        activeRoute="home.*" />
+                @endcan
             </ul>
         </ul>
     </div>
