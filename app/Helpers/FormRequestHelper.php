@@ -19,10 +19,10 @@ function orderConfirmRules() :Array
         'form.type' => 'required',
     ];
 }
-function invoiceCreateRules($stock){
+function invoiceCreateRules(){
     return  [
         'form.product_id' => 'numeric|required|exists:products,id',
-        'cant' => 'numeric|min:0.001|required|max:'.$stock,
+        'cant' => 'numeric|min:0.001|required',
         'price' => 'numeric|min:0.01|required',
         'discount' => 'numeric|min:0|required',
         'client'=>'required',

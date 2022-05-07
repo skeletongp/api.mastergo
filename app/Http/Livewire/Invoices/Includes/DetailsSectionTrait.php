@@ -5,12 +5,12 @@ namespace App\Http\Livewire\Invoices\Includes;
 trait DetailsSectionTrait
 {
     public $producto;
-    public $product, $product_code, $product_name, $products, $stock, $unit;
+    public $product, $product_code, $product_name, $products, $stock, $unit, $open=false;
 
 
     function rules()
     {
-        return invoiceCreateRules($this->stock);
+        return invoiceCreateRules();
     }
 
     public function setProduct($product_code)
@@ -30,12 +30,21 @@ trait DetailsSectionTrait
             $this->product = collect($productLoad);
             $this->product_code = $code;
             $this->product_name = $product->name;
-            $this->updatedUnitId();
+            $this->freshUnitId();
         } else {
             $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name', 'taxTotal');
         }
     }
-    public function addItems()
+    public function tryAddItems()
+    {
+        if ($this->cant > $this->stock) {
+           $this->open=true;
+        } else{
+            $this->confirmedAddItems();
+        }
+       
+    }
+    public function confirmedAddItems()
     {
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
@@ -48,13 +57,13 @@ trait DetailsSectionTrait
         $this->form['total'] = ($this->form['subtotal'] - $this->form['discount']) + $this->taxTotal;
         $this->form['utility'] = ($this->form['cant'] * $this->form['price']) - ($this->form['cant'] * $this->form['cost']);
         $this->form['unit_id'] = $this->unit->id;
+        $this->form['unit_pivot_id'] = $this->pivot_id;
         $this->form['user_id'] = auth()->user()->id;
         $this->form['store_id'] = auth()->user()->store->id;
         $this->form['place_id'] = auth()->user()->place->id;
         $this->form['product_name'] = $this->product['name'];
         $this->form['product_code'] = $this->product['code'];
         $this->form['taxes'] = $this->product['taxes'];
-
         array_push($this->details, $this->form);
         $this->emit('focusCode');
         $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name', 'taxTotal');
@@ -62,9 +71,9 @@ trait DetailsSectionTrait
     public function removeItem($id)
     {
         unset($this->details[$id]);
-        $this->details=array_values($this->details);
+        $this->details = array_values($this->details);
         foreach ($this->details as $ind => $det) {
-            $this->details[$ind]['id']=$ind;
+            $this->details[$ind]['id'] = $ind;
         }
     }
     public function checkStock()
@@ -72,7 +81,6 @@ trait DetailsSectionTrait
         $exist = array_keys(array_column($this->details, 'product_id'), $this->form['product_id']);
         if ($exist) {
             foreach ($exist as $key) {
-
                 if ($this->details[$key]['unit_id'] == $this->unit->id) {
                     $this->stock = $this->stock - $this->details[$key]['cant'];
                 }
@@ -80,11 +88,11 @@ trait DetailsSectionTrait
             }
         }
     }
-    public function updatedUnitId()
+    public function freshUnitId()
     {
         $unit = auth()->user()->place->units()->wherePivot('id', $this->unit_id)->first();
-        $this->unit=$unit;
         if ($unit) {
+            $this->unit = $unit;
             $this->stock = $unit->pivot->stock;
             if ($this->cant >= $unit->pivot->min) {
                 $this->price = formatNumber($unit->pivot->price_mayor);
@@ -103,10 +111,10 @@ trait DetailsSectionTrait
             $sub = str_replace(',', '', formatNumber(($this->cant ?: 0 * $this->price) * (1 - ($discount / 100))));
             if ($this->product) {
                 $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
-            $this->checkStock();
-
+                $this->checkStock();
             }
             $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
+            $this->pivot_id = $unit->pivot->id;
         }
     }
     public function updatedProductCode()

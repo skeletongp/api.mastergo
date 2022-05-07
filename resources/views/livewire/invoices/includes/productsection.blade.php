@@ -32,34 +32,33 @@
             </tr>
         </thead>
         <tbody>
-            <tr
-                class=" border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-               
+            <tr class=" border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-[3.5rem]">
                         <x-base-input placeholder="Cód." class=" border-none" type="number"
-                            wire:model.lazy="product_code" id="code" label=""  wire:keydown.enter="$emit('focusCant')">
+                            wire:model.lazy="product_code" id="code" label="" wire:keydown.enter="$emit('focusCant')">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-48">
-                        <x-base-input id="pr_name"
-                        class="uppercase border-none text-center bg-transparent " disabled placeholder="Nombre del producto"
-                        wire:model="product_name" label=""></x-base-input>
+                        <x-base-input id="pr_name" class="uppercase border-none text-center bg-transparent " disabled
+                            placeholder="Nombre del producto" wire:model="product_name" label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
-                        <x-tooltip id="ttStock">Disp.: {{formatNumber($this->stock)}}</x-tooltip>
-                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number" placeholder="Cant." wire:model.lazy="cant" wire:keydown.enter="addItems"  id="cant"
-                        data-tooltip-target="ttStock" data-tooltip-style="light"
-                            label=""></x-base-input>
+                        <x-tooltip id="ttStock">Disp.: {{ formatNumber($this->stock) }}</x-tooltip>
+                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
+                            placeholder="Cant." wire:model.lazy="cant" wire:keydown.enter="tryAddItems" id="cant"
+                            data-tooltip-target="ttStock" data-tooltip-style="light" label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-[3.5rem]">
-                        <x-base-select id="unit_id" class="uppercase border-none text-center bg-transparent " wire:model="unit_id" label="">
+                        <x-base-select id="unit_id" class="uppercase border-none text-center bg-transparent "
+                            wire:model="unit_id" label="">
                             @if ($product)
                                 @foreach ($product['units'] as $unit)
                                     <option value="{{ $unit['pivot']['id'] }}">
@@ -68,37 +67,41 @@
                                 @endforeach
                             @endif
                         </x-base-select>
-                      
+
                     </div>
                 </td>
 
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled placeholder="Precio" wire:model="price" id="pr_price" label="">
+                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled
+                            placeholder="Precio" wire:model="price" id="pr_price" label="">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number" placeholder="Desc." wire:model="discount" wire:keydown.enter="addItems" id="pr_discount"
+                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
+                            placeholder="Desc." wire:model="discount" wire:keydown.enter="tryAddItems" id="pr_discount"
                             label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
-                        <x-base-input class="uppercase border-none text-center bg-transparent p-0" disabled placeholder="Tax" wire:model="taxTotal" label="" id="pr_tax">
+                        <x-base-input class="uppercase border-none text-center bg-transparent p-0" disabled
+                            placeholder="Tax" wire:model="taxTotal" label="" id="pr_tax">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled placeholder="Total" wire:model="total" label="" id="pr_total">
+                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled
+                            placeholder="Total" wire:model="total" label="" id="pr_total">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-10 pt-2">
-                        <x-button class="bg-transparent p-2 text-gray-800 " wire:click="addItems">
+                        <x-button class="bg-transparent p-2 text-gray-800 " wire:click="tryAddItems">
                             <span class="fas fa-plus text-lg"></span>
                         </x-button>
                     </div>
@@ -145,40 +148,51 @@
                     </tr>
                 @endforeach
                 <tr
-                class="bg-slate-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 uppercase  text-sm">
-                <td class="px-2 py-4 text-base  border-gray-200 text-right ">
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200 text-right ">
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200 text-right ">
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200 text-right ">
-                </td>
+                    class="bg-slate-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 uppercase  text-sm">
+                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    </td>
 
-                <td class="px-2 py-4 text-base  border-gray-200  text-right">
-                   
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200  text-right">
-                    
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200 font-bold text-right">
-                    ${{ formatNumber(array_sum(array_column($details,'taxTotal'))) }}
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200 font-bold text-right ">
-                    ${{ formatNumber(array_sum(array_column($details,'total'))) }}
-                </td>
-                <td class="px-2 py-4 text-base  border-gray-200 text-right ">
-                </td>
-            </tr>
+                    <td class="px-2 py-4 text-base  border-gray-200  text-right">
+
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200  text-right">
+
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200 font-bold text-right">
+                        ${{ formatNumber(array_sum(array_column($details, 'taxTotal'))) }}
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200 font-bold text-right ">
+                        ${{ formatNumber(array_sum(array_column($details, 'total'))) }}
+                    </td>
+                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    </td>
+                </tr>
             @endif
     </table>
     @push('js')
         <script>
-            Livewire.on('focusCode', function(){
+            Livewire.on('focusCode', function() {
                 $('#code').focus();
             })
-            Livewire.on('focusCant', function(){
+            Livewire.on('focusCant', function() {
                 $('#cant').focus();
+            })
+            $(document).ready(function() {
+                // Enable Keyboard Input
+                document.addEventListener("keydown", key, false);
+
+                function key(e) {
+                    code = e.key || e.which;
+                    if (code == 'F2') {
+                       $('#btnSendInvoice').click();
+                    }
+                }
             })
         </script>
     @endpush

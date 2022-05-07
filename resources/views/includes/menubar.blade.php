@@ -18,14 +18,16 @@
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
-                                    <span class="far fa-sign-out-alt"></span>
+                                    <span class="far fa-sign-out-alt  text-xl"></span>
                                     <span> Cerrar sesión</span>
                                 </x-button>
                             </form>
-
+                            <x-side-link routeName='settings.index' icon='fas w-10 text-center fa-cogs' text='Ajustes'
+                                activeRoute="settings.*" />
                         </x-slot>
                     </x-dropdown>
                 </li>
+
             </div>
 
             <ul class="flex space-x-4">

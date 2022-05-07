@@ -9,7 +9,6 @@ use Illuminate\Support\Arr;
 
 trait GenerateInvoiceTrait
 {
-    public $number, $condition = "DE CONTADO", $type, $vence, $seller, $compAvail=true;
 
     public function createDetails($invoice)
     {
@@ -20,11 +19,11 @@ trait GenerateInvoiceTrait
             $detail['detailable_id'] = $invoice->id;
             $detail['detailable_type'] = Invoice::class;
             $taxes = empty($detail['taxes'])?[]:$detail['taxes'];
-            $detail = Detail::create(Arr::except($detail, 'taxes'));
-            $detail->taxes()->sync($taxes);
-            $detail->taxtotal = $detail->taxes->sum('rate') * $detail->subtotal;
-            $detail->save();
-            $this->restStock($detail['unit_id'], $detail['cant']);
+            $det = Detail::create(Arr::except($detail, 'taxes'));
+            $det->taxes()->sync($taxes);
+            $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
+            $det->save();
+            $this->restStock($detail['unit_pivot_id'], $detail['cant']);
         }
     }
     public function setFromScan()
@@ -37,10 +36,13 @@ trait GenerateInvoiceTrait
         $this->form['cost'] = $scanned[3];
         $this->setProduct($this->form['product_id']);
         $this->updatedForm(13, 'unit_id');
-        $this->addItems();
+        $this->tryAddItems();
     }
     public function sendInvoice()
     {
+        if (!count($this->details)) {
+            return ;
+        }
         $total=array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
         if ($this->condition!='DE CONTADO' && $this->verifyCredit($total, $this->client['limit'])) {
@@ -58,21 +60,22 @@ trait GenerateInvoiceTrait
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
                 'client_id' => $this->client['id'],
+                'comprobante_id' => $this->comprobante_id,
                 'status' => 'waiting',
-                'type' => Invoice::TYPES['DOCUMENTO DE CONDUCE'],
+                'type' => $this->type,
             ]
         );
         $this->createPayment($invoice);
         $this->createDetails($invoice);
         event(new NewInvoice($invoice));
-        $this->reset('form', 'details', 'producto', 'price', 'client','client_code');
+        $this->reset('form', 'details', 'producto', 'price', 'client','client_code','product_code','product_name');
         $this->mount();
         $this->emit('showAlert', 'Factura enviada exitosamente', 'success');
     }
     public function createPayment($invoice)
     {
         $data = [
-            'ncf'=>'',
+            'ncf'=>optional($invoice->comprobante)->number,
             'amount' => array_sum(array_column($this->details, 'subtotal')),
             'discount' => array_sum(array_column($this->details, 'discount')),
             'total' =>  array_sum(array_column($this->details, 'subtotal')),
@@ -97,4 +100,5 @@ trait GenerateInvoiceTrait
     {
        return !$amount>$credit;
     }
+    
 }

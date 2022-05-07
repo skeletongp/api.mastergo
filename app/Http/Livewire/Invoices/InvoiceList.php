@@ -28,5 +28,10 @@ class InvoiceList extends LivewireDatatable
             Column::name('id')->label('Ver')->view('livewire.invoices.includes.setPDF'),
         ];
     }
-    
+    public function cellClasses($row, $column)
+    {
+        return
+            'whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-900 px-3 py-2';
+    }
+   
 }

@@ -56,7 +56,7 @@
             } else if (num == 'Backspace') {
                 del();
             } else if (num == 'Enter') {
-                Livewire.emit('addItems');
+                Livewire.emit('tryAddItems');
                 search = "";
                 @this.set('search', search);
                 $('#searchImput').val('')

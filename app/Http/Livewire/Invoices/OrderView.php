@@ -9,6 +9,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Mediconesystems\LivewireDatatables\Action;
 use Mediconesystems\LivewireDatatables\TimeColumn;
 
 class OrderView extends LivewireDatatable
@@ -16,7 +17,7 @@ class OrderView extends LivewireDatatable
     use AuthorizesRequests;
     public $hideable="select";
     public $perPage=5;
-   
+
     public function builder()
     {
         $invoices = auth()->user()->place->invoices()->with('seller','client','details','details.taxes', 'payment')
@@ -32,7 +33,7 @@ class OrderView extends LivewireDatatable
             TimeColumn::name('created_at')->label("Hora")->hide(),
             Column::callback('payment.amount:sum', function ($amount) {
                 return '$' . formatNumber($amount);
-            })->label("Subtotal"),
+            })->label("Monto"),
             Column::name('client.name')->callback(['uid', 'client_id'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
                 return $result['client']['fullname'];
@@ -42,13 +43,10 @@ class OrderView extends LivewireDatatable
             Column::name('seller.name')->callback(['uid', 'day'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
                 return $result['seller']['fullname'];
-
             })->label('Vendedor'),
 
             Column::name('condition')->label("Condición"),
-            Column::name('type')->callback('type', function($type){
-                return array_search($type, Invoice::TYPES);
-            })->label("Tipo"),
+            Column::name('type')->label("Tipo"),
 
             Column::callback('uid', function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
@@ -56,6 +54,22 @@ class OrderView extends LivewireDatatable
             })->label('Acción')
         ];
     }
-    
+    public function cellClasses($row, $column)
+    {
+        return
+            'whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-900 px-3 py-2';
+    }
+    public function buildActions()
+    {
+        return [
+
+            Action::value('fresh')->label('Refrescar')->callback(function ($mode, $items) {
+                // $items contains an array with the primary keys of the selected items
+            }),
+
+           
+           
+        ];
+    }
      
 }

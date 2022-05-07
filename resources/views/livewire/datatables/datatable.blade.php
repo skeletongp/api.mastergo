@@ -35,7 +35,7 @@
 
                 @if(count($this->massActionsOptions))
                     <div class="flex items-center justify-center space-x-1">
-                        <select wire:change="massActionOptionHandler" wire:model="massActionOption" class="px-3 text-xs font-medium tracking-wider uppercase bg-white border border-green-400 space-x-2 rounded-md leading-4 focus:outline-none" id="datatables_mass_actions">
+                        <select wire:change="massActionOptionHandler" wire:model="massActionOption" class="px-3 py-2.5 text-xs font-medium tracking-wider uppercase bg-white border border-green-400 space-x-2 rounded-md leading-4 focus:outline-none" id="datatables_mass_actions">
                             <option value="">{{ __('Opciones...') }}</option>
                             @foreach($this->massActionsOptions as $group => $items)
                                 @if(!$group)
@@ -94,7 +94,7 @@
             </div>
         @endif
 
-        <div wire:loading.class="opacity-50" class="rounded-lg mt-4 @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg bg-white max-w-screen overflow-x-scroll border-2 @if($this->activeFilters) border-blue-500 @else border-transparent @endif @if($complex) rounded-b-none border-b-0 @endif">
+        <div wire:loading.class="opacity-50" class="rounded-lg mt-4 @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg bg-white max-w-screen overflow-x-scroll border-2 @if($this->activeFilters) border-blue-500 @else border-transparent @endif @if($complex)  border-b-0 @endif">
             <div>
                 <div class="table min-w-full align-middle">
                     @unless($this->hideHeader)
@@ -150,7 +150,7 @@
                             @foreach($this->columns as $column)
                                 @if($column['hidden'])
                                     @if($hideable === 'inline')
-                                        <div class="table-cell w-5 @unless($column['wrappable']) whitespace-nowrap truncate @endunless overflow-hidden align-middle align-middle"></div>
+                                        <div class="table-cell w-5 @unless($column['wrappable']) whitespace-nowrap truncate @endunless overflow-hidden  align-middle"></div>
                                     @endif
                                 @elseif($column['type'] === 'checkbox')
                                     @include('datatables::checkbox', ['value' => $row->checkbox_attribute])

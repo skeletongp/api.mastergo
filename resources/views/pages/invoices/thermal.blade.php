@@ -65,7 +65,7 @@
                         CLIENTE
                     </h2>
                     <h2 class="data-title subtitle">
-                        <b>NCF/CED</b>:
+                        <b>RNC/CED</b>:
                     </h2>
                     <h2 class="data-title subtitle">
                         <b>Dirección</b>:
@@ -123,13 +123,17 @@
                             array_push($taxes, $rate);
                         @endphp
                         <tr class="tr-detail">
-                            <td class=" td-details text-center">{{ formatNumber($detail->cant) }} <sup>{{$detail->unit->symbol}}</sup></td>
-                            <td class="td-details text-center">
+                            <td colspan="1" class=" td-details text-left">{{ formatNumber($detail->cant) }} <sup>{{$detail->unit->symbol}}</sup></td>
+                            <td class="td-details text-left" colspan="4">
                                 {{ $detail->product->name }}
                             </td>
-                            <td class=" td-details text-center">${{ formatNumber($detail->price) }}</td>
-                            <td class=" td-details text-center">{{ formatNumber($detail->discount_rate*100) }}%</td>
-                            <td class=" td-details text-right">${{ formatNumber($detail->total) }}
+                            
+                        </tr>
+                        <tr class="tr-detail">
+                            <td colspan="2" class="border-b "></td>
+                            <td class=" border-b text-center">${{ formatNumber($detail->price) }}</td>
+                            <td class=" border-b text-center">{{ formatNumber($detail->discount_rate*100) }}%</td>
+                            <td class=" border-b text-right">${{ formatNumber($detail->total) }}
                             </td>
                         </tr>
                     @endforeach
@@ -212,7 +216,8 @@
     @page {
         size: 80mm 297mm portrait;
         margin: 5px;
-        font-family: 'Times New Roman', Times, serif;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:large;
     }
 
     hr {
@@ -246,27 +251,27 @@
     }
 
     .biz-name {
-        font-size: small;
+        font-size: medium;
         text-transform: uppercase;
         text-align: center;
     }
 
     .biz-rnc {
-        font-size: x-small;
+        font-size: small;
         text-transform: uppercase;
         text-align: center;
         line-height: 4px;
     }
 
     .biz-phone {
-        font-size: x-small;
+        font-size: small;
         text-transform: uppercase;
         text-align: center;
         line-height: 3px;
     }
 
     .biz-addr {
-        font-size: x-small;
+        font-size: small;
         width: 80%;
         margin: auto;
         text-align: center;
@@ -292,23 +297,23 @@
     }
 
     .client-title {
-        font-size: x-small;
+        font-size: small;
         line-height: 6px;
         font-weight: bold;
     }
 
     .data-title {
-        font-size: x-small;
+        font-size: small;
         line-height: 6px;
     }
 
     .client-name {
-        font-size: x-small;
+        font-size: small;
         line-height: 6px;
     }
 
     .invoice-type {
-        font-size: x-small;
+        font-size: small;
         line-height: 8px;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -323,7 +328,7 @@
     .invoice-details {}
 
     .head-details {
-        font-size: xx-small;
+        font-size: x-small;
         text-transform: uppercase;
         border-bottom: solid .2px #ddd;
 
@@ -334,18 +339,21 @@
     }
 
     .tr-detail {
-        font-size: xx-small;
+        font-size: x-small;
         text-transform: uppercase;
-        border-bottom: solid .2px #ddd;
 
     }
+    .border-b {
+        border-bottom: solid .2px #ddd;
+
+        }
 
     .td-details {
         padding: 5px;
     }
 
     .td-total {
-        font-size: xx-small;
+        font-size: x-small;
         padding: 3px 5px 0px 12px;
     }
 

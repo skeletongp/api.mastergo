@@ -42,7 +42,7 @@
                         <x-input type="tel" label="No. Teléfono" id="phone" wire:model.defer="form.phone" />
                         <x-input-error for="form.phone" />
                     </div>
-                    <div class="w-full pb-0">
+                    <div class="w-full pb-0 select2-div">
                         <label for="role">Rol de usuario</label>
                         <x-select id="frole" wire:model.defer="role" class=" select2">
                             <option value=""></option>

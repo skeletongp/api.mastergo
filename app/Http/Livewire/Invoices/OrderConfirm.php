@@ -67,6 +67,10 @@ class OrderConfirm extends Component
     {
         $this->validate(orderConfirmRules());
         $invoice = Invoice::find($this->form['id']);
+        if ($invoice->status!=='waiting') {
+            $this->emit('showAlert','Esta factura ya fue cobrada. Recargue la vista','warning');
+            return;
+        }
         if ($invoice->condition=='De Contado' && $this->form['rest']>0) {
             $this->emit('showAlert','Está factura debe ser saldada', 'warning');
             return ;
@@ -74,6 +78,7 @@ class OrderConfirm extends Component
 
         if ($this->form['rest'] <= 0 && $this->form['status'] != 'entregado') {
             $this->form['status'] = 'pagado';
+            $this->form['condition'] = 'De Contado';
         } else {
             $this->form['status'] = 'adeudado';
         }
@@ -93,6 +98,7 @@ class OrderConfirm extends Component
         setPDFPath($invoice);
 
         $this->closeComprobante($invoice->comprobante, $invoice);
+        $this->emit('refreshLivewireDatatable');
         return redirect()->route('invoices.index');
     }
     public function closeComprobante($comprobante, $invoice)

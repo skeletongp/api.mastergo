@@ -1,4 +1,4 @@
-@props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitVerticalContainer'=>false])
+@props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitVerticalContainer'=>false, 'title'])
 <div class="w-full " x-data="{ open: {{$open?'true':'false'}} }" x-cloak @keydown.escape.window="open = false">
     {{-- Modal Main Button --}}
     <div>
