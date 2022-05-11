@@ -21,7 +21,7 @@ class EditUser extends Component
             'user.email' => 'required|string|max:100|unique:users,email,'.$this->user->id,
             'user.phone' => 'required|string|max:25',
             'role'=>'required|exists:roles,name',
-            'avatar'=>'max:2048'
+          
         ];
     }
     public function mount(User $user)
@@ -51,6 +51,10 @@ class EditUser extends Component
     
     public function updatedAvatar()
     {
+        $this->reset('photo_path');
+        $this->validate([
+            'avatar'=>'image|max:2048'
+        ]);
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->avatar->storeAs('/avatars', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");

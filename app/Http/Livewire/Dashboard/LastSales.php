@@ -10,6 +10,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class LastSales extends LivewireDatatable
 {
     public $perPage=5;
+    public $headTitle="Últimas ventas";
     public function builder()
     {
         $invoices=auth()->user()->place->invoices()->where('created_at', '>=', Carbon::now()->subWeek())

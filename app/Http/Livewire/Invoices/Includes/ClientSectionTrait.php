@@ -6,6 +6,8 @@ use App\Models\Client;
 trait ClientSectionTrait 
 {
 
+    public $client, $client_code, $clients;
+    
     public function changeClient(){
         $code=str_pad($this->client_code,4,'0', STR_PAD_LEFT);
         $client=Client::where('code',$code)->first();

@@ -1,7 +1,7 @@
 <div class="w-full grid grid-cols-2 gap-x-4">
     <div class="space-y-2">
-        <div class="pt-1">
-            <x-base-input id="number" wire:model="number" disabled class="text-right py-0" label="Pedido Nº.">
+        <div class="">
+            <x-base-input id="number" wire:model="number" disabled class="text-right py-1" label="Pedido Nº.">
             </x-base-input>
         </div>
         <div>
@@ -15,8 +15,8 @@
       
     </div>
     <div class="space-y-2">
-        <div class="pt-1">
-            <x-base-input id="vence" type="date" wire:model="vence"  class="text-right py-0" label="Vencimiento">
+        <div class="">
+            <x-base-input id="vence" type="date" wire:model="vence"  class="text-right py-1" label="Vencimiento">
             </x-base-input>
         </div>
         <div>

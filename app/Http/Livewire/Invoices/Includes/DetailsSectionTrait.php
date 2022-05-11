@@ -37,8 +37,10 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
+        
         if ($this->cant > $this->stock) {
-           $this->open=true;
+            $this->action='confirmedAddItems';
+           $this->emit('openAuthorize');
         } else{
             $this->confirmedAddItems();
         }
@@ -70,11 +72,13 @@ trait DetailsSectionTrait
     }
     public function removeItem($id)
     {
+        $this->form['product_id']=$this->details[$id]['product_id'];
         unset($this->details[$id]);
         $this->details = array_values($this->details);
         foreach ($this->details as $ind => $det) {
             $this->details[$ind]['id'] = $ind;
         }
+        $this->checkStock();
     }
     public function checkStock()
     {
@@ -108,7 +112,7 @@ trait DetailsSectionTrait
             if ($this->discount) {
                 $discount = $this->discount;
             }
-            $sub = str_replace(',', '', formatNumber(($this->cant ?: 0 * $this->price) * (1 - ($discount / 100))));
+            $sub = str_replace(',', '', formatNumber(($this->cant  * $this->price) * (1 - ($discount / 100))));
             if ($this->product) {
                 $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
                 $this->checkStock();

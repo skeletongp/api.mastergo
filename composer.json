@@ -45,7 +45,7 @@
             "Tests\\": "tests/"
         },
         "files": [
-            "app/Helpers/InvoicerHelper.php",
+            "app/Helpers/InvoiceHelper.php",
             "app/Helpers/FormRequestHelper.php",
             "app/Helpers/ContableHelper.php",
             "app/Helpers/Universal.php"

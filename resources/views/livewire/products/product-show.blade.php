@@ -1,4 +1,9 @@
 <div class="w-full ">
+    <button
+    class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
+    wire:loading>
+   <x-loading></x-loading>
+</button>
     <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ $product->name }}
     </h1>
     <div class="flex mb-4 select-none">
@@ -15,13 +20,7 @@
             Historial
         </div>
     </div>
-    <button
-        class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
-        wire:loading>
-        <div class="mx-auto h-40 w-40 bg-center bg-cover"
-            style="background-image: url({{ asset('images/assets/loading.gif') }})">
-        </div>
-    </button>
+   
     @switch($componentName)
         @case('products.product-detail')
             <livewire:products.product-detail :product="$product" :wire:key="uniqid().'det'" />

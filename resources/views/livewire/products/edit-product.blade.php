@@ -15,11 +15,11 @@
                         <span class="fas fa-image text-xl"></span>
                         <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Foto del producto</span>
                         <input wire:model="photo" type="file" class="hidden" name="photo"
-                            id="photo{{ $product->id }}" accept="image/png, image/gif, image/jpeg">
+                            id="photo{{ $product->id }}" accept=".png, .gif, .jpeg">
                     </label>
                     <x-input-error for="photo"></x-input-error>
                 </div>
-                <div class="w-[3rem] h-[3rem] rounded-full bg-center bg-cover" style="background-image: url({{$photo?$photo->temporaryUrl() : $product->photo}})">
+                <div class="w-[3rem] h-[3rem] rounded-full bg-center bg-cover" style="background-image: url({{$photo_path?$photo->temporaryUrl() : $product->photo}})">
 
                 </div>
             </div>

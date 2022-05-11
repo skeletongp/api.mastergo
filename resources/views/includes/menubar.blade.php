@@ -3,6 +3,8 @@
         <ul class=" h-full space-y-0 flex justify-between space-x-4">
             <div>
                 <li>
+
+
                     <x-dropdown alignmentClasses="left">
                         <x-slot name="trigger">
                             <div
@@ -15,6 +17,15 @@
                             </div>
                         </x-slot>
                         <x-slot name="content">
+                            <x-side-link routeName='settings.index' icon='fas w-10 text-center fa-cogs' text='Ajustes'
+                                activeRoute="settings.*" />
+                            @if (auth()->user()->places->count() > 1)
+                                <div class="py-4 px-4">
+                                    <livewire:general.toggle-place />
+                                </div>
+                            @endif
+                            <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
+                            activeRoute="prueba.*" scope="" />
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
@@ -22,8 +33,6 @@
                                     <span> Cerrar sesión</span>
                                 </x-button>
                             </form>
-                            <x-side-link routeName='settings.index' icon='fas w-10 text-center fa-cogs' text='Ajustes'
-                                activeRoute="settings.*" />
                         </x-slot>
                     </x-dropdown>
                 </li>

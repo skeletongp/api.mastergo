@@ -13,10 +13,10 @@ function setPDFPath($invoice)
     $PDF2 = App::make('dompdf.wrapper');
     $pdf = $PDF->loadView('pages.invoices.letter', $data);
     $pdf2 = $PDF2->loadView('pages.invoices.thermal', $data);
-    file_put_contents('storage/invoices/' . $invoice->number . '-letter.pdf', $pdf->output());
-    file_put_contents('storage/invoices/' . $invoice->number . '-thermal.pdf', $pdf2->output());
-    $path = asset('storage/invoices/' . $invoice->number . '-letter.pdf');
-    $path2 = asset('storage/invoices/' . $invoice->number . '-thermal.pdf');
+    file_put_contents('storage/invoices/' . $invoice->number.'_'.date('YmdHiS'). '_letter.pdf', $pdf->output());
+    file_put_contents('storage/invoices/' . $invoice->number.'_'.date('YmdHiS'). '_thermal.pdf', $pdf2->output());
+    $path = asset('storage/invoices/' . $invoice->number.'_'.date('YmdHiS'). '_letter.pdf');
+    $path2 = asset('storage/invoices/' . $invoice->number.'_'.date('YmdHiS'). '_thermal.pdf');
     $pdfLetter = Filepdf::create([
         'note' => 'PDF Tamaño carta de la factura ' . $invoice->number,
         'path' => $path,

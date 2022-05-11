@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('tarjeta')->comment('Monto pagado por tarjeta o cheque')->default();
             $table->decimal('transferencia')->comment('Monto pagado por transferencia')->default();
             $table->morphs('payable');
+            $table->morphs('payer');
             $table->softDeletes();
             $table->timestamps();
         });

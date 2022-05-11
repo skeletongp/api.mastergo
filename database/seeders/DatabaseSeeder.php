@@ -187,7 +187,6 @@ class DatabaseSeeder extends Seeder
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
         setContable($place, '100','Efectivo en Caja', $place->id);
-        setContable($place, '100','Efectivo en Banco', $place->id);
         setContable($place, '100','Efectivo en Cheques', $place->id);
         setContable($place, '100','Otros Efectivos', $place->id);
         setContable($place, '400','Ingresos por Ventas', $place->id);
@@ -201,7 +200,7 @@ class DatabaseSeeder extends Seeder
                 'path' => "https://picsum.photos/id/{$num}/200/300",
             ]);
             $us->stores()->save($store);
-            if (fmod($us->id, 6) == 0) {
+            if (fmod($us->id, 33) == 0) {
                 $us->assignRole('Administrador');
             }
         });

@@ -33,7 +33,6 @@ class CreateUser extends Component
         'form.password' => 'required|string|min:8',
         'form.phone' => 'required|string|max:25',
         'form.place_id' => 'required|numeric|exists:places,id',
-        'avatar' => 'max:2048',
         'role'=>'required|exists:roles,name'
     ];
 
@@ -55,10 +54,15 @@ class CreateUser extends Component
     }
     public function updatedAvatar()
     {
+        $this->reset('photo_path');
+        $this->validate([
+            'avatar'=>'image|max:2048'
+        ]);
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->avatar->storeAs('avatars', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
-    }
+    } 
+   
    
     
 }

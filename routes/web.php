@@ -91,11 +91,11 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
-Route::get('uid', function () {
+Route::get('prueba', function () {
 
     $invoice = Invoice::whereNotNull('pdfThermal')->with('details','details.unit')->orderBy('id','desc')->firstOrFail();
     $pdf = App::make('dompdf.wrapper');
     $payment=$invoice->payment;
     $pdf->loadview('pages.invoices.thermal', compact('invoice','payment'));
     return $pdf->stream();
-});
+})->name('prueba');

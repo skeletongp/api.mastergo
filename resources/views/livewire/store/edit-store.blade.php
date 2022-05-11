@@ -17,7 +17,7 @@
                     {{-- Foto actual --}}
                     <label for="logoSet" class="cursor-pointer">
                         <div class="w-44 h-44 bg-center bg-cover mb-12 pb-4  mx-auto flex items-end justify-center"
-                            style="background-image: url({{ $logo ? $logo->temporaryUrl() : $store->logo }})">
+                            style="background-image: url({{ $photo_path ? $logo->temporaryUrl() : $store->logo }})">
                             <span class="fas fa-image text-7xl shadow-xl shadow-cyan-300 opacity-5"></span>
                         </div>
                     </label>

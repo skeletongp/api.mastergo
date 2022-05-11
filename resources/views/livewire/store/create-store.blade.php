@@ -23,7 +23,7 @@
                             {{-- Foto actual --}}
                             <label for="logoSet2" class="cursor-pointer">
                                 <div class="w-24 h-24 shadow-xl shadow-gray-300 bg-center bg-cover mb-12 pb-4  mx-auto flex items-end justify-center"
-                                    style="background-image: url({{ $logo ? $logo->temporaryUrl() : '' }})">
+                                    style="background-image: url({{ $photo_path ? $logo->temporaryUrl() : '' }})">
                                     <span class="fas fa-upload text-7xl shadow-xl shadow-cyan-300 opacity-5"></span>
                                 </div>
                             </label>

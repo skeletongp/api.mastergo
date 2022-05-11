@@ -41,9 +41,9 @@
                         </x-base-input>
                     </div>
                 </td>
-                <td class=" pt-0 border-gray-200 border">
-                    <div class="w-48">
-                        <x-base-input id="pr_name" class="uppercase border-none text-center bg-transparent " disabled
+                <td class=" pt-0 border-gray-200 border  max-w-[12rem]">
+                    <div class="w-48 max-w-[12rem]">
+                        <x-base-input id="pr_name" class="uppercase border-none text-center bg-transparent overflow-hidden overflow-ellipsis whitespace-nowrap " disabled
                             placeholder="Nombre del producto" wire:model="product_name" label=""></x-base-input>
                     </div>
                 </td>
@@ -117,8 +117,10 @@
                         <td class="px-2  text-base border border-gray-200 text-right ">
                             {{ $det['product_code'] }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right ">
-                            {{ $det['product_name'] }}
+                        <td class="px-2   text-base border border-gray-200 text-right ">
+                            <div class="w-48 max-w-[12rem] overflow-hidden overflow-ellipsis whitespace-nowrap">
+                                {{ $det['product_name'] }}
+                            </div>
                         </td>
                         <td class="px-2  text-base border border-gray-200 text-right ">
                             {{ formatNumber($det['cant']) }}
@@ -190,7 +192,7 @@
                 function key(e) {
                     code = e.key || e.which;
                     if (code == 'F2') {
-                       $('#btnSendInvoice').click();
+                       $('#btntrySendInvoice').click();
                     }
                 }
             })

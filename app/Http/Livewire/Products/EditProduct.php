@@ -52,14 +52,18 @@ class EditProduct extends Component
     public function updateProduct()
     {
         $this->validate();
+        
         if ($this->photo_path) {
             $this->product->image()->updateOrCreate(['imageable_id'=>$this->product->id],[
                 'path'=>$this->photo_path
             ]);
+           
         }
         $this->product->save();
         $this->emit('showAlert', 'Producto actualizado correctamente', 'success');
     }
+   
+    
     public function updatePrice()
     {
         $this->authorize('Cambiar Precios');
@@ -99,6 +103,10 @@ class EditProduct extends Component
     }
     public function updatedPhoto()
     {
+        $this->reset('photo_path');
+        $this->validate([
+            'photo'=>'image|max:2048'
+        ]);
         $ext = pathinfo($this->photo->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->photo->storeAs('/productos', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");

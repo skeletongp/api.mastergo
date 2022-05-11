@@ -2,21 +2,20 @@
         <div class=" relative" style="width: 34rem; max-width: 34rem">
             <div
                 class="w-full text-lg font-medium text-gray-900 bg-white  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                <div aria-current="true"
+               {{--  <div aria-current="true"
                     class="block w-full px-4 py-2 pb-3 text-gray-800 bg-gray-100  rounded-tl-lg cursor-pointer dark:bg-gray-800 dark:border-gray-600 text-xl uppercase text-center font-bold">
                     Facturas
-                </div>
+                </div> --}}
                 <livewire:invoices.invoice-list />
 
             </div>
         </div>
 
         <div class="w-full h-full  pl-0" x-data="{ open: true }">
-
             @if ($invoices->count())
                 <div class="mx-auto ">
                     <div class="flex justify-end relative items-center pb-2 pt-1 space-x-4 bg-gray-100 pr-4 rounded-tr-lg">
-                        <div class="absolute left-0">
+                        <div class="absolute left-2">
                             <span class="font-bold uppercase text-xl"> {{$currentInvoice->client->fullname}}</span>
                         </div>
                         
@@ -40,7 +39,7 @@
                             <span class="far fa-print"></span>
                         </button>
                     </div>
-                    <div class="w-full relative " style=" height:60vh; width:239mm">
+                    <div class="w-full relative " style=" height:70vh; width:179mm">
                         <embed class="mx-auto h-full  " id="pdfObj"
                             src="{{ $thermal ? $pdfThermal : $pdfLetter }}#toolbar=0&navpanes=0&scrollbar=0&zoom=100"
                             width="100%" height="100%" type="application/pdf" />
@@ -55,8 +54,7 @@
             @endif
 
         </div>
-        <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+        
         
         @push('js')
             <script>

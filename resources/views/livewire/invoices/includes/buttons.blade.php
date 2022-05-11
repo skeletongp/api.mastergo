@@ -1,6 +1,6 @@
 <div class="grid grid-cols-3 gap-4 p-4">
     <div class="w-full h-full flex flex-col items-center font-bold uppercase  justify-center text-center">
-        <x-button class="flex flex-col items-center font-bold uppercase rounded-xl py-4 space-y-2 w-full bg-cyan-600" wire:click="sendInvoice" id="btnSendInvoice">
+        <x-button class="flex flex-col items-center font-bold uppercase rounded-xl py-4 space-y-2 w-full bg-cyan-600" wire:click="trySendInvoice" id="btntrySendInvoice">
             <span class="fas fa-save text-4xl"></span>
             <span class="">Facturar</span>
         </x-button>

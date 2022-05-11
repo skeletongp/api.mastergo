@@ -106,4 +106,8 @@ class Store extends Model
     {
         return $this->hasMany(Income::class);
     }
+    public function banks()
+    {
+        return $this->hasMany(Bank::class);
+    }
 }

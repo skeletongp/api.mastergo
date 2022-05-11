@@ -16,6 +16,7 @@ class OrderView extends LivewireDatatable
 {
     use AuthorizesRequests;
     public $hideable="select";
+    public $headerTitle="Pedidos Pendientes";
     public $perPage=5;
 
     public function builder()
@@ -36,7 +37,9 @@ class OrderView extends LivewireDatatable
             })->label("Monto"),
             Column::name('client.name')->callback(['uid', 'client_id'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
-                return $result['client']['fullname'];
+                $client=  strlen($result['client']['fullname']) > 16 ? substr($result['client']['fullname'], 0, 16) : $result['client']['fullname'] ;
+                $ellipsis=strlen($result['client']['fullname']) > 16 ? '...' : '';
+                return $client.$ellipsis;
 
             })->label('Cliente'),
 

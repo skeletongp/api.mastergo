@@ -24,7 +24,7 @@
                 8095086221
             </h2>
             <h2 class="biz-addr subtitle    ">
-                {{ substr('Calle Respaldo A, No. 8E, Ensanche La Paz, Distrito Nacional, República Dominicana', 0, 65) . '...' }}
+                {{ substr($invoice->store->address, 0, 50) }}{{ strlen($invoice->store->address) > 50 ? '...' : '' }}
             </h2>
         </div>
         {{-- Invoice Data --}}
@@ -32,10 +32,10 @@
             <tr class="invoice-data">
                 <td class="data-left" colspan="2">
                     <h2 class="sale-type subtitle">
-                        <b>Condición</b>:{{ $invoice->condition}}
+                        <b>Condición</b>: {{ $invoice->condition }}
                     </h2>
                     <h2 class="data-detail subtitle">
-                        <b>FECHA</b>: 12-04-2022
+                        <b>EMITIDA</b>: 12-04-2022
                     </h2>
                     <h2 class="data-detail subtitle">
                         <b>Vence</b>: 12-04-2023
@@ -46,12 +46,22 @@
                         {{ $invoice->payway }}
                     </h2>
                     <h2 class="data-detail subtitle">
-                        @if ($invoice->comprobante)
-                            <b>NCF</b>: {{ $invoice->comprobante->number }}
-                        @endif
+                        <b>NCF</b>: {{ $invoice->comprobante ? $invoice->comprobante->number : '0000000000' }}
                     </h2>
                     <h2 class="data-detail subtitle">
                         <b>Fct. Nº</b>: {{ $invoice->number }}
+                    </h2>
+
+                </td>
+            </tr>
+            <tr class="invoice-data">
+                <td colspan="4">
+                    <h2 class="data-detail subtitle">
+                        <b>Vendedor</b>: {{ $invoice->seller->fullname }}
+                    </h2>
+
+                    <h2 class="data-detail subtitle">
+                        <b>Cajero</b>: {{ $invoice->contable->fullname }}
                     </h2>
                 </td>
             </tr>
@@ -60,32 +70,25 @@
         {{-- Cliente Data --}}
         <table>
             <tr class="invoice-data">
-                <td class="data-left" colspan="2">
-                    <h2 class="client-title subtitle">
-                        CLIENTE
-                    </h2>
-                    <h2 class="data-title subtitle">
-                        <b>RNC/CED</b>:
-                    </h2>
-                    <h2 class="data-title subtitle">
-                        <b>Dirección</b>:
-                    </h2>
-                    <h2 class="data-title subtitle">
-                        <b>Teléfono</b>:
+                <td colspan="4" style="margin-bottom: -40px">
+                    <h2 class="client-name uppercase">Cliente</h2>
+                    <h2 class=" client-name" style="width: 100%; padding:0px; margin-bottom:0px">
+                        {{ strlen($invoice->client->fullname) > 28 ? substr($invoice->client->fullname, 0, 28) : $invoice->client->fullname }}{{ strlen($invoice->client->fullname) > 28 ? '...' : '' }}
                     </h2>
                 </td>
-                <td class="data-right" colspan="2">
-                    <h2 class="subtitle client-name">
-                        {{ strlen($invoice->client->fullname) > 25? substr($invoice->client->fullname, 0, 25) . '...': $invoice->client->fullname }}
+            </tr>
+            <tr class="invoice-data">
+
+                <td class="data-left" colspan="4">
+                    <h2 class="data-detail ">
+                        <b>RNC/CÉD: </b>{{ $invoice->client->rnc ?: 'No Disponible' }}
                     </h2>
                     <h2 class="data-detail ">
-                        {{ $invoice->client->rnc ?: 'No Disponible' }}
-                    </h2>
-                    <h2 class="data-detail ">
-                        {{ $invoice->client->address ?: 'No Disponible' }}
+                        <b>DIRECCIÓN.:</b>
+                        {{ strlen($invoice->client->address) > 30 ? substr($invoice->client->address, 0, 30) : $invoice->client->address }}{{ strlen($invoice->client->address) > 30 ? '...' : '' }}
                     </h2>
                     <h2 class="data-detail subtitle">
-                        {{ $invoice->client->phone }}
+                        <b>Tel.:</b> {{ $invoice->client->phone }}
                     </h2>
                 </td>
             </tr>
@@ -99,51 +102,37 @@
             <table class="table-details">
                 <thead class="head-details">
                     <tr>
-                        <th class="th-details">Cant</th>
                         <th class="th-details">Detalle</th>
                         <th class="th-details">Prec.</th>
-                        <th class="th-details">desc</th>
+                        <th class="th-details">Desc</th>
+                        <th class="th-details">Imp</th>
                         <th class="th-details text-right">Subt.</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                        $taxes = [];
-                    @endphp
                     @foreach ($invoice->details as $detail)
-                        @php
-                            $rate = $detail
-                                ->taxes()
-                                ->select(DB::raw('taxes.rate as tax, taxes.name'))
-                                ->pluck('tax', 'name')
-                                ->toArray();
-                            foreach ($rate as $key => $value) {
-                                $rate[$key] = $value * $detail->subtotal;
-                            }
-                            array_push($taxes, $rate);
-                        @endphp
                         <tr class="tr-detail">
-                            <td colspan="1" class=" td-details text-left">{{ formatNumber($detail->cant) }} <sup>{{$detail->unit->symbol}}</sup></td>
-                            <td class="td-details text-left" colspan="4">
-                                {{ $detail->product->name }}
+                            <td colspan="5" class=" td-details text-left">{{ formatNumber($detail->cant) }}
+                                <sup>{{ $detail->unit->symbol }}</sup>
+                                {{ strlen($detail->product->name) > 25 ? substr($detail->product->name, 0, 25) : $detail->product->name }}{{ strlen($detail->product->name) > 25 ? '...' : '' }}
                             </td>
-                            
                         </tr>
                         <tr class="tr-detail">
-                            <td colspan="2" class="border-b "></td>
-                            <td class=" border-b text-center">${{ formatNumber($detail->price) }}</td>
-                            <td class=" border-b text-center">{{ formatNumber($detail->discount_rate*100) }}%</td>
-                            <td class=" border-b text-right">${{ formatNumber($detail->total) }}
-                            </td>
+                            <td class="border-b  td-details2"></td>
+                            <td class=" border-b text-center td-details2">${{ formatNumber($detail->price) }}</td>
+                            <td class=" border-b text-center td-details2">
+                                {{ formatNumber($detail->discount_rate * 100) }}%</td>
+                            <td class=" border-b text-right">${{ formatNumber($detail->totalTax) }} </td>
+                            <td class=" border-b text-right">${{ formatNumber($detail->total) }} </td>
                         </tr>
                     @endforeach
-                   
+
                     <tr>
                         <td class="td-total text-right" style="padding-top:15px" colspan="4">
                             <b>SUBTOTAL</b>
                         </td>
                         <td class="td-total text-right" style="padding-top:15px">
-                            ${{ formatNumber($invoice->payment->amount) }}
+                            ${{ formatNumber($payment->amount) }}
                         </td>
                     </tr>
 
@@ -152,12 +141,12 @@
                         @foreach ($invoice->taxes as $tax)
                             <tr>
                                 <td class="td-total text-right" style="" colspan="4">
-                                        <div style="margin-top:-1px; margin-bottom:-1px">{{ $tax->name }}</div>
+                                    <div style="margin-top:-1px; margin-bottom:-1px">{{ $tax->name }}</div>
                                 </td>
                                 <td class="td-total text-right" style="">
-                                        <div style="margin-top:-1px; margin-bottom:-1px">
-                                            ${{ formatNumber($tax->pivot->amount) }}
-                                        </div>
+                                    <div style="margin-top:-1px; margin-bottom:-1px">
+                                        ${{ formatNumber($tax->pivot->amount) }}
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -167,7 +156,7 @@
                             <b>DESCUENTO</b>
                         </td>
                         <td class="td-total text-right" style="padding-top:10px">
-                            (${{ formatNumber($invoice->payment->discount) }})
+                            (${{ formatNumber($payment->discount) }})
                         </td>
                     </tr>
                     <tr class="tr-final">
@@ -175,39 +164,69 @@
                             <b>TOTAL</b>
                         </td>
                         <td class="td-total text-right">
-                            <b> ${{ formatNumber($invoice->payment->total) }}</b>
+                            <b> ${{ formatNumber($payment->total) }}</b>
                         </td>
                     </tr>
-                    <tr class="">
-                        <td class="td-total text-right" style="padding-top:15px" colspan="4">
-                            <b>PAGADO</b>
-                        </td>
-                        <td class="td-total text-right" style="padding-top:15px">
-                            <b> ${{ formatNumber($invoice->payment->payed) }}</b>
-                        </td>
-                    </tr>
-                    @if ($invoice->rest > 0)
+                    @if ($payment->efectivo > 0)
+                        <tr class="">
+                            <td class="td-total text-right" style="padding-top:15px" colspan="4">
+                                <b>Efectivo</b>
+                            </td>
+                            <td class="td-total text-right" style="padding-top:15px">
+                                <b> ${{ formatNumber($payment->efectivo) }}</b>
+                            </td>
+                        </tr>
+                    @endif
+                    @if ($payment->tarjeta > 0)
                         <tr class="">
                             <td class="td-total text-right" colspan="4">
-                                <b>PENDIENTE</b>
+                                <b>Tarjeta</b>
                             </td>
                             <td class="td-total text-right">
-                                <b> ${{ formatNumber($invoice->payment->rest) }}</b>
+                                <b> ${{ formatNumber($payment->tarjeta) }}</b>
+                            </td>
+                        </tr>
+                    @endif
+                    @if ($payment->transferencia > 0)
+                        <tr class="">
+                            <td class="td-total text-right" colspan="4">
+                                <b>Transferencia</b>
+                            </td>
+                            <td class="td-total text-right">
+                                <b> ${{ formatNumber($payment->transferencia) }}</b>
+                            </td>
+                        </tr>
+                    @endif
+                    @if ($payment->rest > 0)
+                        <tr class="">
+                            <td class="td-total text-right" style="padding-top:15px" colspan="4">
+                                <b>PENDIENTE</b>
+                            </td>
+                            <td class="td-total text-right" style="padding-top:15px">
+                                <b> ${{ formatNumber($payment->rest) }}</b>
                             </td>
                         </tr>
                     @else
                         <tr class="">
-                            <td class="td-total text-right" colspan="4">
+                            <td class="td-total text-right" style="padding-top:15px" colspan="4">
                                 <b>CAMBIO</b>
                             </td>
-                            <td class="td-total text-right">
-                                <b> ${{ formatNumber($invoice->payment->cambio) }}</b>
+                            <td class="td-total text-right" style="padding-top:15px">
+                                <b> ${{ formatNumber($payment->cambio) }}</b>
                             </td>
                         </tr>
                     @endif
                 </tbody>
-
             </table>
+
+            <h6 class="text-xs uppercase text-center font-normal">
+                <div class="text-left w-full">EMITIDA POR SISTEMA</div>
+                <hr>
+                ***¡Gracias por preferirnos!*** <br>
+                <div style="width: 100%; padding-top:5px"></div>
+                Favor revisar la mercancía al momento de recibir. No se aceptan devoluciones <br>
+                <hr>
+            </h6>
         </div>
     </div>
 
@@ -217,7 +236,7 @@
         size: 80mm 297mm portrait;
         margin: 5px;
         font-family: Arial, Helvetica, sans-serif;
-        font-size:large;
+        font-size: large;
     }
 
     hr {
@@ -226,7 +245,8 @@
     }
 
     table {
-        min-width: 100%;
+        min-width: 90%;
+        max-width: 90vw !important
     }
 
     .logo {
@@ -338,19 +358,27 @@
         padding: 2px 5px;
     }
 
+    .td-details {
+        padding: 5px;
+        padding-bottom: 0;
+    }
+
+    .td-details2 {
+        padding: -5px -5px;
+    }
+
     .tr-detail {
         font-size: x-small;
         text-transform: uppercase;
 
     }
+
     .border-b {
         border-bottom: solid .2px #ddd;
 
-        }
-
-    .td-details {
-        padding: 5px;
     }
+
+
 
     .td-total {
         font-size: x-small;
@@ -377,6 +405,34 @@
 
     .text-right {
         text-align: right;
+    }
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+    .text-sm {
+        font-size: small;
+    }
+
+    .text-md {
+        font-size: medium;
+    }
+
+    .text-xs {
+        font-size: x-small;
+    }
+
+    .font-normal {
+        font-weight: normal;
+    }
+
+    .font-bold {
+        font-weight: bold;
+    }
+
+    .w-full {
+        width: 100%;
     }
 
 </style>

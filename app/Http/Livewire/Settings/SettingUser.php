@@ -65,7 +65,9 @@ class SettingUser extends Component
             $file_headers = @get_headers($this->photo_prev);
             $exists = $file_headers[0] === 'HTTP/1.1 200 OK';
             if ($exists && ($this->photo_path != $this->photo_prev)) {
-                unlink('storage/avatars/' . basename($this->photo_prev));
+                if (file_exists('storage/avatars/' . basename($this->photo_prev))) {
+                    unlink('storage/avatars/' . basename($this->photo_prev));
+                }
             }
         }
     }
@@ -86,7 +88,7 @@ class SettingUser extends Component
             $this->emit('showAlert', 'La contraseña ingresada no es correcta', 'error');
         }
         Auth::logout();
-        Session::flash('msg','success| Por favor, inicie sesión nuevamente');
+        Session::flash('msg', 'success| Por favor, inicie sesión nuevamente');
         return redirect()->route('login');
     }
 }

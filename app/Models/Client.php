@@ -58,4 +58,12 @@ class Client extends Model
     {
         return $this->morphOne(Count::class,'contable');
     }
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+    public function payments()
+    {
+        return $this->morphMany(Payment::class,'payer');
+    }
 }

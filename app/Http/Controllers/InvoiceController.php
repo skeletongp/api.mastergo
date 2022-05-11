@@ -22,12 +22,7 @@ class InvoiceController extends Controller
     }
     public function show(Invoice $invoice)
     {
-        $data = [
-            'invoice' => $invoice,
-            'payment'=>$invoice->payment
-        ];
-        $pdf=App::make('dompdf.wrapper');
-        $pdf->loadview('pages.invoices.letter', $data)->setPaper('80mm', 'portrait');
-       return  $pdf->stream('invoice.pdf');
+        $invoice=$invoice->with('client','client.invoices','details','seller','contable','pdfs','incomes')->first();
+       return  view('pages.invoices.show', compact('invoice'));
     }
 }

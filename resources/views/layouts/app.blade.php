@@ -80,10 +80,12 @@
     <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{asset('js/formatPhoneNumber.js')}}"></script>
-
+    <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     @stack('js')
 
     <script>
+        
         colors = {
             "success": {
                 "text": 'text-green-700',

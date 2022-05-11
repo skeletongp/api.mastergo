@@ -66,7 +66,7 @@
 
             <div class="py-3 flex justify-between items-center">
                 <div>
-                    @if ($avatar)
+                    @if ($photo_path)
                         <label for="avatar{{ $user->id }}">
                             <div for="avatar{{ $user->id }}" class="w-12 h-12 rounded-full bg-cover cursor-pointer"
                                 style="background-image: url({{ $avatar->temporaryUrl() }})">

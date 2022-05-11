@@ -74,5 +74,15 @@ class Invoice extends Model
     {
         return $this->belongsToMany(Tax::class, 'invoice_taxes')->withPivot('amount');
     }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+    public function cheque(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
+        );
+    }
    
 }

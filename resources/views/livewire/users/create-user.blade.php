@@ -70,7 +70,7 @@
                         <label for="avatar" class="flex items-center space-x-4 pb-4 cursor-pointer">
                             <span class="fas fa-image text-xl"></span>
                             <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen/Avatar</span>
-                            @if ($avatar)
+                            @if ($photo_path)
                                 <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
                                     {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
                             @endif
@@ -82,7 +82,7 @@
                     </div>
                     <div class="py-3 flex justify-between items-center">
                         <div>
-                            @if ($avatar)
+                            @if ($photo_path)
                                 <div class="w-12 h-12 rounded-full bg-cover"
                                     style="background-image: url({{ $avatar->temporaryUrl() }})">
                                 </div>

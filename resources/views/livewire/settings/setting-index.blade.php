@@ -49,14 +49,21 @@
                 <hr>
             @endcan
             @can('Crear Comprobantes')
-            <div wire:click="changeView('settings.setting-comprobante')" id="divComprobante"
-                class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'settings.setting-comprobante' ? 'bg-blue-100' : '' }}">
+                <div wire:click="changeView('settings.setting-comprobante')" id="divComprobante"
+                    class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'settings.setting-comprobante' ? 'bg-blue-100' : '' }}">
+                    <span class="far fa-file-invoice-dollar text-xl w-8 text-center"></span>
+                    <span class=" text-lg">Comprobantes</span>
+                </div>
+                <hr>
+            @endcan
+            @can('Crear Bancos')
+            <div wire:click="changeView('settings.setting-bank')" id="divBank"
+                class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'settings.setting-bank' ? 'bg-blue-100' : '' }}">
                 <span class="far fa-file-invoice-dollar text-xl w-8 text-center"></span>
-                <span class=" text-lg">Comprobantes</span>
+                <span class=" text-lg">Cuentas de Banco</span>
             </div>
             <hr>
         @endcan
-
         </div>
     </div>
     <div class="w-full h-full relative  p-4" x-data="{ open: true }">
@@ -64,9 +71,7 @@
         <button
             class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
             wire:loading>
-            <div class="mx-auto h-40 w-40 bg-center bg-cover"
-                style="background-image: url({{ asset('images/assets/loading.gif') }})">
-            </div>
+            <x-loading></x-loading>
         </button>
 
 
@@ -90,7 +95,11 @@
             @case('settings.setting-measure')
                 @livewire($componentName)
             @break
+
             @case('settings.setting-comprobante')
+                @livewire($componentName)
+            @break
+            @case('settings.setting-bank')
                 @livewire($componentName)
             @break
 

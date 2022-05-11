@@ -1,7 +1,7 @@
-@props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitVerticalContainer'=>false, 'title'])
+@props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitVerticalContainer'=>false, 'title', 'hideButton'=>false])
 <div class="w-full " x-data="{ open: {{$open?'true':'false'}} }" x-cloak @keydown.escape.window="open = false">
     {{-- Modal Main Button --}}
-    <div>
+    <div class="{{$hideButton?'hidden':''}}">
         <button id="btn{{$attributes['id']}}" type="button" x-on:click.prevent="open = ! open"
             class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
             {{ $button }}
@@ -21,7 +21,7 @@
 
             {{-- Modal Header --}}
             <div class="flex justify-between">
-                <h1 class="font-bold my-4 uppercase text-xl">{{ $title }}</h1>
+                <h1 class="font-bold my-4 uppercase text-xl w-full">{{ $title }}</h1>
                 <span class="fas fa-times cursor-pointer text-red-600" x-on:click.prevent="open = ! open"></span>
             </div>
             {{-- Modal Body --}}

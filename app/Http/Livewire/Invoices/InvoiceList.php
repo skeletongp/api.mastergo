@@ -9,23 +9,30 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class InvoiceList extends LivewireDatatable
 {
 
-    public $hidePagination=true;
-
+    public$hideResults=true;
+    public $headTitle="Facturas";
+    public $perPage=15;
     public function builder()
     {
         $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
-            ->where('status', '!=', 'waiting')->with('pdfs', 'payment');
+            ->where('status', '!=', 'waiting')->with('pdfs', 'payment','client');
         return $invoices;
     }
 
     public function columns()
     {
+        $invoices = $this->builder()->get()->toArray();
         return [
-            Column::name('number')->label('Orden'),
+            Column::name('number')->label('Orden')->searchable()->sortable(),
+            Column::name('client.name')->callback(['id', 'client_id'], function ($id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
+                return $result['client']['fullname'];
+
+            })->label('Cliente'),
             Column::name('payment.total')->callback('payment.total:sum', function ($total) {
                 return '$' . formatNumber($total);
             })->label('Monto'),
-            Column::name('id')->label('Ver')->view('livewire.invoices.includes.setPDF'),
+            Column::name('id')->label('Ver')->view('livewire.invoices.includes.setPDF')->sortable(),
         ];
     }
     public function cellClasses($row, $column)

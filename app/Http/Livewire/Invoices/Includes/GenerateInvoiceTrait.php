@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 
 trait GenerateInvoiceTrait
 {
+    public $invoice;
 
     public function createDetails($invoice)
     {
@@ -38,6 +39,18 @@ trait GenerateInvoiceTrait
         $this->updatedForm(13, 'unit_id');
         $this->tryAddItems();
     }
+
+    public function trySendInvoice()
+    {
+        $condition=$this->condition!='DE CONTADO' && array_sum(array_column($this->details, 'total'))>$this->client['limit'];
+        if ($condition) {
+            $this->action='sendInvoice';
+            $this->emit('openAuthorize');
+         } else{
+             $this->sendInvoice();
+         }
+    }
+
     public function sendInvoice()
     {
         if (!count($this->details)) {
@@ -69,31 +82,38 @@ trait GenerateInvoiceTrait
         $this->createDetails($invoice);
         event(new NewInvoice($invoice));
         $this->reset('form', 'details', 'producto', 'price', 'client','client_code','product_code','product_name');
+        $this->invoice=$invoice;
+        $this->emit('openData');
         $this->mount();
-        $this->emit('showAlert', 'Factura enviada exitosamente', 'success');
     }
     public function createPayment($invoice)
     {
+        $subtotal=array_sum(array_column($this->details, 'subtotal'));
+        $discount=array_sum(array_column($this->details, 'discount'));
+        $tax=array_sum(array_column($this->details, 'taxTotal'));
+        $total=$subtotal-$discount+$tax;
+
         $data = [
             'ncf'=>optional($invoice->comprobante)->number,
-            'amount' => array_sum(array_column($this->details, 'subtotal')),
-            'discount' => array_sum(array_column($this->details, 'discount')),
-            'total' =>  array_sum(array_column($this->details, 'subtotal')),
+            'amount' => $subtotal,
+            'discount' => $discount,
+            'total' =>  $total,
+            'tax' =>  $tax,
             'payed' => 0,
-            'rest' =>  array_sum(array_column($this->details, 'subtotal')),
+            'rest' =>  $total,
             'cambio' =>  0,
             'efectivo' => 0,
             'tarjeta' => 0,
-            'tax' => 0,
             'transferencia' => 0,
         ];
        $invoice->payment()->save(setPayment($data));
+       $invoice->client->payments()->save($invoice->payment);
     }
     public function restStock($pivotUnitId, $cant)
     {
         $user = auth()->user();
         $unit = $user->place->units()->wherePivot('id', $pivotUnitId)->first();
-        $unit->pivot->stock = $unit->stock - $cant;
+        $unit->pivot->stock = floatval($unit->stock) - $cant;
         $unit->pivot->save();
     }
     public function verifyCredit($amount, $credit)

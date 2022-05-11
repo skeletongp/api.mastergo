@@ -11,23 +11,47 @@
 
 <body>
     <div class="flex items-center min-h-screen bg-gray-50">
-        <div class="flex-1 h-full max-h-[30rem] max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
-            <div class="flex flex-col md:flex-row">
-                <div class=" md:h-auto md:w-1/2">
-                    <img class=" w-full h-[30rem]" src="https://source.unsplash.com/user/erondu/1600x900" alt="img" />
+        <div class="flex-1 h-full max-h-[30rem] max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
+            <div class="flex flex-col md:flex-row ">
+                <div class="h-full md:h-auto md:w-1/2 bg-teal-700 text-gray-100 grid grid-cols-2 gap-6 p-6">
+                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-chart-bar text-7xl"></span>
+                        Estadísticas
+                    </div>
+                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-cash-register text-7xl"></span>
+                        Cobros
+                    </div>
+                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-file-invoice-dollar text-7xl"></span>
+                        Facturación
+                    </div>
+                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-cogs text-7xl"></span>
+                        Gestión
+                    </div>
+                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-users-cog text-7xl"></span>
+                        Personas
+                    </div>
+                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-layer-group text-7xl"></span>
+                        Inventario
+                    </div>
                 </div>
                 <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                     <form class="w-full" action="{{ route('login.store') }}" method="POST">
                         @csrf
+                        <h1 class="font-bold text-center uppercase text-2xl">
+                            Bienvenido a Mastergo
+                        </h1>
+                        <hr class="my-8 mt-2" />
+
                         <div class="flex justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-blue-600" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                                <path
-                                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                            </svg>
+                            <div class="w-16 h-16 bg-cover bg-center"
+                                style="background-image: url({{ asset('/images/icon.png') }})">
+
+                            </div>
                         </div>
                         <h1 class="mb-4 text-2xl font-bold text-center text-gray-700">
                             Ingresa a tu cuenta
@@ -37,7 +61,7 @@
                                 Nombre de usuario
                             </label>
                             <select type="text" name="username" id="username"
-                                class="w-full px-4 py-2 border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                class="w-full px-4 py-2 border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600"
                                 placeholder="">
                                 @foreach ($users as $username => $fullname)
                                     <option value="{{ $username }}">{{ $fullname }}</option>
@@ -50,19 +74,20 @@
                                 Contraseña
                             </label>
                             <input name="password" id="password"
-                                class="w-full px-4 py-2 border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600" autocomplete="off"
-                                placeholder="" type="password" />
+                                class="w-full px-4 py-2 border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600"
+                                autocomplete="off" placeholder="" type="password" />
                             <x-input-error for="password"></x-input-error>
                         </div>
 
-                        <button
-                            class="block w-full px-4 py-2 mt-4 font-medium leading-5 text-center text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                            href="#">
-                            Acceder
-                        </button>
+                        <div class="flex justify-end">
+                            <button
+                                class="block px-4 py-2 font-bold leading-6 text-center text-white transition-colors duration-150 bg-teal-700 border border-transparent rounded-lg active:bg-teal-700 hover:bg-teal-800 focus:outline-none focus:shadow-outline-teal uppercase"
+                                href="#">
+                                Acceder
+                            </button>
+                        </div>
 
 
-                        <hr class="my-8" />
 
 
                     </form>
@@ -89,8 +114,8 @@
                 "bg": 'bg-yellow-100'
             },
             'info': {
-                text: 'text-blue-700',
-                "bg": 'bg-blue-100'
+                text: 'text-teal-700',
+                "bg": 'bg-teal-100'
             }
         };
         if (msg) {

@@ -29,9 +29,9 @@ class ScopeIndex extends Component
     public function changeScopes()
     {
         if (!is_array($this->scopesSelected)) {
-            $keys=array_keys($this->scopesSelected->toArray());
+            $keys=array_values($this->scopesSelected->toArray());
         } else{
-            $keys=array_keys($this->scopesSelected);
+            $keys=array_values($this->scopesSelected);
 
         }
         $this->store->scope()->sync(

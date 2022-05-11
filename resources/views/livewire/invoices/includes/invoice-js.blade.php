@@ -83,7 +83,7 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('#sendInvoice').click();
+                        $('#trySendInvoice').click();
                         search = "";
                         @this.set('search', search);
                         $('#searchImput').val('')

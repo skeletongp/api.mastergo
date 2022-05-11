@@ -12,7 +12,7 @@ class CreateProduct extends Component
 {
     use AuthorizesRequests, WithFileUploads;
 
-    public $form, $units, $taxes, $places;
+    public $form=[], $units, $taxes, $places;
     public  $unitSelected = [], $taxSelected = [], $placeSelected = [];
     public $unit_id, $unit_price_mayor, $unit_price_menor, $unit_min, $unit_cost, $unit_margin;
     public $photo, $photo_path;
@@ -67,7 +67,9 @@ class CreateProduct extends Component
         }
         $this->createTaxes($product);
         $this->attachToPlace($product);
-        return redirect()->route('products.index');
+        $this->reset();
+        $this->mount();
+        $this->emit('refreshLivewireDatatable');
     }
     public function createTaxes(Product $product)
     {
@@ -132,10 +134,15 @@ class CreateProduct extends Component
     }
     public function updatedPhoto()
     {
+        $this->reset('photo_path');
+        $this->validate([
+            'photo'=>'image|max:2048'
+        ]);
         $ext = pathinfo($this->photo->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->photo->storeAs('products', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
     }
+   
     public function remove($id)
     {
         unset($this->unitSelected[$id]);

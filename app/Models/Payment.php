@@ -14,4 +14,8 @@ class Payment extends Model
     {
         $this->morphTo();
     }
+    public function payer()
+    {
+        $this->morphTo();
+    }
 }

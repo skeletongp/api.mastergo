@@ -52,6 +52,10 @@ class CreateStore extends Component
 
     public function updatedLogo()
     {
+        $this->reset('photo_path');
+        $this->validate([
+            'logo'=>'image|max:2048'
+        ]);
         $ext = pathinfo($this->logo->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->logo->storeAs('logos', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
