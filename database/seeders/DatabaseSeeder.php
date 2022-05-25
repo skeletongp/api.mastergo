@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Http\Livewire\Store\CreateStore;
+use App\Models\Invoice;
 use App\Models\Store;
 use App\Models\User;
 use Carbon\Carbon;
@@ -109,7 +110,9 @@ class DatabaseSeeder extends Seeder
         ]);
         foreach($products as $prod){
             $product=$store->products()->create($prod);
-           // $product->taxes()->sync($tax);
+            if(fmod($product->id, 2)==1){
+                $product->taxes()->sync($tax);
+            }
             $price_mayor=rand(75,125);
             $price_menor=$price_mayor*1.15;
             $cost=rand(39,75);
@@ -179,20 +182,20 @@ class DatabaseSeeder extends Seeder
                 CountMainSeeder::class,
             ]
         );
-        setContable($client, '101');
-        setContable($tax, '202', 'ITBIS por Pagar');
-        setContable($tax, '103', $tax->name.' por Cobrar');
+        setContable($client, '101', 'debit');
+        setContable($tax, '202', 'credit', 'ITBIS por Pagar');
+        setContable($tax, '103', 'debit', $tax->name.' por Cobrar');
         $user->assignRole('Super Admin');
         $user2->assignRole('Administrador');
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
-        setContable($place, '100','Efectivo en Caja', $place->id);
-        setContable($place, '100','Efectivo en Cheques', $place->id);
-        setContable($place, '100','Otros Efectivos', $place->id);
-        setContable($place, '400','Ingresos por Ventas', $place->id);
-        setContable($place, '401','Descuento en Ventas', $place->id);
-        setContable($place, '401','Devolución en Ventas', $place->id);
-        setContable($place, '402','Otros Ingresos', $place->id);
+        setContable($place, '100', 'debit','Efectivo en Caja', $place->id, 'debit');
+        setContable($place, '100', 'debit','Efectivo en Cheques', $place->id);
+        setContable($place, '100', 'debit','Otros Efectivos', $place->id);
+        setContable($place, '400', 'credit','Ingresos por Ventas', $place->id);
+        setContable($place, '401', 'debit','Descuento en Ventas', $place->id);
+        setContable($place, '401', 'debit','Devolución en Ventas', $place->id);
+        setContable($place, '402', 'credit','Otros Ingresos', $place->id);
 
         User::factory(400)->create()->each(function ($us) use ($store) {
             $num = rand(1, 250);
@@ -204,5 +207,12 @@ class DatabaseSeeder extends Seeder
                 $us->assignRole('Administrador');
             }
         });
+        for ($i=1; $i < 16; $i++) { 
+            $store->comprobantes()->create([
+                'type'=>'COMPROBANTE DE CONSUMIDOR FINAL',
+                'prefix'=>Invoice::TYPES['COMPROBANTE DE CONSUMIDOR FINAL'],
+                'number'=>str_pad($i, 8,'0', STR_PAD_LEFT),
+            ]);
+        }
     }
 }

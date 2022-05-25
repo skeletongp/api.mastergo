@@ -10,6 +10,7 @@ trait OrderContable
     {
         $place = auth()->user()->place;
         $creditable = $place->counts()->where('code', '400-01')->first();
+        $discount = $place->counts()->where('code', '401-01')->first();
         $ref = $invoice->comprobante ?: $invoice;
         $ref = $ref->number;
         $moneys = array($payment->efectivo, $payment->tarjeta, $payment->transferencia, $payment->rest);
@@ -17,34 +18,33 @@ trait OrderContable
         $toTax = null;
         switch ($max) {
             case 0:
-                setTransaction('Reg. venta a ' . $invoice->client->fullname, $ref, $moneys[$max] - $invoice->tax, $place->cash(), $creditable);
+                setTransaction('Reg. venta Ref. Nº. ' . $ref, $ref, $moneys[$max] - $payment->tax, $place->cash(), $creditable);
                 $toTax = $place->cash();
                 break;
             case 1:
-                setTransaction('Reg. venta a ' . $invoice->client->fullname, $ref, $moneys[$max] - $invoice->tax, $place->check(), $creditable);
-                $place->check();
+                setTransaction('Reg. venta Ref. Nº. ' . $ref, $ref, $moneys[$max] - $payment->tax, $place->check(), $creditable);
+                $toTax =  $place->check();
                 break;
             case 2:
-                setTransaction('Reg. venta a ' . $invoice->client->fullname, $ref, $moneys[$max] - $invoice->tax,  optional($this->bank)->contable, $creditable);
-                $toTax =  optional($this->bank)->contable;
+                setTransaction('Reg. venta Ref. Nº. ' . $ref, $this->reference, $moneys[$max] - $payment->tax, $this->bank->contable()->first(), $creditable);
+                $toTax =  $this->bank->contable()->first();
                 break;
             case 3:
-                setTransaction('Reg. venta a ' . $invoice->client->fullname, $ref, $moneys[$max] - $invoice->tax, $client->contable()->first(), $creditable);
+                setTransaction('Reg. venta Ref. Nº. ' . $ref, $ref, $moneys[$max] - $payment->tax, $client->contable()->first(), $creditable);
                 $toTax = $client->contable()->first();
                 break;
-            default:
-                setTransaction('Reg. venta a ' . $invoice->client->fullname, $ref, $moneys[$max] - $invoice->tax, $place->other(), $creditable);
-                $place->check();
-                break;
+           
         }
 
         $moneys[$max] = 0;
-        setTransaction('Reg. venta en Efectivo', $ref,  $moneys[0] - $invoice->cambio, $place->cash(), $creditable);
+        setTransaction('Reg. venta en Efectivo', $ref,  $moneys[0], $place->cash(), $creditable);
+        setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash());
         setTransaction('Reg. venta por Cheque', $ref,  $moneys[1], $place->check(), $creditable);
-        setTransaction('Reg. venta por Transferencia', $ref,  $moneys[2], optional($this->bank)->contable, $creditable);
+        setTransaction('Reg. venta por Transferencia', $ref.' | '.$this->reference,  $moneys[2], optional($this->bank)->contable, $creditable);
         setTransaction('Reg. venta a Crédito', $ref, $moneys[3],  $client->contable()->first(), $creditable);
+        setTransaction('Descuento a Fct. '.$invoice->number, $ref, $payment->discount,  $discount, $creditable);
         foreach ($invoice->taxes as $tax) {
-            setTransaction('Reg. retención de ' . $tax->name, $ref, $tax->pivot->amount,   $toTax, $tax->contable()->first());
+            setTransaction('Reg. retención de ' . $tax->name, $ref, $tax->rate*$payment->amount,   $toTax, $tax->contable()->first());
         }
         $client->update([
             'limit' => $client->limit - $invoice->payment->rest

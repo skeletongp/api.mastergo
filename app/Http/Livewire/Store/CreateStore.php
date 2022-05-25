@@ -48,13 +48,13 @@ class CreateStore extends Component
         $this->emitUp('reloadSettingStore');
         $this->emit('showAlert', 'Negocio registrado exitosamente', 'success');
     }
-  
+
 
     public function updatedLogo()
     {
         $this->reset('photo_path');
         $this->validate([
-            'logo'=>'image|max:2048'
+            'logo' => 'image|max:2048'
         ]);
         $ext = pathinfo($this->logo->getFileName(), PATHINFO_EXTENSION);
         $photo = $this->logo->storeAs('logos', date('Y_m_d_H_i_s') . '.' . $ext);
@@ -62,52 +62,52 @@ class CreateStore extends Component
     }
     public function createPlace(Store $store)
     {
-        $data=[
-            'name'=>$store->name.' | Sede Principal',
-            'phone'=>$store->phone,
-            'user_id'=>auth()->user()->id,
+        $data = [
+            'name' => $store->name . ' | Sede Principal',
+            'phone' => $store->phone,
+            'user_id' => auth()->user()->id,
         ];
-       $place= $store->places()->create($data);
-       $this->setCounts($place);
+        $place = $store->places()->create($data);
+        $this->setCounts($place);
     }
     public function setCounts($place)
     {
-        setContable($place, '100','Efectivo en Caja', $place->id);
-        setContable($place, '100','Efectivo en Banco', $place->id);
-        setContable($place, '100','Efectivo en Cheques', $place->id);
-        setContable($place, '100','Otros Efectivos', $place->id);
-        setContable($place, '400','Ingresos por Ventas', $place->id);
-        setContable($place, '401','Descuento en Ventas', $place->id);
-        setContable($place, '401','Devolución en Ventas', $place->id);
-        setContable($place, '402','Otros Ingresos', $place->id);
+        setContable($place,   '100', 'debit', 'Efectivo en Caja', $place->id);
+        setContable($place,  '100', 'debit', 'Efectivo en Banco', $place->id);
+        setContable($place,  '100', 'debit', 'Efectivo en Cheques', $place->id);
+        setContable($place,  '100', 'debit', 'Otros Efectivos', $place->id);
+        setContable($place,  '400','credit','Ingresos por Ventas', $place->id);
+        setContable($place,  '401', 'debit', 'Descuento en Ventas', $place->id);
+        setContable($place,  '401', 'debit', 'Devolución en Ventas', $place->id);
+        setContable($place,  '402', 'credit', 'Otros Ingresos', $place->id);
     }
     public function createUnit(Store $store)
     {
-        $data=[
-            'name'=>'Unidad',
-            'symbol'=>'UND',
+        $data = [
+            'name' => 'Unidad',
+            'symbol' => 'UND',
         ];
         $store->units()->create($data);
     }
     public function createTax(Store $store)
     {
-        $data=[
-            'name'=>'ITBIS',
-            'rate'=>0.18,
+        $data = [
+            'name' => 'ITBIS',
+            'rate' => 0.18,
         ];
-       $tax=$store->taxes()->create($data);
-       setContable($tax, '202', $tax->name.' por Pagar');
-       setContable($tax, '103', $tax->name.' por Cobrar');
+        $tax = $store->taxes()->create($data);
+        setContable($tax, '202', $tax->name . ' por Pagar');
+        setContable($tax, '103', $tax->name . ' por Cobrar');
     }
     public function createClient(Store $store)
     {
-        $data=[
-            'name'=>'Cliente',
-            'lastname'=>'Genérico',
-            'email'=>'generico@'.strtok($store->uid,' ').'.com',
-            'address'=>'SIN DIRECCIÓN',
-            'phone'=>'8097654321',
-            'limit'=>0.0,
+        $data = [
+            'name' => 'Cliente',
+            'lastname' => 'Genérico',
+            'email' => 'generico@' . strtok($store->uid, ' ') . '.com',
+            'address' => 'SIN DIRECCIÓN',
+            'phone' => '8097654321',
+            'limit' => 0.0,
         ];
         $store->clients()->create($data);
     }

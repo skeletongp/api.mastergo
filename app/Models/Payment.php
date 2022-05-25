@@ -18,4 +18,16 @@ class Payment extends Model
     {
         $this->morphTo();
     }
+    public function contable()
+    {
+        $this->morphTo();
+    }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+    public function pdf()
+    {
+        return $this->morphOne(Filepdf::class, 'fileable');
+    }
 }

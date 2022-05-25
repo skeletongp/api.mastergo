@@ -43,13 +43,13 @@
                 </td>
                 <td class="data-right" colspan="2">
                     <h2 class="pay-type subtitle">
-                        {{ $invoice->payway }}
+                        {{ formatDate($invoice->created_at, 'H:i:s A') }}
+                    </h2>
+                    <h2 class="data-detail subtitle">
+                        <b>Nº</b>: {{ $invoice->number }}
                     </h2>
                     <h2 class="data-detail subtitle">
                         <b>NCF</b>: {{ $invoice->comprobante ? $invoice->comprobante->number : '0000000000' }}
-                    </h2>
-                    <h2 class="data-detail subtitle">
-                        <b>Fct. Nº</b>: {{ $invoice->number }}
                     </h2>
 
                 </td>
@@ -102,10 +102,12 @@
             <table class="table-details">
                 <thead class="head-details">
                     <tr>
-                        <th class="th-details">Detalle</th>
+                        <th class="th-details" colspan="{{$invoice->payment->tax > 0?'1':'2'}}">Detalle</th>
                         <th class="th-details">Prec.</th>
                         <th class="th-details">Desc</th>
-                        <th class="th-details">Imp</th>
+                        @if ($invoice->payment->tax > 0)
+                            <th class="th-details">Imp</th>
+                        @endif
                         <th class="th-details text-right">Subt.</th>
                     </tr>
                 </thead>
@@ -118,11 +120,13 @@
                             </td>
                         </tr>
                         <tr class="tr-detail">
-                            <td class="border-b  td-details2"></td>
+                            <td class="border-b  td-details2" colspan="{{$invoice->payment->tax > 0?'1':'2'}}"></td>
                             <td class=" border-b text-center td-details2">${{ formatNumber($detail->price) }}</td>
                             <td class=" border-b text-center td-details2">
                                 {{ formatNumber($detail->discount_rate * 100) }}%</td>
-                            <td class=" border-b text-right">${{ formatNumber($detail->totalTax) }} </td>
+                            @if ($invoice->payment->tax > 0)
+                                <td class=" border-b text-right">${{ formatNumber($detail->totalTax) }} </td>
+                            @endif
                             <td class=" border-b text-right">${{ formatNumber($detail->total) }} </td>
                         </tr>
                     @endforeach
@@ -137,7 +141,6 @@
                     </tr>
 
                     @if ($invoice->comprobante)
-
                         @foreach ($invoice->taxes as $tax)
                             <tr>
                                 <td class="td-total text-right" style="" colspan="4">
@@ -151,6 +154,7 @@
                             </tr>
                         @endforeach
                     @endif
+
                     <tr>
                         <td class="td-total text-right" style="padding-top:10px" colspan="4">
                             <b>DESCUENTO</b>
@@ -159,6 +163,9 @@
                             (${{ formatNumber($payment->discount) }})
                         </td>
                     </tr>
+                    <div style="float: left">
+                        {!! \DNS2D::getBarcodeHTML(asset('storage/invoices/' . $invoice->number . '_' . date('YmdHi') . '_thermal.pdf'), 'QRCODE', 2, 2) !!}
+                    </div>
                     <tr class="tr-final">
                         <td class="td-total text-right" colspan="4">
                             <b>TOTAL</b>
@@ -167,52 +174,53 @@
                             <b> ${{ formatNumber($payment->total) }}</b>
                         </td>
                     </tr>
-                    @if ($payment->efectivo > 0)
+                    @if ($invoice->payments()->sum('efectivo') > 0)
                         <tr class="">
                             <td class="td-total text-right" style="padding-top:15px" colspan="4">
                                 <b>Efectivo</b>
                             </td>
                             <td class="td-total text-right" style="padding-top:15px">
-                                <b> ${{ formatNumber($payment->efectivo) }}</b>
+                                <b> ${{ formatNumber($invoice->payments()->sum('efectivo')) }}</b>
                             </td>
                         </tr>
                     @endif
-                    @if ($payment->tarjeta > 0)
+                    @if ($invoice->payments()->sum('tarjeta') > 0)
                         <tr class="">
                             <td class="td-total text-right" colspan="4">
                                 <b>Tarjeta</b>
                             </td>
                             <td class="td-total text-right">
-                                <b> ${{ formatNumber($payment->tarjeta) }}</b>
+                                <b> ${{ formatNumber($invoice->payments()->sum('tarjeta')) }}</b>
                             </td>
                         </tr>
                     @endif
-                    @if ($payment->transferencia > 0)
+                    @if ($invoice->payments()->sum('transferencia') > 0)
                         <tr class="">
                             <td class="td-total text-right" colspan="4">
                                 <b>Transferencia</b>
                             </td>
                             <td class="td-total text-right">
-                                <b> ${{ formatNumber($payment->transferencia) }}</b>
+                                <b> ${{ formatNumber($invoice->payments()->sum('transferencia')) }}</b>
                             </td>
                         </tr>
                     @endif
+
                     @if ($payment->rest > 0)
                         <tr class="">
-                            <td class="td-total text-right" style="padding-top:15px" colspan="4">
+                            <td class="td-total text-right" style="padding-top:5px" colspan="4">
                                 <b>PENDIENTE</b>
                             </td>
-                            <td class="td-total text-right" style="padding-top:15px">
-                                <b> ${{ formatNumber($payment->rest) }}</b>
+                            <td class="td-total text-right" style="padding-top:5px">
+                                <b> ${{ formatNumber($invoice->rest) }}</b>
                             </td>
                         </tr>
                     @else
                         <tr class="">
-                            <td class="td-total text-right" style="padding-top:15px" colspan="4">
+                            <td class="td-total text-right" style="padding-top:5px" colspan="4">
                                 <b>CAMBIO</b>
                             </td>
-                            <td class="td-total text-right" style="padding-top:15px">
-                                <b> ${{ formatNumber($payment->cambio) }}</b>
+                            <td class="td-total text-right" style="padding-top:5px">
+                                <b> ${{ formatNumber($invoice->payments()->sum('cambio')) }}</b>
                             </td>
                         </tr>
                     @endif
@@ -222,6 +230,11 @@
             <h6 class="text-xs uppercase text-center font-normal">
                 <div class="text-left w-full">EMITIDA POR SISTEMA</div>
                 <hr>
+                @if ($invoice->note)
+                    <div style="padding:5px; padding-bottom:10px; font-style: italic">
+                        <b>Nota: </b>{{ $invoice->note }}
+                    </div>
+                @endif
                 ***¡Gracias por preferirnos!*** <br>
                 <div style="width: 100%; padding-top:5px"></div>
                 Favor revisar la mercancía al momento de recibir. No se aceptan devoluciones <br>
@@ -232,10 +245,20 @@
 
 </body>
 <style>
+    @font-face {
+        font-family: 'MyCustomFont';
+        font-weight: normal;
+        font-style: normal;
+        font-variant: normal;
+        src: url('public/fonts/merchant.ttf') format('truetype');
+    }
+
+
+
     @page {
         size: 80mm 297mm portrait;
         margin: 5px;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'MyCustomFont', sans-serif !important;
         font-size: large;
     }
 
@@ -309,7 +332,6 @@
         font-size: x-small;
         line-height: 6px;
         font-weight: normal;
-
     }
 
     .data-right {
@@ -351,7 +373,6 @@
         font-size: x-small;
         text-transform: uppercase;
         border-bottom: solid .2px #ddd;
-
     }
 
     .th-details {
@@ -370,15 +391,11 @@
     .tr-detail {
         font-size: x-small;
         text-transform: uppercase;
-
     }
 
     .border-b {
         border-bottom: solid .2px #ddd;
-
     }
-
-
 
     .td-total {
         font-size: x-small;

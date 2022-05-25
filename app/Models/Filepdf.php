@@ -12,7 +12,8 @@ class Filepdf extends Model
 
     protected $fillable=[
         'note',
-        'path',
+        'pathLetter',
+        'pathThermal',
         'size',
         'fileable_id',
         'fileable_type',

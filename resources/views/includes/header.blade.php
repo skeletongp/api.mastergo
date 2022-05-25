@@ -16,10 +16,10 @@
         @endcan
 
     </div>
-    <div class="container flex flex-wrap justify-end items-end mx-auto ">
+    <div class="container flex flex-row justify-end items-end mx-auto ">
 
-        <div class="hidden md:flex md:order-2 ml-4">
-            <div class=" hidden 2xl:block  mr-3 md:mr-0 w-56">
+        <div class="hidden lg:flex lg:order-2 ml-4">
+            <div class=" hidden lg:block  mr-3 md:mr-0 w-56">
                 <livewire:general.search-field />
             </div>
         </div>

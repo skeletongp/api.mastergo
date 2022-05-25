@@ -14,8 +14,7 @@ class LastSales extends LivewireDatatable
     public function builder()
     {
         $invoices=auth()->user()->place->invoices()->where('created_at', '>=', Carbon::now()->subWeek())
-        ->where('status', '!=', 'waiting')
-        ->orderBy('created_at','desc')->with('payment','client','seller','contable');
+        ->orderBy('created_at','desc')->with('payment','client','seller','contable','payments');
         return $invoices;
     }
 
@@ -23,25 +22,33 @@ class LastSales extends LivewireDatatable
     {
         $invoices = $this->builder()->get()->toArray();
         return [
-            Column::index($this),
-            DateColumn::name('created_at')->label('fecha')->format('d/m/Y H:i A'),
+            Column::name('id')->callback(['id'], function($id) use ($invoices){
+                $result = arrayFind($invoices, 'id', $id);
+                if ($result['rest']>0) {
+                    return "  <a href=".route('invoices.show', [$id,'includeName'=>'showpayments','includeTitle'=>'Pagos']).
+                    "><span class='fas w-8 text-center fa-dollar-sign'></span> </a>";
+                } else {
+                    return "  <a href=".route('invoices.show', $id)."><span class='fas w-8 text-center fa-eye'></span> </a>";
+                }
+                
+           
+            })->label(''),
+            DateColumn::name('created_at')->label('Hora')->format('h:i A'),
             Column::name('client.name')->callback(['uid', 'client_id'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
                 return $result['client']['fullname'];
             })->label('Cliente'),
-
-            Column::name('seller.name')->callback(['uid', 'day'], function ($uid) use ($invoices) {
-                $result = arrayFind($invoices, 'uid', $uid);
-                return $result['seller']['fullname'];
-            })->label('Vendedor'),
-            Column::name('contable.name')->callback(['uid', 'id'], function ($uid) use ($invoices) {
-                $result = arrayFind($invoices, 'uid', $uid);
-                return $result['contable']['fullname'];
-            })->label('Cajero'),
-            Column::name('condition')->label("Condición"),
-            Column::callback('payment.amount:sum', function ($amount) {
-                return '$' . formatNumber($amount);
+            Column::callback(['uid', 'id'], function ($total, $id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
+                return '$' . formatNumber($result['payment']['total']);
             })->label("Monto"),
+            Column::name('client.id')->callback(['id', 'client_id'], function ($id, $client_id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
+                return '$'.formatNumber( array_sum(array_column($result['payments'],'payed')));
+            })->label('Pagado'),
+            Column::name('rest')->callback(['rest'], function ($rest) {
+                return '$'. formatNumber($rest);
+            })->label('Resta'),
         ];
     }
 }

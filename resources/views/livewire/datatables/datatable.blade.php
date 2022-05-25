@@ -2,8 +2,8 @@
     @includeIf($beforeTableSlot)
     <div class="relative">
         <div class="flex items-center justify-between mb-1">
-            <div class="flex items-center h-10">
-                @if ($this->searchableColumns()->count())
+            @if ($this->searchableColumns()->count())
+                <div class="flex items-center h-10">
                     <div class="flex rounded-lg  shadow-sm" style="width: 28rem">
                         <div class="relative flex-grow focus-within:z-10">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -21,8 +21,8 @@
                             </div>
                         </div>
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
 
 
 
@@ -168,10 +168,10 @@
                                             </div>
                                         @else
                                             <div wire:key="{{ $index }}">
-                                                @include(
-                                                    'datatables::filters.' . ($column['filterView'] ?? $column['type']),
-                                                    ['index' => $index, 'name' => $column['label']]
-                                                )
+                                                @include('datatables::filters.' . ($column['filterView'] ?? $column['type']), [
+                                                    'index' => $index,
+                                                    'name' => $column['label'],
+                                                ])
                                             </div>
                                         @endif
                                     @endisset

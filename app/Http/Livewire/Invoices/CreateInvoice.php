@@ -26,7 +26,7 @@ class CreateInvoice extends Component
     public $form = [], $cant = 0, $price, $discount=0, $total, $taxTotal=0, $scanned;
     public $details = [];
     public $producto;
-    public $admins, $action;
+    public $action;
     public  $unit, $unit_id;
     protected $listeners = ['selProducto', 'tryAddItems', 'realoadClients','confirmedAddItems', 'sendInvoice'];
     protected $queryString = [ 'details','client','client_code', 'vence','condition','type'];
@@ -38,9 +38,9 @@ class CreateInvoice extends Component
         $this->vence = Carbon::now()->addDays(30)->format('Y-m-d');
         $this->condition = 'DE CONTADO';
         $this->type = 'B02';
-        $this->admins = $store->users()->role('Administrador')->where('loggeable','yes')->orderBy('lastname')->pluck('password','fullname');
         $this->number = str_pad($store->invoices()->count() + 1, 7, '0', STR_PAD_LEFT);
         $this->clients = $store->clients()->orderBy('lastname')->pluck('fullname', 'code');
+        $this->products = $store->products()->orderBy('name')->pluck('name', 'code');
         $this->seller = auth()->user()->fullname;
         $this->checkComprobante($this->type);
     }
@@ -57,10 +57,7 @@ class CreateInvoice extends Component
         $this->freshUnitId();
     }
    
-    public function updatedClientCode()
-    {
-        $this->changeClient();
-    }
+   
     public function refresh()
     {
         $this->reset('form', 'details', 'producto', 'price', 'client','client_code','condition');

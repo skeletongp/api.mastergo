@@ -17,13 +17,13 @@
 
     {{-- Fonts --}}
 
+       
 
     {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fa/css/all.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     {{-- Scripts --}}
 
@@ -31,11 +31,11 @@
 
     @livewireStyles
     @laravelPWA
-
+    @stack('css')
 </head>
 
 <body class=" antialised ">
-    <div class="hidden md:flex relative max-w-7xl mx-auto ">
+    <div class="flex relative max-w-7xl mx-auto ">
        
         <div class="w-full min-h-[50rem] ">
             <div class="sticky left-0 top-0  z-50 px-2" style="z-index: 80">
@@ -65,12 +65,12 @@
         </div>
     </div>
 
-    <div class="flex justify-center items-center sm:hidden w-screen h-screen">
+   {{--  <div class="flex justify-center items-center sm:hidden w-screen h-screen">
         <h1 class=" font-bold text-3xl uppercase text-center max-w-lg leading-12">Este tamaño de pantalla no es
             compatible. Utilice un monitor más
             grande o
             aplique zoom out al sistema</h1>
-    </div>
+    </div> --}}
     @livewireScripts
 
     <script src="{{ asset('js/app.js') }}"></script>

@@ -13,7 +13,7 @@
                 labels: labelsIncomes,
                 datasets: [{
                     label: 'Ingresos',
-                    backgroundColor: ['#33ae23'],
+                    backgroundColor: ['#13aa23'],
                     borderColor: ['#33ae23'],
                     data: @this.data['valuesIncomes'],
                 },

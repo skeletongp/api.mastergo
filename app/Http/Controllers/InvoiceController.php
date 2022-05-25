@@ -22,7 +22,7 @@ class InvoiceController extends Controller
     }
     public function show(Invoice $invoice)
     {
-        $invoice=$invoice->with('client','client.invoices','details','seller','contable','pdfs','incomes')->first();
+        $invoice=$invoice->load('client','client.invoices','details','details.product','details.unit','seller','contable','pdf','incomes', 'payments', 'payments.image');
        return  view('pages.invoices.show', compact('invoice'));
     }
 }

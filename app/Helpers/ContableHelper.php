@@ -6,8 +6,9 @@ use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
-function setContable($model, String $code, $name = null, $place_id = null)
+function setContable($model, String $code,  $origin, $name = null, $place_id = null,)
 {
     if (!$place_id) {
         $place_id = session('place_id');
@@ -25,14 +26,15 @@ function setContable($model, String $code, $name = null, $place_id = null)
         $count = $cMain->counts()->create([
             'code' => $code . '-' . str_pad($cant + 1, 2, '0', STR_PAD_LEFT),
             'name' => $name,
-            'place_id' => $place_id ?: 1
+            'place_id' => $place_id ?: 1,
+            'origin' => $origin,
         ]);
         $model->contable()->save($count);
     }
 }
 function setTransaction($concept, $ref, $amount, $debitable, $creditable)
 {
-    if ($amount != 0) {
+    if ($amount > 0) {
         $trans = Transaction::create([
             'concepto' => $concept,
             'ref' => $ref,
@@ -40,39 +42,46 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable)
             'income' => $amount,
             'outcome' => $amount,
             'place_id' => session('place_id'),
-            'debitable_id'=>$debitable->id,
-            'creditable_id'=>$creditable->id,
+            'debitable_id' => $debitable->id,
+            'creditable_id' => $creditable->id,
         ]);
         if ($debitable->origin == "debit") {
+            $bal=$debitable;
             $debitable->balance = $debitable->balance + $amount;
+            $debitable->save();
+            $bal2=$debitable;
+            Log::info($bal.' | '.$bal2.' | '.$amount.' | '.$concept);
+
         } else {
             $debitable->balance = $debitable->balance - $amount;
+            $debitable->save();
         }
         if ($creditable->origin == "credit") {
             $creditable->balance = $creditable->balance + $amount;
+            $creditable->save();
         } else {
             $creditable->balance = $creditable->balance - $amount;
+            $creditable->save();
         }
-        $debitable->save();
-        $creditable->save();
     }
 }
- function setOutcome($amount, $concepto, $ref, $outcomeable=null, $ncf=null)
+function setOutcome($amount, $concepto, $ref, $outcomeable = null, $ncf = null)
 {
-    $place=auth()->user()->place;
-    $outcome=$place->outcomes()->create([
-        'concepto'=>$concepto,
-        'amount'=>$amount,
-        'ncf'=>$ncf,
-        'ref'=>$ref,
-        'user_id'=>auth()->user()->id,
-        'store_id'=>$place->store_id
+    $place = auth()->user()->place;
+    $outcome = $place->outcomes()->create([
+        'concepto' => $concepto,
+        'amount' => $amount,
+        'ncf' => $ncf,
+        'ref' => $ref,
+        'user_id' => auth()->user()->id,
+        'store_id' => $place->store_id
     ]);
     if ($outcomeable) {
         $outcomeable->outcomes()->save($outcome);
     }
 }
-function setPayment($data){
-    $payment=Payment::create($data);
+function setPayment($data)
+{
+    $payment = Payment::create($data);
     return $payment;
 }

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('filepdfs', function (Blueprint $table) {
             $table->id();
             $table->string('note')->comment('Nota o descripción opcional')->nullable();
-            $table->string('path')->comment('Ruta del archivo en local o nube');
-            $table->enum('size',['thermal','letter'])->comment('Tamaño de papel del pdf')->default('thermal');
+            $table->string('pathThermal')->comment('Ruta del archivo térmico');
+            $table->string('pathLetter')->comment('Ruta del archivo en carta');
             $table->morphs('fileable');
             $table->softDeletes();
             $table->timestamps();

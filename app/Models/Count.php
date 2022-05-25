@@ -15,20 +15,7 @@ class Count extends Model
     ];
 
 
-    protected static function boot()
-    {
-        $credits=[2,3,4];
-        parent::boot();
-        self::creating(function($count) use ($credits){
-            if(substr($count->code,0,1)>3){
-                $count->type='nominal';
-            }
-            if(in_array(substr($count->code,0,1), $credits)){
-                $count->origin='credit';
-            }
-        });
-    }
-    
+  
     public function contable()
     {
         return $this->morphTo('contable');

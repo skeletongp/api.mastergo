@@ -24,9 +24,11 @@ class ClientObserver
         $client->code = $code;
     }
    
-    public function updated(Client $client)
+   
+    public function updating(Client $client)
     {
-        //
+        Cache::forget('clients' . $client->store_id);
+        $client->fullname = (string) rtrim($client->lastname).', '.$client->name;
     }
 
     

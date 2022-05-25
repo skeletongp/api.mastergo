@@ -29,7 +29,10 @@
                     <span>{{ $invoice->seller->fullname }}</span>
                 </div>
             </div>
-            <div class="flex justify-end my-4 ">
+            <div class="flex justify-between my-4 ">
+                <div class="">
+                    @livewire('invoices.order-confirm', ['invoice' => $invoice->toArray()], key(uniqid()))
+                </div>
                 <x-button class="" onclick="print()">
                     Imprimir
                 </x-button>

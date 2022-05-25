@@ -29,7 +29,6 @@ class Product extends Model
     ];
     public static function boot()
     {
-       
         parent::boot();
         self::creating(function ($model) {
             $store=optional(auth()->user())->store?:Store::first();
@@ -96,21 +95,11 @@ class Product extends Model
     {
         return $this->belongsToMany(Recurso::class, 'proceso_recursos')->withPivot('cant')->withTimestamps();
     }
-    public function procesos()
+    public function productions()
     {
-        return $this->belongsToMany(Proceso::class, 'proceso_product_units')->withPivot('due','obtained','eficiency')->withTimestamps();
+        return $this->morphToMany(Production::class, 'productible');
     }
-    public function procunits()
-    {
-        return $this->belongsToMany(Unit::class, 'proceso_product_units')->withPivot('due','obtained','eficiency')
-        ->withTimestamps();
-    }
-
-    public function scopeProcunit($query, $unit_id)
-    {
-        //dd($this->procunits);
-        return $this->procunits()->where('unit_id', $unit_id)->first();
-    }
+    
     public function providers()
     {
         return $this->belongsToMany(Provider::class, 'product_providers');

@@ -16,7 +16,7 @@
     </div>
     <div class="space-y-2">
         <div class="">
-            <x-base-input id="vence" type="date" wire:model="vence"  class="text-right py-1" label="Vencimiento">
+            <x-base-input id="vence" type="date" wire:model="vence" disabled  class="text-right py-1" label="Vencimiento">
             </x-base-input>
         </div>
         <div>

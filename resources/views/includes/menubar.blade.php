@@ -74,10 +74,7 @@
                         text='Reportes' activeRoute="home.*" scope="Reportes" />
                     <x-side-link routeName='users.index' icon='far w-10 text-center fa-download fa-lg'
                         text='Exportaciones' activeRoute="home.*" scope="Reportes" />
-                    <x-side-link routeName='reports.general_daily' icon='far w-10 text-center fa-download fa-lg'
-                        text='Diario General' activeRoute="home.*" scope="Reportes" />
-                    <x-side-link routeName='reports.general_mayor' icon='far w-10 text-center fa-download fa-lg'
-                        text='Balanza General' activeRoute="home.*" scope="Reportes" />
+                 
                 </x-dropitem>
 
                 <x-dropitem text="Finanzas" icon="far fa-wallet">
@@ -85,11 +82,16 @@
                         text='Ingresos' activeRoute="invoices.*" scope="Ingresos" />
                     <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg'
                         text='Gastos' activeRoute="home.*" scope="Gastos" />
+                        <x-side-link routeName='reports.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
+                        text='Diario General' activeRoute="home.*" scope="Reportes" />
+                    <x-side-link routeName='reports.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
+                        text='Balance General' activeRoute="home.*" scope="Reportes" />
                 </x-dropitem>
                 @can('Crear Permisos-')
                     <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
                         activeRoute="home.*" />
                 @endcan
+                
             </ul>
         </ul>
     </div>

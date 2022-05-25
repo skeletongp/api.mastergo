@@ -16,7 +16,7 @@ class OrderView extends LivewireDatatable
 {
     use AuthorizesRequests;
     public $hideable="select";
-    public $headerTitle="Pedidos Pendientes";
+    public $headTitle="Pedidos Pendientes";
     public $perPage=5;
 
     public function builder()
@@ -62,17 +62,6 @@ class OrderView extends LivewireDatatable
         return
             'whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-900 px-3 py-2';
     }
-    public function buildActions()
-    {
-        return [
-
-            Action::value('fresh')->label('Refrescar')->callback(function ($mode, $items) {
-                // $items contains an array with the primary keys of the selected items
-            }),
-
-           
-           
-        ];
-    }
+   
      
 }

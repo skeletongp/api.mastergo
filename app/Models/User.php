@@ -134,4 +134,8 @@ class User extends Authenticatable
         Cache::put('place_' . $this->id, $place);
         return $place;
     }
+    public function payments()
+    {
+        return $this->morphMany(Payment::class,'contable');
+    }
 }

@@ -28,8 +28,8 @@ class CreateTax extends Component
         $this->validate();
         $this->form['rate']=floatval($this->form ['rate'])/100;
         $tax=auth()->user()->store->taxes()->create($this->form);
-        setContable($tax, '202', $tax->name.' por Pagar');
-        setContable($tax, '103', $tax->name.' por Cobrar');
+        setContable($tax, '202', 'credit',  $tax->name.' por Pagar');
+        setContable($tax, '103', 'credit', $tax->name.' por Cobrar');
         $this->emit('showAlert', 'Impuesto registrado exitosamente', 'success');
         $this->reset();
         $this->emit('refreshLivewireDatatable');

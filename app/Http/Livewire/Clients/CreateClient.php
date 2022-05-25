@@ -46,8 +46,8 @@ class CreateClient extends Component
                 'path' => $this->photo_path
             ]);
         }
+        setContable($client, '101', 'debit');
         $this->emit('realoadClients');
-        $client->name=$client->fullname;
         
         $this->reset();
         $this->render();

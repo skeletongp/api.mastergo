@@ -15,7 +15,7 @@ class InvoiceList extends LivewireDatatable
     public function builder()
     {
         $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
-            ->where('status', '!=', 'waiting')->with('pdfs', 'payment','client');
+            ->where('status', '!=', 'waiting')->with('pdf', 'payment','payments','client');
         return $invoices;
     }
 
@@ -29,8 +29,9 @@ class InvoiceList extends LivewireDatatable
                 return $result['client']['fullname'];
 
             })->label('Cliente'),
-            Column::name('payment.total')->callback('payment.total:sum', function ($total) {
-                return '$' . formatNumber($total);
+            Column::name('uid')->callback(['uid','id'], function ($total, $id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
+                return '$' . formatNumber($result['payment']['total']);
             })->label('Monto'),
             Column::name('id')->label('Ver')->view('livewire.invoices.includes.setPDF')->sortable(),
         ];

@@ -33,7 +33,7 @@ class CreateBank extends Component
         $store=auth()->user()->store;
         $this->validate();
         $bank=$store->banks()->create($this->form);
-        setContable($bank, '100',$bank->bank_name);
+        setContable($bank, '100', 'debit', $bank->bank_name);
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert','Cuenta registrada','success');
         $this->reset('form');

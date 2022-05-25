@@ -26,10 +26,5 @@
     </div>
     @include('includes.authorize')
     @include('livewire.invoices.includes.orderdata')
-    @if ($invoice)
-  
-        <div class="">
-            @livewire('invoices.order-confirm', ['invoice' => $invoice->toArray()], key(uniqid()))
-        </div>
-    @endif
+   
 </div>

@@ -6,6 +6,7 @@ use App\Events\NewInvoice;
 use App\Models\Detail;
 use App\Models\Invoice;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 trait GenerateInvoiceTrait
 {
@@ -19,10 +20,15 @@ trait GenerateInvoiceTrait
             unset($this->details[$ind]['id']);
             $detail['detailable_id'] = $invoice->id;
             $detail['detailable_type'] = Invoice::class;
-            $taxes = empty($detail['taxes'])?[]:$detail['taxes'];
+            $taxes = empty($detail['taxes']) ? [] : $detail['taxes'];
+            if ($invoice->type == 'B00' || $invoice->type == 'B14') {
+                $detail['total']=$detail['subtotal']-$detail['discount'];
+            }
             $det = Detail::create(Arr::except($detail, 'taxes'));
-            $det->taxes()->sync($taxes);
-            $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
+            if ($invoice->type != 'B00' && $invoice->type != 'B14') {
+                $det->taxes()->sync($taxes);
+                $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
+            }
             $det->save();
             $this->restStock($detail['unit_pivot_id'], $detail['cant']);
         }
@@ -42,33 +48,30 @@ trait GenerateInvoiceTrait
 
     public function trySendInvoice()
     {
-        $condition=$this->condition!='DE CONTADO' && array_sum(array_column($this->details, 'total'))>$this->client['limit'];
-        if ($condition) {
-            $this->action='sendInvoice';
+        $condition = $this->condition != 'DE CONTADO' && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
+
+        if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
+            $this->action = 'sendInvoice';
             $this->emit('openAuthorize');
-         } else{
-             $this->sendInvoice();
-         }
+        } else {
+            $this->sendInvoice();
+        }
     }
 
     public function sendInvoice()
     {
         if (!count($this->details)) {
-            return ;
+            return;
         }
-        $total=array_sum(array_column($this->details, 'subtotal'));
+        $total = array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
-        if ($this->condition!='DE CONTADO' && $this->verifyCredit($total, $this->client['limit'])) {
-            $this->emit('showAlert', 'El cliente no tiene balance suficiente', 'error');
-            return false;
-        }
         $invoice = $user->store->invoices()->create(
             [
 
                 'day' => date('Y-m-d'),
                 'seller_id' => $user->id,
-                'condition'=>$this->condition,
-                'expires_at'=>$this->vence,
+                'condition' => $this->condition,
+                'expires_at' => $this->vence,
                 'contable_id' => $user->id,
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
@@ -80,21 +83,27 @@ trait GenerateInvoiceTrait
         );
         $this->createPayment($invoice);
         $this->createDetails($invoice);
+        if ($invoice->type != 'B00' && $invoice->type != 'B14') {
+            $this->createInvoiceTaxes($invoice);
+        }
         event(new NewInvoice($invoice));
-        $this->reset('form', 'details', 'producto', 'price', 'client','client_code','product_code','product_name');
-        $this->invoice=$invoice;
+        $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name');
+        $this->invoice = $invoice;
         $this->emit('openData');
         $this->mount();
     }
     public function createPayment($invoice)
     {
-        $subtotal=array_sum(array_column($this->details, 'subtotal'));
-        $discount=array_sum(array_column($this->details, 'discount'));
-        $tax=array_sum(array_column($this->details, 'taxTotal'));
-        $total=$subtotal-$discount+$tax;
+        $subtotal = array_sum(array_column($this->details, 'subtotal'));
+        $discount = array_sum(array_column($this->details, 'discount'));
+        $tax=0;
+        if ($invoice->type != 'B00' && $invoice->type != 'B14') {
+            $tax = array_sum(array_column($this->details, 'taxTotal'));
+        }
+        $total = $subtotal - $discount + $tax;
 
         $data = [
-            'ncf'=>optional($invoice->comprobante)->number,
+            'ncf' => optional($invoice->comprobante)->number,
             'amount' => $subtotal,
             'discount' => $discount,
             'total' =>  $total,
@@ -106,8 +115,8 @@ trait GenerateInvoiceTrait
             'tarjeta' => 0,
             'transferencia' => 0,
         ];
-       $invoice->payment()->save(setPayment($data));
-       $invoice->client->payments()->save($invoice->payment);
+        $invoice->payment()->save(setPayment($data));
+        $invoice->client->payments()->save($invoice->payment);
     }
     public function restStock($pivotUnitId, $cant)
     {
@@ -118,7 +127,24 @@ trait GenerateInvoiceTrait
     }
     public function verifyCredit($amount, $credit)
     {
-       return !$amount>$credit;
+        return !$amount > $credit;
     }
-    
+    public function createInvoiceTaxes($invoice)
+    {
+        $details = $invoice->details()->with('taxes')->get();
+        foreach ($details as $detail) {
+            foreach ($detail->taxes as $tax) {
+                DB::table('invoice_taxes')->updateOrInsert(
+                    [
+                        'tax_id' => $tax->id,
+                        'invoice_id' => $invoice->id
+                    ],
+                    [
+                        'tax_id' => $tax->id,
+                        'amount' => DB::raw('amount +' . $tax->rate * $detail->subtotal)
+                    ]
+                );
+            }
+        }
+    }
 }

@@ -30,7 +30,10 @@ Breadcrumbs::for('invoices.orders', function ($trail) {
     $trail->parent('invoices');
     $trail->push('Órdenes', route('orders'));
 });
-
+Breadcrumbs::for('invoices.show', function ($trail, $invoice) {
+    $trail->parent('invoices');
+    $trail->push('Detalles -> Fct. '.$invoice->number, route('invoices.show', $invoice));
+});
 /* Productos */
 Breadcrumbs::for('products', function ($trail) {
     $trail->parent('home');

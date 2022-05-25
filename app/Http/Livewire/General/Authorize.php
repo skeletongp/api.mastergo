@@ -19,7 +19,7 @@ trait Authorize
             $this->reset('unhashedPassword','hashedPassword');
             $this->emit($action);
             $this->emit('openAuthorize');
-            $this->open=false;
+          
         } else {
            $this->emit('showAlert','Datos no válidos','error');
         }

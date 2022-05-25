@@ -47,7 +47,7 @@ class CreateUser extends Component
             ]);
         }
         $user->assignRole($this->role);
-        setContable($user, '102');
+        setContable($user, '102', 'credit');
         $this->reset();
         $this->emit('showAlert','Usuario registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');

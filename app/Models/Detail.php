@@ -34,7 +34,7 @@ class Detail extends Model
     {
         parent::boot();
         self::created(function ($model) {
-            Log::info('Detalle creado');
+          
          
         });
         

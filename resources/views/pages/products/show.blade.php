@@ -12,7 +12,7 @@
                     <span>Editar</span>
                 </a>
                </div>
-                <div class="grid grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 gap-6 max-w-6x w-full mx-auto">
                     <livewire:products.product-show :product="$product" />
                     <div class="flex items-center justify-center">
                         <div class="w-full h-full  bg-center bg-contain bg-no-repeat"

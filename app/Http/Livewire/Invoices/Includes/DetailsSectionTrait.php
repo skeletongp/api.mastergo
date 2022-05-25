@@ -38,7 +38,7 @@ trait DetailsSectionTrait
     public function tryAddItems()
     {
         
-        if ($this->cant > $this->stock) {
+        if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar')) {
             $this->action='confirmedAddItems';
            $this->emit('openAuthorize');
         } else{

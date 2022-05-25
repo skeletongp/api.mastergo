@@ -41,6 +41,10 @@ class Invoice extends Model
     {
         return $this->morphOne(Payment::class, 'payable');
     }
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'payable');
+    }
     public function store()
     {
         return $this->belongsTo(Store::class);
@@ -61,9 +65,17 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class, 'contable_id');
     }
-    public function pdfs()
+    public function pdf()
     {
-        return $this->morphMany(Filepdf::class, 'fileable');
+        return $this->morphOne(Filepdf::class, 'fileable');
+    }
+    public function getPdfLetterAttribute()
+    {
+        return $this->pdf->pathLetter;
+    }
+    public function getPdfThermalAttribute()
+    {
+        return $this->pdf->pathThermal;
     }
     public function incomes()
     {

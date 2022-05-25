@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
     content: [
         "./resources/**/*.blade.php",
@@ -5,7 +7,12 @@ module.exports = {
         "./resources/**/*.css",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                bank: ["Merchant Copy"],
+            },
+        },
+        theme: {},
     },
     plugins: [require("flowbite/plugin")],
 };

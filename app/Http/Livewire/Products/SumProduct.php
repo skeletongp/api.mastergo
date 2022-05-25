@@ -76,7 +76,9 @@ class SumProduct extends Component
     public function getUnits()
     {
         $prod=Product::find($this->form['product_id']);
-        $this->units=$prod->units()->distinct('name')->pluck('name','units.id');
+        if ($prod) {
+            $this->units=$prod->units()->distinct('name')->pluck('name','units.id');
+        }
     }
     
 }

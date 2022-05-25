@@ -1,7 +1,8 @@
 <div class="max-w-4xl shadow-xl p-4">
     <form action="" wire:submit.prevent="addProduct">
-        <div class="flex space-x-4 items-end pt-8 relative">
+        <div class="flex space-x-4 items-start pt-8 relative">
             <div class="w-3/6 select2-div">
+                
                 <x-select class="selectProduct" wire:model.defer="form.product_id">
                     <option value=""></option>
                     @foreach ($products as $id => $product)

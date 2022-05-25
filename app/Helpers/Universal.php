@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Cloudinary\Cloudinary;
 
 function formatNumber($number)
@@ -47,4 +48,13 @@ function arrayFind(array $array, $key, $value)
         }
     }
     return $result;
+}
+function admins()
+{
+    $store = auth()->user()->store;
+    return $store->users()->role('Administrador')->where('loggeable', 'yes')->orderBy('lastname')->pluck('password', 'fullname');
+}
+function formatDate($date, $format)
+{
+   return Carbon::parse($date)->format($format);
 }

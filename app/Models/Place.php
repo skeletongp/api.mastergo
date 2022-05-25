@@ -58,6 +58,10 @@ class Place extends Model
     {
         return $this->hasMany(Count::class);
     }
+    public function details()
+    {
+        return $this->hasMany(Detail::class);
+    }
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
@@ -71,19 +75,15 @@ class Place extends Model
         return $this->morphOne(Count::class, 'contable')
         ->where('code','100-01')->first();
     }
-    public function bank()
+  
+    public function check()
     {
         return $this->morphOne(Count::class, 'contable')
         ->where('code','100-02')->first();
     }
-    public function check()
-    {
-        return $this->morphOne(Count::class, 'contable')
-        ->where('code','100-03')->first();
-    }
     public function other()
     {
         return $this->morphOne(Count::class, 'contable')
-        ->where('code','100-04')->first();
+        ->where('code','100-03')->first();
     }
 }

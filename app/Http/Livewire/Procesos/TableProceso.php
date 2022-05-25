@@ -16,7 +16,6 @@ class TableProceso extends LivewireDatatable
     public function builder()
     {
         $procesos=auth()->user()->place->procesos()
-        ->leftJoin('proceso_product_units', 'procesos.id', 'proceso_product_units.proceso_id')
         ->whereNull('deleted_at')->groupBy('procesos.id');
         return $procesos;
     }
@@ -30,7 +29,7 @@ class TableProceso extends LivewireDatatable
             }),
             Column::name('name')->label('Nombre')->searchable(),
             DateColumn::name('start_at')->label('Inicio')->searchable(),
-            Column::raw('sum(proceso_product_units.due) AS Esperado')->label('Esperado')->searchable(),
+          
             Column::name('status')->label('Estado')->searchable(),
 
         ];

@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 class InvoiceView extends Component
 {
     public $pdfLetter, $pdfThermal, $thermal = true;
-    public  $currentInvoice;
+    public  $currentInvoice, $invoice, $payment;
     use WithPagination;
 
 
@@ -20,17 +20,20 @@ class InvoiceView extends Component
 
     ];
     protected $listeners=['setPDF'];
+    
     public function render()
     {
         $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
-            ->where('status', '!=', 'waiting')->with('pdfs','payment')->paginate(6);
+            ->where('status', '!=', 'waiting')->with('pdf','payment')->paginate(6);
 
         if ($invoices->count() && !$this->pdfThermal) {
             $this->pdfThermal = $invoices->first()->pdfThermal;
             $this->pdfLetter = $invoices->first()->pdfLetter;
         }
-        if (!$this->currentInvoice) {
+        if (!$this->currentInvoice && $invoices->count()) {
             $this->currentInvoice = $invoices->first();
+            $this->invoice = $invoices->first();
+            $this->payment = $this->invoice->payment;
         }
         return view('livewire.invoices.invoice-view', ['invoices' => $invoices]);
     }
@@ -40,6 +43,8 @@ class InvoiceView extends Component
         $this->pdfLetter = $invoice->pdfLetter;
         $this->pdfThermal = $invoice->pdfThermal;
         $this->currentInvoice = $invoice;
+        $this->invoice = $invoice;
+        $this->payment = $this->invoice->payment;
         $this->render();
     }
     public function toggleThermal()

@@ -21,12 +21,11 @@ return new class extends Migration
             $table->date('day');
             $table->string('number');
             $table->string('note')->comment('Nota o descripción opcional')->nullable();
-            $table->string('pdfLetter')->comment('PDF en tamaño carta')->nullable();
-            $table->string('pdfThermal')->comment('PDF en tamaño térmico')->nullable();
             $table->enum('type', Invoice::TYPES)->default('B00');
             $table->enum('status',['pagado','adeudado','entregado', 'waiting']);
             $table->enum('condition',['De Contado','1 A 15 Días','16 A 30 Días', '31 a 45 Días']);
             $table->enum('payway',['Efectivo','Tarjeta','Transferencia', 'Mixto']);
+            $table->decimal('rest')->comment('Deuda pendiente de la factura');
             $table->foreignId('client_id')->comment('Cliente que hace la compra')->nullable()->constrained();
             $table->foreignId('place_id')->comment('Sucursal a la que pertenece la compra')->constrained();
             $table->foreignId('store_id')->comment('Tienda a la que pertenece la compra')->constrained();

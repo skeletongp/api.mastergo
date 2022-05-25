@@ -22,7 +22,7 @@ function orderConfirmRules() :Array
 function invoiceCreateRules(){
     return  [
         'form.product_id' => 'numeric|required|exists:products,id',
-        'cant' => 'numeric|min:0.001|required',
+        'cant' => 'required|numeric|min:0.001|max:999',
         'price' => 'numeric|min:0.01|required',
         'discount' => 'numeric|min:0|required',
         'client'=>'required',
