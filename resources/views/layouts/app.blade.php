@@ -10,14 +10,14 @@
         @if (isset($title))
             {{ $title }}
         @else
-            {{ env('APP_NAME') .' | '. auth()->user()->store->name }}
+            {{ env('APP_NAME') . ' | ' . auth()->user()->store->name }}
         @endif
     </title>
 
 
     {{-- Fonts --}}
 
-       
+
 
     {{-- Styles --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -36,7 +36,7 @@
 
 <body class=" antialised ">
     <div class="flex relative max-w-7xl mx-auto ">
-       
+
         <div class="w-full min-h-[50rem] ">
             <div class="sticky left-0 top-0  z-50 px-2" style="z-index: 80">
                 @include('includes.menubar')
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-   {{--  <div class="flex justify-center items-center sm:hidden w-screen h-screen">
+    {{-- <div class="flex justify-center items-center sm:hidden w-screen h-screen">
         <h1 class=" font-bold text-3xl uppercase text-center max-w-lg leading-12">Este tamaño de pantalla no es
             compatible. Utilice un monitor más
             grande o
@@ -79,13 +79,12 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="{{asset('js/formatPhoneNumber.js')}}"></script>
+    <script src="{{ asset('js/formatPhoneNumber.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     @stack('js')
-
+    <x-livewire-alert::scripts />
     <script>
-        
         colors = {
             "success": {
                 "text": 'text-green-700',
@@ -157,11 +156,18 @@
         });
         $(document).ready(function() {
             $('input[type=tel]').each(function() {
-                $(this).formatPhoneNumber({format: '(###) ###-####'})
+                $(this).formatPhoneNumber({
+                    format: '(###) ###-####'
+                })
             })
         })
     </script>
+    <style>
+        .swal2-container {
+            z-index: 2000;
+        }
 
+    </style>
 </body>
 
 </html>

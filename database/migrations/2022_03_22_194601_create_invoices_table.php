@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('day');
             $table->string('number');
             $table->string('note')->comment('Nota o descripción opcional')->nullable();
+            $table->string('name')->comment('Para colocar nombre de cliente genérico')->nullable();
             $table->enum('type', Invoice::TYPES)->default('B00');
             $table->enum('status',['pagado','adeudado','entregado', 'waiting']);
             $table->enum('condition',['De Contado','1 A 15 Días','16 A 30 Días', '31 a 45 Días']);

@@ -1,6 +1,6 @@
 <div class="">
     @include('includes.authorize')
-    <x-modal id="modalConfirmInvoice" fitVerticalContainer='true' maxWidth="max-w-3xl">
+    <x-modal id="modalConfirmInvoice"  maxWidth="max-w-3xl">
         <x-slot name="button">
             <span>
                 Cobrar

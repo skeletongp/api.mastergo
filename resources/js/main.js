@@ -1,5 +1,6 @@
 $(".confirm").on("click", function () {
     msg = $(this).attr("data-label");
+    evento = $(this).attr("data-event");
     Swal.fire({
         title: "Aviso",
         text: msg,
@@ -7,12 +8,13 @@ $(".confirm").on("click", function () {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Proceder",
+        cancelButtonText:'Cancelar',
     }).then((result) => {
         if (result.isConfirmed) {
-            event.stopImmediatePropagation();
+           Livewire.emit(evento);
         } else {
-            return true;
+            return false;
         }
     });
 });

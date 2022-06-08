@@ -1,7 +1,7 @@
 
 
 <div>
-    <x-modal>
+    <x-modal :fitVerticalContainer='false'>
         <x-slot name="title">
           <div class="flex justify-between items-center">
             <span> Nuevo Cliente</span>

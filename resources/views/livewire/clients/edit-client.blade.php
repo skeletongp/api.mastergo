@@ -1,5 +1,5 @@
 <div>
-    <x-modal fitVerticalContainer='true'>
+    <x-modal >
             
         <x-slot name="title">
             <span> Editar registro</span>

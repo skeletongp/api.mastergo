@@ -53,7 +53,7 @@
 
         </div>
 
-
+        <script src="https://parzibyte.github.io/plugin-ticket-js/Impresora.js"></script>
         @push('js')
             <script>
                 function askPrint(thermal, letter) {
@@ -74,6 +74,7 @@
                 }
 
                 function print(url) {
+                   
                     printJS({
                         printable: url,
                         type: 'pdf',

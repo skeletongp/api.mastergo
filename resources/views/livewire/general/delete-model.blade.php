@@ -1,12 +1,12 @@
 <div class="">
-    <x-modal>
+    <x-modal >
         <x-slot name="title">
             <h1 class="text-center font-bold uppercase text-xl">Eliminar registro</h1>
         </x-slot>
         <x-slot name="button">
-            <span class="fas fa-trash-alt text-red-500" data-tooltip-target="deleteId{{$model->id}}"
+            <span class="fas fa-trash-alt text-red-500" data-tooltip-target="deleteId{{$model['id']}}"
                 data-tooltip-style="light"></span>
-                <x-tooltip id="deleteId{{$model->id}}"> Eliminar registro </x-tooltip>
+                <x-tooltip id="deleteId{{$model['id']}}"> Eliminar registro </x-tooltip>
         </x-slot>
         <div>
             <div class="w-full mt-4 text-center text-xl mb-2" >

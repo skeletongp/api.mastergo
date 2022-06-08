@@ -1,6 +1,6 @@
 
 <div>
-    <x-modal>
+    <x-modal :fitVerticalContainer="false">
         <x-slot name="title">
             <span> Nueva Empresa</span>
         </x-slot>

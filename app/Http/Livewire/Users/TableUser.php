@@ -7,6 +7,7 @@ use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Livewire;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Traits\CanPinRecords;
 use Spatie\Permission\Models\Role;
@@ -17,11 +18,13 @@ class TableUser extends LivewireDatatable
     public $exportable = true;
     public $name = "Tabla Usuarios";
     public  $hideable = "select";
+    public $roles;
 
 
     public function builder()
     {
-        return auth()->user()->store->users()->with('roles')->whereHas('roles', function ($role) {
+        $this->roles=auth()->user()->store->roles;
+        return auth()->user()->store->users()->with('roles','image')->whereHas('roles', function ($role) {
             $role->where('name', '!=', 'Super Admin');
         })->whereNull('deleted_at');
     }
@@ -29,32 +32,35 @@ class TableUser extends LivewireDatatable
     public function columns()
     {
         $canEdit = auth()->user()->hasPermissionTo('Editar Usuarios');
+        $users = $this->builder()->get()->toArray();
         return [
             NumberColumn::name('id')->defaultSort('asc'),
             Column::name('fullname')->label('Nombre Completo')->searchable(),
-            Column::name('name')->label('Nombre')->searchable()->editable($canEdit)->hide(),
-            Column::name('lastname')->label('Apellido')->searchable()->editable($canEdit)->hide(),
-            Column::name('email')->label('Correo Electrónico')->searchable()->editable($canEdit),
-            Column::name('phone')->label('Teléfono')->searchable()->editable($canEdit),
-            Column::name('roles.name')->label('Rol')->searchable(),
+            Column::name('name')->label('Nombre')->searchable()->hide(),
+            Column::name('lastname')->label('Apellido')->searchable()->hide(),
+            Column::name('email')->label('Correo Electrónico')->searchable(),
+            Column::name('phone')->label('Teléfono')->searchable(),
+            Column::callback(['created_at', 'id'], function ($role, $id) use ($users) {
+                $result = arrayFind($users, 'id', $id);
+                foreach ($result['roles'] as $key => $rol) {
+                    $result['roles'][$key]['name'] = preg_replace('/[0-9]+/', '', $result['roles'][$key]['name']);
+                }
+                return implode(', ', array_column($result['roles'], 'name'));
+            })->label('Rol')->searchable()->hide(),
             Column::name('username')->label('Usuario')->searchable()->hide(),
             Column::name('created_at')->label('Registro')->searchable()->hide(),
-            auth()->user()->hasPermissionTo('Borrar Usuarios')  ?
-                Column::delete('id')->label('Eliminar') :
-                Column::name('updated_at')->label('Actualizado')->hide(),
+            Column::callback(['updated_at','id'],function($updated, $id) use ($users){
+                $result = arrayFind($users, 'id', $id);
+                return  view('pages.users.actions',['user'=>$result, 'roles'=>$this->roles, 'key'=>uniqid()]);
+            })->label('Permisos'),
 
         ];
     }
 
-    public function getRolesProperty()
-    {
-        return Role::pluck('name');
-    }
+
     public function cellClasses($row, $column)
     {
         return
             'whitespace-normal  text-gray-900 px-6 py-2';
     }
-   
-    
 }

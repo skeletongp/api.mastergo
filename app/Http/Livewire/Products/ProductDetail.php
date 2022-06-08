@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Products;
 use App\Http\Helper\Universal;
 use App\Models\Product;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ProductDetail extends Component
@@ -17,8 +18,11 @@ class ProductDetail extends Component
     }
     public function formatedData(): Collection
     {
-        $price = $this->product->units->pluck('pivot.price_menor', 'name');
+        $price = $this->product->units()->
+        select(
+            DB::raw("CONCAT(ROUND(stock,2),' → ',name) AS name"),'price_menor')->pluck('pivot.price_menor', 'name');
         $taxes = $this->product->taxes->pluck('rate', 'name');
+       
         $wTax = [];
         foreach ($price as $in => $priz) {
             $price[$in] = '$' . formatNumber($priz);

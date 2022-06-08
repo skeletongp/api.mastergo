@@ -59,7 +59,8 @@ class TableClient extends LivewireDatatable
     public function delete($id)
     {
         $client = Client::find($id);
-        if ($client->lastname !== 'Genérico') {
+        $generic=auth()->user()->store->clients()->first();
+        if ($id !== $generic->id) {
             $client->delete();
         } else {
             $this->emit('showAlert', 'No puede eliminar este cliente', 'warning');

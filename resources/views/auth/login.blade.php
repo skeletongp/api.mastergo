@@ -64,7 +64,7 @@
                                 class="w-full px-4 py-2 border rounded-md focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-600"
                                 placeholder="">
                                 @foreach ($users as $username => $fullname)
-                                    <option value="{{ $username }}">{{ $fullname }}</option>
+                                    <option value="{{ $username }}" {{old('username')}}>{{ $fullname }}</option>
                                 @endforeach
                             </select>
                             <x-input-error for="username"></x-input-error>

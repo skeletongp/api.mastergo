@@ -1,5 +1,5 @@
 <div>
-    <x-modal zindex="2000"  title="Se requiere autorización" fitVerticalContainer="true" hideButton="true">
+    <x-modal zindex="2000"  title="Se requiere autorización"  hideButton="true">
         <x-slot name="button">
             <div id="openAuthorize"></div>
         </x-slot>

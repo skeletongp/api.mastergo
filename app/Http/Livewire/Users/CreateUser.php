@@ -9,7 +9,7 @@ use Livewire\WithFileUploads;
 
 class CreateUser extends Component
 {
-    public $form, $avatar, $photo_path, $store_id, $role;
+    public $form, $avatar, $photo_path, $store_id, $role, $loggeable;
     use WithFileUploads;
     public function render()
     {
@@ -28,8 +28,8 @@ class CreateUser extends Component
     protected $rules = [
         'form.name' => 'required|string|max:50',
         'form.lastname' => 'required|string|max:75',
-        'form.email' => 'required|string|max:100|unique:users,email',
-        'form.username' => 'required|string|max:35|unique:users,username',
+        'form.email' => 'required|string|max:100|unique:users,email,NULL,id,deleted_at,NULL',
+        'form.username' => 'required|string|max:35|unique:users,username,NULL,id,deleted_at,NULL',
         'form.password' => 'required|string|min:8',
         'form.phone' => 'required|string|max:25',
         'form.place_id' => 'required|numeric|exists:places,id',
@@ -40,6 +40,7 @@ class CreateUser extends Component
     {
         $this->validate();
         $store=auth()->user()->store;
+        $this->form['loggeable']=$this->loggeable?'yes':'no';
         $user= $store->users()->create($this->form);
         if ($this->photo_path) {
             $user->image()->create([

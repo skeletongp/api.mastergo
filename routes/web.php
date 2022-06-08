@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(UserController::class)->group(function () {
 
             Route::get('users', 'index')->name('users.index');
+            Route::get('users/set-permissions/{id}', 'setPermissions')->name('users.setPermissions');
         });
 
         Route::controller(InvoiceController::class)->group(function () {
@@ -77,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(RecursoController::class)->group(function () {
             Route::get('recursos', 'index')->name('recursos.index');
+            Route::get('recursos/sum', 'sum')->name('recursos.sum');
             Route::get('recursos/{recurso}', 'show')->name('recursos.show');
         });
 
@@ -91,11 +93,14 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 });
+
+
 Route::get('prueba', function () {
 
-    $invoice = Invoice::with('details','details.unit')->orderBy('id','desc')->firstOrFail();
+      $invoice = Invoice::with('details','details.unit')->orderBy('id','desc')->firstOrFail();
     $pdf = App::make('dompdf.wrapper');
     $payment=$invoice->payment;
     $pdf->loadview('pages.invoices.thermal', compact('invoice','payment'));
     return $pdf->stream();
+   
 })->name('prueba');

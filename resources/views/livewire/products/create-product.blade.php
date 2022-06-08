@@ -1,5 +1,5 @@
 <div>
-    <x-modal maxWidth="max-w-7xl mx-4">
+    <x-modal maxWidth="max-w-7xl mx-4" :fitVerticalContainer="false">
         <x-slot name="title">
             <div class="flex justify-between items-center w-full">
                 <span> Nuevo Producto</span>

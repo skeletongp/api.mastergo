@@ -49,47 +49,47 @@ class DatabaseSeeder extends Seeder
         $products = [
             [
                 'name' => 'Chuleta ahumada',
-                'description' => '<p><b>Chuleta</b> de cerdo precocida</p>'
+                'description' => 'Chuleta de cerdo precocida'
             ],
             [
                 'name' => 'Costillitas',
-                'description' => '<p><b>Costillas</b> de cerdo </p>'
+                'description' => 'Costillas de cerdo'
             ],
             [
                 'name' => 'Longaniza',
-                'description' => '<p><b>Longaniza</b> de cerdo con picante </p>'
+                'description' => 'Longaniza de cerdo con picante'
             ],
             [
                 'name' => 'Masita',
-                'description' => '<p><b>Masita</b> de cerdo con picante </p>'
+                'description' => 'Masita de cerdo con picante'
             ],
             [
                 'name' => 'Tocineta',
-                'description' => '<p><b>Tocineta</b> de cerdo </p>'
+                'description' => 'Tocineta de cerdo'
             ],
             [
                 'name' => 'Pinguilín',
-                'description' => '<p><b>Pinguilín</b> de cerdo </p>'
+                'description' => 'Pinguilín de cerdo'
             ],
             [
                 'name' => 'Muslo',
-                'description' => '<p><b>Muslo</b> de cerdo </p>'
+                'description' => 'Muslo de cerdo'
             ],
             [
                 'name' => 'Derivados de la barrigada',
-                'description' => '<p><b>Barrigada</b> de cerdo </p>'
+                'description' => 'Barrigada de cerdo'
             ],
             [
                 'name' => 'Bistec de res',
-                'description' => '<p>Bistec de red artesanal </p>'
+                'description' => 'Bistec de red artesanal'
             ],
             [
                 'name' => 'Filete de res',
-                'description' => '<p>Filete de red artesanal </p>'
+                'description' => 'Filete de red artesanal'
             ],
             [
                 'name' => 'Tocineta de res',
-                'description' => '<p>Tocineta de red artesanal </p>'
+                'description' => 'Tocineta de red artesanal'
             ],
         ];
         
@@ -186,9 +186,11 @@ class DatabaseSeeder extends Seeder
         setContable($tax, '202', 'credit', 'ITBIS por Pagar');
         setContable($tax, '103', 'debit', $tax->name.' por Cobrar');
         $user->assignRole('Super Admin');
+        $user->assignRole('Administrador');
         $user2->assignRole('Administrador');
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
+        $store->roles()->save(Role::find(3));
         setContable($place, '100', 'debit','Efectivo en Caja', $place->id, 'debit');
         setContable($place, '100', 'debit','Efectivo en Cheques', $place->id);
         setContable($place, '100', 'debit','Otros Efectivos', $place->id);
@@ -196,16 +198,16 @@ class DatabaseSeeder extends Seeder
         setContable($place, '401', 'debit','Descuento en Ventas', $place->id);
         setContable($place, '401', 'debit','Devolución en Ventas', $place->id);
         setContable($place, '402', 'credit','Otros Ingresos', $place->id);
+        setContable($place, '500', 'debit','Compra de mercancías', $place->id);
 
-        User::factory(400)->create()->each(function ($us) use ($store) {
+        $roles=['Administrador','Super Admin','Generico'];
+        User::factory(25)->create()->each(function ($us) use ($store, $roles) {
             $num = rand(1, 250);
             $us->image()->create([
                 'path' => "https://picsum.photos/id/{$num}/200/300",
             ]);
             $us->stores()->save($store);
-            if (fmod($us->id, 33) == 0) {
-                $us->assignRole('Administrador');
-            }
+            $us->assignRole($roles[rand(0,2)]);
         });
         for ($i=1; $i < 16; $i++) { 
             $store->comprobantes()->create([

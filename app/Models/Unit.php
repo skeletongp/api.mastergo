@@ -49,7 +49,7 @@ class Unit extends Model
     public function plainPrice() : Attribute
     {
         return new Attribute(
-            get:fn()=> $this->pivot->price
+            get:fn()=> $this->pivot->price_menor
         );
     }
     public function cost() : Attribute

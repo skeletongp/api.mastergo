@@ -34,6 +34,7 @@ class User extends Authenticatable
         'avatar',
         'store_id',
         'place_id',
+        'loggeable'
     ];
     protected $searchable = [
         'columns' => [
@@ -73,7 +74,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    
     public function password(): Attribute
     {
         return new Attribute(
@@ -115,7 +116,7 @@ class User extends Authenticatable
         if (!is_null($store)) {
             return $store;
         }
-        $store = $this->stores()->where('stores.id', $this->place_id)->with('clients','products')->first();
+        $store = $this->stores()->where('stores.id', $this->place_id)->with('clients','products','roles')->first();
         Cache::put('store_' . $this->id, $store);
         return $store;
     }
@@ -134,6 +135,8 @@ class User extends Authenticatable
         Cache::put('place_' . $this->id, $place);
         return $place;
     }
+    
+
     public function payments()
     {
         return $this->morphMany(Payment::class,'contable');

@@ -1,5 +1,5 @@
 <div class="relative">
-    <x-modal>
+    <x-modal :fitVerticalContainer="false" minHeight='min-h-[50vh]'>
         <x-slot name="button">
             <span class="fas fa-plus text-xl mr-2"></span>
             <span>Añadir Medida</span>

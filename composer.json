@@ -14,6 +14,7 @@
         "davejamesmiller/laravel-breadcrumbs": "5.x",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/cache": "^9.8",
+        "jantinnerezo/livewire-alert": "^2.2",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/telescope": "^4.8",

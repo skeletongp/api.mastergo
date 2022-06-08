@@ -2,16 +2,17 @@
 
 namespace App\Http\Livewire\Settings\Roles;
 
+use App\Http\Traits\Livewire\Confirm;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleIndex extends Component
 {
+    use Confirm;
     public $roles, $permissions, $roleActual, $permissionsSelected = [];
     public $role_name , $selectAll = false;
-
-    protected $listeners = ['reloadRoles'];
+    protected $listeners = ['reloadRoles', 'deleteRole', 'validateAuthorization'];
     protected $queryString = ['role_name'];
     protected $rules = [
         'permissionsSelected.*' => 'required'
@@ -83,5 +84,14 @@ class RoleIndex extends Component
         }
 
         $this->render();
+    }
+    public function deleteRole($data){
+       $name=$data['data']['value'];
+       $role=Role::findByName($name);
+       $role->users()->sync([]);
+       $role->syncPermissions([]);
+       $role->delete();
+       $this->emit('showAlert', 'Rol eliminado exitosamente', 'success');
+       $this->emit('reloadRoles');
     }
 }

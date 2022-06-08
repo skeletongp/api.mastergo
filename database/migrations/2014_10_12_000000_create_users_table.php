@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('name',50)->comment('Primer nombre del usuario');
             $table->string('lastname',75)->comment('Apellidos');
             $table->string('fullname',75)->comment('Nombre y Apellidos');
-            $table->string('email',100)->unique();
-            $table->string('username',35)->unique()->comment('Utilizado para iniciar sesión');
+            $table->string('email',100)->comment('Se debe validar unique al registrar');
+            $table->string('username',35)->comment('Utilizado para iniciar sesión');
             $table->string('password',255);
             $table->string('phone',25);
             $table->enum('loggeable',['no','yes']);

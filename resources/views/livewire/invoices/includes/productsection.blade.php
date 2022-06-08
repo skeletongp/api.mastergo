@@ -27,7 +27,7 @@
                     Total
                 </th>
                 <th scope="col" class="px-2 py-3 border border-gray-200 text-center">
-                    <span class="sr-only">Action</span>
+                    <span class="sr-only">Acción</span>
                 </th>
             </tr>
         </thead>
@@ -81,6 +81,7 @@
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
                         <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
+                        status="{{auth()->user()->hasPermissionTo('Aplicar Descuentos')?'':'disabled'}}"
                             placeholder="Desc." wire:model="discount" wire:keydown.enter="tryAddItems" id="pr_discount"
                             label=""></x-base-input>
                     </div>
@@ -179,6 +180,7 @@
     </table>
     @push('js')
         <script>
+      
             Livewire.on('focusCode', function() {
                 $('#code').focus();
             })
@@ -188,6 +190,7 @@
             $(document).ready(function() {
                 // Enable Keyboard Input
                 document.addEventListener("keydown", key, false);
+                $('#code').focus();
 
                 function key(e) {
                     code = e.key || e.which;

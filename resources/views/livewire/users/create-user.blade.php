@@ -1,6 +1,6 @@
 
 <div>
-    <x-modal>
+    <x-modal :fitVerticalContainer="false">
         <x-slot name="title">
             <span> Nuevo Usuario</span>
         </x-slot>
@@ -10,6 +10,9 @@
         </x-slot>
         <div>
             <form wire:submit.prevent="createUser">
+                <div class="pb-6 flex justify-end">
+                    <x-toggle label="Usuario Logueable" value="true" id="usr.loggeable" wire:model="loggeable"></x-toggle>
+                </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
                         <x-input label="Primer nombre" id="name" wire:model.defer="form.name" />
@@ -27,11 +30,11 @@
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
-                    <div class="w-full">
+                    <div class="w-1/2">
                         <x-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.defer="form.username" />
                         <x-input-error for="form.username" />
                     </div>
-                    <div class="w-full">
+                    <div class="w-1/2">
                         <x-input label="Contraseña" autocomplete="new-password" type="password" id="new-password"
                             wire:model.defer="form.password" />
                         <x-input-error for="form.password" />
@@ -47,7 +50,7 @@
                         <x-select id="frole" wire:model.defer="role" class=" select2">
                             <option value=""></option>
                             @foreach ($roles as $name)
-                                <option value="{{ $name }}">{{ $name }}</option>
+                                <option value="{{ $name }}">{{ preg_replace('/[0-9]+/', '',  $name); }}</option>
                             @endforeach
                         </x-select>
                         <x-input-error for="frole" />

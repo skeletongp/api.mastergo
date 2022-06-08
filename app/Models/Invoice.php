@@ -51,19 +51,19 @@ class Invoice extends Model
     }
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->withTrashed();
     }
     public function comprobante()
     {
-        return $this->belongsTo(Comprobante::class);
+        return $this->belongsTo(Comprobante::class)->withTrashed();;
     }
     public function seller()
     {
-        return $this->belongsTo(User::class, 'seller_id');
+        return $this->belongsTo(User::class, 'seller_id')->withTrashed();;
     }
     public function contable()
     {
-        return $this->belongsTo(User::class, 'contable_id');
+        return $this->belongsTo(User::class, 'contable_id')->withTrashed();;
     }
     public function pdf()
     {
@@ -79,7 +79,7 @@ class Invoice extends Model
     }
     public function incomes()
     {
-        return $this->morphMany(Income::class, 'incomeable');
+        return $this->morphMany(Income::class, 'incomeable')->withTrashed();;
     }
 
     public function taxes()

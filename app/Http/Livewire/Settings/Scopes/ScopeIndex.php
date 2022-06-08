@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Settings\Scopes;
 
+use App\Http\Traits\Livewire\Confirm;
 use App\Models\Scope;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class ScopeIndex extends Component
 {
+    use Confirm;
     public $store, $scopes;
     public $selectAll, $scopesSelected=[];
-    protected $listeners=['reloadScopes'];
+    protected $listeners=['reloadScopes', 'deleteScope'];
     public function mount()
     {
         $this->store=auth()->user()->store;
@@ -34,6 +38,9 @@ class ScopeIndex extends Component
             $keys=array_values($this->scopesSelected);
 
         }
+        if (!auth()->user()->hasPermissionTo('Editar Scopes')) {
+            throw new AuthorizationException();
+        }
         $this->store->scope()->sync(
             $keys
         );
@@ -49,6 +56,7 @@ class ScopeIndex extends Component
     }
     public function deleteScope($name)
     {
+        dd($name);
         $scope=Scope::where('name', $name)->first();
         $scope->delete();
         $this->emit('reloadScopes');

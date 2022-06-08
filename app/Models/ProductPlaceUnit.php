@@ -8,12 +8,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class ProductPlaceUnit extends Pivot
 {
     protected $table="product_place_units";
-    public function price() : Attribute
-    {
-        return new Attribute(
-            get:fn($value)=>$value
-        );
-    }
+    protected $guarded=[];
+   
     public function stock() : Attribute
     {
         return new Attribute(

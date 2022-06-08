@@ -12,15 +12,15 @@ use Spatie\Permission\Models\Permission;
 class AssignPermission extends Component
 {
     use AuthorizesRequests;
-    public User $user;
-    public $permissions, $permissionsSelected = [], $selectAll = false, $rolePermissions=[];
+    public  $user;
+    public $permissions, $permissionsSelected = [], $selectAll = false, $rolePermissions = [];
 
     public function mount()
     {
-       
-        $this->permissionsSelected=$this->user->getPermissionsViaRoles()->pluck('name');
-        $spatiePermissionCache=Cache::get('spatie.permission.cache');
-        $this->permissions = Arr::pluck($spatiePermissionCache,'n','i');
+        $this->permissionsSelected = $this->user['permissions'];
+        $spatiePermissionCache = Cache::get('spatie.permission.cache')['permissions'];
+        $this->permissions = Arr::pluck($spatiePermissionCache, 'n', 'i');
+        $this->permissions = array_diff($this->permissions, $this->user['permissionsViaRole']);
         $this->selectAll = count($this->permissionsSelected) === count($this->permissions);
     }
 
@@ -30,11 +30,11 @@ class AssignPermission extends Component
     }
     public function changePermissions()
     {
-            $this->authorize('Asignar Permisos');
-            $this->user->syncPermissions($this->permissionsSelected);
-            $this->emit('showAlert', 'Permisos actualizados', 'success');
-            $this->render();
-       
+        $this->authorize('Asignar Permisos');
+        $user = User::whereId($this->user['id'])->first();
+        $user->syncPermissions($this->permissionsSelected);
+        $this->emit('showAlert', 'Permisos actualizados', 'success');
+        $this->render();
     }
     public function updatedSelectAll()
     {

@@ -65,6 +65,10 @@ trait GenerateInvoiceTrait
         }
         $total = array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
+        $comp_id=null;
+        if ($this->type!='B00' && $this->type!='B14') {
+            $comp_id=$this->comprobante_id;
+        }
         $invoice = $user->store->invoices()->create(
             [
 
@@ -76,7 +80,7 @@ trait GenerateInvoiceTrait
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
                 'client_id' => $this->client['id'],
-                'comprobante_id' => $this->comprobante_id,
+                'comprobante_id' => $comp_id,
                 'status' => 'waiting',
                 'type' => $this->type,
             ]

@@ -2,25 +2,29 @@
 
 // Home
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Home', route('home'));
+    $trail->push('Home', route('home'),['icon'=>'fas fa-home']);
 });
 
 // Usuarios
 Breadcrumbs::for('users', function ($trail) {
     $trail->parent('home');
-    $trail->push('Usuarios', route('users.index'));
+    $trail->push('Usuarios', route('users.index'),['icon'=>'fas fa-users']);
+});
+Breadcrumbs::for('users.set-permissions', function ($trail, $user) {
+    $trail->parent('users');
+    $trail->push('Gestionar Permisos', route('users.setPermissions', $user),['icon'=>'far fa-shield-alt']);
 });
 
 // Clientes
 Breadcrumbs::for('clients', function ($trail) {
     $trail->parent('home');
-    $trail->push('Clientes', route('clients.index'));
+    $trail->push('Clientes', route('clients.index'), ['icon'=>'fas fa-users']);
 });
 
 /* Facturas */
 Breadcrumbs::for('invoices', function ($trail) {
     $trail->parent('home');
-    $trail->push('Facturas', route('invoices.index'));
+    $trail->push('Facturas', route('invoices.index'), ['icon'=>'fas fa-file-invoice']);
 });
 Breadcrumbs::for('invoices.create', function ($trail) {
     $trail->parent('invoices');
@@ -59,11 +63,15 @@ Breadcrumbs::for('products.edit', function ($trail, $product) {
 /* Recursos */
 Breadcrumbs::for('recursos', function ($trail) {
     $trail->parent('home');
-    $trail->push('Recursos', route('recursos.index'));
+    $trail->push('Recursos', route('recursos.index'), ['icon'=>'fas fa-warehouse-alt']);
 });
 Breadcrumbs::for('recursos.show', function ($trail, $recurso) {
     $trail->parent('recursos');
     $trail->push('Detalles -> '.$recurso->name, route('recursos.show', $recurso));
+});
+Breadcrumbs::for('recursos.sum', function ($trail) {
+    $trail->parent('recursos');
+    $trail->push('Sumar recursos', route('recursos.sum'));
 });
 
 /* Recursos */

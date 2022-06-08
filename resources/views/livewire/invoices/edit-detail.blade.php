@@ -1,5 +1,5 @@
 <div>
-    <x-modal fitVerticalContainer="true" title="Editar detalle">
+    <x-modal  title="Editar detalle">
         <x-slot name="button">
             <span class="far fa-pen-alt"></span>
         </x-slot>

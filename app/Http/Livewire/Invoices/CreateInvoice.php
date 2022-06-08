@@ -42,6 +42,8 @@ class CreateInvoice extends Component
         $this->clients = $store->clients()->orderBy('lastname')->pluck('fullname', 'code');
         $this->products = $store->products()->orderBy('name')->pluck('name', 'code');
         $this->seller = auth()->user()->fullname;
+        $this->client_code=$store->generic->code;
+        $this->changeClient();
         $this->checkComprobante($this->type);
     }
     public function render()

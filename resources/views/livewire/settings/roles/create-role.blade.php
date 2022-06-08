@@ -1,7 +1,7 @@
 <div>
     <h1 class="uppercase text-xl text-center font-bold">Crear rol</h1>
     <div class="my-4 px-4">
-        <form action="" class="mt-8" wire:submit.prevent="createRole">
+        <form action="" class="mt-8" wire:submit.prevent=" authorize('¿Permitir crear rol?', 'validateAuthorization','createRole',null,'Crear Roles')">
             <div class="flex justify-between items-end space-x-4">
                 <div class="w-full max-w-xs">
                     <x-input label="Nombre del Rol" wire:model.defer="form.name" id="form.role.name"></x-input>

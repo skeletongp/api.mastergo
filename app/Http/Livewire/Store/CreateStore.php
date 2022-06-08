@@ -80,6 +80,7 @@ class CreateStore extends Component
         setContable($place,  '401', 'debit', 'Descuento en Ventas', $place->id);
         setContable($place,  '401', 'debit', 'Devolución en Ventas', $place->id);
         setContable($place,  '402', 'credit', 'Otros Ingresos', $place->id);
+        setContable($place,  '500', 'credit', 'Compra de Mercancías', $place->id);
     }
     public function createUnit(Store $store)
     {

@@ -110,4 +110,9 @@ class Store extends Model
     {
         return $this->hasMany(Bank::class);
     }
+
+    public function getGenericAttribute()
+    {
+        return $this->clients()->first();
+    }
 }

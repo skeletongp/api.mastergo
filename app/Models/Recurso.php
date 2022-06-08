@@ -45,16 +45,8 @@ class Recurso extends Model
     {
         return $this->belongsTo(Place::class);
     }
-    public function procesos()
-    {
-       return $this->belongsToMany(Proceso::class, 'proceso_recursos');
-    }
-    public function getCostPriceAttribute()
-    {
-        return '$'.formatNumber($this->cost);
-    }
-    public function scopeTotal($query)
-    {
-       $query->addSelect(DB::raw('cant*cost as Total'));
-    }
+   public function brands()
+   {
+       return $this->hasMany(Brand::class);
+   }
 }

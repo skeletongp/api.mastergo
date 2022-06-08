@@ -7,11 +7,11 @@ use Livewire\Component;
 
 class RecursosDetail extends Component
 {
-    public $procesos;
+    public $brands;
     public Recurso $recurso;
     public function mount()
     {
-        $this->procesos=$this->recurso->procesos->pluck('name','id');
+        $this->brands=$this->recurso->brands;
     }
     public function render()
     {

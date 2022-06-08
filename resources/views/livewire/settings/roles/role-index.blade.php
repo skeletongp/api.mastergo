@@ -34,10 +34,22 @@
                         <td class="px-6 py-2">
                             <div class="flex space-x-4 w-max mx-auto ">
                                 @if ($rol->name !== 'Super Admin' && $rol->name !== 'Administrador')
-                                    <livewire:general.delete-model title="Rol" permission="Borrar Roles" :model="$rol"
-                                        event="reloadRoles" :wire:key="uniqid()" />
+                                    <button>
+                                        <span class="far fa-trash text-red-400"
+                                            wire:click="confirm('¿Desea eliminar este rol?', 'deleteRole', '{{ $rol->name }}', 'Borrar Roles')">
+                                        </span>
+                                    </button>
                                 @endif
                             </div>
+                        </td>
+                        <td >
+                            <button @click="open = !open">
+                                <x-tooltip id="managePermissions">
+                                    Ver/Cambiar permisos
+                                </x-tooltip>
+                                <span data-tooltip-target="managePermissions" data-tooltip-style="light" class="far fa-pen-square"
+                                    x-bind:class=" open ? ' text-green-600' : 'text-yellow-600'"></span>
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -47,15 +59,11 @@
 
         @can('Asignar Permisos')
             @if ($role_name)
-                <div class=" p-8" >
+                <div class=" p-8">
                     <h1 class="text-center uppercase font-bold text-xl mt-4 mb-6 flex justify-between items-center cursor-pointer"
                         @click="open = !open">
                         <span>Gestionar permisos de {{ preg_replace('/[0-9]+/', '', $role_name) }}</span>
-                        <x-tooltip id="managePermissions">
-                            Ver/Cambiar permisos
-                        </x-tooltip>
-                        <span data-tooltip-target="managePermissions" data-tooltip-style="light" class="far fa-pen-square"
-                            x-bind:class=" open?' text-green-600':'text-yellow-600'"></span>
+                       
                     </h1>
                     <form action="" wire:submit.prevent="changePermissions" x-show="open" x-transition>
                         <div class="grid grid-cols-4 gap-6">

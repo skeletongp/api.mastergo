@@ -17,9 +17,6 @@ return new class extends Migration
             $table->id();
             $table->uuid('uid');
             $table->string('name')->comment('Identificador en texto');
-            $table->text('description')->comment('Detalles opcionales del recurso, para facilitar su búsqueda')->nullable();
-            $table->decimal('cost')->comment('Costo base del recurso (valor de compra)');
-            $table->decimal('cant')->comment('Cantidad del recurso');
             $table->foreignId('store_id')->comment('Tienda a la que pertenece el recurso')->constrained();
             $table->foreignId(('place_id'))->comment('Sucursal a la que pertenedce el material')->constrained();
             $table->foreignId('unit_id')->comment('Unidad con que se gestiona el recurso')->constrained();

@@ -15,11 +15,8 @@ return new class extends Migration
     {
         Schema::create('procesos', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->commet('Nombre identificador del proceso');
-            $table->timestamp('start_at')->comment('Momento en que inicia el proceso');
-            $table->timestamp('end_at')->comment('Momento en que termina el proceso')->nullable();
-            $table->enum('status',['Sin procesar','Procesado','Descartado','En Proceso'])->comment('Cómo se encuentra el recurso');
-            $table->foreignId('user_id')->comment('Usuario responsable del proceso')->constrained();
+            $table->string('name')->commet('Nombre identificador del proceso');       
+            $table->string('code')->commet('Nombre identificador del proceso');       
             $table->foreignId('place_id')->comment('Usuario responsable del proceso')->constrained();
             $table->softDeletes();
             $table->timestamps();

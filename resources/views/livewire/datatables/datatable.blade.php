@@ -223,7 +223,7 @@
                 </div>
             </div>
             @if ($this->results->isEmpty())
-                <p class="p-3 text-lg text-center font-bold uppercase my-8">
+                <p class="p-3 text-lg text-center font-bold uppercase my-8 overflow-hidden overflow-ellipsis whitespace-nowrap">
                     {{ __('No hay ningún resultado para mostrar') }}
                 </p>
             @endif

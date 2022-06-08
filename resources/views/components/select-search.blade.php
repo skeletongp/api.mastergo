@@ -159,6 +159,7 @@
                         }
                     },
                     increaseIndex: function() {
+
                         if (this.currentIndex == Object.keys(this.options).length)
                             this.currentIndex = 0
                         else

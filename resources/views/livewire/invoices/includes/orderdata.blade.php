@@ -1,5 +1,5 @@
 <div>
-    <x-modal open="{{ false }}" title="Imprimir orden" fitVerticalContainer="true" hideButton="true">
+    <x-modal open="{{ false }}" title="Imprimir orden"  hideButton="true">
         <x-slot name="button">
             <div id="openData"></div>
         </x-slot>
@@ -30,9 +30,9 @@
                 </div>
             </div>
             <div class="flex justify-between my-4 ">
-                <div class="">
-                    @livewire('invoices.order-confirm', ['invoice' => $invoice->toArray()], key(uniqid()))
-                </div>
+                @can('Cobrar Facturs')
+                    
+                @endcan
                 <x-button class="" onclick="print()">
                     Imprimir
                 </x-button>

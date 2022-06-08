@@ -68,6 +68,10 @@ class Product extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+    public function productProductions()
+    {
+        return $this->morphMany(ProductProduction::class, 'productible');
+    }
     public function photo(): Attribute
     {
         return new Attribute(

@@ -15,4 +15,8 @@ class RecursoController extends Controller
     {
         return view('pages.recursos.show', ['recurso'=>$recurso]);
     }
+    public function sum()
+    {
+        return view('pages.recursos.sum');
+    }
 }

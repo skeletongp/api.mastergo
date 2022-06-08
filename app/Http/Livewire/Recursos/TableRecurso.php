@@ -17,9 +17,8 @@ class TableRecurso extends LivewireDatatable
 
     public function builder()
     {
-        $recursos = auth()->user()->place->recursos()
-            ->leftJoin('units', 'units.id', 'recursos.unit_id')
-            ->whereNull('recursos.deleted_at');
+        $recursos = auth()->user()->place->recursos()->with('brands')
+          ;
         return $recursos;
     }
 
@@ -27,23 +26,24 @@ class TableRecurso extends LivewireDatatable
     {
         $canDelete = auth()->user()->hasPermissionTo('Borrar Recursos');
         $canEdit = auth()->user()->hasPermissionTo('Editar Recursos');
+        $recursos=$this->builder()->get()->toArray();
         return [
             Column::callback(['id','uid'], function($id){
                 return view('components.view', ['url'=>route('recursos.show',$id)]);
             }),
             Column::name('name')->label('Nombre')->searchable()->editable($canEdit),
-            Column::name('description')->label('Descripción')->searchable(),
-            Column::name('units.name')->label('Medida'),
-            Column::name('cant')->label('Cantidad')->searchable()->name('cant')->editable($canEdit),
-            Column::callback('cost', function ($cost) {
-                return '$' . formatNumber($cost);
-            })->label('Costo')->searchable()->name('cost')->editable(),
-            Column::callback(['cant','cost'], function($cant, $cost){
-                return '$'.formatNumber($cant*$cost);
-            })->label('Total'),
+            Column::callback(['created_at','id'], function($created, $id) use ($recursos){
+                $result=arrayFind($recursos, 'id', $id);
+                return formatNumber(array_sum(array_column($result['brands'],'cant')));
+            })->label('Cant'),
+            Column::callback(['updated_at','id'], function($created, $id) use ($recursos){
+                $result=arrayFind($recursos, 'id', $id);
+                return formatNumber(array_sum(array_column($result['brands'],'cost'))/count($result['brands']));
+            })->label('Costo'),
+           
             $canDelete ?
             Column::delete()->label('Eliminar') :
-                Column::delete()->label('Eliminar')->hide(false),
+                Column::delete()->label('Eliminar')->hide(false)
         ];
     }
 

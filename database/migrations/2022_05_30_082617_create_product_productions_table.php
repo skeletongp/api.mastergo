@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proceso_recursos', function (Blueprint $table) {
+        Schema::create('product_productions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('proceso_id')->comment('Proceso vinculado')->constrained();
-            $table->foreignId('recurso_id')->comment('Recurso utilizado en el proceso')->constrained();
-            $table->decimal('cant')->comment('Cantidad del recurso que se utiliza');
-            $table->decimal('stock')->comment('Cantidad del recurso que resta');
+            $table->foreignId('production_id')->comment('Producción vinculada')->constrained();
+            $table->morphs('productible');
+            $table->morphs('unitable');
+            $table->decimal('cant')->comment('Cantidad del producto que se obtuvo');
+            $table->decimal('stock')->comment('Campo puesto mientras tanto');
             $table->enum('status',['open','close']);
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proceso_recursos');
+        Schema::dropIfExists('product_productions');
     }
 };
