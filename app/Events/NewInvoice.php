@@ -30,7 +30,7 @@ class NewInvoice implements ShouldBroadcastNow
     
     public function broadcastOn()
     {
-       return new Channel('invoices.'.$this->invoice->place_id);
+       return new PrivateChannel('invoices.'.$this->invoice->place_id);
       
     }
    

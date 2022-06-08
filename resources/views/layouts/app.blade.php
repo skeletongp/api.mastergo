@@ -150,9 +150,10 @@
             $('#generalLoad').removeClass('hidden');
         })
         id = {{ auth()->user()->place->id }}
-        var channel = Echo.channel(`invoices.${id}`);
+        var channel = Echo.private(`invoices.${id}`);
         channel.listen("NewInvoice", function(data) {
             Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
+           
         });
         $(document).ready(function() {
             $('input[type=tel]').each(function() {

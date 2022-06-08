@@ -34,11 +34,12 @@ class CreateInvoice extends Component
    
     public function mount()
     {
-        $store = auth()->user()->store;
+        $store=auth()->user()->store;
+        $place=auth()->user()->place;
         $this->vence = Carbon::now()->addDays(30)->format('Y-m-d');
         $this->condition = 'DE CONTADO';
         $this->type = 'B02';
-        $this->number = str_pad($store->invoices()->count() + 1, 7, '0', STR_PAD_LEFT);
+        $this->number =$place->id.'-'.str_pad($place->invoices()->withTrashed()->count()+1,7,'0',STR_PAD_LEFT);
         $this->clients = $store->clients()->orderBy('lastname')->pluck('fullname', 'code');
         $this->products = $store->products()->orderBy('name')->pluck('name', 'code');
         $this->seller = auth()->user()->fullname;

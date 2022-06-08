@@ -25,7 +25,7 @@
                                 </div>
                             @endif
                             <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
-                            activeRoute="prueba.*" scope="" />
+                                activeRoute="prueba.*" scope="" />
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
@@ -49,14 +49,22 @@
                         text='Proveedores' activeRoute="home.*" scope="Proveedores" />
                 </x-dropitem>
 
-                <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders']">
-                    <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
-                        text='Facturas' activeRoute="invoices.*" scope="Facturas" />
-                    <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
-                        text='Cotizaciones' activeRoute="home.*" scope="Cotizaciones" />
-                    <x-side-link routeName='orders' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'
-                        activeRoute="orders" scope="Pedidos" />
-                </x-dropitem>
+                @canany(['Cobrar Facturas', 'Ver Facturas', 'Ver Cotizaciones'])
+                    <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders']">
+                        @can('Ver Facturas')
+                            <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
+                                text='Facturas' activeRoute="invoices.*" scope="Facturas" />
+                        @endcan
+                        @can('Ver Cotizaciones')
+                            <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
+                                text='Cotizaciones' activeRoute="home.*" scope="Cotizaciones" />
+                        @endcan
+                        @can('Cobrar Facturas')
+                            <x-side-link routeName='orders' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'
+                                activeRoute="orders" scope="Pedidos" />
+                        @endcan
+                    </x-dropitem>
+                @endcanany
 
                 <x-dropitem text="Inventario" icon=" far fa-cabinet-filing" :routes="['products.*', 'recursos.*', 'Procesos.*']">
                     <x-side-link routeName='products.index' icon='far w-10 text-center fa-layer-group fa-lg'
@@ -74,7 +82,7 @@
                         text='Reportes' activeRoute="home.*" scope="Reportes" />
                     <x-side-link routeName='users.index' icon='far w-10 text-center fa-download fa-lg'
                         text='Exportaciones' activeRoute="home.*" scope="Reportes" />
-                 
+
                 </x-dropitem>
 
                 <x-dropitem text="Finanzas" icon="far fa-wallet">
@@ -82,7 +90,7 @@
                         text='Ingresos' activeRoute="invoices.*" scope="Ingresos" />
                     <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg'
                         text='Gastos' activeRoute="home.*" scope="Gastos" />
-                        <x-side-link routeName='reports.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
+                    <x-side-link routeName='reports.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
                         text='Diario General' activeRoute="home.*" scope="Reportes" />
                     <x-side-link routeName='reports.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
                         text='Balance General' activeRoute="home.*" scope="Reportes" />
@@ -91,7 +99,7 @@
                     <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
                         activeRoute="home.*" />
                 @endcan
-                
+
             </ul>
         </ul>
     </div>

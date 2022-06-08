@@ -12,6 +12,7 @@
             @if ($errors->any())
                 <div class=" bg-gray-100 p-4 rounded-xl w-max">
                     <x-input-error for="client">Debe seleccionar un cliente</x-input-error>
+                    <x-input-error for="name">Digite un nombre para el cliente</x-input-error>
                     <x-input-error for="form.product_id">Debe seleccionar un producto</x-input-error>
                     <x-input-error for="cant">Ingrese una cantidad válida</x-input-error>
                     <x-input-error for="price">Verifique el precio</x-input-error>

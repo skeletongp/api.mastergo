@@ -56,7 +56,8 @@ trait OrderConfirmTrait
         setPDFPath($invoice);
 
         $this->closeComprobante($invoice->comprobante, $invoice);
+
+        $this->emit('printThermal', $invoice->pdfThermal);
         $this->emit('refreshLivewireDatatable');
-        return redirect()->route('invoices.index');
     }
 }

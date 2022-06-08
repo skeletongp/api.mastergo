@@ -3,7 +3,7 @@
     <x-modal id="modalConfirmInvoice"  maxWidth="max-w-3xl">
         <x-slot name="button">
             <span>
-                Cobrar
+                Cobrar 
             </span>
         </x-slot>
         <x-slot name="title">
@@ -160,13 +160,10 @@
                 input = event.target;
                 input.value = prevVal;
             }
-            Livewire.on('printInvoice', function(url) {
-             
+            
+            Livewire.on('printThermal', function(url) {
                 printJS({
                     printable: url,
-                    showModal: true,
-                    
-                    modalMessage: 'Cargando documento'
                 });
             });
         </script>

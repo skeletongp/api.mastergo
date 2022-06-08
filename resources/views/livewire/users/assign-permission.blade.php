@@ -11,6 +11,9 @@
                 </h1>
                 <form action="" wire:submit.prevent="changePermissions" x-transition>
                     <div class="grid grid-cols-5 gap-2">
+                        @php
+                            asort($permissions)
+                        @endphp
                         @foreach ($permissions as $id => $perm)
                             @can($perm)
                                 <div class="flex space-x-2 items-center mb-2 ">

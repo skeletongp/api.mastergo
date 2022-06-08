@@ -22,6 +22,7 @@ class AssignPermission extends Component
         $this->permissions = Arr::pluck($spatiePermissionCache, 'n', 'i');
         $this->permissions = array_diff($this->permissions, $this->user['permissionsViaRole']);
         $this->selectAll = count($this->permissionsSelected) === count($this->permissions);
+        
     }
 
     public function render()

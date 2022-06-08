@@ -20,10 +20,10 @@ class Invoice extends Model
         $store=auth()->user()->store;
         $place=auth()->user()->place;
         parent::boot();
-        self::creating(function ($model) use ($place) {
+      /*   self::creating(function ($model) use ($place) {
             $model->uid = (string) Uuid::uuid4();
             $model->number=$place->id.'-'.str_pad($place->invoices()->count()+1,7,'0',STR_PAD_LEFT);
-        });
+        }); */
     }
     const TYPES = [
         'COMPROBANTE DE CONSUMIDOR FINAL' => 'B02',

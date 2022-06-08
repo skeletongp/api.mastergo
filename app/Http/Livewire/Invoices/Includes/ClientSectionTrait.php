@@ -7,7 +7,7 @@ use App\Models\Client;
 trait ClientSectionTrait
 {
 
-    public $client, $client_code, $clients;
+    public $client, $client_code, $clients, $name;
 
     public function changeClient()
     {

@@ -72,15 +72,12 @@
                         }
                     })
                 }
-
+               
                 function print(url) {
-                   
                     printJS({
                         printable: url,
                         type: 'pdf',
                         targetStyle: ['*'],
-                        showModal: true,
-                        modalMessage: 'Imprimiendo...'
                     })
                 }
                 $(document).ready(function() {

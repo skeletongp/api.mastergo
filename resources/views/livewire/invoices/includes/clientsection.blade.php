@@ -7,9 +7,13 @@
                 <span wire:click="changeClient" class="fas fa-search cursor-pointer text-cyan-600"></span>
             </div>
         </div>
-        <x-select-search :data="$clients" wire:model="client_code" :placeholder="'Seleccione un cliente'" :wire:key="uniqid()"/>
-            
-      
+        <x-select-search :data="$clients" wire:model="client_code" :placeholder="'Seleccione un cliente'" :wire:key="uniqid()" />
+
+    </div>
+   
+    <div class="{{auth()->user()->store->generic->code==$client_code?'':'hidden'}}">
+        <x-base-input wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre">
+        </x-base-input>
     </div>
     <div class="w-full">
         <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.address"
@@ -29,30 +33,5 @@
                 id="clt.balance" label="Balance"></x-base-input>
         </div>
     </div>
-    @push('js')
-        <script>
-            $(document).ready(function() {
-                $('#select2').select2({
-                    placeholder: "Seleccione un cliente",
-                    allowClear: true
-                });
-                $('#select2').on('change', function(e) {
-                    var data = $(this).select2("val");
-                    @this.set('client_code', data);
-                });
-            });
-            Livewire.hook('element.updated', function() {
-                $(document).ready(function() {
-                    $('#elect2').select2({
-                        placeholder: "Seleccione un cliente",
-                        allowClear: true
-                    });
-                });
-                $('#select2').on('change', function(e) {
-                    var data = $(this).select2("val");
-                    @this.set('client_code', data);
-                });
-            });
-        </script>
-    @endpush
+
 </div>

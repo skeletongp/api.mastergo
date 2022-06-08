@@ -32,7 +32,7 @@ class OrderView extends LivewireDatatable
         return [
             Column::name('number')->label("Nro."),
             TimeColumn::name('created_at')->label("Hora")->hide(),
-            Column::callback('payment.amount:sum', function ($amount) {
+            Column::callback('payment.total:sum', function ($amount) {
                 return '$' . formatNumber($amount);
             })->label("Monto"),
             Column::name('client.name')->callback(['uid', 'client_id'], function ($uid) use ($invoices) {
@@ -45,16 +45,21 @@ class OrderView extends LivewireDatatable
 
             Column::name('seller.name')->callback(['uid', 'day'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
-                return $result['seller']['fullname'];
+                $seller=  strlen($result['seller']['fullname']) > 14 ? substr($result['seller']['fullname'], 0, 14) : $result['seller']['fullname'] ;
+                $ellipsis=strlen($result['seller']['fullname']) > 14 ? '...' : '';
+                return $seller.$ellipsis;
             })->label('Vendedor'),
 
             Column::name('condition')->label("Condición"),
-            Column::name('type')->label("Tipo"),
-
-            Column::callback('uid', function ($uid) use ($invoices) {
-                $result = arrayFind($invoices, 'uid', $uid);
+            Column::callback('id', function ($id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
                 return view('pages.invoices.order-page', ['invoice' => $result]);
-            })->label('Acción')
+            })->label('Acción'),
+            Column::callback(['uid','id'], function ($uid) use ($invoices) {
+                $result = arrayFind($invoices, 'uid', $uid);
+                return view('pages.invoices.delete-invoice-page', ['invoice' => $result]);
+            })->label('Anular')->alignCenter()
+            
         ];
     }
     public function cellClasses($row, $column)

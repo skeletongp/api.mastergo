@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Invoices\Includes;
 
 use App\Events\NewInvoice;
+use App\Models\Comprobante;
 use App\Models\Detail;
 use App\Models\Invoice;
 use Illuminate\Support\Arr;
@@ -68,15 +69,18 @@ trait GenerateInvoiceTrait
         $comp_id=null;
         if ($this->type!='B00' && $this->type!='B14') {
             $comp_id=$this->comprobante_id;
+            $comprobante=Comprobante::whereId($comp_id)->first();
+            $comprobante->update(['status'=>'usado']);
         }
         $invoice = $user->store->invoices()->create(
             [
-
                 'day' => date('Y-m-d'),
                 'seller_id' => $user->id,
                 'condition' => $this->condition,
                 'expires_at' => $this->vence,
                 'contable_id' => $user->id,
+                'number'=>$this->number,
+                'name'=>$this->name,
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
                 'client_id' => $this->client['id'],
