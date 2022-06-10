@@ -26,8 +26,8 @@ class Invoice extends Model
         }); */
     }
     const TYPES = [
-        'COMPROBANTE DE CONSUMIDOR FINAL' => 'B02',
         'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',
+        'COMPROBANTE DE CONSUMIDOR FINAL' => 'B02',
         'COMPROBANTE DE RÉGIMEN ESPECIAL' => 'B14',
         'COMPROBANTE GUBERNAMENTAL' => 'B15',
         'DOCUMENTO DE CONDUCE' => 'B00',
@@ -48,6 +48,10 @@ class Invoice extends Model
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+    public function place()
+    {
+        return $this->belongsTo(Place::class);
     }
     public function client()
     {

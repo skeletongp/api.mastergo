@@ -1,178 +1,299 @@
 @push('js')
     <script>
-        window.onbeforeunload = function(event) {
-            if (@this.details.length > 0) {
-                return @this.details
-            };
-
-        };
-        let input = document.getElementById('outputScreen');
-
-        function clr() {
-            input.value = '';
-            @this.set('form.cant', parseFloat(input.value));
-        }
-
-        // Del button 
-        function del() {
-            input.value = input.value.substring(0, input.value.length - 1);
-            @this.set('form.cant', parseFloat(input.value));
-        }
-        // Making button works 
-        function display(e, n) {
-            e.target.blur()
-            if (input.value == '0.000') {
-                clr();
-            }
-            if (input.value.length > 11) {
-                return;
-            }
-            if (n == '.' && input.value.includes('.')) {
-                return;
-            }
-            if (n == '.' && input.value.length < 1) {
-                n = '0.';
-            }
-            if (input.value == '0' && n !== '.') {
-                input.value = '';
-                input.value += n;
-                return;
-            }
-            input.value += n;
-            @this.set('form.cant', parseFloat(input.value));
-        }
-        // Enable Keyboard Input
-        document.addEventListener("keydown", key, false);
-
-        isFocused = false;
-
-        function setFocused(val) {
-            isFocused = val;
-        }
-
-        function keydownCant(e, num) {
-            if (!isNaN(parseInt(num)) || num == '.') {
-                display(e, num);
-            } else if (num == 'Backspace') {
-                del();
-            } else if (num == 'Enter') {
-                Livewire.emit('tryAddItems');
-                search = "";
-                @this.set('search', search);
-                $('#searchImput').val('')
-                setTimeout(() => {
-                    clr();
-                }, 500);
-            } else if (num == 'Delete') {
-                clr();
-            } else if (num == 'F7' || num == 'AltGraph') {
-                $('#btnmodalSale').click();
-                open = !open;
-                setTimeout(() => {
-                    document.getElementById("prodsearch").focus();
-                }, 0);
-
-            } else if (num == 'F2') {
-                Swal.fire({
-                    title: 'Generar factura',
-                    text: '¿Desea generar y enviar esta factura?',
-                    confirmButtonText: 'Proceder',
-                    confirmButtonColor: '#3895D3',
-                    cancelButtonColor: '#F08080',
-                    showCancelButton: true,
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#trySendInvoice').click();
-                        search = "";
-                        @this.set('search', search);
-                        $('#searchImput').val('')
-                    } else {
-                        return;
-                    }
-                })
-            }
-
-        }
-        urlParams = new URLSearchParams(window.location.search);
-        search = urlParams.get('search')
-        $('#searchImput').val(search)
-
-        function keydownProduct(e, num) {
-
-            abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't',
-                'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-            ]
-            if (num == 'Backspace') {
-                search = search.substring(0, search.length - 1)
-            } else if (num == 'Delete') {
-                search = "";
-            } else if (abc.includes(num)) {
-                search += num;
-            } else if (num == 'Space') {
-                search += " ";
-            } else if (num == 'Enter') {
-                @this.set('search', search)
-            }
-            if (search.length == 0) {
-                search = search.replace('null', '');
-                @this.set('search', search)
-            }
-            $('#searchImput').val(search)
-        }
-
-        function catchSearchEnter(event) {
-            if (event.keyCode === 13) {
-                @this.set('search', $('#searchImput').val())
+        function align(conector, dir) {
+            switch (dir) {
+                case 'right':
+                    conector.establecerJustificacion(ConectorPlugin.Constantes.AlineacionDerecha);
+                    break;
+                case 'center':
+                    conector.establecerJustificacion(ConectorPlugin.Constantes.AlineacionCentro);
+                    break;
+                case 'left':
+                    conector.establecerJustificacion(ConectorPlugin.Constantes.AlineacionIzquierda);
+                    break;
             }
         }
-
-        function key(e) {
-
-            var keyCode = e.key || e.which;
-            var num = keyCode;
-            if (num == '%') {
-                setFocused(true);
-                document.getElementById('scanned').focus();
-            }
-            product = @this.producto;
-            if (!isFocused && (product || num == 'F2')) {
-                keydownCant(e, num)
-            } else if (!isFocused && !product && e.target.id !== 'searchImput') {
-                keydownProduct(e, num);
-            }
-        }
-        $('#searchImput').on('search', function() {
-            @this.set('search', $('#searchImput').val())
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
         });
+        var toDecimal = new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 2,
+        });
+        var sumField = (obj, field) => obj
+            .map(items => items[field])
+            .reduce((prev, curr) => parseFloat(prev) + parseFloat( curr), 0);
 
-        function facturar() {
-            document.dispatchEvent(new KeyboardEvent('keydown', {
-                'key': 'Enter'
-            }));
-            search = "";
-            @this.set('search', search)
-            $('#searchImput').val(search)
-            console.log(search + '2')
-        }
+        Livewire.on('changeInvoice', function(invoice, letPrint = true) {
+            obj = invoice;
+           
 
-        function closeModal() {
-            document.dispatchEvent(new KeyboardEvent('keydown', {
-                'key': 'AltGraph'
-            }));
-        }
-
-        function setFocusedOut(event) {
-            @this.set('search', null);
-            setFocused(false);
-        }
-
-        function kdwnPrice(e) {
-
-            key = e.key || e.which;
-            if (key == 'Tab') {
-                return e.preventDefault();
+            if (letPrint) {
+                for (let index = 0; index < obj.place.preference.copy_print; index++) {
+                print();
+                }
             }
+        })
+
+        function print() {
+            if (!obj.place.preference.printer) {
+                Livewire.emit('showAlert', 'No hay ninguna impresora añadida', 'warning');
+                return false;
+            }
+            const conector = new ConectorPlugin();
+            conector.cortar();
+            /* Encabezado Negocio */
+            align(conector, 'center');
+            conector.establecerEnfatizado(1);
+            conector.establecerTamanioFuente(1.3, 2)
+            conector.texto(obj.store.name.toUpperCase() + "\n");
+            conector.establecerEnfatizado(0);
+            conector.establecerTamanioFuente(1, 1)
+            conector.texto('RNC: ')
+            conector.texto(obj.store.rnc + "\n");
+            conector.texto(obj.store.phone + "\n");
+            conector.texto(obj.store.address + "\n");
+            align(conector, 'center');
+            conector.texto('--------------------------------------');
+            conector.feed(1);
+            /* Fin Encabezado */
+
+
+            /* Detalle Factura */
+            align(conector, 'left');
+            conector.establecerEnfatizado(1);
+            conector.texto("CONDICIÓN: ");
+            align(conector, 'right');
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.condition.toUpperCase())
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('NCF: ')
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.comprobante ? obj.comprobante.ncf : " 0000000000");
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('EMITIDA: ')
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.day);
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('VENCE: ')
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.expires_at);
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('ORDEN NO.: ')
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.number);
+            conector.feed(1);
+
+            align(conector, 'center');
+            conector.texto('--------------------------------------');
+            conector.feed(1);
+            /* Fin detalle */
+
+
+            /* Datos del cliente */
+            align(conector, 'left');
+            conector.establecerEnfatizado(1);
+            conector.texto('CLIENTE: ')
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.name ? obj.name.toUpperCase() : obj.client.fullname.toUpperCase());
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('RNC: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.client.rnc ? obj.client.rnc : '0000000000')
+            conector.texto(' / ');
+
+            conector.establecerEnfatizado(1);
+            conector.texto('TEL: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.client.phone);
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('DIR: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.client.address ? obj.client.address : 'N/D');
+            conector.feed(1);
+
+            align(conector, 'center');
+            conector.texto('--------------------------------------');
+            conector.feed(1);
+            /* Fin Cliente */
+
+
+            /* Tipo de Factura */
+            conector.establecerEnfatizado(1);
+            conector.establecerTamanioFuente(1.2, 1.5)
+            align(conector, 'center');
+            conector.texto(obj.comprobante ? obj.comprobante.type : 'DOCUMENTO CONDUCE')
+            conector.establecerTamanioFuente(1, 1)
+            conector.feed(2);
+            /* Fin Tipo */
+
+            /* Encabezado de productos */
+            align(conector, 'left');
+            conector.texto('DETALLES DE LA FACTURA ')
+            conector.feed(1)
+            /* Fin encabezados */
+
+            /* Productos facturados */
+            conector.establecerEnfatizado(0);
+            obj.details.forEach(det => {
+                align(conector, 'left');
+                conector.texto((toDecimal.format(det.cant)) + " ");
+                conector.texto(det.unit.symbol + " ");
+                conector.texto(det.product.name + " ");
+                conector.feed(1);
+                align(conector, 'right');
+                conector.texto("Pr. " + formatter.format(det.price) + " ");
+                if (det.discount_rate > 0 && obj.type !== 'B00' && obj.type !== 'B14') {
+                    conector.texto("Desc. " + toDecimal.format(det.discount_rate * 100) + "% ");
+                }
+                if (det.taxtotal > 0) {
+                    conector.texto("Imp. " + formatter.format(det.taxtotal) + " ");
+                }
+                conector.texto("Subt. " + formatter.format(det.total));
+                conector.feed(2);
+            });
+            conector.feed(1);
+            /* Fin Productos */
+
+
+            /* Sección totales */
+
+            align(conector, 'right')
+            conector.establecerEnfatizado(1);
+            conector.texto('SUBTOTAL: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(formatter.format(obj.payment.amount));
+            conector.feed(1);
+
+            if (obj.payment.discount > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('DESCUENTO: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(obj.payment.discount));
+                conector.feed(1);
+            }
+
+            if (obj.payment.tax > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('IMPUESTOS: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(obj.payment.tax));
+                conector.feed(1);
+            }
+            conector.feed(1);
+            conector.establecerEnfatizado(1);
+            conector.texto('TOTAL: ');
+            conector.texto(formatter.format(obj.payment.total));
+            conector.feed(1);
+            console.log(obj.payments);
+            if (sumField(obj.payments, 'efectivo') > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('EFECTIVO: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(sumField(obj.payments, 'efectivo')));
+                conector.feed(1);
+            }
+            if (sumField(obj.payments, 'transferencia') > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('TRANSFERENCIA: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(sumField(obj.payments, 'transferencia')));
+                conector.feed(1);
+            }
+            if (sumField(obj.payments, 'tarjeta') > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('OTRO: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(sumField(obj.payments, 'tarjeta')));
+                conector.feed(1);
+            }
+            conector.feed(1);
+            conector.establecerEnfatizado(1);
+            conector.texto('PAGADO: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(formatter.format(sumField(obj.payments, 'payed')));
+            conector.feed(1);
+            if (obj.rest > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('PENDIENTE: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(obj.rest));
+                conector.feed(1);
+            }
+            if (sumField(obj.payments, 'cambio') > 0) {
+                conector.establecerEnfatizado(1);
+                conector.texto('CAMBIO: ');
+                conector.establecerEnfatizado(0);
+                conector.texto(formatter.format(sumField(obj.payments, 'cambio')));
+                conector.feed(1);
+            }
+            align(conector, 'center');
+            conector.texto('--------------------------------------');
+            conector.feed(1);
+            /* Fin Sección */
+            /*  Código QR */
+            conector.qr(obj.pdf.pathLetter)
+            /* Fin de código */
+
+            /* Sección personas */
+            conector.establecerEnfatizado(1);
+            conector.texto('VENDEDOR: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.seller.fullname);
+            conector.feed(1);
+
+            conector.establecerEnfatizado(1);
+            conector.texto('CAJERO: ');
+            conector.establecerEnfatizado(0);
+            conector.texto(obj.contable.fullname);
+            conector.feed(1);
+
+            /* Fin sección */
+
+
+            /* Sección notas */
+            align(conector, 'center')
+            if (obj.note) {
+                conector.establecerEnfatizado(1);
+                conector.establecerEnfatizado(0);
+                conector.texto(obj.note.toUpperCase());
+                conector.feed(2);
+            } else {
+                conector.feed(1);
+            }
+            conector.texto('FAVOR REVISAR LA MERCANCÍA AL MOMENTO DE  RECIBIR. NO SE ACEPTAN DEVOLUCIONES \n');
+            conector.texto('-------- GRACIAS POR PREFERIRNOS --------\n');
+            conector.feed(2);
+            /* Fin sección */
+
+            conector.feed(3);
+            conector.cortar();
+            conector.imprimirEn(obj.place.preference.printer)
+                .then(respuestaAlImprimir => {
+                    if (respuestaAlImprimir === true) {
+                        console.log("Impreso correctamente");
+                    } else {
+                        console.log("Error. La respuesta es: " + respuestaAlImprimir);
+                    }
+                });
+            /* printJS({
+                printable: url,
+                type: 'pdf',
+                targetStyle: ['*'],
+            }) */
         }
     </script>
 @endpush

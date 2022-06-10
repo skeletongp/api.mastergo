@@ -24,7 +24,6 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('client_id')->nullable()->constrained();
             $table->foreignId('store_id')->constrained();
-            $table->foreignId('place_id')->nullable()->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

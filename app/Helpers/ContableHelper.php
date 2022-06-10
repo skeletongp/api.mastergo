@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-function setContable($model, String $code,  $origin, $name = null, $place_id = null,)
+function setContable($model, String $code, String $origin, $name = null, $place_id = null,)
 {
     if (!$place_id) {
         $place_id = session('place_id');
@@ -19,15 +19,22 @@ function setContable($model, String $code,  $origin, $name = null, $place_id = n
     if (!$name) {
         $name = $model->name;
     }
+    $type='real';
+    $subCode=substr($code,0,1);
+        $nominals=['4','5','6'];
+        if (in_array($subCode, $nominals)) {
+           $type='nominal';
+        }
     $cMain = CountMain::where('code', $code)->with('counts')->first();
     $exist = $cMain->counts()->where('name', $name)->where('place_id', $place_id)->first();
     if (!$exist) {
-        $cant = $cMain->counts()->where('place_id', $place_id)->count();
+        $cant = Count::where('code','like',$code.'%')->where('place_id', $place_id)->count();
         $count = $cMain->counts()->create([
             'code' => $code . '-' . str_pad($cant + 1, 2, '0', STR_PAD_LEFT),
             'name' => $name,
             'place_id' => $place_id ?: 1,
             'origin' => $origin,
+            'type'=>$type
         ]);
         $model->contable()->save($count);
     }
@@ -50,7 +57,6 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable)
             $debitable->balance = $debitable->balance + $amount;
             $debitable->save();
             $bal2=$debitable;
-            Log::info($bal.' | '.$bal2.' | '.$amount.' | '.$concept);
 
         } else {
             $debitable->balance = $debitable->balance - $amount;
@@ -85,3 +91,27 @@ function setPayment($data)
     $payment = Payment::create($data);
     return $payment;
 }
+ function ajustCount($model)
+    {
+        $haber = $model->haber;
+        $debe = $model->debe;
+        $amount = $model->income;
+        if ($debe->type == 'nominal') {
+            if ($debe->origin == "debit") {
+                $debe->balance = $debe->balance - $amount;
+                $debe->save();
+            } else {
+                $debe->balance = $debe->balance + $amount;
+                $debe->save();
+            }
+        }
+        if ($haber->type == 'nominal') {
+            if ($haber->origin == "credit") {
+                $haber->balance = $haber->balance - $amount;
+                $haber->save();
+            } else {
+                $haber->balance = $haber->balance + $amount;
+                $haber->save();
+            }
+        }
+    }

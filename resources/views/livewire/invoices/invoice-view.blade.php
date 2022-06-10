@@ -1,5 +1,5 @@
     <div class="w-full flex  items-start">
-        <div class=" relative" >
+        <div class=" relative">
             <div
                 class="w-full text-lg font-medium text-gray-900 bg-white  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <livewire:invoices.invoice-list />
@@ -30,13 +30,13 @@
                             <span class="far fa-eye"></span>
                         </a>
                         <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                        href="{{ route('invoices.show', [$currentInvoice, 'includeName'=>'showpayments','includeTitle'=>'Pagos']) }}">
-                        <span class="fas fa-hand-holding-usd"></span>
-                    </a>
+                            href="{{ route('invoices.show', [$currentInvoice, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) }}">
+                            <span class="fas fa-hand-holding-usd"></span>
+                        </a>
                         <x-tooltip id="printAction">Imprimir</x-tooltip>
                         <button class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
                             data-tooltip-target="printAction" data-tooltip-style="light"
-                            onclick="askPrint('{{$pdfThermal}}', '{{$pdfLetter}}')">
+                           wire:click="$emit('changeInvoice',{{$invoice, true}})">
                             <span class="far fa-print"></span>
                         </button>
                     </div>
@@ -52,39 +52,5 @@
             @endif
 
         </div>
-
-        <script src="https://parzibyte.github.io/plugin-ticket-js/Impresora.js"></script>
-        @push('js')
-            <script>
-                function askPrint(thermal, letter) {
-                    console.log(thermal, letter)
-                Swal.fire({
-                            title: '¿En qué formato desea imprimir?',
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            confirmButtonText: 'Térmico',
-                            denyButtonText: `Normal`,
-                        }).then((result) => {
-                        if (result.isConfirmed) {
-                            print(thermal);
-                        } else if (result.isDenied) {
-                            print(letter);
-                        }
-                    })
-                }
-               
-                function print(url) {
-                    printJS({
-                        printable: url,
-                        type: 'pdf',
-                        targetStyle: ['*'],
-                    })
-                }
-                $(document).ready(function() {
-
-
-                })
-            </script>
-        @endpush
-
+        @include('livewire.invoices.includes.invoice-js')
     </div>

@@ -24,7 +24,6 @@
         </ol>
     </nav>
 
-    <ol class="breadcrumb">
-    </ol>
+   
 
 @endif

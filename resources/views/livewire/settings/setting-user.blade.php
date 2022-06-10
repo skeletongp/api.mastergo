@@ -87,12 +87,12 @@
         <form action="" class="max-w-lg ml-auto" wire:submit.prevent="changePassword">
             <div class="flex space-x-4 items-start">
                 <div class="w-full">
-                    <x-input class="text-2xl" label="Nueva Contraseña" type="password" wire:model.defer="password"
+                    <x-input autocomplete="new-password" class="text-2xl" label="Nueva Contraseña" type="password" wire:model.defer="password"
                         id="npassword"></x-input>
                     <x-input-error for="password"></x-input-error>
                 </div>
                 <div class="w-full">
-                    <x-input class="text-2xl" label="Confirme la Contraseña" type="password" wire:model.defer="password_confirmation" id="password_confirmation">
+                    <x-input class="text-2xl" label="Confirme la Contraseña" type="password" wire:model.defer="password_confirmation" id="password_confirmation" autocomplete="new-password">
                     </x-input>
                     <x-input-error for="password_confirmation"></x-input-error>
                 </div>
@@ -101,7 +101,7 @@
              <div class="flex my-4  items-center justify-between ">
                 <div class=" w-72">
                     <x-input class="text-2xl" label="Contraseña actual" type="password" wire:model.defer="oldPassword"
-                        id="oldPassword"></x-input>
+                        id="oldPassword" autocomplete="new-password"></x-input>
                     <x-input-error for="oldPassword"></x-input-error>
                 </div>
                 <x-button class=" font-bold bg-gray-800 text-white uppercase disabled:bg-gray-200 disabled:text-gray-700 text-xs"

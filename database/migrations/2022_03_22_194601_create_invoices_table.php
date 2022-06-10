@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('status',['pagado','adeudado','entregado', 'waiting']);
             $table->enum('condition',['De Contado','1 A 15 Días','16 A 30 Días', '31 a 45 Días']);
             $table->enum('payway',['Efectivo','Tarjeta','Transferencia', 'Mixto']);
-            $table->decimal('rest')->comment('Deuda pendiente de la factura');
+            $table->decimal('rest', 14,4)->comment('Deuda pendiente de la factura');
             $table->foreignId('client_id')->comment('Cliente que hace la compra')->nullable()->constrained();
             $table->foreignId('place_id')->comment('Sucursal a la que pertenece la compra')->constrained();
             $table->foreignId('store_id')->comment('Tienda a la que pertenece la compra')->constrained();

@@ -2,11 +2,13 @@
     @slot('bread')
         {{ Breadcrumbs::render('products') }}
     @endslot
-
+    @slot('rightButton')
+       @livewire('transactions.create-transaction', key(uniqid()))
+    @endslot
     <div class=" w-full ">
+        {{auth()->user()->place->id}}
         <div class=" mx-auto py-2 w-max min-h-max h-full  sm:px-6 lg:px-8">
-            <h1 class="text-center font-bold uppercase text-xl mb-4">Diario General</h1>
-           <livewire:reports.general-daily-table />
+            <livewire:reports.general-daily-table />
         </div>
     </div>
 

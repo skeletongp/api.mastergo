@@ -11,7 +11,7 @@
                             </div>
                             <input wire:model.debounce.500ms="search"
                                 class="block w-full py-3 pl-10 text-sm border-gray-300 leading-4 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none"
-                                placeholder="{{ __('Buscar en') }} {{ $this->searchableColumns()->map->label->join(', ') }}"
+                                placeholder="{{ __('Buscar por: ') }} {{ $this->searchableColumns()->map->label->join(', ') }}"
                                 type="text" />
                             <div class="absolute inset-y-0 right-0 flex items-center pr-2">
                                 <button wire:click="$set('search', null)"

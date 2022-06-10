@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->enum('origin',['debit','credit']);
             $table->enum('type',['real','nominal']);
-            $table->decimal('balance',11,4);
+            $table->decimal('balance', 14,4);
             $table->foreignId('count_main_id')->constrained();
             $table->foreignId('place_id')->constrained();
             $table->morphs('contable');

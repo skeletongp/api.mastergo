@@ -14,6 +14,7 @@ use Mediconesystems\LivewireDatatables\TimeColumn;
 class GeneralDailyTable extends LivewireDatatable
 {
     public $perPage = 5;
+    public $headTitle="Transacciones realizadas";
     public function builder()
     {
         $place = auth()->user()->place;
@@ -29,7 +30,7 @@ class GeneralDailyTable extends LivewireDatatable
     {
         return [
             Column::index($this),
-            DateColumn::name('created_at')->label('Fecha')->format("d-m-y \r\n H:i A")->filterable(),
+            DateColumn::name('created_at')->label('Fecha')->format("d-m-y \r\n H:i A")->searchable(),
             Column::name('deberes.code')->callback(['deberes.code', 'haberes.code',], function ($cta1, $cta2) {
                 return "
                 <div class='leading-4'>
@@ -40,7 +41,7 @@ class GeneralDailyTable extends LivewireDatatable
             })->label('Cuenta')->headerAlignCenter()
                 ->exportCallback(function ($cta1, $cta2) {
                     return $cta1 . "\r " . $cta2;
-                })->filterable(),
+                })->searchable(),
             Column::name('deberes.name')->callback(['deberes.name', 'haberes.name', 'concepto'], function ($debe, $haber, $concepto) {
                 return "
                 <div class='leading-4'>

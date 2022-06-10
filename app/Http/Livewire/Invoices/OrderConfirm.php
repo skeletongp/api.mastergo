@@ -7,7 +7,7 @@ use App\Http\Livewire\General\Authorize;
 use App\Http\Livewire\Invoices\Includes\OrderConfirmTrait;
 use App\Http\Livewire\Invoices\Includes\OrderContable;
 use App\Models\Bank;
-
+use App\Models\Invoice;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -18,7 +18,7 @@ class OrderConfirm extends Component
     public $banks, $bank, $bank_id, $reference;
     public $cheque, $photo_path;
 
-    protected $listeners=['payInvoice'];
+    protected $listeners=['payInvoice', 'reload'=>'render'];
 
     public function mount($invoice)
     {

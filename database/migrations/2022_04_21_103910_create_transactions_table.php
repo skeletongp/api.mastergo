@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('concepto');
             $table->string('ref');
             $table->date('day');
-            $table->decimal('income',11,5);
+            $table->decimal('income',14,4);
             $table->foreignId('debitable_id')->references('id')->on('counts')->constrained();
-            $table->decimal('outcome',11,4);
+            $table->decimal('outcome',14,4);
             $table->foreignId('creditable_id')->references('id')->on('counts')->constrained();
             $table->foreignId('place_id')->constrained();
             $table->softDeletes();

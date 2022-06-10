@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address',255)->comment('Dirección del cliente');
             $table->string('phone',25);
             $table->string('rnc')->nullable();
-            $table->decimal('limit',11,4)->default(0)->comment('Crédito límite del cliente');
+            $table->decimal('limit', 14,4)->default(0)->comment('Crédito límite del cliente');
             $table->foreignId('store_id')->constrained();
             $table->softDeletes();
             $table->timestamps();

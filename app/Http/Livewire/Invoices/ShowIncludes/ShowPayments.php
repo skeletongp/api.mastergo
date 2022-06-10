@@ -42,6 +42,8 @@ trait ShowPayments
     {
         $this->validateData();
         $this->createPayment($this->invoice);
+        $invoice=$this->invoice->load('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference');
+        $this->emit('changeInvoice', $invoice);
     }
     public function createPayment($invoice)
     {

@@ -21,6 +21,12 @@ Breadcrumbs::for('clients', function ($trail) {
     $trail->push('Clientes', route('clients.index'), ['icon'=>'fas fa-users']);
 });
 
+// Proveedores
+Breadcrumbs::for('providers', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Proveedores', route('providers.index'), ['icon'=>'fas fa-user-tie']);
+});
+
 /* Facturas */
 Breadcrumbs::for('invoices', function ($trail) {
     $trail->parent('home');
@@ -91,4 +97,10 @@ Breadcrumbs::for('procesos.show', function ($trail, $proceso) {
 Breadcrumbs::for('settings', function ($trail) {
     $trail->parent('home');
     $trail->push('Ajustes', route('settings.index'));
+});
+
+/* Ajustes */
+Breadcrumbs::for('comprobantes', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Comprobantes', route('comprobantes.index'),['icon'=>'far fa-receipt']);
 });

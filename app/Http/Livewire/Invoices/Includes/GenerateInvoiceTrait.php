@@ -96,8 +96,7 @@ trait GenerateInvoiceTrait
         }
         event(new NewInvoice($invoice));
         $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name');
-        $this->invoice = $invoice;
-        $this->emit('openData');
+        $this->invoice = $invoice->load('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference');
         $this->mount();
     }
     public function createPayment($invoice)
@@ -111,7 +110,7 @@ trait GenerateInvoiceTrait
         $total = $subtotal - $discount + $tax;
 
         $data = [
-            'ncf' => optional($invoice->comprobante)->number,
+            'ncf' => optional($invoice->comprobante)->ncf,
             'amount' => $subtotal,
             'discount' => $discount,
             'total' =>  $total,

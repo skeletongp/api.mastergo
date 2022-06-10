@@ -12,6 +12,7 @@ class CountMain extends Model
     
     public function counts()
     {
-        return $this->hasMany(Count::class);
+        $place_id=auth()->user()?auth()->user()->place->id:1;
+        return $this->hasMany(Count::class)->where('place_id', $place_id);
     }
 }

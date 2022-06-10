@@ -20,6 +20,11 @@ class Place extends Model
         self::creating(function ($model) {
             $model->uid = (string) Uuid::uuid4();
         });
+       
+    }
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 
     function user()
@@ -58,6 +63,7 @@ class Place extends Model
     {
         return $this->hasMany(Count::class);
     }
+    
     public function details()
     {
         return $this->hasMany(Detail::class);
@@ -85,5 +91,9 @@ class Place extends Model
     {
         return $this->morphOne(Count::class, 'contable')
         ->where('code','100-03')->first();
+    }
+    public function preference()
+    {
+        return $this->hasOne(Preference::class);
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 trait OrderConfirmTrait
 {
 
-    public $action;
+    public $action, $invoice;
     public function tryPayInvoice()
     {
         $invoice = Invoice::find($this->form['id']);
@@ -56,8 +56,9 @@ trait OrderConfirmTrait
         setPDFPath($invoice);
 
         $this->closeComprobante($invoice->comprobante, $invoice);
-
-        $this->emit('printThermal', $invoice->pdfThermal);
+        $invoice = Invoice::whereId($this->form['id'])->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')->first();
+        $this->emit('showAlert', 'Factura cobrada exitosamente','success');
+        $this->emit('changeInvoice', $invoice);
         $this->emit('refreshLivewireDatatable');
     }
 }

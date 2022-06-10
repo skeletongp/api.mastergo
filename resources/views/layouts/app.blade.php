@@ -44,10 +44,15 @@
             {{-- Navbar --}}
             <header class="sticky top-[4.5rem] z-50 w-full mx-auto py-2 bg-white">
                 @include('includes.header')
-                <div class=" w-full bg-gray-50 py-1 px-4">
+                <div class=" w-full bg-gray-50 py-1 px-4 flex justify-between">
                     @if (isset($bread))
                         {{ $bread }}
                     @endif
+                    <div class="z-50">
+                        @if (isset($rightButton))
+                            {{ $rightButton }}
+                        @endif
+                    </div>
                 </div>
             </header>
             {{-- Content --}}
@@ -80,6 +85,7 @@
     <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/formatPhoneNumber.js') }}"></script>
+    <script src="{{ asset('js/printer-script.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     @stack('js')
@@ -153,7 +159,7 @@
         var channel = Echo.private(`invoices.${id}`);
         channel.listen("NewInvoice", function(data) {
             Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
-           
+
         });
         $(document).ready(function() {
             $('input[type=tel]').each(function() {
@@ -167,7 +173,6 @@
         .swal2-container {
             z-index: 2000;
         }
-
     </style>
 </body>
 

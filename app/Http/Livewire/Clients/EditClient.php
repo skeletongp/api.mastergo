@@ -22,7 +22,7 @@ class EditClient extends Component
             'client.lastname' => 'required|string|max:75',
             'client.address' => 'required|string|max:100',
             'client.email' => 'required|string|max:100|unique:clients,email,' . $this->client['id'],
-            'client.limit' => 'required|numeric|min:0',
+            'client.limit' => 'required|numeric',
             'client.phone' => 'required|string|max:25',
             'client.store_id' => 'required|numeric|exists:stores,id',
         ];

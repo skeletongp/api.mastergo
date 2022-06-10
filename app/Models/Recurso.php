@@ -49,4 +49,8 @@ class Recurso extends Model
    {
        return $this->hasMany(Brand::class);
    }
+   public function provisions()
+   {
+       return $this->morphMany(Provision::class, 'provisionable');
+   }
 }

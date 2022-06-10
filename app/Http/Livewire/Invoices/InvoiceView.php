@@ -24,8 +24,8 @@ class InvoiceView extends Component
     public function render()
     {
         $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
-            ->where('status', '!=', 'waiting')->with('pdf','payment')->paginate(6);
-
+        ->where('status', '!=', 'waiting')->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')->paginate(6);
+        
         if ($invoices->count() && !$this->pdfThermal) {
             $this->pdfThermal = $invoices->first()->pdfThermal;
             $this->pdfLetter = $invoices->first()->pdfLetter;
@@ -39,7 +39,8 @@ class InvoiceView extends Component
     }
     public function setPDF($id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::whereId($id)->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')->first();
+        $this->emit('changeInvoice', $invoice, false);
         $this->pdfLetter = $invoice->pdfLetter;
         $this->pdfThermal = $invoice->pdfThermal;
         $this->currentInvoice = $invoice;

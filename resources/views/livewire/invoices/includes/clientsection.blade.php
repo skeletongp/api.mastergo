@@ -12,10 +12,10 @@
     </div>
    
     <div class="{{auth()->user()->store->generic->code==$client_code?'':'hidden'}}">
-        <x-base-input wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre">
+        <x-base-input wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre" id="clt.inv.name">
         </x-base-input>
     </div>
-    <div class="w-full">
+    <div class="w-full  ">
         <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.address"
             id="clt.address" label="Dirección"></x-base-input>
     </div>

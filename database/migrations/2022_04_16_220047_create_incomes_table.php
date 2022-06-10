@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount')->comment('Cantidad ingresada');
+            $table->decimal('amount', 14,4)->comment('Cantidad ingresada');
             $table->string('concepto')->comment('Detalle de este ingreso');
             $table->morphs('incomeable');
             $table->foreignId('user_id')->comment('Usuario que recibe el ingreso')->constrained();

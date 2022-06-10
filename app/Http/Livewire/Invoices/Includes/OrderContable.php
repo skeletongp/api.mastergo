@@ -11,8 +11,7 @@ trait OrderContable
         $place = auth()->user()->place;
         $creditable = $place->counts()->where('code', '400-01')->first();
         $discount = $place->counts()->where('code', '401-01')->first();
-        $ref = $invoice->comprobante ?: $invoice;
-        $ref = $ref->number;
+        $ref = $invoice->comprobante ?$invoice->comprobante->ncf: $invoice->number;
         $moneys = array($payment->efectivo, $payment->tarjeta, $payment->transferencia, $payment->rest);
         $max = array_search(max($moneys), $moneys);
         $toTax = null;

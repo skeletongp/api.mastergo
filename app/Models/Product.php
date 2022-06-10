@@ -68,6 +68,10 @@ class Product extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+    public function provisions()
+    {
+        return $this->morphMany(Provision::class, 'provisionable');
+    }
     public function productProductions()
     {
         return $this->morphMany(ProductProduction::class, 'productible');

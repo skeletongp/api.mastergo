@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'ITBIS',
             'rate' => 0.18
         ]);
+        
         $products = [
             [
                 'name' => 'Chuleta ahumada',
@@ -98,7 +99,13 @@ class DatabaseSeeder extends Seeder
             'phone' => $store->phone,
             
         ];
+        
         $place=$store->places()->create($data);
+        $place->preference()->create([
+            'comprobante_type'=>'B02',
+            'unit_id'=>$unit->id,
+            'tax_id'=>$tax->id,
+           ]);
         $provider = $store->providers()->create([
             'name' => 'Proveedor',
             'lastname' => 'Genérico ',
@@ -182,6 +189,11 @@ class DatabaseSeeder extends Seeder
                 CountMainSeeder::class,
             ]
         );
+        $bank=$store->banks()->create([
+            'bank_name'=>'Banco Popular Dominicano',
+            'bank_number'=>'803579804',
+            'titular_id'=>$user->id
+        ]);
         setContable($client, '101', 'debit');
         setContable($tax, '202', 'credit', 'ITBIS por Pagar');
         setContable($tax, '103', 'debit', $tax->name.' por Cobrar');
@@ -191,14 +203,16 @@ class DatabaseSeeder extends Seeder
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
         $store->roles()->save(Role::find(3));
-        setContable($place, '100', 'debit','Efectivo en Caja', $place->id, 'debit');
+        setContable($place, '100', 'debit','Efectivo en Caja', $place->id);
         setContable($place, '100', 'debit','Efectivo en Cheques', $place->id);
         setContable($place, '100', 'debit','Otros Efectivos', $place->id);
+        setContable($bank, '100', 'debit', $bank->bank_name,  $place->id,);
         setContable($place, '400', 'credit','Ingresos por Ventas', $place->id);
         setContable($place, '401', 'debit','Descuento en Ventas', $place->id);
         setContable($place, '401', 'debit','Devolución en Ventas', $place->id);
         setContable($place, '402', 'credit','Otros Ingresos', $place->id);
         setContable($place, '500', 'debit','Compra de mercancías', $place->id);
+        setContable($place, '300', 'credit','Capital Sucrito y Pagado', $place->id);
 
         $roles=['Administrador','Super Admin','Generico'];
         User::factory(25)->create()->each(function ($us) use ($store, $roles) {

@@ -4,8 +4,10 @@ namespace App\Http\Livewire\Store;
 
 use App\Models\Store;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 
 class CreateStore extends Component
 {
@@ -18,7 +20,6 @@ class CreateStore extends Component
         'form.email' => 'required|string|max:100|unique:stores,email',
         'form.phone' => 'required|string|max:15',
         'form.RNC' => 'max:12',
-
         'logo' => 'max:2048'
     ];
 
@@ -43,9 +44,14 @@ class CreateStore extends Component
         $this->createUnit($store);
         $this->createTax($store);
         $this->createClient($store);
+        $this->setPreference($store->places()->first(), $store);
+        $store->roles()->save(Role::find(1));
+        $store->roles()->save(Role::find(2));
+        $store->roles()->save(Role::find(3));
         $this->reset();
         $this->emit('reloadUsers');
         $this->emitUp('reloadSettingStore');
+        Cache::forget('scopes_'.auth()->user()->store->id);
         $this->emit('showAlert', 'Negocio registrado exitosamente', 'success');
     }
 
@@ -69,6 +75,7 @@ class CreateStore extends Component
         ];
         $place = $store->places()->create($data);
         $this->setCounts($place);
+       
     }
     public function setCounts($place)
     {
@@ -81,6 +88,17 @@ class CreateStore extends Component
         setContable($place,  '401', 'debit', 'Devolución en Ventas', $place->id);
         setContable($place,  '402', 'credit', 'Otros Ingresos', $place->id);
         setContable($place,  '500', 'credit', 'Compra de Mercancías', $place->id);
+        setContable($place, '300', 'credit','Capital Sucrito y Pagado', $place->id);
+    }
+    public function setPreference($place, $store)
+    {
+       $unit_id= $store->units()->first()->id;
+       $tax_id=$store->taxes()->first()->id;
+        $place->preference()->create([
+            'comprobante_type'=>'B02',
+            'unit_id'=>$unit_id,
+            'tax_id'=>$tax_id,
+           ]);
     }
     public function createUnit(Store $store)
     {
@@ -110,6 +128,7 @@ class CreateStore extends Component
             'phone' => '8097654321',
             'limit' => 0.0,
         ];
-        $store->clients()->create($data);
+       $client= $store->clients()->create($data);
+        setContable($client, '101', 'debit');
     }
 }

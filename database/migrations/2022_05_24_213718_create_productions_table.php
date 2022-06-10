@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('productions', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->decimal('setted')->comment('Cantidad de prducto que se invierte');
-            $table->decimal('getted')->comment('Cantidad de producto que se obtuvo')->default(0);
+            $table->decimal('setted', 14,4)->comment('Cantidad de prducto que se invierte');
+            $table->decimal('getted', 14,4)->comment('Cantidad de producto que se obtuvo')->default(0);
             $table->enum('status',['Creado','Iniciado','Completado']);
             $table->foreignId('proceso_id')->comment('Proceso vinculado')->constrained();
             $table->foreignId('unit_id')->constrained();

@@ -16,16 +16,16 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('ncf')->comment('Comprobante fiscal que corresponde al pago')->nullable();
-            $table->decimal('amount')->comment('Cantidad real a pagar');
-            $table->decimal('discount')->comment('Descuento general del pago si aplica');
-            $table->decimal('total')->comment('Monto total del pago menos descuentos y más impuestos');
-            $table->decimal('tax')->comment('Total de impuestos del pago');
-            $table->decimal('payed')->comment('Monto pagado del pago');
-            $table->decimal('rest')->comment('Monto adeudado del pago');
-            $table->decimal('cambio')->comment('Lo que se le devuelve al cliente');
-            $table->decimal('efectivo')->comment('Monto pagado en efectivo')->default();
-            $table->decimal('tarjeta')->comment('Monto pagado por tarjeta o cheque')->default();
-            $table->decimal('transferencia')->comment('Monto pagado por transferencia')->default();
+            $table->decimal('amount', 14,4)->comment('Cantidad real a pagar');
+            $table->decimal('discount', 14,4)->comment('Descuento general del pago si aplica');
+            $table->decimal('total', 14,4)->comment('Monto total del pago menos descuentos y más impuestos');
+            $table->decimal('tax', 14,4)->comment('Total de impuestos del pago');
+            $table->decimal('payed', 14,4)->comment('Monto pagado del pago');
+            $table->decimal('rest', 14,4)->comment('Monto adeudado del pago');
+            $table->decimal('cambio', 14,4)->comment('Lo que se le devuelve al cliente');
+            $table->decimal('efectivo', 14,4)->comment('Monto pagado en efectivo')->default();
+            $table->decimal('tarjeta', 14,4)->comment('Monto pagado por tarjeta o cheque')->default();
+            $table->decimal('transferencia', 14,4)->comment('Monto pagado por transferencia')->default();
             $table->morphs('payable');
             $table->morphs('contable');
             $table->morphs('payer');

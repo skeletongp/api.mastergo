@@ -48,9 +48,10 @@ trait DetailsSectionTrait
     }
     public function confirmedAddItems()
     {
+        $this->price=str_replace(',','',$this->price);
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
-        $this->form['price'] = $this->price;
+        $this->form['price'] = str_replace(',','',$this->price);
         $this->validate();
         $this->form['subtotal'] =  $this->cant * $this->price;
         $this->form['discount_rate'] =  ($this->discount / 100);
@@ -112,13 +113,16 @@ trait DetailsSectionTrait
             if ($this->discount) {
                 $discount = $this->discount;
             }
-            $sub = str_replace(',', '', formatNumber(($this->cant  * $this->price) * (1 - ($discount / 100))));
+           $pr=str_replace(',','',$this->price);
+            $sub = str_replace(',', '', formatNumber(($this->cant  * $pr) * (1 - ($discount / 100))));
             if ($this->product) {
+
                 $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
                 $this->checkStock();
             }
             $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
             $this->pivot_id = $unit->pivot->id;
+
         }
     }
     public function updatedProductCode()

@@ -1,15 +1,15 @@
 <div class="">
     @include('includes.authorize')
-    <x-modal id="modalConfirmInvoice"  maxWidth="max-w-3xl">
+    <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl">
         <x-slot name="button">
             <span>
-                Cobrar 
+                Cobrar
             </span>
         </x-slot>
         <x-slot name="title">
             Cobrar Pedido Nº. {{ $form['number'] }}
         </x-slot>
-        
+
         <form wire:submit.prevent="tryPayInvoice" class="grid grid-cols-5 gap-4 p-3 max-w-3xl mx-auto text-left">
             {{-- Primera fila --}}
             <div class="col-span-2">
@@ -44,19 +44,19 @@
 
             {{-- Tercera Fila --}}
             <div>
-                <x-dinput onfocus="clrInput(event)" onblur="restoreInput(event)" class="text-xl font-bold" type="number"
+                <x-dinput class="text-xl font-bold" type="number"
                     wire:model.lazy="form.efectivo" label="Efectivo" id="form{{ $form['id'] }}.efectivo"></x-dinput>
                 <x-input-error for="form.efectivo"></x-input-error>
             </div>
             <div>
-                <x-dinput onfocus="clrInput(event)" onblur="restoreInput(event)" class="text-xl font-bold" type="number"
+                <x-dinput class="text-xl font-bold" type="number"
                     wire:model.lazy="form.tarjeta" label="Tarjeta/Cheque" id="form{{ $form['id'] }}.tarjeta">
                 </x-dinput>
                 <x-input-error for="form.tarjeta"></x-input-error>
             </div>
             @if (auth()->user()->store->banks->count())
                 <div>
-                    <x-dinput onfocus="clrInput(event)" onblur="restoreInput(event)" class="text-xl font-bold"
+                    <x-dinput class="text-xl font-bold"
                         type="number" wire:model.lazy="form.transferencia" label="Transferencia"
                         id="form{{ $form['id'] }}.transferencia"></x-dinput>
                     <x-input-error for="form.transferencia"></x-input-error>
@@ -83,7 +83,7 @@
                 </div>
                 <div>
                     <x-dinput class="text-sm py-4" type="text" wire:model.lazy="reference" label="No. Referencia"
-                    id="f{{ $form['id'] }}.reference" placeholder="Nº. Ref."></x-dinput>
+                        id="f{{ $form['id'] }}.reference" placeholder="Nº. Ref."></x-dinput>
                     <x-input-error for="reference">Requerido</x-input-error>
                 </div>
             @endif
@@ -134,38 +134,30 @@
                 </div>
             @endif
             <button
-            class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
-            wire:loading>
-            <x-loading></x-loading>
-        </button>
+                class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
+                wire:loading>
+                <x-loading></x-loading>
+            </button>
             <div class="col-span-5 flex justify-end">
-                <x-button  wire:loading.attr="disabled">
+                <x-button wire:loading.attr="disabled">
                     Cobrar
                 </x-button>
             </div>
-
         </form>
     </x-modal>
+  
     @push('js')
         <script>
             var prevVal = 0;
-
             function clrInput(event) {
                 input = event.target;
                 prevVal = input.value;
                 input.value = '';
             }
-
             function restoreInput(event) {
                 input = event.target;
                 input.value = prevVal;
             }
-            
-            Livewire.on('printThermal', function(url) {
-                printJS({
-                    printable: url,
-                });
-            });
         </script>
     @endpush
 

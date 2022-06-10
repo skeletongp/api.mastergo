@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email',75)->unique()->comment('Debe ser propio del negocio, no de un usuario');
             $table->string('phone',25);
             $table->string('phone2',25)->nullable();
-            $table->decimal('price');
+            $table->decimal('price', 14,4);
             $table->string('rnc')->nullable();
             $table->timestamp('expires_at')->comment('Para el control de mensualidad del sistema');
             $table->softDeletes();

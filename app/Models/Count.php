@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 
 class Count extends Model
 {
     use HasFactory;
     
     protected $fillable=[
-        'code','name','balance','count_main_id','place_id'
+        'code','name','origin','balance','count_main_id','place_id'
     ];
 
+   
 
   
     public function contable()

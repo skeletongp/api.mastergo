@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained();
             $table->foreignId('tax_id')->constrained();
-            $table->decimal('amount',11,4);
+            $table->decimal('amount', 14,4);
             $table->timestamps();
         });
     }

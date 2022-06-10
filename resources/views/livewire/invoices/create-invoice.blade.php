@@ -8,6 +8,16 @@
             </div>
             <div class="float-right">
                 @include('livewire.invoices.includes.productsection')
+                @if ($invoice)
+                <div class="py-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            @livewire('invoices.order-confirm', ['invoice' => $invoice->toArray()], key(uniqid()))
+                        </div>
+                        <x-button class="bg-gray-200 text-black">Imprimir ticket</x-button>
+                    </div>
+                </div>
+                @endif
             </div>
             @if ($errors->any())
                 <div class=" bg-gray-100 p-4 rounded-xl w-max">
@@ -27,5 +37,6 @@
     </div>
     @include('includes.authorize')
     @include('livewire.invoices.includes.orderdata')
-   
+    @include('livewire.invoices.includes.invoice-js')
+
 </div>

@@ -45,8 +45,8 @@
                         activeRoute="users.*" scope="Usuarios" />
                     <x-side-link routeName='clients.index' icon='far w-10 text-center fa-users fa-lg' text='Clientes'
                         activeRoute="clients.*" scope="Clientes" />
-                    <x-side-link routeName='users.index' icon='far w-10 text-center fa-user-tag fa-lg'
-                        text='Proveedores' activeRoute="home.*" scope="Proveedores" />
+                    <x-side-link routeName='providers.index' icon='far w-10 text-center fa-user-tag fa-lg'
+                        text='Proveedores' activeRoute="poviders.*" scope="Proveedores" />
                 </x-dropitem>
 
                 @canany(['Cobrar Facturas', 'Ver Facturas', 'Ver Cotizaciones'])
@@ -85,7 +85,7 @@
 
                 </x-dropitem>
 
-                <x-dropitem text="Finanzas" icon="far fa-wallet">
+                <x-dropitem text="Contabilidad" icon="far fa-wallet">
                     <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-chart-line fa-lg'
                         text='Ingresos' activeRoute="invoices.*" scope="Ingresos" />
                     <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg'
@@ -94,11 +94,10 @@
                         text='Diario General' activeRoute="home.*" scope="Reportes" />
                     <x-side-link routeName='reports.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
                         text='Balance General' activeRoute="home.*" scope="Reportes" />
+                        <x-side-link routeName='comprobantes.index' icon='far w-10 text-center fa-receipt fa-lg'
+                        text='Comprobantes' activeRoute="comprobantes.*" scope="Impuestos" />
                 </x-dropitem>
-                @can('Crear Permisos-')
-                    <x-side-link routeName='telescope' icon='far w-10 text-center fa-chart-line-down fa-lg' text='Telescope'
-                        activeRoute="home.*" />
-                @endcan
+               
 
             </ul>
         </ul>

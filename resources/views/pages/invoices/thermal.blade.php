@@ -102,7 +102,7 @@
             <table class="table-details">
                 <thead class="head-details">
                     <tr>
-                        <th class="th-details" colspan="{{$invoice->payment->tax > 0?'1':'2'}}">Detalle</th>
+                        <th class="th-details" colspan="{{ $invoice->payment->tax > 0 ? '1' : '2' }}">Detalle</th>
                         <th class="th-details">Prec.</th>
                         <th class="th-details">Desc</th>
                         @if ($invoice->payment->tax > 0)
@@ -120,7 +120,7 @@
                             </td>
                         </tr>
                         <tr class="tr-detail">
-                            <td class="border-b  td-details2" colspan="{{$invoice->payment->tax > 0?'1':'2'}}"></td>
+                            <td class="border-b  td-details2" colspan="{{ $invoice->payment->tax > 0 ? '1' : '2' }}"></td>
                             <td class=" border-b text-center td-details2">${{ formatNumber($detail->price) }}</td>
                             <td class=" border-b text-center td-details2">
                                 {{ formatNumber($detail->discount_rate * 100) }}%</td>
@@ -451,7 +451,6 @@
     .w-full {
         width: 100%;
     }
-
 </style>
 
 </html>

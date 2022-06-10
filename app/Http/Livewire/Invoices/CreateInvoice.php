@@ -38,7 +38,7 @@ class CreateInvoice extends Component
         $place=auth()->user()->place;
         $this->vence = Carbon::now()->addDays(30)->format('Y-m-d');
         $this->condition = 'DE CONTADO';
-        $this->type = 'B02';
+        $this->type = $place->preference->comprobante_type;
         $this->number =$place->id.'-'.str_pad($place->invoices()->withTrashed()->count()+1,7,'0',STR_PAD_LEFT);
         $this->clients = $store->clients()->orderBy('lastname')->pluck('fullname', 'code');
         $this->products = $store->products()->orderBy('name')->pluck('name', 'code');

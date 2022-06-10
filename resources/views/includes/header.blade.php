@@ -10,7 +10,7 @@
         @else
             <a href="{{ route('home') }}">
                 <span
-                    class="self-center text-xl xl:text-2xl font-bold whitespace-nowrap dark:text-white">{{ auth()->user()->store->name }}
+                    class="self-center text-xl  font-bold whitespace-nowrap dark:text-white">{{ auth()->user()->store->name }}
                     | {{ env('APP_NAME') }}</span>
             </a>
         @endcan

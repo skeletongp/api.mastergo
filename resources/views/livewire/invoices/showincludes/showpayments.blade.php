@@ -82,6 +82,7 @@
     <div class="">
         <livewire:invoices.show-includes.payments-from-invoice :invoice="$invoice->load('payments')" :key="$invoice->id" />
     </div>
+    @include('livewire.invoices.includes.invoice-js')
     @push('js')
         <script>
             var prevVal = 0;
@@ -96,15 +97,7 @@
                 input = event.target;
                 input.value = prevVal;
             }
-            Livewire.on('printInvoice', function(url) {
-
-                printJS({
-                    printable: url,
-                    showModal: true,
-
-                    modalMessage: 'Cargando documento'
-                });
-            });
+            
         </script>
     @endpush
 </div>

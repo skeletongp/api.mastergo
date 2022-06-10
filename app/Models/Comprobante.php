@@ -16,16 +16,24 @@ class Comprobante extends Model
         'prefix',
         'number',
         'status',
+        'ncf',
         'user_id',
         'store_id',
         'place_id',
         'client_id'
     ];
     
-    public function number() : Attribute
+    
+    public static function boot()
     {
-        return new Attribute(
-            get: fn()=>$this->attributes['prefix'].$this->attributes['number']
-        );
+        parent::boot();
+        self::creating(function ($model) {
+            $model->ncf = $model->prefix.$model->number;
+        });
+       
+    }
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
     }
 }

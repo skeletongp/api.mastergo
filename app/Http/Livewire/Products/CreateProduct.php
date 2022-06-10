@@ -22,7 +22,6 @@ class CreateProduct extends Component
 
     protected $rules = [
         'form.name' => 'required|string|max:35',
-        'form.description' => 'required|string',
         'unitSelected' => 'required|min:1',
         'placeSelected' => 'required|min:1'
 
@@ -69,6 +68,7 @@ class CreateProduct extends Component
         $this->attachToPlace($product);
         $this->reset();
         $this->mount();
+        $this->emit('showAlert','Producto registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');
     }
     public function createTaxes(Product $product)

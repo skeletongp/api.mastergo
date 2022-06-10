@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ComprobanteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
@@ -71,6 +73,9 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ClientController::class)->group(function () {
             Route::get('/clients', 'index')->name('clients.index');
         });
+        Route::controller(ProviderController::class)->group(function () {
+            Route::get('providers', 'index')->name('providers.index');
+        });
 
         Route::controller(SettingController::class)->group(function () {
             Route::get('/settings', 'index')->name('settings.index');
@@ -90,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ReportController::class)->group(function () {
             Route::get('general_daily', 'general_daily')->name('reports.general_daily');
             Route::get('general_mayor', 'general_mayor')->name('reports.general_mayor');
+        });
+        Route::controller(ComprobanteController::class)->group(function() {
+            Route::get('comprobantes','index')->name('comprobantes.index');
         });
     });
 });

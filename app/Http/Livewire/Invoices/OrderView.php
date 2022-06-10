@@ -21,7 +21,7 @@ class OrderView extends LivewireDatatable
 
     public function builder()
     {
-        $invoices = auth()->user()->place->invoices()->with('seller','client','details','details.taxes', 'payment')
+        $invoices = auth()->user()->place->invoices()->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')
             ->orderBy('invoices.id', 'desc')->where('status', 'waiting');
         return $invoices;
     }

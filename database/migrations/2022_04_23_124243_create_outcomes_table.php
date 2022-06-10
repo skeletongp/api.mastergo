@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('outcomes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount')->comment('Cantidad gastada');
+            $table->decimal('amount', 14,4)->comment('Cantidad gastada');
             $table->string('concepto')->comment('Detalle de este gasto');
             $table->string('ref')->comment('Referencia del gasto para asiento');
             $table->string('ncf')->nullable()->comment('Comprobante que sustenta el gasto');
