@@ -13,7 +13,7 @@
         <form wire:submit.prevent="tryPayInvoice" class="grid grid-cols-5 gap-4 p-3 max-w-3xl mx-auto text-left">
             {{-- Primera fila --}}
             <div class="col-span-2">
-                <x-dinput class="text-xl font-bold" label="Vendedor" id="form{{ $form['id'] }}.seller" disabled
+                <x-base-input class="text-xl font-bold" label="Vendedor" id="form{{ $form['id'] }}.seller" disabled
                     value="{{ $form['seller']['fullname'] }}">
                     </x-input>
             </div>
@@ -22,55 +22,55 @@
 
             {{-- Segunda Fila --}}
             <div>
-                <x-dinput class="text-xl font-bold" type="number" disabled wire:model.lazy="form.amount" label="Subtotal"
+                <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.amount" label="Subtotal"
                     id="form{{ $form['id'] }}.amount">
-                </x-dinput>
+                </x-base-input>
             </div>
 
             <div>
-                <x-dinput class="text-xl font-bold" type="number" disabled wire:model.lazy="form.tax" label="Impuestos"
-                    id="form{{ $form['id'] }}.tax"></x-dinput>
+                <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.tax" label="Impuestos"
+                    id="form{{ $form['id'] }}.tax"></x-base-input>
             </div>
             <div>
-                <x-dinput class="text-xl font-bold" type="number" disabled wire:model.lazy="form.discount"
-                    label="Descuento" id="form{{ $form['id'] }}.discount"></x-dinput>
+                <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.discount"
+                    label="Descuento" id="form{{ $form['id'] }}.discount"></x-base-input>
                 <x-input-error for="form.rest"></x-input-error>
             </div>
             <div>
-                <x-dinput class="text-xl font-bold text-green-600" type="number" disabled wire:model.lazy="form.total"
-                    label="Total" id="form{{ $form['id'] }}.total"></x-dinput>
+                <x-base-input class="text-xl font-bold text-green-600" type="number" disabled wire:model.lazy="form.total"
+                    label="Total" id="form{{ $form['id'] }}.total"></x-base-input>
                 <x-input-error for="form.total"></x-input-error>
             </div>
 
             {{-- Tercera Fila --}}
             <div>
-                <x-dinput class="text-xl font-bold" type="number"
-                    wire:model.lazy="form.efectivo" label="Efectivo" id="form{{ $form['id'] }}.efectivo"></x-dinput>
+                <x-base-input class="text-xl font-bold" type="number" status="{{!$cobrable?'disabled':''}}"
+                    wire:model.lazy="form.efectivo" label="Efectivo" id="form{{ $form['id'] }}.efectivo"></x-base-input>
                 <x-input-error for="form.efectivo"></x-input-error>
             </div>
             <div>
-                <x-dinput class="text-xl font-bold" type="number"
+                <x-base-input class="text-xl font-bold" type="number" status="{{!$cobrable?'disabled':''}}"
                     wire:model.lazy="form.tarjeta" label="Tarjeta/Cheque" id="form{{ $form['id'] }}.tarjeta">
-                </x-dinput>
+                </x-base-input>
                 <x-input-error for="form.tarjeta"></x-input-error>
             </div>
-            @if (auth()->user()->store->banks->count())
+            @if ($banks->count())
                 <div>
-                    <x-dinput class="text-xl font-bold"
+                    <x-base-input class="text-xl font-bold" status="{{!$cobrable?'disabled':''}}"
                         type="number" wire:model.lazy="form.transferencia" label="Transferencia"
-                        id="form{{ $form['id'] }}.transferencia"></x-dinput>
+                        id="form{{ $form['id'] }}.transferencia"></x-base-input>
                     <x-input-error for="form.transferencia"></x-input-error>
                 </div>
             @endif
 
 
             <div>
-                <x-dinput class="text-xl font-bold" type="number" disabled wire:model.lazy="form.payed" label="Pagado"
-                    id="form{{ $form['id'] }}.payed"></x-dinput>
+                <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.payed" label="Pagado"
+                    id="form{{ $form['id'] }}.payed"></x-base-input>
             </div>
 
             {{-- Cuarta Fila --}}
-            @if (auth()->user()->store->banks->count())
+            @if ($banks->count())
                 <div class="col-span-2">
                     <x-base-select id="{{ $form['id'] }}bank_id" wire:model="bank_id" label="Banco"
                         class="py-3">
@@ -82,26 +82,26 @@
                     <x-input-error for="bank">Seleccione un Banco</x-input-error>
                 </div>
                 <div>
-                    <x-dinput class="text-sm py-4" type="text" wire:model.lazy="reference" label="No. Referencia"
-                        id="f{{ $form['id'] }}.reference" placeholder="Nº. Ref."></x-dinput>
+                    <x-base-input class="text-sm py-4" type="text" wire:model.lazy="reference" label="No. Referencia"
+                        id="f{{ $form['id'] }}.reference" placeholder="Nº. Ref."></x-base-input>
                     <x-input-error for="reference">Requerido</x-input-error>
                 </div>
             @endif
 
             <div>
-                <x-dinput class="text-xl font-bold" type="number" disabled wire:model.lazy="form.rest" label="Pendiente"
-                    id="form{{ $form['id'] }}.rest"></x-dinput>
+                <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.rest" label="Pendiente"
+                    id="form{{ $form['id'] }}.rest"></x-base-input>
                 <x-input-error for="form.rest"></x-input-error>
             </div>
             <div>
-                <x-dinput class="text-xl font-bold" type="number" disabled wire:model.lazy="form.cambio"
-                    label="Devuelta" id="form{{ $form['id'] }}.cambio"></x-dinput>
+                <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.cambio"
+                    label="Devuelta" id="form{{ $form['id'] }}.cambio"></x-base-input>
                 <x-input-error for="form.cambio"></x-input-error>
             </div>
 
-            <div class="{{ auth()->user()->store->banks->count()? 'col-span-5': 'col-span-4' }} space-y-3">
-                <x-dinput class="text-xl font-bold" type="text" wire:model.lazy="form.note" label="Nota"
-                    id="form{{ $form['id'] }}.note" placeholder="Ingrese una nota a la factura"></x-dinput>
+            <div class="{{ $banks->count()? 'col-span-5': 'col-span-4' }} space-y-3">
+                <x-base-input class="text-xl font-bold" type="text" wire:model.lazy="form.note" label="Nota"
+                    id="form{{ $form['id'] }}.note" placeholder="Ingrese una nota a la factura"></x-base-input>
             </div>
             @if ($form['tarjeta'] > 0)
                 <div class="flex space-x-4 col-span-5">

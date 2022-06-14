@@ -23,15 +23,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $store = Store::create([
-            'name' => 'Ahumados Smoke House',
-            'address' => 'San Lorenzo de Los Minas, no. 70',
-            'email' => 'ahumadoshs@gmail.com',
-            'phone' => '8095086221',
+            'name' => 'Carníbores',
+            'address' => 'San Lorenzo de Los Mina, no. 70',
+            'lema' => '¡Carnes con los mejores sabores!',
+            'email' => 'info@carnibores.com',
+            'phone' => '8092992932',
             'rnc'=>'132487524',
             'expires_at' => Carbon::now()->addMonths(3)
         ]);
         $store->image()->create([
-            'path' => 'https://pbs.twimg.com/profile_images/1706139939/image_400x400.jpg',
+            'path' => 'https://res.cloudinary.com/atriontechsd/image/upload/v1654993986/WhatsApp_Image_2022-06-11_at_10.00.43_AM_k3dngz.jpg',
         ]);
 
         $unit = $store->units()->create([
@@ -107,12 +108,12 @@ class DatabaseSeeder extends Seeder
             'tax_id'=>$tax->id,
            ]);
         $provider = $store->providers()->create([
-            'name' => 'Proveedor',
+            'name' => 'Prov.',
             'lastname' => 'Genérico ',
-            'email' => 'pgenerico@ahumadosh.com',
+            'email' => 'generic@provider.com',
             'address' => 'Sin Dirección',
-            'phone' => '8098765432',
-            'RNC' => '00000000',
+            'phone' => '(000) 000-0000)',
+            'rnc' => '000-00000-0',
             'limit' => 0,
         ]);
         foreach($products as $prod){
@@ -123,7 +124,7 @@ class DatabaseSeeder extends Seeder
             $price_mayor=rand(75,125);
             $price_menor=$price_mayor*1.15;
             $cost=rand(39,75);
-            $stock=rand(105,500);
+            $stock=0;
             $product->units()->attach($unit,
             [
                 'place_id'=>1,
@@ -156,7 +157,8 @@ class DatabaseSeeder extends Seeder
             'password' => 'mastergo',
             'phone' => '8298041907',
             'loggeable'=>'yes',
-            'place_id' => $store->places()->first()->id
+            'place_id' => $store->places()->first()->id,
+            'store_id' => $store->id,
         ]);
         $user2 = $store->users()->create([
             'name' => 'Estefany',
@@ -166,11 +168,12 @@ class DatabaseSeeder extends Seeder
             'password' => 'estefany',
             'loggeable'=>'yes',
             'phone' => '8298041907',
-            'place_id' => $store->places()->first()->id
+            'place_id' => $store->places()->first()->id,
+            'store_id' => $store->id,
         ]);
 
         $client = $store->clients()->create([
-            'name' => 'Cliente',
+            'name' => 'Clte.',
             'lastname' => 'Genérico ',
             'email' => 'generico@ahumadosh.com',
             'address' => 'Sin Dirección',
@@ -194,24 +197,29 @@ class DatabaseSeeder extends Seeder
             'bank_number'=>'803579804',
             'titular_id'=>$user->id
         ]);
-        setContable($client, '101', 'debit');
-        setContable($tax, '202', 'credit', 'ITBIS por Pagar');
-        setContable($tax, '103', 'debit', $tax->name.' por Cobrar');
+        setContable($client, '101', 'debit',$client->fullname, $place->id);
+        setContable($tax, '203', 'credit', 'ITBIS por Pagar', $place->id);
+        setContable($tax, '103', 'debit', $tax->name.' por Cobrar', $place->id);
         $user->assignRole('Super Admin');
         $user->assignRole('Administrador');
         $user2->assignRole('Administrador');
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
         $store->roles()->save(Role::find(3));
-        setContable($place, '100', 'debit','Efectivo en Caja', $place->id);
+        setContable($place, '100', 'debit','Efectivo en Caja General', $place->id);
+        setContable($place, '100', 'debit','Efectivo en Caja Chica', $place->id);
         setContable($place, '100', 'debit','Efectivo en Cheques', $place->id);
         setContable($place, '100', 'debit','Otros Efectivos', $place->id);
         setContable($bank, '100', 'debit', $bank->bank_name,  $place->id,);
+        setContable($place, '104', 'debit', 'Inventario general',  $place->id,);
         setContable($place, '400', 'credit','Ingresos por Ventas', $place->id);
-        setContable($place, '401', 'debit','Descuento en Ventas', $place->id);
-        setContable($place, '401', 'debit','Devolución en Ventas', $place->id);
+        setContable($place, '401', 'debit','Devoluciones en Ventas', $place->id);
+        setContable($place, '401', 'debit','Otras notas de crédito', $place->id);
+        setContable($place, '401', 'debit','Descuentos en Ventas', $place->id);
         setContable($place, '402', 'credit','Otros Ingresos', $place->id);
         setContable($place, '500', 'debit','Compra de mercancías', $place->id);
+        setContable($place, '501', 'debit','Devoluciones en compras', $place->id);
+        setContable($place, '501', 'debit','Descuentos en compras', $place->id);
         setContable($place, '300', 'credit','Capital Sucrito y Pagado', $place->id);
 
         $roles=['Administrador','Super Admin','Generico'];

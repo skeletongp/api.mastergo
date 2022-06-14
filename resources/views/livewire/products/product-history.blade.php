@@ -1,3 +1,3 @@
 <div>
-    {{-- The whole world belongs to you. --}}
+   @livewire('products.includes.product-details', ['product' => $product], key(uniqid()))
 </div>

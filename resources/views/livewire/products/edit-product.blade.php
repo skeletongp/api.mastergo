@@ -1,6 +1,6 @@
 <div class="w-full max-w-6xl flex space-x-4 items-start">
 
-    <div class="w-full h-full shadow-xl p-4 ">
+    <div class="w-2/5 h-full shadow-xl p-4 ">
         <form wire:submit.prevent="updateProduct" class="space-y-4 max-w-xl w-full ">
             <h1 class="text-center pb-4 uppercase font-bold text-xl">Información del producto</h1>
             <div class="w-full">
@@ -9,7 +9,7 @@
             <div class="pt-4 pb-2">
                 <div class="space-y-2">
                     <label>Descripción del producto</label>
-                    <textarea rows="4"
+                    <textarea rows="2"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
                         placeholder="Breve descripción del producto" id="product.description" wire:model.defer="product.description"></textarea>
                 </div>
@@ -30,7 +30,7 @@
 
                 </div>
             </div>
-            <div class="flex justify-end">
+            <div class="flex justify-end pb-2 pt-1">
                 <x-button wire:loading.attr="disabled">
                     Actualizar
                 </x-button>
@@ -46,13 +46,15 @@
         </div>
         {{-- Product Price --}}
         @can('Cambiar Precios')
-            <form action="" wire:submit.prevent="updatePrice ">
+            <form action="" wire:submit.prevent="confirm('¿Desea actualizar el precio?', 'updatePrice', 'Cambiar Precio')"  >
                 <h1 class="text-center pb-4 uppercase font-bold text-xl">Detalles de precio</h1>
                 <div class="space-y-4">
                     @foreach ($units as $unt)
                         <div class="flex space-x-4 items-start pt-4">
-                            <x-input class="font-bold uppercase" readonly value="{{ $unt->name }}" label="Medida"
-                                id="medida{{ $unt->id }}"></x-input>
+                            <div>
+                                <x-input class="font-bold uppercase" readonly value="{{ $unt->name }}" label="Medida"
+                                    id="medida{{ $unt->id }}"></x-input>
+                            </div>
                             <div class="max-w-xs w-1/4">
                                 <x-input label="Costo" type="number" id="cost{{ $unt->id }}"
                                     x-value="{{ $unt->id }}" wire:model.defer="unit.{{ $unt->symbol }}.cost">
@@ -60,9 +62,19 @@
                                 <x-input-error for="unit.{{ $unt->symbol }}.cost"> Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
-                                <x-input label="Precio" type="number" id="price{{ $unt->id }}"
+                                <x-input label="Detalle" type="number" id="price{{ $unt->id }}.menor"
                                     wire:model.defer="unit.{{ $unt->symbol }}.price_menor"></x-input>
                                 <x-input-error for="unit.{{ $unt->symbol }}.price_menor">Min. 1</x-input-error>
+                            </div>
+                            <div class="max-w-xs w-1/4">
+                                <x-input label="Mayor" type="number" id="price{{ $unt->id }}.mayor"
+                                    wire:model.defer="unit.{{ $unt->symbol }}.price_mayor"></x-input>
+                                <x-input-error for="unit.{{ $unt->symbol }}.price_mayor">Min. 1</x-input-error>
+                            </div>
+                            <div class="max-w-xs w-1/4">
+                                <x-input label="Mínimo" type="number" id="price{{ $unt->id }}.min"
+                                    wire:model.defer="unit.{{ $unt->symbol }}.min"></x-input>
+                                <x-input-error for="unit.{{ $unt->symbol }}.min">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
                                 <x-button>

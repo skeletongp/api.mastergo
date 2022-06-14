@@ -15,6 +15,7 @@ class SettingPreference extends Component
         'preference.printer'=>'required',
         'preference.copy_print'=>'required|numeric|min:1|max:3',
     ];
+    protected $listeners=['setPrinters'];
     public function mount()
     {
         $place=auth()->user()->place;
@@ -32,5 +33,9 @@ class SettingPreference extends Component
         $this->preference->save();
         $this->emit('showAlert','Preferencias actualizadas existosamente','success');
         $this->mount();
+    }
+    public function setPrinters($printers){
+        $this->printers=$printers;
+        $this->render();
     }
 }

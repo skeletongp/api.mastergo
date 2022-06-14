@@ -57,6 +57,7 @@ class ScopeIndex extends Component
         }
         Cache::forget('scopes_'.auth()->user()->store->id);
         $this->emit('showAlert', 'Scopes actualizados', 'success');
+        return redirect(route('home'));
     }
     public function updatedSelectAll()
     {

@@ -8,6 +8,7 @@ use App\Http\Livewire\Invoices\ShowIncludes\ShowPayments;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowProducts;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowUsers;
 use App\Models\Invoice;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -37,6 +38,10 @@ class InvoiceShow extends Component
         $this->det=$this->invoice->details;
         $this->clients = $store->clients()->orderBy('name')->pluck('fullname', 'code');
         $this->client = $this->invoice->client->load('payments')->toArray();
+        $inv=$this->invoice->client->invoices()->where('id', '<', $this->invoice->id)->where('rest','>',0)->first();
+        if($inv){
+            $this->cobrable=false;
+        }
         $this->seller = $this->invoice->seller->toArray();
         $this->contable = $this->invoice->contable->toArray();
         $this->banks = auth()->user()->store->banks->pluck('bank_name', 'id');

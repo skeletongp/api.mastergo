@@ -29,6 +29,8 @@ class OrderView extends LivewireDatatable
     public function columns()
     {
         $invoices = $this->builder()->get()->toArray();
+        $store = auth()->user()->store;
+        $banks = $store->banks->pluck('bank_name', 'id');
         return [
             Column::name('number')->label("Nro."),
             TimeColumn::name('created_at')->label("Hora")->hide(),
@@ -51,9 +53,9 @@ class OrderView extends LivewireDatatable
             })->label('Vendedor'),
 
             Column::name('condition')->label("Condición"),
-            Column::callback('id', function ($id) use ($invoices) {
+            Column::callback('id', function ($id) use ($invoices,  $banks) {
                 $result = arrayFind($invoices, 'id', $id);
-                return view('pages.invoices.order-page', ['invoice' => $result]);
+                return view('pages.invoices.order-page', ['invoice' => $result, 'banks'=>$banks]);
             })->label('Acción'),
             Column::callback(['uid','id'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);

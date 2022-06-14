@@ -28,10 +28,10 @@ class Production extends Model
         return $this->belongsTo(Unit::class);
     }
     public function recursos(){
-        return $this->belongsToMany(Recurso::class, 'production_recursos');
+        return $this->belongsToMany(Recurso::class, 'production_recursos')->withPivot('cant','stock','status');
     }
     public function brands(){
-        return $this->belongsToMany(Brand::class, 'production_recursos');
+        return $this->belongsToMany(Brand::class, 'production_recursos')->withPivot('cant','stock','status');
     }
     
     public function products()

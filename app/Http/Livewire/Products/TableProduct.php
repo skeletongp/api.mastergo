@@ -36,11 +36,14 @@ class TableProduct extends LivewireDatatable
                 return "<div class='max-w-sm w-full pr-3  overflow-hidden overflow-ellipsis whitespace-nowrap '>$description</div>";
             })->label('Detalles')->searchable(),
             Column::name('created_at')->callback(['id', 'code'], function ($id) {
-                return view('datatables::link', [
-                    'href' => route('products.edit', $id),
-                    'slot' => "<span class='far fa-pen-square  text-xl'></span>",
-                    'bg' => "hover:bg-yellow-500",
-                ]);
+                if (auth()->user()->hasPermissionTo('Editar Productos')) {
+                    return view('datatables::link', [
+                        'href' => route('products.edit', $id),
+                        'slot' => "<span class='far fa-pen-square  text-xl'></span>",
+                        'bg' => "hover:bg-yellow-500",
+                    ]);
+                    return 'N/D';
+                }
             })->label('Editar'),
             Column::delete()->label('Eliminar')
         ];

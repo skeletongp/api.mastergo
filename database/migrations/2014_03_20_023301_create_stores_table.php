@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid('uid');
             $table->string('name',75);
             $table->string('address',100)->comment('Dirección del negocio');
+            $table->string('lema',100)->comment('Frase corta debajo del nombre');
             $table->string('email',75)->unique()->comment('Debe ser propio del negocio, no de un usuario');
             $table->string('phone',25);
             $table->string('phone2',25)->nullable();

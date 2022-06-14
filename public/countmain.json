@@ -19,127 +19,133 @@
     },
     {
      "code": "103",
-     "name": " IMPUESTOS POR COBRAR",
+     "name": "IMPUESTOS POR COBRAR",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "104",
-     "name": " INVENTARIOS",
+     "name": "INVENTARIOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "110",
-     "name": " FIANZAS Y DEPÓSITOS",
+     "name": "FIANZAS Y DEPÓSITOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "111",
-     "name": " GASTOS ANTICIPADOS",
+     "name": "GASTOS ANTICIPADOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "120",
-     "name": " PROPIEDAD",
+     "name": "PROPIEDADES",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "121",
-     "name": " DEPRECIACIÓN ACUMULADA",
+     "name": "DEPRECIACIÓN ACUMULADA",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "200",
-     "name": " CUENTAS POR PAGAR PROVEEDORES",
+     "name": "CUENTAS POR PAGAR PROVEEDORES",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "201",
-     "name": " PRÉSTAMOS POR PAGAR",
+     "name": "CUENTAS POR PAGAR EMPLEADOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "202",
-     "name": " IMPUESTOS POR PAGAR",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
-    },
+        "code": "202",
+        "name": "PRÉSTAMOS POR PAGAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
+       },
     {
      "code": "203",
-     "name": " RETENCIONES POR PAGAR",
+     "name": "IMPUESTOS POR PAGAR",
+     "created_at": "2022-21-04 17:18:16",
+     "updated_at": "2022-21-04 17:18:16"
+    },
+    {
+     "code": "204",
+     "name": "RETENCIONES POR PAGAR",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "210",
-     "name": " DOCUMENTOS POR PAGAR",
+     "name": "DOCUMENTOS POR PAGAR",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "211",
-     "name": " PRÉSTAMOS HIPOTECARIOS",
+     "name": "PRÉSTAMOS HIPOTECARIOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "300",
-     "name": " CAPITAL SOCIAL",
+     "name": "CAPITAL SOCIAL",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "400",
-     "name": " INGRESOS POR VENTAS",
+     "name": "INGRESOS POR VENTAS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "401",
-     "name": " DESC. Y DEV. EN VENTAS",
+     "name": "DESC. Y DEV. EN VENTAS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "402",
-     "name": " OTROS INGRESOS",
+     "name": "OTROS INGRESOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "500",
-     "name": " COSTOS DE OPERACIÓN",
+     "name": "COSTOS DE OPERACIÓN",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "501",
-     "name": " DESC. Y DEV. EN COMPRAS",
+     "name": "DESC. Y DEV. EN COMPRAS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "600",
-     "name": " GASTOS ADMINISTRATIVOS",
+     "name": "GASTOS ADMINISTRATIVOS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "601",
-     "name": " GASTOS DE VENTAS",
+     "name": "GASTOS DE VENTAS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     },
     {
      "code": "602",
-     "name": " GASTOS FINANCIEROS",
+     "name": "GASTOS FINANCIEROS",
      "created_at": "2022-21-04 17:18:16",
      "updated_at": "2022-21-04 17:18:16"
     }

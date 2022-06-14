@@ -1,5 +1,5 @@
 <div>
-    <x-modal maxWidth="max-w-2xl" title="Nuevo Asiento Contable" :fitVerticalContainer="false">
+    <x-modal maxWidth="max-w-2xl" title="Nuevo Asiento Contable" :fitV="false">
         <x-slot name="button">
             Añadir
         </x-slot>

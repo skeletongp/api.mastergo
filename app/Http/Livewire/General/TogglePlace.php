@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\General;
 
 use App\Models\Place;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
@@ -20,7 +21,7 @@ class TogglePlace extends Component
         $place = Place::where('id', $this->place_id)->first();
         Cache::forget('place_' . auth()->user()->id);
         Cache::put('place_' . auth()->user()->id, $place);
-        session()->put('place_id',$this->place_id);
+        User::find(auth()->user()->id)->update(['place_id'=>$place->id]);
         return redirect()->route('home');
     }
 }

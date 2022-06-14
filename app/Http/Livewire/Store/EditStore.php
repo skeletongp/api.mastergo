@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Store;
 
 use App\Models\Store;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -17,9 +18,10 @@ class EditStore extends Component
             'store' => 'required',
             'store.name' => 'required|string|max:75',
             'store.address' => 'required|string|max:100',
+            'store.lema' => 'string|max:75',
             'store.email' => "required|string|max:100|unique:stores,email," . $this->store->id,
             'store.phone' => 'required|string|max:15',
-            'store.RNC' => 'max:15',
+            'store.rnc' => 'max:15',
             'logo' => 'max:2048'
         ];
     }
@@ -45,6 +47,8 @@ class EditStore extends Component
         $this->store->save();
         $this->emit('showAlert', 'Datos actualizados correctamente', 'success');
         $this->resetExcept('store');
+        Cache::forget('store_' . auth()->user()->id);
+        $this->store = auth()->user()->store;
         $this->emitUp('reloadSettingStore');
     }
 

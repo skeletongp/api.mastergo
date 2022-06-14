@@ -14,7 +14,7 @@ class TableClient extends LivewireDatatable
 {
 
     public $exportable=true;
-    public $name="Tabla Usuarios";
+    public $headTitle="Clientes Registrados";
     public  $hideable="select";
 
 
@@ -43,24 +43,25 @@ class TableClient extends LivewireDatatable
     }
     public function editColumn($clients)
     {
-        if (auth()->user()->hasPermissionTo('Editar Usuarios')) {
+        if (auth()->user()->hasPermissionTo('Editar Clientes')) {
             return Column::name('created_at')->callback(['created_at','id'], function($created, $id) use ($clients) {
                 $client=arrayFind($clients, 'id', $id);
                 return view('pages.clients.actions', compact('client'));
             })->label('Editar')->headerAlignCenter();
-        }
+        } 
     }
-    public function deleteColumn()
+    public function deleteColumn($clients)
     {
-        if (auth()->user()->hasPermissionTo('Borrar Usuarios')) {
+        if (auth()->user()->hasPermissionTo('Borrar Clientes')) {
             return Column::delete('id')->label("Borrar");
         }
     }
     public function delete($id)
     {
         $client = Client::find($id);
-        $generic=auth()->user()->store->clients()->first();
+        $generic=auth()->user()->store->generic;
         if ($id !== $generic->id) {
+            $client->contable->delete();
             $client->delete();
         } else {
             $this->emit('showAlert', 'No puede eliminar este cliente', 'warning');

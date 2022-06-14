@@ -24,7 +24,7 @@ class InvoiceList extends LivewireDatatable
         $invoices = $this->builder()->get()->toArray();
         return [
             Column::name('number')->label('Orden')->searchable()->sortable(),
-            Column::name('client.name')->callback(['id', 'client_id'], function ($id) use ($invoices) {
+            Column::callback(['id', 'client_id'], function ($id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 return $result['client']['fullname'];
 

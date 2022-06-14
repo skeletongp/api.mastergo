@@ -2,7 +2,7 @@
     class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 flex flex-row justify-between items-center ">
     <div class="flex space-x-2 uppercase items-center">
         <a href="{{ route('home') }}">
-            <div class="h-12 w-12 bg-cover bg-center rounded-full"
+            <div class="h-12 w-12 bg-contain bg-no-repeat bg-center rounded-full"
                 style="background-image: url({{ auth()->user()->store->logo }})"></div>
         </a>
         @can('Crear Negocios')

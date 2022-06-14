@@ -27,8 +27,6 @@
 
         Livewire.on('changeInvoice', function(invoice, letPrint = true) {
             obj = invoice;
-           
-
             if (letPrint) {
                 for (let index = 0; index < obj.place.preference.copy_print; index++) {
                 print();

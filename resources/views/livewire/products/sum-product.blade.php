@@ -1,6 +1,6 @@
 <div class="max-w-4xl shadow-xl p-4">
     <form action="" wire:submit.prevent="addProduct">
-        <div class="flex space-x-4 items-start pt-8 relative">
+        <div class="flex space-x-4 items-start pt-12 relative">
             <div class="w-3/6 select2-div">
 
                 <x-base-select label="Nombre de producto" wire:model="form.product_id" id="producto_id">
@@ -11,10 +11,6 @@
                 </x-base-select>
                 <x-input-error for="form.product_id"></x-input-error>
             </div>
-            <div class=" w-1/6">
-                <x-base-input type="number" label="Cantidad" id="form.cant" wire:model.defer="form.cant" />
-                <x-input-error for="form.cant"></x-input-error>
-            </div>
             <div class=" w-2/6 px-4">
                 <x-base-select wire:model.defer="form.unit" label="Medida" id="medida_id">
                     <option value=""></option>
@@ -24,6 +20,11 @@
                 </x-base-select>
                 <x-input-error for="form.unit"></x-input-error>
             </div>
+            <div class=" w-1/6">
+                <x-base-input type="number" label="Cantidad" id="form.cant" wire:model.defer="form.cant" />
+                <x-input-error for="form.cant"></x-input-error>
+            </div>
+            
             <div class="absolute top-1 right-1">
                 <x-button>
                     <span class="fas fa-plus"></span>
@@ -109,9 +110,23 @@
                         </x-base-select>
                         <x-input-error for="count_code">Campo requerido</x-input-error>
                     </div>
+                    <div class="w-full">
+                       <x-base-input label="Referencia" placeholder="NCF u otro referencia" wire:model.defer="ref"></x-base-input>
+                        <x-input-error for="ref">Campo requerido</x-input-error>
+                    </div>
                 </div>
             </div>
         @endif
     </div>
+    @push('js')
 
+        <script>
+            Livewire.on('printProvision', function(provision){
+                printProvision(provision);
+            })
+            function printProvision(provision){
+                console.log(provision);
+            }
+        </script>
+    @endpush
 </div>

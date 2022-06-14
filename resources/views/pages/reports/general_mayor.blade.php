@@ -1,6 +1,6 @@
 <x-app-layout>
     @slot('bread')
-        {{ Breadcrumbs::render('products') }}
+        {{ Breadcrumbs::render('general-mayor') }}
     @endslot
 
     <div class=" w-full ">

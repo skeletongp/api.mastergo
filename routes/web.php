@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ComprobanteController;
+use App\Http\Controllers\CuadreController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProcesoController;
@@ -13,11 +14,15 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Models\Count;
+use App\Models\CountMain;
+use App\Models\Detail;
 use App\Models\Invoice;
 use App\Models\Proceso;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -95,9 +100,15 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ReportController::class)->group(function () {
             Route::get('general_daily', 'general_daily')->name('reports.general_daily');
             Route::get('general_mayor', 'general_mayor')->name('reports.general_mayor');
+            Route::get('catalogue', 'catalogue')->name('reports.catalogue');
+            Route::get('view_catalogue', 'view_catalogue')->name('reports.view_catalogue');
         });
-        Route::controller(ComprobanteController::class)->group(function() {
-            Route::get('comprobantes','index')->name('comprobantes.index');
+        Route::controller(ComprobanteController::class)->group(function () {
+            Route::get('comprobantes', 'index')->name('comprobantes.index');
+        });
+
+        Route::controller(CuadreController::class)->group(function () {
+            Route::get('cuadres', 'index')->name('cuadres.index');
         });
     });
 });
@@ -105,10 +116,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
 
-      $invoice = Invoice::with('details','details.unit')->orderBy('id','desc')->firstOrFail();
-    $pdf = App::make('dompdf.wrapper');
-    $payment=$invoice->payment;
-    $pdf->loadview('pages.invoices.thermal', compact('invoice','payment'));
-    return $pdf->stream();
-   
+    $model = "App\Models\User";
+    dd($model::find(1));
+
+    dd($model::setContable(1,'201','credit'));
+    $user=DB::table('users')->select('*')->first();
+    dd($user->contable);
+    $counts = Count::with('contable')->get();
+    dd($counts);
 })->name('prueba');

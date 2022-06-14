@@ -12,6 +12,7 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 class LastProducts extends LivewireDatatable
 {
     public $headTitle = "Productos más vendidos";
+    public $perPage=5;
     public function builder()
     {
         $details = auth()->user()->place->details()

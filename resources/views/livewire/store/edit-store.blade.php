@@ -16,7 +16,7 @@
 
                     {{-- Foto actual --}}
                     <label for="logoSet" class="cursor-pointer">
-                        <div class="w-44 h-44 bg-center bg-cover mb-12 pb-4  mx-auto flex items-end justify-center"
+                        <div class="w-44 h-44 bg-center bg-contain bg-no-repeat mb-12 pb-4  mx-auto flex items-end justify-center"
                             style="background-image: url({{ $photo_path ? $logo->temporaryUrl() : $store->logo }})">
                             <span class="fas fa-image text-7xl shadow-xl shadow-cyan-300 opacity-5"></span>
                         </div>
@@ -52,15 +52,23 @@
                 </div>
                 <div class="flex space-x-4 items-center">
                     <div class="w-full">
+                        <x-input class="text-2xl" label="Lema o Slogan" wire:model.defer="store.lema"
+                            id="store.lema"></x-input>
+                        <x-input-error for="store.lema"></x-input-error>
+                    </div>
+
+                </div>
+                <div class="flex space-x-4 items-center">
+                    <div class="w-full">
                         <x-input type="tel" class="text-2xl" label="No. Teléfono" wire:model.defer="store.phone"
                             id="store.phone">
                         </x-input>
                         <x-input-error for="store.phone"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-input class="text-2xl" label="RNC/ID" wire:model.defer="store.RNC" id="store.RNC">
+                        <x-input class="text-2xl" label="RNC/ID" wire:model.defer="store.rnc" id="store.rnc">
                         </x-input>
-                        <x-input-error for="store.RNC"></x-input-error>
+                        <x-input-error for="store.rnc"></x-input-error>
                     </div>
                 </div>
                 {{-- Botón --}}

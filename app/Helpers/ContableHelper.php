@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-function setContable($model, String $code, String $origin, $name = null, $place_id = null,)
+function setContable($model, String $code, String $origin, $name = null, $place_id = null, $borrable=NULL)
 {
     if (!$place_id) {
-        $place_id = session('place_id');
+        $place_id = auth()->user()->place_id;
     }
     if ($model->fullname) {
         $model->name = $model->fullname;
@@ -34,7 +34,8 @@ function setContable($model, String $code, String $origin, $name = null, $place_
             'name' => $name,
             'place_id' => $place_id ?: 1,
             'origin' => $origin,
-            'type'=>$type
+            'type'=>$type,
+            'borrable'=>$borrable
         ]);
         $model->contable()->save($count);
     }
@@ -48,7 +49,7 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable)
             'day' => date('Y-m-d'),
             'income' => $amount,
             'outcome' => $amount,
-            'place_id' => session('place_id'),
+            'place_id' => auth()->user()->place->id,
             'debitable_id' => $debitable->id,
             'creditable_id' => $creditable->id,
         ]);
@@ -56,7 +57,6 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable)
             $bal=$debitable;
             $debitable->balance = $debitable->balance + $amount;
             $debitable->save();
-            $bal2=$debitable;
 
         } else {
             $debitable->balance = $debitable->balance - $amount;

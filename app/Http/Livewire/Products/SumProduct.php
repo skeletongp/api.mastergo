@@ -9,16 +9,16 @@ use Livewire\Component;
 
 class SumProduct extends Component
 {
-    public $products, $units, $form, $productAdded = [], $provider_id, $counts, $count_code;
+    public $products, $units, $form, $productAdded = [], $provider_id, $counts, $count_code, $ref;
     public $setCost = false;
 
     protected $listeners = ['getUnits'];
     protected $queryString = ['productAdded'];
     public function mount()
     {
-        $this->products = auth()->user()->place->products->pluck('name', 'id');
-        $this->units = auth()->user()->place->units->pluck('name', 'id');
-        $place = auth()->user()->place;
+        $place=auth()->user()->place;
+        $this->products = $place->products->pluck('name', 'id');
+        $this->units = $place->units->pluck('name', 'id');
         $this->counts = $place->counts()->where('code','like', '100%')->pluck('name','code');
     }
 
@@ -78,14 +78,16 @@ class SumProduct extends Component
             $unit->pivot->stock = $unit->stock + $added['cant'];
             $unit->pivot->save();
             $amount += $added['cant'] * $unit->cost;
-            $this->createProvision($product, $added['cant'], $code, $added['unit']);
+            $this->createProvision($product, $added['cant'], $code, $added['unit'],  $unit->cost);
         }
         if ($this->setCost) {
-            setOutcome($amount, 'Ingreso de productos a inventario', 'N/A');
+            setOutcome($amount, 'Ingreso de productos a inventario', $this->ref);
             $place = auth()->user()->place;
-            $debitable = $place->counts()->where('code', '500-01')->first();
+            $debitable = $place->findCount('104-01');
             $creditable = $place->counts()->where('code', $this->count_code)->first();
             setTransaction('Compra de mercancía',$code, $amount, $debitable, $creditable);
+            $provisions=Provision::wherecode($code)->get();
+            $this->emit('printProvision', $provisions);
         }
 
         $this->reset('form', 'productAdded');

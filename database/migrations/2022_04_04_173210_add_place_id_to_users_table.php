@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('place_id')->constrained();
+            $table->foreignId('store_id')->constrained();
         });
     }
 
@@ -27,6 +28,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropConstrainedForeignId('place_id');
+            $table->dropConstrainedForeignId('store_id');
         });
     }
 };

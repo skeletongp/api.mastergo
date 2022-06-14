@@ -30,7 +30,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'password', // password
             'remember_token' => Str::random(10),
-            'place_id'=>Place::first()->id
+            'place_id'=>Place::first()->id,
+            'store_id'=>Store::first()->id,
         ];
     }
 

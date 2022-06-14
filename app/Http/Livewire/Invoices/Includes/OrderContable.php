@@ -9,8 +9,8 @@ trait OrderContable
     public function setTransaction($invoice, $payment, $client)
     {
         $place = auth()->user()->place;
-        $creditable = $place->counts()->where('code', '400-01')->first();
-        $discount = $place->counts()->where('code', '401-01')->first();
+        $creditable = $place->findCount('400-01');
+        $discount = $place->findCount('401-03');
         $ref = $invoice->comprobante ?$invoice->comprobante->ncf: $invoice->number;
         $moneys = array($payment->efectivo, $payment->tarjeta, $payment->transferencia, $payment->rest);
         $max = array_search(max($moneys), $moneys);
@@ -34,7 +34,7 @@ trait OrderContable
                 break;
            
         }
-
+        setTransaction('Venta de Fact. '.$invoice->number, $ref, $invoice->gasto, $place->findCount('500-01'), $place->inventario());
         $moneys[$max] = 0;
         setTransaction('Reg. venta en Efectivo', $ref,  $moneys[0], $place->cash(), $creditable);
         setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash());

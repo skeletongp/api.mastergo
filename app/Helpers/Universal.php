@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Cloudinary\Cloudinary;
+use Illuminate\Support\Facades\Cache;
 
 function formatNumber($number)
 {
@@ -52,7 +53,11 @@ function arrayFind(array $array, $key, $value)
 function admins()
 {
     $store = auth()->user()->store;
-    return $store->users()->role('Administrador')->where('loggeable', 'yes')->orderBy('lastname')->pluck('password', 'fullname');
+    if (!Cache::get($store->id.'admins')) {
+        Cache::put($store->id.'admins',$store->users()->role('Administrador')->where('loggeable', 'yes')->orderBy('lastname')->pluck('password', 'fullname'));
+    }
+    
+    return Cache::get($store->id.'admins');
 }
 function formatDate($date, $format)
 {

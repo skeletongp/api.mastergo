@@ -19,7 +19,7 @@ class Provider extends Model
         'email',
         'fullname',
         'address',
-        'RNC',
+        'rnc',
         'phone',
         'limit',
         'store_id',
@@ -36,12 +36,19 @@ class Provider extends Model
     {
         parent::boot();
         self::creating(function($model){
-            $model->fullname = (string) rtrim($model->lastname).', '.$model->name;
+            $model->fullname = $model->name.' '.(string) rtrim($model->lastname);
+        });
+        self::updating(function($model){
+            $model->fullname = $model->name.' '.(string) rtrim($model->lastname);
         });
     }
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+    public function contable()
+    {
+        return $this->morphOne(Count::class,'contable');
     }
     public function avatar(): Attribute
     {
@@ -49,4 +56,13 @@ class Provider extends Model
             get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
         );
     }
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+    public function provisions()
+    {
+        return $this->hasMany(Provision::class);
+    }
+
 }

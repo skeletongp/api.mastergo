@@ -14,7 +14,7 @@ use Livewire\WithFileUploads;
 class OrderConfirm extends Component
 {
     use OrderContable, OrderConfirmTrait, WithFileUploads, Authorize;
-    public  $form, $compAvail = true;
+    public  $form, $compAvail = true, $cobrable=true;
     public $banks, $bank, $bank_id, $reference;
     public $cheque, $photo_path;
 
@@ -24,11 +24,13 @@ class OrderConfirm extends Component
     {
         $store = auth()->user()->store;
         $this->form = $invoice;
-        $this->banks = $store->banks->pluck('bank_name', 'id');
+        $this->banks=$store->banks;
         unset($invoice['payment']['id']);
         $this->form = array_merge($this->form, $invoice['payment']);
-       
-        if ($invoice['condition'] == 'De Contado') {
+        if ($invoice['client']['debt']>0 || $invoice['condition']!='De Contado') {
+           $this->cobrable=false;
+        }
+        if ($invoice['condition'] == 'De Contado' && $this->cobrable) {
             $this->form['efectivo'] = $this->form['rest'];
         }
         $this->form['contable_id'] = auth()->user()->id;
@@ -44,8 +46,8 @@ class OrderConfirm extends Component
             case 'efectivo':
             case 'tarjeta':
             case 'transferencia':
-                $this->form['payed'] = $this->form['efectivo'] +
-                    $this->form['tarjeta'] + $this->form['transferencia'];
+                $this->form['payed'] = floatVal($this->form['efectivo']) +
+                   floatVal( $this->form['tarjeta']) + floatVal($this->form['transferencia']);
                 break;
 
             default:

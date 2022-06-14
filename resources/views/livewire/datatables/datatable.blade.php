@@ -127,7 +127,7 @@
                                 @elseif($column['type'] === 'checkbox')
                                     @unless($column['hidden'])
                                         <div
-                                            class="flex justify-center table-cell w-32 h-12 px-6 py-4 overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-middle border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
+                                            class="justify-center table-cell w-32 h-12  {{isset($padding)?$padding:'py-4 px-6 '}}  overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-middle border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
                                             <div
                                                 class="px-3 py-1 rounded @if (count($selected)) bg-orange-400 @else bg-gray-200 @endif text-white text-center">
                                                 {{ count($selected) }}
@@ -196,7 +196,7 @@
                                     @include('datatables::label')
                                 @else
                                     <div
-                                        class="table-cell px-6 py-2 @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
+                                        class="table-cell {{isset($padding)?$padding:'py-4 px-6 '}} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
                                         {!! $row->{$column['name']} !!}
                                     </div>
                                 @endif

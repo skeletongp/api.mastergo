@@ -87,6 +87,11 @@ class Place extends Model
         return $this->morphOne(Count::class, 'contable')
         ->where('code','100-02')->first();
     }
+    public function inventario()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','104-01')->first();
+    }
     public function other()
     {
         return $this->morphOne(Count::class, 'contable')
@@ -95,5 +100,18 @@ class Place extends Model
     public function preference()
     {
         return $this->hasOne(Preference::class);
+    }
+    public function cuadres()
+    {
+        return $this->hasMany(Cuadre::class);
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+    public function findCount($code)
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code',$code)->first();
     }
 }

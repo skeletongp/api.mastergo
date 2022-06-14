@@ -10,17 +10,28 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded=[];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->place_id = auth()->user()->place->id;
+            $model->day = date('Y-m-d');
+        });
+       
+    }
+
     public function payable()
     {
-        $this->morphTo();
+       return  $this->morphTo();
     }
     public function payer()
     {
-        $this->morphTo();
+       return  $this->morphTo();
     }
     public function contable()
     {
-        $this->morphTo();
+       return  $this->morphTo();
     }
     public function image()
     {
@@ -29,5 +40,9 @@ class Payment extends Model
     public function pdf()
     {
         return $this->morphOne(Filepdf::class, 'fileable');
+    }
+    public function place()
+    {
+        return $this->belongsTo(Place::class);
     }
 }

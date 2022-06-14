@@ -96,7 +96,7 @@ return [
     'password'             => 'La contraseña es incorrecta.',
     'present'              => 'El campo debe estar presente.',
     'regex'                => 'El formato del campo es inválido.',
-    'required'             => 'Falta el Campo que es requerido.',
+    'required'             => 'Falta el campo  requerido.',
     'required_if'          => 'El campo es obligatorio cuando el campo :other es :value.',
     'required_unless'      => 'El campo es requerido a menos que :other se encuentre en :values.',
     'required_with'        => 'El campo es obligatorio cuando :values está presente.',
@@ -114,7 +114,7 @@ return [
     'string'               => 'El campo debe ser una cadena de caracteres.',
     'timezone'             => 'El campo debe ser una zona horaria válida.',
     'unique'               => 'El valor del campo ya está en uso.',
-    'uploaded'             => 'El campo no se pudo subir.',
+    'uploaded'             => 'El archivo no se pudo subir.',
     'url'                  => 'El formato del campo es inválido.',
     'uuid'                 => 'El campo debe ser un UUID válido.',
 

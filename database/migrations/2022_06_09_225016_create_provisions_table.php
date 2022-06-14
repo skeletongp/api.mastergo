@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('provisions', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->decimal('cant');
+            $table->decimal('cant',14,4);
+            $table->decimal('cost',14,4);
             $table->foreignId('provider_id');
             $table->morphs('atribuible');
             $table->morphs('provisionable');

@@ -6,15 +6,19 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Count extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
-    protected $fillable=[
-        'code','name','origin','balance','count_main_id','place_id'
+    protected $guarded=[
+     
     ];
-
+    const ORIGINS=[
+        'credit'=>'Acreedor',
+        'debit'=>'Deudor'
+    ];
    
 
   

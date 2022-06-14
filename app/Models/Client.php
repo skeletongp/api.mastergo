@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Client extends Model
+class Client extends Model implements Searchable
 {
     use HasFactory, SoftDeletes, SearchableTrait;
 
 
     protected $fillable = [
         'name',
+        'code',
         'lastname',
         'email',
         'fullname',
@@ -33,6 +36,21 @@ class Client extends Model
             'email' => 1,
         ]
     ];
+    protected $appends=[
+        'debt'
+    ];
+
+    public function getSearchResult(): SearchResult
+    {
+       $url = route('clients.index', $this->id);
+    
+        return new SearchResult(
+           $this,
+           $this->fullname,
+           $url
+        );
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -65,5 +83,12 @@ class Client extends Model
     public function payments()
     {
         return $this->morphMany(Payment::class,'payer');
+    }
+    public function getDebtAttribute(){
+        return $this->invoices()->sum('rest');
+    }
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }

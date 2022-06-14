@@ -17,9 +17,10 @@ class CreateStore extends Component
     protected $rules = [
         'form.name' => 'required|string|max:75',
         'form.address' => 'required|string|max:100',
+        'form.lema' => 'string|max:75',
         'form.email' => 'required|string|max:100|unique:stores,email',
         'form.phone' => 'required|string|max:15',
-        'form.RNC' => 'max:12',
+        'form.rnc' => 'max:12',
         'logo' => 'max:2048'
     ];
 
@@ -44,6 +45,8 @@ class CreateStore extends Component
         $this->createUnit($store);
         $this->createTax($store);
         $this->createClient($store);
+        $this->createProvider($store);
+        
         $this->setPreference($store->places()->first(), $store);
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
@@ -79,15 +82,19 @@ class CreateStore extends Component
     }
     public function setCounts($place)
     {
-        setContable($place,   '100', 'debit', 'Efectivo en Caja', $place->id);
-        setContable($place,  '100', 'debit', 'Efectivo en Banco', $place->id);
-        setContable($place,  '100', 'debit', 'Efectivo en Cheques', $place->id);
-        setContable($place,  '100', 'debit', 'Otros Efectivos', $place->id);
-        setContable($place,  '400','credit','Ingresos por Ventas', $place->id);
-        setContable($place,  '401', 'debit', 'Descuento en Ventas', $place->id);
-        setContable($place,  '401', 'debit', 'Devolución en Ventas', $place->id);
-        setContable($place,  '402', 'credit', 'Otros Ingresos', $place->id);
-        setContable($place,  '500', 'credit', 'Compra de Mercancías', $place->id);
+        setContable($place, '100', 'debit','Efectivo en Caja General', $place->id);
+        setContable($place, '100', 'debit','Efectivo en Caja Chica', $place->id);
+        setContable($place, '100', 'debit','Efectivo en Cheques', $place->id);
+        setContable($place, '100', 'debit','Otros Efectivos', $place->id);
+        setContable($place, '104', 'debit', 'Inventario general',  $place->id,);
+        setContable($place, '400', 'credit','Ingresos por Ventas', $place->id);
+        setContable($place, '401', 'debit','Devoluciones en Ventas', $place->id);
+        setContable($place, '401', 'debit','Otras notas de crédito', $place->id);
+        setContable($place, '401', 'debit','Descuentos en Ventas', $place->id);
+        setContable($place, '402', 'credit','Otros Ingresos', $place->id);
+        setContable($place, '500', 'debit','Compra de mercancías', $place->id);
+        setContable($place, '501', 'debit','Devoluciones en compras', $place->id);
+        setContable($place, '501', 'debit','Descuentos en compras', $place->id);
         setContable($place, '300', 'credit','Capital Sucrito y Pagado', $place->id);
     }
     public function setPreference($place, $store)
@@ -115,7 +122,7 @@ class CreateStore extends Component
             'rate' => 0.18,
         ];
         $tax = $store->taxes()->create($data);
-        setContable($tax, '202', $tax->name . ' por Pagar');
+        setContable($tax, '203', $tax->name . ' por Pagar');
         setContable($tax, '103', $tax->name . ' por Cobrar');
     }
     public function createClient(Store $store)
@@ -125,10 +132,25 @@ class CreateStore extends Component
             'lastname' => 'Genérico',
             'email' => 'generico@' . strtok($store->uid, ' ') . '.com',
             'address' => 'SIN DIRECCIÓN',
-            'phone' => '8097654321',
+            'phone' => '(000)000-0000',
+            'rnc' => '000-00000-0',
             'limit' => 0.0,
         ];
        $client= $store->clients()->create($data);
+       $client->update(['code'=>'001']);
         setContable($client, '101', 'debit');
+    }
+    public function createProvider(Store $store)
+    {
+        $provider = $store->providers()->create([
+            'name' => 'Prov.',
+            'lastname' => 'Genérico ',
+            'email' => 'generic@provider.com',
+            'address' => 'Sin Dirección',
+            'phone' => '(000) 000-0000',
+            'rnc' => '000-00000-0',
+            'limit' => 0,
+        ]);
+        setContable($provider, '201', 'credit');
     }
 }

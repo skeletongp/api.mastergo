@@ -11,7 +11,7 @@ trait ClientSectionTrait
 
     public function changeClient()
     {
-        $this->clients = auth()->user()->store->clients()->orderBy('lastname')->pluck('fullname', 'code');
+       
         $code = str_pad($this->client_code, 4, '0', STR_PAD_LEFT);
         $client = Client::where('code', $code)->first();
         if ($client) {
@@ -36,6 +36,7 @@ trait ClientSectionTrait
 
     public function updatedClientCode()
     {
+        $this->clients = auth()->user()->store->clients()->orderBy('lastname')->pluck('fullname', 'code');
         $this->changeClient();
     }
 }

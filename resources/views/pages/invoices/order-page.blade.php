@@ -1,3 +1,3 @@
 <div class="">
-   @livewire('invoices.order-confirm', ['invoice' => $invoice], key(uniqid()))
+   @livewire('invoices.order-confirm', ['invoice' => $invoice, 'banks'=>$banks], key(uniqid()))
 </div>

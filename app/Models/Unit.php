@@ -46,10 +46,16 @@ class Unit extends Model
             get:fn($value)=> ' $'.formatNumber($this->pivot->price)
         );
     }
-    public function plainPrice() : Attribute
+    public function plainPriceMenor() : Attribute
     {
         return new Attribute(
             get:fn()=> $this->pivot->price_menor
+        );
+    }
+    public function plainPriceMayor() : Attribute
+    {
+        return new Attribute(
+            get:fn()=> $this->pivot->price_mayor
         );
     }
     public function cost() : Attribute

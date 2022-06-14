@@ -99,8 +99,28 @@ Breadcrumbs::for('settings', function ($trail) {
     $trail->push('Ajustes', route('settings.index'));
 });
 
-/* Ajustes */
+/* Comprobantes */
 Breadcrumbs::for('comprobantes', function ($trail) {
     $trail->parent('home');
     $trail->push('Comprobantes', route('comprobantes.index'),['icon'=>'far fa-receipt']);
+});
+
+/* Cuadres */
+Breadcrumbs::for('cuadres', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Cuadre Diario', route('cuadres.index'),['icon'=>'far fa-receipt']);
+});
+
+/* reportes */
+Breadcrumbs::for('general-daily', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Diario General', route('reports.general_daily'),['icon'=>'far  fa-calendar-day']);
+});
+Breadcrumbs::for('general-mayor', function ($trail) {
+    $trail->parent('general-daily');
+    $trail->push('Balance General', route('reports.general_mayor'),['icon'=>'far  fa-calendar-alt']);
+});
+Breadcrumbs::for('catalogue', function ($trail) {
+    $trail->parent('general-mayor');
+    $trail->push('Catálogo de Cuentas', route('reports.catalogue'),['icon'=>'far  fa-list']);
 });

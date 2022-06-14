@@ -5,7 +5,7 @@
             <h1 class="p-4 text-xl font-bold uppercase">Preferencias</h1>
             <form action="" class=" p-2" wire:submit.prevent="updatePreference">
                 <p class="my-4">En esta sección puedes configurar los valores predeterminados correspondientes a
-                    esta sucursal, tales como: impresora predeterminada, tipo de comprobante más utilizado, etc. Si no aparece la lista de impresoras instaladas, presione Ctrl+R y espere 5 segundos.</p>
+                    esta sucursal, tales como: impresora predeterminada, tipo de comprobante más utilizado, etc. Si no aparece la lista de impresoras instaladas, haga click en el icono de la lupa.</p>
                 <div class="w-full space-y-3  flex items-center ">
                     <div class="space-y-3 w-full">
                         <div class="flex space-x-4 items-center">
@@ -46,7 +46,7 @@
                         <div class="w-full max-w-sm">
                             <x-base-select wire:model="preference.printer" id="printer">
                                 <x-slot name="label">
-                                    <div class="flex justify-between items-center" id="searchPrinter">
+                                    <div class="flex justify-between items-center" id="searchPrinter" onclick="searchPrinter()">
                                         <span class="">
                                             Impresora predeterminada</span>
                                         <span class="fas fa-search text-blue-400 cursor-pointer"></span>
@@ -76,20 +76,5 @@
             </form>
         </div>
     @endcan
-    @push('js')
-        <script>
-            $(document).ready(function() {
-                function searchPrinter() {
-                    ConectorPlugin.obtenerImpresoras()
-                        .then(impresoras => {
-                            @this.printers = impresoras;
-                        });
-                }
-                $('#searchPrinter').on('click', function() {
-                    searchPrinter()
-                });
-                searchPrinter()
-            })
-        </script>
-    @endpush
+  
 </div>

@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('ncf')->comment('Comprobante fiscal que corresponde al pago')->nullable();
+            $table->date('day');
+           // $table->string('number');
             $table->decimal('amount', 14,4)->comment('Cantidad real a pagar');
             $table->decimal('discount', 14,4)->comment('Descuento general del pago si aplica');
             $table->decimal('total', 14,4)->comment('Monto total del pago menos descuentos y más impuestos');
@@ -29,6 +31,8 @@ return new class extends Migration
             $table->morphs('payable');
             $table->morphs('contable');
             $table->morphs('payer');
+            $table->foreignId('place_id')->constrained();
+            $table->enum('forma',['cobro','contado','credito']);
             $table->softDeletes();
             $table->timestamps();
         });

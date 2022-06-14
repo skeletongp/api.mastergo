@@ -23,6 +23,8 @@ return new class extends Migration
             $table->foreignId('count_main_id')->constrained();
             $table->foreignId('place_id')->constrained();
             $table->morphs('contable');
+            $table->tinyInteger('borrable')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,3 +18,4 @@ $(".confirm").on("click", function () {
         }
     });
 });
+

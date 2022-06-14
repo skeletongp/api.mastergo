@@ -10,17 +10,19 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class PaymentsFromInvoice extends LivewireDatatable
 {
     public $invoice;
+    public $hideable="select";
     public $headTitle='Historial de pagos';
     public function builder()
     {
        
-        return $this->invoice->payments()->with('payable')->orderBy('id','desc');
+        return $this->invoice->payments()->with('payable.store', 'payer', 'payer', 'place.preference', 'contable')->orderBy('id','desc');
     }
 
     public function columns()
     {
+        
         return [
-            DateColumn::name('created_at')->label('Fecha'),
+            DateColumn::name('created_at')->label('Fecha')->hide(),
             Column::name('total')->callback(['total'], function ($total) {
                 return '$' . formatNumber($total);
             })->label('Monto'),
@@ -37,11 +39,19 @@ class PaymentsFromInvoice extends LivewireDatatable
             Column::name('payed')->callback(['payed'], function ($payed) {
                 return "<b>$". formatNumber($payed)."</b>";
             })->label('Pagado'),
-            Column::name('rest')->callback(['rest'], function ($rest) {
-               
+            Column::callback(['rest'], function ($rest) {
                 return  "<span class='text-red-400 font-bold'>$". formatNumber($rest)."</span>";
             })->label('Resta'),
+            Column::callback(['payer_id', 'id'], function ($payer, $id)  {
+                return  "<span class='far fa-print cursor-pointer' wire:click='print($id)'> </span>";
+            })->label('Print')->contentAlignCenter(),
         ];
+    }
+    public function print($id)
+    {
+        $payments=$this->builder()->get()->toArray();
+        $result=arrayFind($payments, 'id', $id);
+        $this->emit('printPayment', $result);
     }
     
 }

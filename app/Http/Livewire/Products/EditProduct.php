@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Products;
 
+use App\Http\Traits\Livewire\Confirm;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -10,12 +11,12 @@ use Livewire\WithFileUploads;
 
 class EditProduct extends Component
 {
-    use AuthorizesRequests, WithFileUploads;
+    use Confirm, WithFileUploads;
     public Product $product;
     public $units, $unit, $photo, $photo_path;
     public $taxes, $taxSelected = [];
 
-    protected $listeners = ['reloadEditProduct'];
+    protected $listeners = ['reloadEditProduct', 'validateAuthorization','updatePrice'];
     public function mount()
     {
         $this->units = $this->product->units->unique('symbol');
@@ -28,8 +29,10 @@ class EditProduct extends Component
         }
         foreach ($this->units as  $un) {
             $this->unit[$un->symbol] = [
-                'price_menor' => floatval($un->plainPrice),
+                'price_menor' => floatval($un->plainPriceMenor),
+                'price_mayor' => floatval($un->plainPriceMayor),
                 'cost' => floatval($un->cost),
+                'min' => floatval($un->pivot->min),
             ];
         }
     }
@@ -47,7 +50,9 @@ class EditProduct extends Component
     protected $rules2 = [
         'unit' => 'required',
         'unit.*.price_menor' => 'required|numeric|min:1',
+        'unit.*.price_mayor' => 'required|numeric|min:1',
         'unit.*.cost' => 'required|numeric|min:1',
+        'unit.*.min' => 'required|numeric|min:1',
     ];
     public function updateProduct()
     {
@@ -66,12 +71,13 @@ class EditProduct extends Component
     
     public function updatePrice()
     {
-        $this->authorize('Cambiar Precios');
         $this->validate($this->rules2);
         foreach ($this->unit as $key => $value) {
             $unit = $this->product->units()->where('symbol', $key)->first();
             $unit->pivot->price_menor = $value['price_menor'];
+            $unit->pivot->price_mayor = $value['price_mayor'];
             $unit->pivot->cost = $value['cost'];
+            $unit->pivot->min = $value['min'];
             $unit->pivot->margin = ($value['price_menor'] / $value['cost']) - 1;
             $unit->pivot->save();
             $this->unit[$key] = [

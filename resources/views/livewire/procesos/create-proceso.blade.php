@@ -1,5 +1,5 @@
-<div>
-    <x-modal title="Nuevo Proceso" >
+<div >
+    <x-modal title="Nuevo Proceso" :fitV="false">
         <x-slot name="button">
             <div class="flex space-x-4 items-center">
                 <span>Crear Proceso</span>

@@ -15,6 +15,7 @@ trait GenerateInvoiceTrait
 
     public function createDetails($invoice)
     {
+        $gasto=0;
         foreach ($this->details as $ind => $detail) {
             unset($this->details[$ind]['product_name']);
             unset($this->details[$ind]['unit_name']);
@@ -31,8 +32,11 @@ trait GenerateInvoiceTrait
                 $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
             }
             $det->save();
+            $gasto+=$det->cant*$det->cost;
+
             $this->restStock($detail['unit_pivot_id'], $detail['cant']);
         }
+        $invoice->update(['gasto'=>$gasto]);
     }
     public function setFromScan()
     {
@@ -95,7 +99,7 @@ trait GenerateInvoiceTrait
             $this->createInvoiceTaxes($invoice);
         }
         event(new NewInvoice($invoice));
-        $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name');
+        $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name','name');
         $this->invoice = $invoice->load('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference');
         $this->mount();
     }
@@ -108,7 +112,13 @@ trait GenerateInvoiceTrait
             $tax = array_sum(array_column($this->details, 'taxTotal'));
         }
         $total = $subtotal - $discount + $tax;
-
+        if ($invoice->condition=="DE CONTADO") {
+            $forma='contado';
+        } else {
+            $forma='credito';
+        }
+        
+        
         $data = [
             'ncf' => optional($invoice->comprobante)->ncf,
             'amount' => $subtotal,
@@ -121,6 +131,7 @@ trait GenerateInvoiceTrait
             'efectivo' => 0,
             'tarjeta' => 0,
             'transferencia' => 0,
+            'forma'=>$forma
         ];
         $invoice->payment()->save(setPayment($data));
         $invoice->client->payments()->save($invoice->payment);

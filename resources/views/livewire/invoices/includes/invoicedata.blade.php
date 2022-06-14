@@ -5,7 +5,7 @@
             </x-base-input>
         </div>
         <div>
-            <x-base-select id="condition" wire:model="condition" class="text-base uppercase py-0" label="Condición">
+            <x-base-select status="{{auth()->user()->hasPermissionTo('Fiar Facturas')?'':'disabled'}}" id="condition" wire:model="condition" class="text-base uppercase py-0" label="Condición">
                 <option value="DE CONTADO">DE CONTADO</option>
                 <option value="1 A 15 DÍAS">1 A 15 DÍAS</option>
                 <option value="16 A 30 DÍAS">16 A 30 DÍAS</option>
@@ -26,8 +26,8 @@
         </div>
 
     </div>
-    <div class="col-span-2">
-        <x-base-select id="type" wire:model="type" class="text-base uppercase py-0" label="Tipo de NCF">
+    <div class="col-span-2 py-2 ">
+        <x-base-select id="type" wire:model="type" class="text-sm uppercase pt-1 pb-0" label="Tipo de NCF">
             @foreach (App\Models\Invoice::TYPES as $ind => $type)
                 <option value="{{ $type }}">{{ $ind }}</option>
             @endforeach

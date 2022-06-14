@@ -1,16 +1,16 @@
 <div>
-    <x-modal >
+    <x-modal :fitV="false" maxWidth="max-w-2xl" minHeight="min-h-[65vh]">
             
         <x-slot name="title">
             <span> Editar registro</span>
         </x-slot>
         <x-slot name="button">
             <span data-tooltip-target="editId{{$client['id']}}"
-            data-tooltip-style="light" class="far fa-pen-square text-green-600"></span>
+            data-tooltip-style="light" class="far fa-pen text-green-600"></span>
             <x-tooltip id="editId{{$client['id']}}">Editar registro</x-tooltip>
         </x-slot>
-        <form wire:submit.prevent="updateClient">
-            <div class="  pb-6 flex items-end space-x-3">
+        <form wire:submit.prevent="updateClient" class="space-y-8">
+            <div class="   flex items-end space-x-3">
                 <div class="w-full">
                     <x-input label="Primer nombre" id="client.{{$client['id']}}name" wire:model.defer="client.name" />
                     <x-input-error for="client.name" />
@@ -20,14 +20,12 @@
                     <x-input-error for="client.lastname" />
                 </div>
             </div>
-            <div class="  pb-6 flex items-end space-x-3">
+            <div class="   flex items-end space-x-3">
                 <div class="w-full">
                     <x-input label="Correo Electrónico" id="client.{{$client['id']}}email" type="email"
                         wire:model.defer="client.email" />
                     <x-input-error for="client.email" />
                 </div>
-            </div>
-            <div class="  pb-6 flex items-end space-x-3">
                 <div class="w-full">
                     <x-input label="Dirección" id="client.{{$client['id']}}address" wire:model.defer="client.address" />
                     <x-input-error for="client.address" />
@@ -35,28 +33,27 @@
 
             </div>
            
-            <div class="  pb-6 flex items-end space-x-3">
-                <div class="w-full">
+           
+            <div class="   flex items-end space-x-3">
+                <div class="w-full max-w-sm">
                     <x-input label="RNC/Cédula" id="client.{{$client['id']}}RNC" type="number" wire:model.defer="client.rnc" />
                     <x-input-error for="client.rnc" />
                 </div>
                 @can('Asignar Créditos')
-                    <div class="w-full">
+                    <div class="w-full max-w-sm">
                         <x-input label="Crédito" type="number" id="client.{{$client['id']}}limit" wire:model.defer="client.limit" />
                         <x-input-error for="client.limit" />
                     </div>
                 @else
                     <input type="hidden" name="client.limit" wiere.model="client.limit" x-bind:value="0.00" id="client.{{$client['id']}}limit">
                 @endcan
-            </div>
-            <div class="  pb-6 flex items-end space-y-0 space-x-3">
-                <div class="w-full">
+                <div class="w-full max-w-sm">
                     <x-input label="No. Teléfono" type="tel" id="client.{{$client['id']}}phone" wire:model.defer="client.phone" />
                     <x-input-error for="client.phone" />
                 </div>
-                
             </div>
-            <div class="    pb-6 ">
+          
+            <div class="     ">
                 <div class="w-full">
                     <label for="client_avatar" class="flex items-center space-x-4 pb-4 cursor-pointer">
                         <span class="fas fa-image text-xl"></span>

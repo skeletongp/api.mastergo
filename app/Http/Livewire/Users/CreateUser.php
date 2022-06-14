@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users;
 
 use App\Models\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -16,7 +17,7 @@ class CreateUser extends Component
         $store=auth()->user()->store;
         $this->store_id=$store->id;
         $roles=$store->roles()->pluck('name');
-        $places=$store->places()->pluck('name','id');
+        $places=auth()->user()->places->pluck('name','id');
         $this->form['place_id']=array_key_first($places->toArray());
         return view('livewire.users.create-user',
         [
@@ -41,6 +42,7 @@ class CreateUser extends Component
         $this->validate();
         $store=auth()->user()->store;
         $this->form['loggeable']=$this->loggeable?'yes':'no';
+        $this->form['store_id']=auth()->user()->store_id;
         $user= $store->users()->create($this->form);
         if ($this->photo_path) {
             $user->image()->create([
@@ -49,6 +51,7 @@ class CreateUser extends Component
         }
         $user->assignRole($this->role);
         setContable($user, '102', 'credit');
+        Cache::forget($store->id.'admins');
         $this->reset();
         $this->emit('showAlert','Usuario registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');

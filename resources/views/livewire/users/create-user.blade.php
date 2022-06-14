@@ -1,6 +1,6 @@
 
 <div>
-    <x-modal :fitVerticalContainer="false">
+    <x-modal :fitV="false">
         <x-slot name="title">
             <span> Nuevo Usuario</span>
         </x-slot>

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Users;
 
 use App\Models\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -51,6 +52,7 @@ class EditUser extends Component
         $user->update(Arr::except($this->user,['avatar','pivot','roles','image','updated_at']));
         $user->syncRoles($this->role);
         $user->save();
+        Cache::forget(auth()->user()->store->id.'admins');
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert', 'Usuario Actualizado Exitosamente','success');
     }

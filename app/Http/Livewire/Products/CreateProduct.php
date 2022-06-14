@@ -47,7 +47,7 @@ class CreateProduct extends Component
     {
         $this->taxes = auth()->user()->store->taxes()->pluck('name', 'id');
         $this->units = auth()->user()->store->units()->pluck('name', 'id');
-        $this->places = auth()->user()->store->places()->pluck('name', 'id');
+        $this->places = auth()->user()->places->pluck('name', 'id');
         return view('livewire.products.create-product');
     }
 

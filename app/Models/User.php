@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Events\UserEvent;
+use App\Traits\ModelContableTrait;
 use App\Observers\UserObserver;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,15 +13,28 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
-use Ramsey\Uuid\Uuid;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Searchable
 {
-    use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes, ModelContableTrait;
 
    
+
+    public function getSearchResult(): SearchResult
+     {
+        $url = route('users.index', $this->id);
+     
+         return new SearchResult(
+            $this,
+            $this->fullname,
+            $url
+         );
+     }
+     
 
     protected $fillable = [
         'name',
@@ -103,6 +116,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Store::class, 'store_users');
     }
+   
     
     public function contable()
     {
@@ -116,7 +130,7 @@ class User extends Authenticatable
         if (!is_null($store)) {
             return $store;
         }
-        $store = $this->stores()->where('stores.id', $this->place_id)->with('clients','products','roles')->first();
+        $store = $this->stores()->where('stores.id', $this->store_id)->with('clients','products','roles','invoices','providers','incomes','banks','recursos','comprobantes','units','places')->first();
         Cache::put('store_' . $this->id, $store);
         return $store;
     }
@@ -131,7 +145,13 @@ class User extends Authenticatable
         if (!is_null($place)) {
             return $place;
         }
-        $place = $this->store->places()->first();
+        $placeOnStore = $this->store->places()->whereId($this->place_id)->first();
+        if (!$placeOnStore) {
+            $place=$this->store->places()->first();
+            $this->update(['place_id'=>$place->id]);
+        } else{
+            $place=$placeOnStore;
+        }
         Cache::put('place_' . $this->id, $place);
         return $place;
     }

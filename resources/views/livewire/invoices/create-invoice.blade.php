@@ -1,10 +1,14 @@
 <div>
     <div class="flex space-x-8 divide-x divide-red-100">
         <div class="w-max flex flex-col max-w-6xl space-y-4">
-            <div class="flex space-x-8">
+            <div class="flex space-x-8 items-start">
                 {{-- Client Section --}}
-                @include('livewire.invoices.includes.clientsection')
-                @include('livewire.invoices.includes.invoicedata')
+                <div>
+                    @include('livewire.invoices.includes.clientsection')
+                </div>
+                <div>
+                    @include('livewire.invoices.includes.invoicedata')
+                </div>
             </div>
             <div class="float-right">
                 @include('livewire.invoices.includes.productsection')

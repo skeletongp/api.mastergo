@@ -18,7 +18,10 @@ class EditProduction extends Component
     ];
     public function render()
     {
-        $this->status = $this->production['status'];
+        if($this->production['status']=='Completado'){
+
+            $this->status = $this->production['status'];
+        }
         return view('livewire.productions.edit-production');
     }
     public function updatedStatus()

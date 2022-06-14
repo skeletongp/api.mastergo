@@ -17,13 +17,14 @@ class Invoice extends Model
     ];
     public static function boot()
     {
-        $store=auth()->user()->store;
-        $place=auth()->user()->place;
         parent::boot();
-      /*   self::creating(function ($model) use ($place) {
-            $model->uid = (string) Uuid::uuid4();
-            $model->number=$place->id.'-'.str_pad($place->invoices()->count()+1,7,'0',STR_PAD_LEFT);
-        }); */
+        self::updated(function ($model)  {
+            if ($model->total>$model->rest) {
+                $model->isEditable = 0;
+                $model->save();
+            }
+            
+        });
     }
     const TYPES = [
         'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',

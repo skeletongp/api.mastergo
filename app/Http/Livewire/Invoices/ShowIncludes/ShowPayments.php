@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Invoices\ShowIncludes;
 
 use App\Models\Bank;
+use App\Models\User;
 use Livewire\WithFileUploads;
 
 trait ShowPayments
 {
 
 
-    public $banks, $payment, $reference, $bank, $bank_id, $photo_path, $cheque;
+    public $banks, $payment, $reference, $bank, $bank_id, $photo_path, $cheque, $cobrable=true;
 
     public function rules2(): array
     {
@@ -42,8 +43,7 @@ trait ShowPayments
     {
         $this->validateData();
         $this->createPayment($this->invoice);
-        $invoice=$this->invoice->load('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference');
-        $this->emit('changeInvoice', $invoice);
+       
     }
     public function createPayment($invoice)
     {
@@ -59,6 +59,11 @@ trait ShowPayments
         } else {
             $cambio = $payed - $total;
         }
+        $forma='cobro';
+
+        if ($invoice->day==date('Y-m-d')) {
+            $forma=$invoice->condiction=='De Contado'?'contado':'credito';
+        }
 
         $data = [
             'ncf' => $invoice->payment->ncf,
@@ -68,18 +73,19 @@ trait ShowPayments
             'tax' =>  $tax,
             'payed' => array_sum($this->payment),
             'rest' =>  $rest,
+            'forma' =>  $forma,
             'cambio' =>  $cambio,
             'efectivo' => $this->payment['efectivo'],
             'tarjeta' => $this->payment['tarjeta'],
+            'contable_type'=>User::class, 
+            'contable_id'=>auth()->user()->id,
             'transferencia' => empty($this->payment['transferencia']) ? 0 : $this->payment['transferencia'],
         ];
-        if (optional($invoice->payment)->payed == 0) {
-           $invoice->payment()->update($data);
-        } else {
-           $invoice->payment()->save(setPayment($data));
 
-        }
-        $payment=$invoice->payments()->orderBy('id','desc')->first();
+        $invoice->payment()->save(setPayment($data));
+
+
+        $payment = $invoice->payments()->orderBy('id', 'desc')->first();
         setIncome($invoice, 'Abono saldo Factura Nº. ' . $invoice->number, $payment->payed);
         $invoice->client->payments()->save($payment);
         setPaymentTransaction($invoice, $payment, $invoice->client, $this->bank, $this->reference);
@@ -95,10 +101,14 @@ trait ShowPayments
             ]);
         }
         setPDFPath($invoice);
-       
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
+        $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'contable');
+        $this->emit('printPayment', $payment);
         $this->emit('refreshLivewireDatatable');
         $this->reset('payment', 'bank_id', 'cheque', 'photo_path');
+        $this->payment['efectivo']=0;
+        $this->payment['tarjeta']=0;
+        $this->payment['transferencia']=0;
     }
     public function updatedCheque()
     {

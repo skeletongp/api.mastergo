@@ -17,8 +17,8 @@ class Store extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait, HasRoles, StoreTrait;
 
-    protected $fillable = [
-        'uid', 'name', 'address', 'email', 'phone', 'logo', 'expire_at', 'rnc'
+    protected $guarded = [
+       
     ];
     protected $searchable = [
 
@@ -114,5 +114,9 @@ class Store extends Model
     public function getGenericAttribute()
     {
         return $this->clients()->first();
+    }
+    public function getProvGenericAttribute()
+    {
+        return $this->providers()->first();
     }
 }

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Ramsey\Uuid\Uuid;
 
-class Product extends Model
+class Product extends Model implements Searchable
 {
     use HasFactory, SoftDeletes, SearchableTrait;
 
@@ -37,6 +39,17 @@ class Product extends Model
             $model->uid = (string) Uuid::uuid4();
             $model->code=$code;
         });
+    }
+
+    public function getSearchResult(): SearchResult
+    {
+       $url = route('products.show', $this->id);
+    
+        return new SearchResult(
+           $this,
+           $this->code.' '.$this->name,
+           $url
+        );
     }
 
     public function categories()
@@ -113,5 +126,9 @@ class Product extends Model
         return $this->belongsToMany(Provider::class, 'product_providers');
     }
     
+    public function details()
+    {
+        return $this->hasMany(Detail::class);
+    }
     
 }
