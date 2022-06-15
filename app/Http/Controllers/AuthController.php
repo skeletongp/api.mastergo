@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login()
     {
         if (auth()->user()) {
-            return view('welcome');
+            return redirect( route('home'));
         }
         $store=Store::whereId(env('STORE_ID'))->with('users')->first();
         $users=$store->users()->where('loggeable','yes')->pluck('fullname','username');

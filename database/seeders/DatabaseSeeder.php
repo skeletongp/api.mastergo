@@ -35,10 +35,10 @@ class DatabaseSeeder extends Seeder
             'path' => 'https://res.cloudinary.com/dboafhu31/image/upload/v1638122890/bfguvm5lp8qfoydcsinz.png',
         ]); */
 
-        $store=Store::find(1);
+        $store=Store::find(env('STORE_ID'));
         $unit = $store->units()->create([
-            'name' => 'Servicio',
-            'symbol' => 'Serv.'
+            'name' => 'Libra',
+            'symbol' => 'LB.'
         ]);
 
         $tax = $store->taxes()->create([
@@ -46,35 +46,11 @@ class DatabaseSeeder extends Seeder
             'rate' => 0.18
         ]);
 
-        $products = [
-            [
-                'name' => 'Desarrollo de Software',
-                'description' => 'Creación y desarrollo de sistemas',
-                'type' => 'Servicio'
-            ],
-            [
-                'name' => 'Instalación de Software',
-                'description' => 'Instalación de sistemas con licencia',
-                'type' => 'Servicio'
-            ],
-            [
-                'name' => 'Desarrollo Web',
-                'description' => 'Creación de páginas web para negocios',
-                'type' => 'Servicio'
-            ],
-            [
-                'name' => 'Asesoría Digital',
-                'description' => 'Asesoría para gestión de tecnologías',
-                'type' => 'Servicio'
-            ],
-        ];
-
         $data = [
             'name' => $store->name . ' | Oficina',
             'phone' => $store->phone,
 
         ];
-
         $place = $store->places()->create($data);
         $place->preference()->create([
             'comprobante_type' => 'B00',
@@ -84,34 +60,13 @@ class DatabaseSeeder extends Seeder
         $provider = $store->providers()->create([
             'name' => 'Prov.',
             'lastname' => 'Genérico ',
-            'email' => 'generic@provider.com',
+            'email' => $store->email,
             'address' => 'Sin Dirección',
             'phone' => '(000) 000-0000)',
             'rnc' => '000-00000-0',
             'limit' => 0,
         ]);
-        foreach ($products as $prod) {
-            $product = $store->products()->create($prod);
-                $product->taxes()->sync($tax);
-            $price_mayor = rand(75, 125);
-            $price_menor = $price_mayor * 1.15;
-            $cost = rand(39, 75);
-            $stock = 0;
-            $product->units()->attach(
-                $unit,
-                [
-                    'place_id' => 1,
-                    'cost' => $cost,
-                    'price_mayor' => $price_mayor,
-                    'price_menor' => $price_menor,
-                    'min' => $stock * 0.25,
-                    'margin' => ($price_menor / $cost) - 1,
-                    'stock' => $stock
-
-                ]
-            );
-            $product->providers()->attach($provider);
-        };
+       
        /*  $user = $store->users()->create([
             'name' => 'Ismael',
             'lastname' => 'Contreras ',
@@ -145,11 +100,11 @@ class DatabaseSeeder extends Seeder
                 CountMainSeeder::class,
             ]
         );
-        $bank = $store->banks()->create([
+        /* $bank = $store->banks()->create([
             'bank_name' => 'Banco Popular Dominicano',
             'bank_number' => '803579804',
             'titular_id' => $user->id
-        ]);
+        ]); */
         setContable($client, '101', 'debit', $client->fullname, $place->id);
         setContable($tax, '203', 'credit', 'ITBIS por Pagar', $place->id);
         setContable($tax, '103', 'debit', $tax->name . ' por Cobrar', $place->id);
@@ -162,7 +117,6 @@ class DatabaseSeeder extends Seeder
         setContable($place, '100', 'debit', 'Efectivo en Caja Chica', $place->id);
         setContable($place, '100', 'debit', 'Efectivo en Cheques', $place->id);
         setContable($place, '100', 'debit', 'Otros Efectivos', $place->id);
-        setContable($bank, '100', 'debit', $bank->bank_name,  $place->id,);
         setContable($place, '104', 'debit', 'Inventario general',  $place->id,);
         setContable($place, '400', 'credit', 'Ingresos por Ventas', $place->id);
         setContable($place, '401', 'debit', 'Devoluciones en Ventas', $place->id);
