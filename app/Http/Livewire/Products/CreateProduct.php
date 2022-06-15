@@ -22,6 +22,7 @@ class CreateProduct extends Component
 
     protected $rules = [
         'form.name' => 'required|string|max:35',
+        'form.type' => 'required|string|max:35',
         'unitSelected' => 'required|min:1',
         'placeSelected' => 'required|min:1'
 
@@ -129,7 +130,9 @@ class CreateProduct extends Component
     public function updatedUnitPriceMenor()
     {
         if ( floatval($this->unit_cost) > 0 && floatval($this->unit_price_menor) > 0) {
-            $this->unit_margin = round(((floatval($this->unit_price_menor) / (floatval($this->unit_cost))) - 1) * 100, 2);
+            $this->unit_margin = round(((floatval($this->unit_price_menor) / (floatval($this->unit_cost?:0.0001))) - 1) * 100, 2);
+        } else if(floatval($this->unit_cost)==0){
+            $this->unit_margin =100;
         }
     }
     public function updatedPhoto()

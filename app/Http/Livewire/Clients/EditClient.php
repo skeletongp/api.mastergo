@@ -24,7 +24,7 @@ class EditClient extends Component
             'client.email' => 'required|string|max:100|unique:clients,email,' . $this->client['id'],
             'client.limit' => 'required|numeric',
             'client.phone' => 'required|string|max:25',
-            'client.store_id' => 'required|numeric|exists:stores,id',
+            'client.store_id' => 'required|numeric|exists:moso_master.stores,id',
         ];
     }
     public function updateClient()

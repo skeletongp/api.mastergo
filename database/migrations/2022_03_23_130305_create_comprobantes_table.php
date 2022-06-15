@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('number');
             $table->string('ncf');
             $table->enum('status',['disponible','usado','anulado']);
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->on('moso_master.users');
             $table->foreignId('client_id')->nullable()->constrained();
-            $table->foreignId('store_id')->constrained();
+            $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();
         });

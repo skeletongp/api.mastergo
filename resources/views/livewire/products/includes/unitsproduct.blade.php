@@ -19,22 +19,22 @@
 
         </div>
         <div class="flex space-x-4 items-start">
-            <div class="pt-4">
+            <div class="pt-4 w-1/4">
                 <x-input label="Costo" type="number" step="any" min="0" id="unit_cost" name="unit_cost"
                     wire:model.lazy="unit_cost"></x-input>
                 <x-input-error for="unit_cost">Verifique el costo</x-input-error>
             </div>
-            <div class="pt-4">
+            <div class="pt-4 w-1/4">
                 <x-input label="Precio Mayor" type="number" step="any" min="0" id="unit_price_mayor"
                     name="unit_price_mayor" wire:model.lazy="unit_price_mayor"></x-input>
                 <x-input-error for="unit_price_mayor">Verifique el precio</x-input-error>
             </div>
-            <div class="pt-4">
+            <div class="pt-4 w-1/4">
                 <x-input label="Precio Detalle" type="number" step="any" min="0" id="unit_price_menor"
                     name="unit_price_menor" wire:model.lazy="unit_price_menor"></x-input>
                 <x-input-error for="unit_price_menor">Verifique el precio</x-input-error>
             </div>
-            <div class="pt-4">
+            <div class="pt-4 w-1/4">
                 <x-input label="Margin (%)" type="number" step="any" min="0" id="unit_margin" name="unit_margin"
                     wire:model.lazy="unit_margin"></x-input>
                 <x-input-error for="unit_margin">Verifique el margen</x-input-error>

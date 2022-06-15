@@ -5,21 +5,23 @@
                 <livewire:invoices.invoice-list />
             </div>
         </div>
-        <x-slot name="rightButton">
-            <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
-            <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300" href="{{ route('orders') }}"
-                data-tooltip-target="seeOrders" data-tooltip-style="light">
-                <span class="far fa-copy"></span>
-            </a>
-            <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                href="{{ route('invoices.show', $currentInvoice) }}">
-                <span class="far fa-eye"></span>
-            </a>
-            <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                href="{{ route('invoices.show', [$currentInvoice, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) }}">
-                <span class="fas fa-hand-holding-usd"></span>
-            </a>
-        </x-slot>
+        @if ($currentInvoice)
+            <x-slot name="rightButton">
+                <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
+                <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300" href="{{ route('orders') }}"
+                    data-tooltip-target="seeOrders" data-tooltip-style="light">
+                    <span class="far fa-copy"></span>
+                </a>
+                <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                    href="{{ route('invoices.show', $currentInvoice) }}">
+                    <span class="far fa-eye"></span>
+                </a>
+                <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                    href="{{ route('invoices.show', [$currentInvoice, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) }}">
+                    <span class="fas fa-hand-holding-usd"></span>
+                </a>
+            </x-slot>
+        @endif
 
         <div class="w-full h-full  pl-0" x-data="{ open: true }">
             @if ($invoices->count())

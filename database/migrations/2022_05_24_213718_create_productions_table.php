@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('eficiency')->comment('Eficiencia de la producción')->default(0);
             $table->dateTime('start_at')->comment('Momento en que inicia el proceso');
             $table->dateTime('end_at')->comment('Momento en que termina el proceso')->nullable();
-            $table->foreignId('user_id')->comment('Usuario responsable del proceso')->constrained();
+            $table->foreignId('user_id')->comment('Usuario responsable del proceso')->constrained()->on('moso_master.users');
             $table->timestamps();
         });
     }

@@ -12,9 +12,9 @@
                 </div>
             </div>
             <div>
-                <div class="space-y-2">
-                    <label>Descripción del producto</label>
-                    <textarea rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
+                <div class="space-y-2 pt-7">
+                    <label class="font-medium">Descripción del producto</label>
+                    <textarea rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
                         placeholder="Breve descripción del producto" id="form.description"
                         wire:model.defer="form.description"></textarea>
                 </div>
@@ -45,6 +45,14 @@
             <hr>
         </div>
         <div class="flex space-x-4 col-span-3">
+            <div class="w-full">
+                <x-base-select wire:model.defer="form.type" label="Tipo de producto">
+                    <option value=""></option>
+                    <option  >Producto</option>
+                    <option >Servicio</option>
+                </x-base-select>
+            <x-input-error for="form.type"></x-input-error>
+            </div>
             <div class="w-full">
                 <label for="photo" class="flex items-center space-x-4 pb-4 cursor-pointer">
                     <span class="fas fa-image text-xl"></span>

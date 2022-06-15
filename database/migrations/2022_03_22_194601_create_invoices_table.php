@@ -32,9 +32,9 @@ return new class extends Migration
             $table->decimal('ingreso', 14,4)->comment('Costo de venta de los productos');
             $table->foreignId('client_id')->comment('Cliente que hace la compra')->nullable()->constrained();
             $table->foreignId('place_id')->comment('Sucursal a la que pertenece la compra')->constrained();
-            $table->foreignId('store_id')->comment('Tienda a la que pertenece la compra')->constrained();
-            $table->foreignIdFor(User::class,'seller_id')->references('id')->on('users')->comment('Usuario que genera la venta')->constrained();
-            $table->foreignIdFor(User::class, 'contable_id')->references('id')->on('users')->comment('Usuario que cobra la venta')->constrained();
+            $table->foreignId('store_id')->comment('Tienda a la que pertenece la compra')->constrained()->on('moso_master.stores');
+            $table->foreignIdFor(User::class,'seller_id')->references('id')->on('users')->comment('Usuario que genera la venta')->constrained()->on('moso_master.users');
+            $table->foreignIdFor(User::class, 'contable_id')->references('id')->on('users')->comment('Usuario que cobra la venta')->constrained()->on('moso_master.users');
             $table->date('expires_at');
             $table->softDeletes();
             $table->timestamps();

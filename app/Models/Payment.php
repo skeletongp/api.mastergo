@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Payment extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
     protected $guarded=[];
 
     public static function boot()

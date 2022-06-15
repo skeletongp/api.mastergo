@@ -15,6 +15,7 @@ use Ramsey\Uuid\Uuid;
 class Product extends Model implements Searchable
 {
     use HasFactory, SoftDeletes, SearchableTrait;
+    protected $connection="mysql";
 
 
     protected $fillable=[

@@ -73,8 +73,8 @@
 
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent " disabled
-                            placeholder="Precio" wire:model="price" id="pr_price" label="">
+                        <x-base-input class="uppercase border-none text-center bg-transparent" type="number" status="{{auth()->user()->hasPermissionTo('Asignar Precios')?'':'disabled'}}"
+                            placeholder="Precio" wire:model.lazy="price" id="pr_price" label="">
                         </x-base-input>
                     </div>
                 </td>

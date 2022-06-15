@@ -15,13 +15,6 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Models\Count;
-use App\Models\CountMain;
-use App\Models\Detail;
-use App\Models\Invoice;
-use App\Models\Proceso;
-use App\Models\User;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('copy_print')->default(1);
             $table->string('printer_nif')->nullable();
             $table->string('printer_ver')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

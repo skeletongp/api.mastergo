@@ -20,7 +20,7 @@ class EditUser extends Component
             'user'=>'required',
             'user.name' => 'required|string|max:50',
             'user.lastname' => 'required|string|max:75',
-            'user.email' => 'required|string|max:100|unique:users,email,'.$this->user['id'],
+            'user.email' => 'required|string|max:100|unique:moso_master.users,email,'.$this->user['id'],
             'user.phone' => 'required|string|max:25',
             'role'=>'required|exists:roles,name',
           

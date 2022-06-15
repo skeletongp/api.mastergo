@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Unit extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $fillable = [
         'name',
@@ -39,6 +40,7 @@ class Unit extends Model
     {
         return $this->belongsToMany(Product::class, 'product_place_units')->withPivot('price_menor','price_mayor','min','stock','cost','id');
     }
+    
 
     public function price() : Attribute
     {

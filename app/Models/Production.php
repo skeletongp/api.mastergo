@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Production extends Model
 {
     use HasFactory;
+protected $connection="mysql";
     protected $guarded=[];
 
     public static function boot() {

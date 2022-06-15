@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Count extends Model
 {
     use HasFactory, SoftDeletes;
-    
+protected $connection="mysql";
     protected $guarded=[
      
     ];

@@ -16,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 class Store extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait, HasRoles, StoreTrait;
-
+    protected $connection="moso_master";
     protected $guarded = [
        
     ];
@@ -44,12 +44,12 @@ class Store extends Model
     }
     public function users()
     {
-        return $this->belongsToMany(User::class, 'store_users');
+        return $this->belongsToMany(User::class, env('DB_DATABASE').'.store_users');
     }
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'store_roles');
+        return $this->belongsToMany(Role::class, env('DB_DATABASE').'.store_roles');
     }
     public function image()
     {
@@ -88,7 +88,7 @@ class Store extends Model
     }
     public function scope()
     {
-        return $this->morphToMany(Scope::class, 'scopeable', 'model_has_scopes')->withTimestamps();
+        return $this->morphToMany(Scope::class, 'scopeable', env('DB_DATABASE').'.model_has_scopes')->withTimestamps();
     }
     public function recursos()
     {

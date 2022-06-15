@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 class Detail extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $connection="mysql";
     protected $fillable = [
         'detailable_id',
         'detailable_type',

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Provision extends Model
 {
     use HasFactory;
+protected $connection="mysql";
     protected $guarded=[];
     const LETTER=['A','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 

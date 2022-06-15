@@ -12,9 +12,12 @@ return new class extends Migration
      *
      * @return void
      */
+
+    protected $connection = 'moso_master';
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        
+        Schema::connection($this->connection)->create('users', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
             $table->string('name',50)->comment('Primer nombre del usuario');
@@ -30,7 +33,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE users comment 'My comment'");
     }
 
     /**
@@ -40,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::connection($this->connection)->dropIfExists('moso_master.users');
     }
 };

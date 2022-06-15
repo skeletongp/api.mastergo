@@ -19,7 +19,7 @@ class EditStore extends Component
             'store.name' => 'required|string|max:75',
             'store.address' => 'required|string|max:100',
             'store.lema' => 'string|max:75',
-            'store.email' => "required|string|max:100|unique:stores,email," . $this->store->id,
+            'store.email' => "required|string|max:100|unique:moso_master.stores,email," . $this->store->id,
             'store.phone' => 'required|string|max:15',
             'store.rnc' => 'max:15',
             'logo' => 'max:2048'

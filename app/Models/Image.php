@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Image extends Model
 {
     use HasFactory, SoftDeletes;
-
+protected $connection="mysql";
     protected $fillable = [
         'path',
         'imageable_id',

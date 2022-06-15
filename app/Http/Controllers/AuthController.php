@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'exists:users,username'
+            'username' => 'exists:moso_master.users,username'
         ]);
         if (Auth::attempt($request->only('username', 'password'), false)) {
             $request->session()->regenerate();

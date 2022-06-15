@@ -11,7 +11,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Provider extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait;
-
+    protected $connection="mysql";
 
     protected $fillable = [
         'name',

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Proceso extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $fillable = [
         'name',

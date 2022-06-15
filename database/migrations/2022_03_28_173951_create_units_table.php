@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('symbol');
-            $table->foreignId('store_id')->constrained();
+            $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -129,4 +129,17 @@ trait DetailsSectionTrait
     {
         $this->setProduct($this->product_code);
     }
+    public function updatingPrice($newPrice)
+    {
+        $oldPrice=$this->price;
+        if ($oldPrice>$newPrice) {
+            $discount=formatNumber(1-($newPrice/$oldPrice));
+           $this->discount=$discount*100;
+        }
+        $this->price=$newPrice;
+    }
+    public function updatingDiscount($desc)
+    {
+      $this->discount=$desc*100;
+    }
 }

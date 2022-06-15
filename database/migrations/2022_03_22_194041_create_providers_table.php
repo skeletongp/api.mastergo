@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone',25);
             $table->string('rnc')->nullable();
             $table->decimal('limit', 14,4)->default(0)->comment('Crédito límite del proveedor');
-            $table->foreignId('store_id')->constrained();
+            $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();
         });

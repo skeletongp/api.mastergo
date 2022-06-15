@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Cuadre extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
     protected $guarded=[];
 
     public function place(){

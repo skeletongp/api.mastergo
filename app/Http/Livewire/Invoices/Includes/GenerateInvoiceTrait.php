@@ -15,7 +15,7 @@ trait GenerateInvoiceTrait
 
     public function createDetails($invoice)
     {
-        $gasto=0;
+        $gasto = 0;
         foreach ($this->details as $ind => $detail) {
             unset($this->details[$ind]['product_name']);
             unset($this->details[$ind]['unit_name']);
@@ -24,7 +24,7 @@ trait GenerateInvoiceTrait
             $detail['detailable_type'] = Invoice::class;
             $taxes = empty($detail['taxes']) ? [] : $detail['taxes'];
             if ($invoice->type == 'B00' || $invoice->type == 'B14') {
-                $detail['total']=$detail['subtotal']-$detail['discount'];
+                $detail['total'] = $detail['subtotal'] - $detail['discount'];
             }
             $det = Detail::create(Arr::except($detail, 'taxes'));
             if ($invoice->type != 'B00' && $invoice->type != 'B14') {
@@ -32,11 +32,11 @@ trait GenerateInvoiceTrait
                 $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
             }
             $det->save();
-            $gasto+=$det->cant*$det->cost;
-
-            $this->restStock($detail['unit_pivot_id'], $detail['cant']);
+            $gasto += $det->cant * $det->cost;
+            $product = $det->product;
+            $this->restStock($detail['unit_pivot_id'], $detail['cant'], $product);
         }
-        $invoice->update(['gasto'=>$gasto]);
+        $invoice->update(['gasto' => $gasto]);
     }
     public function setFromScan()
     {
@@ -70,11 +70,11 @@ trait GenerateInvoiceTrait
         }
         $total = array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
-        $comp_id=null;
-        if ($this->type!='B00' && $this->type!='B14') {
-            $comp_id=$this->comprobante_id;
-            $comprobante=Comprobante::whereId($comp_id)->first();
-            $comprobante->update(['status'=>'usado']);
+        $comp_id = null;
+        if ($this->type != 'B00' && $this->type != 'B14') {
+            $comp_id = $this->comprobante_id;
+            $comprobante = Comprobante::whereId($comp_id)->first();
+            $comprobante->update(['status' => 'usado']);
         }
         $invoice = $user->store->invoices()->create(
             [
@@ -83,8 +83,8 @@ trait GenerateInvoiceTrait
                 'condition' => $this->condition,
                 'expires_at' => $this->vence,
                 'contable_id' => $user->id,
-                'number'=>$this->number,
-                'name'=>$this->name,
+                'number' => $this->number,
+                'name' => $this->name,
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
                 'client_id' => $this->client['id'],
@@ -99,26 +99,26 @@ trait GenerateInvoiceTrait
             $this->createInvoiceTaxes($invoice);
         }
         event(new NewInvoice($invoice));
-        $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name','name');
-        $this->invoice = $invoice->load('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference');
+        $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name', 'name');
+        $this->invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
         $this->mount();
     }
     public function createPayment($invoice)
     {
         $subtotal = array_sum(array_column($this->details, 'subtotal'));
         $discount = array_sum(array_column($this->details, 'discount'));
-        $tax=0;
+        $tax = 0;
         if ($invoice->type != 'B00' && $invoice->type != 'B14') {
             $tax = array_sum(array_column($this->details, 'taxTotal'));
         }
         $total = $subtotal - $discount + $tax;
-        if ($invoice->condition=="DE CONTADO") {
-            $forma='contado';
+        if ($invoice->condition == "DE CONTADO") {
+            $forma = 'contado';
         } else {
-            $forma='credito';
+            $forma = 'credito';
         }
-        
-        
+
+
         $data = [
             'ncf' => optional($invoice->comprobante)->ncf,
             'amount' => $subtotal,
@@ -131,17 +131,19 @@ trait GenerateInvoiceTrait
             'efectivo' => 0,
             'tarjeta' => 0,
             'transferencia' => 0,
-            'forma'=>$forma
+            'forma' => $forma
         ];
         $invoice->payment()->save(setPayment($data));
         $invoice->client->payments()->save($invoice->payment);
     }
-    public function restStock($pivotUnitId, $cant)
+    public function restStock($pivotUnitId, $cant, $product)
     {
-        $user = auth()->user();
-        $unit = $user->place->units()->wherePivot('id', $pivotUnitId)->first();
-        $unit->pivot->stock = floatval($unit->stock) - $cant;
-        $unit->pivot->save();
+        if ($product->type == 'Producto') {
+            $user = auth()->user();
+            $unit = $user->place->units()->wherePivot('id', $pivotUnitId)->first();
+            $unit->pivot->stock = floatval($unit->stock) - $cant;
+            $unit->pivot->save();
+        }
     }
     public function verifyCredit($amount, $credit)
     {

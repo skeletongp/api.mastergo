@@ -1223,6 +1223,9 @@ input:checked + .toggle-bg {
 .min-h-\[65vh\] {
   min-height: 65vh;
 }
+.min-h-\[26rem\] {
+  min-height: 26rem;
+}
 .w-28 {
   width: 7rem;
 }
@@ -2238,6 +2241,9 @@ input:checked + .toggle-bg {
 }
 .pt-10 {
   padding-top: 2.5rem;
+}
+.pt-7 {
+  padding-top: 1.75rem;
 }
 .text-left {
   text-align: left;

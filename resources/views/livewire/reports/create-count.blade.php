@@ -1,6 +1,6 @@
 <div>
     @can('Crear Cuentas')
-        <x-modal open :fitV="false" maxHeight="max-h-[70vh]" title="Nueva Cuenta" maxWidth="max-w-3xl">
+        <x-modal  :fitV="false" maxHeight="max-h-[70vh]" title="Nueva Cuenta" maxWidth="max-w-3xl">
             <x-slot name="button">
                 <span>
                     Añadir Cuenta

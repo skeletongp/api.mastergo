@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Tax extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $fillable=[
         'name',

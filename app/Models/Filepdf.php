@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Filepdf extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $fillable=[
         'note',

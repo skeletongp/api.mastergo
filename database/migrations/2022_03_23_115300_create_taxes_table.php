@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->comment('Nombre del impuesto');
             $table->decimal('rate')->comment('Tasa que pagaría el impuesto');
-            $table->foreignId('store_id')->constrained();
+            $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();
         });

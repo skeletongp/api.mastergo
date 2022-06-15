@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductProduction extends Model
 {
     use HasFactory;
+protected $connection="mysql";
     protected $guarded=[];
 
     public function productible()

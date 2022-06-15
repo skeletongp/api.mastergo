@@ -10,6 +10,7 @@ use Ramsey\Uuid\Uuid;
 class Place extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $fillable=[
         'name','phone','uid','user_id','store_id'
@@ -37,7 +38,7 @@ class Place extends Model
     }
     public function units()
     {
-        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price_menor','price_mayor','min','stock','cost','id');
+        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price_menor','price_mayor','min','stock','cost','id', 'product_id');
     }
     public function contable()
     {

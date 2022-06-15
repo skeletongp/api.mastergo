@@ -18,7 +18,7 @@ class CreateStore extends Component
         'form.name' => 'required|string|max:75',
         'form.address' => 'required|string|max:100',
         'form.lema' => 'string|max:75',
-        'form.email' => 'required|string|max:100|unique:stores,email',
+        'form.email' => 'required|string|max:100|unique:moso_master.stores,email',
         'form.phone' => 'required|string|max:15',
         'form.rnc' => 'max:12',
         'logo' => 'max:2048'

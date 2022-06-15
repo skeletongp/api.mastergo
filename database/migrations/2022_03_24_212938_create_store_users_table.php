@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('store_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('store_id')->constrained()->on('moso_master.stores');
+            $table->foreignId('user_id')->constrained()->on('moso_master.users');
             $table->timestamps();
         });
     }

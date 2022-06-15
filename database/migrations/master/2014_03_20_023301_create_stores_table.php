@@ -11,9 +11,11 @@ return new class extends Migration
      *
      * @return void
      */
+    protected $connection = 'moso_master';
+
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
+      Schema::connection($this->connection)->create('stores', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
             $table->string('name',75);
@@ -37,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores');
+        Schema::connection($this->connection)->dropIfExists('moso_master.stores');
     }
 };

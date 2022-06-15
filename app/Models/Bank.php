@@ -10,8 +10,7 @@ class Bank extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded=[];
-    
-
+    protected $connection="mysql";
     public function titular()
     {
         return $this->belongsTo(User::class, 'titular_id');

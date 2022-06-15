@@ -18,8 +18,8 @@ return new class extends Migration
             $table->decimal('amount', 14,4)->comment('Cantidad ingresada');
             $table->string('concepto')->comment('Detalle de este ingreso');
             $table->morphs('incomeable');
-            $table->foreignId('user_id')->comment('Usuario que recibe el ingreso')->constrained();
-            $table->foreignId('store_id')->comment('Tienda a la que pertenece')->constrained();
+            $table->foreignId('user_id')->comment('Usuario que recibe el ingreso')->constrained()->on('moso_master.users');
+            $table->foreignId('store_id')->comment('Tienda a la que pertenece')->constrained()->on('moso_master.stores');
             $table->foreignId('place_id')->comment('Sucursal a la que pertenece')->constrained();
 
             $table->softDeletes();

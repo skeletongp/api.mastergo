@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uid');
             $table->string('name')->comment('Identificador de la categoría');
             $table->string('description')->comment('Para entender su natureleza y facilitar las búsqueda');
-            $table->foreignId('store_id')->comment('Tienda a la que pertenece la categoría')->constrained();
+            $table->foreignId('store_id')->comment('Tienda a la que pertenece la categoría')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();
         });

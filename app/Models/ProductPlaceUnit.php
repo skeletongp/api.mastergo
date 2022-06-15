@@ -9,11 +9,15 @@ class ProductPlaceUnit extends Pivot
 {
     protected $table="product_place_units";
     protected $guarded=[];
-   
+    protected $connection="mysql";
     public function stock() : Attribute
     {
         return new Attribute(
             get:fn($value)=>$value
         );
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Transaction extends Model
 {
     use HasFactory, SoftDeletes, Prunable;
-
+    protected $connection="mysql";
     protected $guarded = [];
 
     public function debe()

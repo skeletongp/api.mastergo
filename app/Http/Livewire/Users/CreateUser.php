@@ -29,8 +29,8 @@ class CreateUser extends Component
     protected $rules = [
         'form.name' => 'required|string|max:50',
         'form.lastname' => 'required|string|max:75',
-        'form.email' => 'required|string|max:100|unique:users,email,NULL,id,deleted_at,NULL',
-        'form.username' => 'required|string|max:35|unique:users,username,NULL,id,deleted_at,NULL',
+        'form.email' => 'required|string|max:100|unique:moso_master.users,email,NULL,id,deleted_at,NULL',
+        'form.username' => 'required|string|max:35|unique:moso_master.users,username,NULL,id,deleted_at,NULL',
         'form.password' => 'required|string|min:8',
         'form.phone' => 'required|string|max:25',
         'form.place_id' => 'required|numeric|exists:places,id',

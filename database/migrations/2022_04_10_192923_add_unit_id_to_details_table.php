@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('details', function (Blueprint $table) {
+            
             $table->foreignId('unit_id')->after('product_id')->references('id')->on('product_place_units')->constrained();
         });
     }

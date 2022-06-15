@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('store_roles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')->constrained()->onDelete('cascade');
-            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+            $table->foreignId('store_id')->constrained()->onDelete('cascade')->on('moso_master.stores');
             $table->timestamps();
         });
     }

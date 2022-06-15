@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('ref')->comment('Referencia del gasto para asiento');
             $table->string('ncf')->nullable()->comment('Comprobante que sustenta el gasto');
             $table->morphs('outcomeable');
-            $table->foreignId('user_id')->comment('Usuario que realiza el gasto')->constrained();
-            $table->foreignId('store_id')->comment('Tienda a la que pertenece')->constrained();
+            $table->foreignId('user_id')->comment('Usuario que realiza el gasto')->constrained()->on('moso_master.users');
+            $table->foreignId('store_id')->comment('Tienda a la que pertenece')->constrained()->on('moso_master.stores');
             $table->foreignId('place_id')->comment('Sucursal a la que pertenece')->constrained();
             $table->softDeletes();
             $table->timestamps();

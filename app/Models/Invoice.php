@@ -11,6 +11,7 @@ use Ramsey\Uuid\Uuid;
 class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $guarded=[
 

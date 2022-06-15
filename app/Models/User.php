@@ -21,8 +21,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements Searchable
 {
     use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes, ModelContableTrait;
-
-   
+    protected $connection="moso_master";
 
     public function getSearchResult(): SearchResult
      {
@@ -114,7 +113,7 @@ class User extends Authenticatable implements Searchable
 
     public function stores()
     {
-        return $this->belongsToMany(Store::class, 'store_users');
+        return $this->belongsToMany(Store::class, env('DB_DATABASE').'.store_users');
     }
    
     

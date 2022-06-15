@@ -13,6 +13,7 @@ use Ramsey\Uuid\Uuid;
 class Recurso extends Model
 {
     use HasFactory, SoftDeletes;
+protected $connection="mysql";
 
     protected $fillable=[
         'name',

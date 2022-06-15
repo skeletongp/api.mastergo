@@ -15,7 +15,7 @@ class Client extends Model implements Searchable
 {
     use HasFactory, SoftDeletes, SearchableTrait;
 
-
+    protected $connection="mysql";
     protected $fillable = [
         'name',
         'code',
