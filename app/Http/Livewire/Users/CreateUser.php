@@ -66,7 +66,22 @@ class CreateUser extends Component
         $photo = $this->avatar->storeAs('avatars', date('Y_m_d_H_i_s') . '.' . $ext);
         $this->photo_path = asset("storage/{$photo}");
     } 
-   
+   public function updatedFormLastname($value)
+   {
+      $name='';
+      if (array_key_exists('name',$this->form)) {
+        $name=$this->form['name'];
+      }
+      $this->form['username']=strtolower(substr($name,0,1).strtok($value, " "));
+   }
+   public function updatedFormName($value)
+   {
+      $lastname='';
+      if (array_key_exists('lastname',$this->form)) {
+        $lastname=$this->form['lastname'];
+      }
+      $this->form['username']=strtolower(substr($value,0,1).strtok($lastname, " "));
+   }
    
     
 }

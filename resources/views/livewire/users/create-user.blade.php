@@ -15,39 +15,39 @@
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-input label="Primer nombre" id="name" wire:model.defer="form.name" />
+                        <x-input label="Primer nombre" id="name" wire:model.lazy="form.name" />
                         <x-input-error for="form.name" />
                     </div>
                     <div class="w-full">
-                        <x-input label="Apellidos" id="lastname" wire:model.defer="form.lastname" />
+                        <x-input label="Apellidos" id="lastname" wire:model.lazy="form.lastname" />
                         <x-input-error for="form.lastname" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-input label="Correo Electrónico" id="email" type="email" wire:model.defer="form.email" />
+                        <x-input label="Correo Electrónico" id="email" type="email" wire:model.lazy="form.email" />
                         <x-input-error for="form.email" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-1/2">
-                        <x-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.defer="form.username" />
+                        <x-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.lazy="form.username" />
                         <x-input-error for="form.username" />
                     </div>
                     <div class="w-1/2">
                         <x-input label="Contraseña" autocomplete="new-password" type="password" id="new-password"
-                            wire:model.defer="form.password" />
+                            wire:model.lazy="form.password" />
                         <x-input-error for="form.password" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-end space-y-0 space-x-3">
                     <div class="w-full">
-                        <x-input type="tel" label="No. Teléfono" id="phone" wire:model.defer="form.phone" />
+                        <x-input type="tel" label="No. Teléfono" id="phone" wire:model.lazy="form.phone" />
                         <x-input-error for="form.phone" />
                     </div>
                     <div class="w-full pb-0 select2-div">
                         <label for="role">Rol de usuario</label>
-                        <x-select id="frole" wire:model.defer="role" class=" select2">
+                        <x-select id="frole" wire:model.lazy="role" class=" select2">
                             <option value=""></option>
                             @foreach ($roles as $name)
                                 <option value="{{ $name }}">{{ preg_replace('/[0-9]+/', '',  $name); }}</option>
@@ -59,7 +59,7 @@
                 <div class="  pb-6 flex items-end space-y-0 space-x-3">
                     <div class="w-full pb-0">
                         <label for="place_id">Sucursal Predeterminada</label>
-                        <x-select id="place_id" wire:model.defer="form.place_id" class="select2">
+                        <x-select id="place_id" wire:model.lazy="form.place_id" class="select2">
                             @foreach ($places as $id=> $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
