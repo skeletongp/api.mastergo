@@ -15,7 +15,7 @@ trait OrderConfirmTrait
         $condition = $invoice->condition == 'De Contado' && $this->form['rest'] > 0;
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
             $this->action = 'payInvoice';
-            $this->emit('openAuthorize');
+            $this->emit('openAuthorize', 'Para fiar factura de contado');
         } else {
             $this->payInvoice();
         }
@@ -56,9 +56,10 @@ trait OrderConfirmTrait
         setPDFPath($invoice);
 
         $this->closeComprobante($invoice->comprobante, $invoice);
-        $invoice = Invoice::whereId($this->form['id'])->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')->first();
-        $this->emit('showAlert', 'Factura cobrada exitosamente','success');
-        $this->emit('changeInvoice', $invoice);
+        $invoice = Invoice::whereId($this->form['id'])->with('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference')->first();
+        $this->emit('showAlert', 'Factura cobrada exitosamente', 'success');
+        if (auth()->user()->hasPermissionTo('Imprimir Facturas'))
+            $this->emit('changeInvoice', $invoice);
         $this->emit('refreshLivewireDatatable');
     }
 }

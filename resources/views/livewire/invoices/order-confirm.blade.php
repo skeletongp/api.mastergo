@@ -11,7 +11,7 @@
         </x-slot>
 
         <form wire:submit.prevent="tryPayInvoice" class="grid grid-cols-5 gap-4 p-3 max-w-3xl mx-auto text-left">
-            {{-- Primera fila --}}
+            {{-- Vendedor --}}
             <div class="col-span-2">
                 <x-base-input class="text-xl font-bold" label="Vendedor" id="form{{ $form['id'] }}.seller" disabled
                     value="{{ $form['seller']['fullname'] }}">
@@ -20,7 +20,7 @@
 
 
 
-            {{-- Segunda Fila --}}
+            {{-- Montos --}}
             <div>
                 <x-base-input class="text-xl font-bold" type="number" disabled wire:model.lazy="form.amount" label="Subtotal"
                     id="form{{ $form['id'] }}.amount">
@@ -42,7 +42,7 @@
                 <x-input-error for="form.total"></x-input-error>
             </div>
 
-            {{-- Tercera Fila --}}
+            {{-- Campos de cobro --}}
             <div>
                 <x-base-input class="text-xl font-bold" type="number" status="{{!$cobrable?'disabled':''}}"
                     wire:model.lazy="form.efectivo" label="Efectivo" id="form{{ $form['id'] }}.efectivo"></x-base-input>
@@ -103,36 +103,7 @@
                 <x-base-input class="text-xl font-bold" type="text" wire:model.lazy="form.note" label="Nota"
                     id="form{{ $form['id'] }}.note" placeholder="Ingrese una nota a la factura"></x-base-input>
             </div>
-            @if ($form['tarjeta'] > 0)
-                <div class="flex space-x-4 col-span-5">
-                    <div class="w-full">
-                        <label for="{{ $form['id'] }}cheque" class="flex items-center space-x-4 pb-4 cursor-pointer">
-                            <span class="fas fa-image text-xl"></span>
-                            <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen del adjunto</span>
-                            @if ($photo_path)
-                                <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                                    {{ formatNumber($cheque->getSize() / 1024) }} KB</span>
-                            @endif
-                            <input wire:model="cheque" type="file" class="hidden" name="cheque"
-                                id="{{ $form['id'] }}cheque" accept="image/*" capture>
-                        </label>
-                        <hr>
-                        <x-input-error for="cheque" />
-                    </div>
-                    <div class="w-96 h-[3rem]  bg-center bg-cover"
-                        style="background-image: url({{ $photo_path ? $cheque->temporaryUrl() : '' }})">
-                    </div>
-                    <div class="">
-                        <x-button class="space-x-2 z-50 text-sm flex items-center" wire:target="cheque" wire:loading>
-                            <div class="animate-spin">
-                                <span class="fa fa-spinner ">
-                                </span>
-                            </div>
-                            <h1>Procesando</h1>
-                        </x-button>
-                    </div>
-                </div>
-            @endif
+          
             <button
                 class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
                 wire:loading>

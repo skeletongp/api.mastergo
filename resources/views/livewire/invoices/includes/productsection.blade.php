@@ -42,9 +42,15 @@
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border  max-w-[12rem]">
-                    <div class="w-48 max-w-[12rem]">
-                        <x-base-input id="pr_name" class="uppercase border-none text-center bg-transparent overflow-hidden overflow-ellipsis whitespace-nowrap " disabled
-                            placeholder="Nombre del producto" wire:model="product_name" label=""></x-base-input>
+                    <div class="w-48 max-w-[12rem] px-1">
+                        {{-- <x-base-input id="pr_name" class="uppercase border-none text-center bg-transparent overflow-hidden overflow-ellipsis whitespace-nowrap " disabled
+                            placeholder="Nombre del producto" wire:model="product_name" label=""></x-base-input> --}}
+                        <x-datalist wire:model.lazy="product_name" id="pr_name" type="text" placeholder="Producto"
+                            listName="pr_code_name" wire:keydown.enter="$emit('focusCant')">
+                            @foreach ($products as $index => $prod)
+                                <option class="bg-gray-200 py-1" value="{{ $index . ' ' . $prod }}">
+                            @endforeach
+                        </x-datalist>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
@@ -73,7 +79,8 @@
 
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
-                        <x-base-input class="uppercase border-none text-center bg-transparent" type="number" status="{{auth()->user()->hasPermissionTo('Asignar Precios')?'':'disabled'}}"
+                        <x-base-input class="uppercase border-none text-center bg-transparent" type="number"
+                            status="{{ auth()->user()->hasPermissionTo('Asignar Precios')? '': 'disabled' }}"
                             placeholder="Precio" wire:model.lazy="price" id="pr_price" label="">
                         </x-base-input>
                     </div>
@@ -81,7 +88,7 @@
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-24">
                         <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
-                        status="{{auth()->user()->hasPermissionTo('Aplicar Descuentos')?'':'disabled'}}"
+                            status="{{ auth()->user()->hasPermissionTo('Aplicar Descuentos')? '': 'disabled' }}"
                             placeholder="Desc." wire:model="discount" wire:keydown.enter="tryAddItems" id="pr_discount"
                             label=""></x-base-input>
                     </div>
@@ -180,7 +187,6 @@
     </table>
     @push('js')
         <script>
-      
             Livewire.on('focusCode', function() {
                 $('#code').focus();
             })
@@ -195,7 +201,7 @@
                 function key(e) {
                     code = e.key || e.which;
                     if (code == 'F2') {
-                       $('#btntrySendInvoice').click();
+                        $('#btntrySendInvoice').click();
                     }
                 }
             })

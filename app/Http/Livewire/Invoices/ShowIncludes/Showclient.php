@@ -36,7 +36,7 @@ trait Showclient
     {
         if (!auth()->user()->hasPermissionTo('Editar Facturas')) {
             $this->action='updateInvoiceClient';
-            $this->emit('openAuthorize');
+            $this->emit('openAuthorize', 'Para cambiar cliente de factura');
         } else {
             $this->updateInvoiceClient();
         }

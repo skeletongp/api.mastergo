@@ -37,7 +37,7 @@ class Client extends Model implements Searchable
         ]
     ];
     protected $appends=[
-        'debt'
+        'debt','avatar'
     ];
 
     public function getSearchResult(): SearchResult

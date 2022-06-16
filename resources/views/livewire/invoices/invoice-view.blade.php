@@ -5,24 +5,7 @@
                 <livewire:invoices.invoice-list />
             </div>
         </div>
-        @if ($currentInvoice)
-            <x-slot name="rightButton">
-                <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
-                <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300" href="{{ route('orders') }}"
-                    data-tooltip-target="seeOrders" data-tooltip-style="light">
-                    <span class="far fa-copy"></span>
-                </a>
-                <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                    href="{{ route('invoices.show', $currentInvoice) }}">
-                    <span class="far fa-eye"></span>
-                </a>
-                <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                    href="{{ route('invoices.show', [$currentInvoice, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) }}">
-                    <span class="fas fa-hand-holding-usd"></span>
-                </a>
-            </x-slot>
-        @endif
-
+       
         <div class="w-full h-full  pl-0" x-data="{ open: true }">
             @if ($invoices->count())
                 <div class="mx-auto ">
@@ -32,14 +15,28 @@
                             <span class="font-bold uppercase text-xl "> {{ $currentInvoice->client->fullname }}</span>
                         </div>
 
+                        <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
+                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300" href="{{ route('orders') }}"
+                            data-tooltip-target="seeOrders" data-tooltip-style="light">
+                            <span class="far fa-copy"></span>
+                        </a>
+                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                            href="{{ route('invoices.show', $currentInvoice) }}">
+                            <span class="far fa-eye"></span>
+                        </a>
+                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                            href="{{ route('invoices.show', [$currentInvoice, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) }}">
+                            <span class="fas fa-hand-holding-usd"></span>
+                        </a>
 
-
-                        <x-tooltip id="printAction">Imprimir</x-tooltip>
-                        <button class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                            data-tooltip-target="printAction" data-tooltip-style="light"
-                            wire:click="$emit('changeInvoice',{{ $invoice, true }})">
-                            <span class="far fa-print"></span>
-                        </button>
+                        @can('Imprimir Facturas')
+                            <x-tooltip id="printAction">Imprimir</x-tooltip>
+                            <button class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                                data-tooltip-target="printAction" data-tooltip-style="light"
+                                wire:click="$emit('changeInvoice',{{ $invoice, true }})">
+                                <span class="far fa-print"></span>
+                            </button>
+                        @endcan
                     </div>
                     <div class=" mx-auto relative " style=" height:70vh; width:80mm">
                         @include('livewire.invoices.includes.show')

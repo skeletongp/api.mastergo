@@ -13,7 +13,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class TableClient extends LivewireDatatable
 {
 
-    public $exportable=true;
     public $headTitle="Clientes Registrados";
     public  $hideable="select";
 
@@ -35,36 +34,18 @@ class TableClient extends LivewireDatatable
             Column::callback(['limit'], function($limit){
                 return '$'. formatNumber($limit);
             })->label('Crédito')->searchable()->headerAlignCenter(),
+            Column::callback(['updated_at','id'], function($updated, $id) use ($clients){
+                $client=arrayFind($clients, 'id', $id);
+                return  view('pages.clients.link-to-invoice', ['client_id' => $client['id'], 'debt' =>'$'. formatNumber($client['debt']), 'key' => uniqid()]);
+            })->label('Deuda')->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Documento')->searchable()->headerAlignCenter()->hide(),
-           $this->editColumn($clients),
-           $this->deleteColumn($clients),
-        ];
-    }
-    public function editColumn($clients)
-    {
-        if (auth()->user()->hasPermissionTo('Editar Clientes')) {
-            return Column::name('created_at')->callback(['created_at','id'], function($created, $id) use ($clients) {
+            Column::name('created_at')->callback(['created_at','id'], function($created, $id) use ($clients) {
                 $client=arrayFind($clients, 'id', $id);
                 return view('pages.clients.actions', compact('client'));
-            })->label('Editar')->headerAlignCenter();
-        } 
+            })->label('Acciones')->headerAlignCenter(),
+        ];
     }
-    public function deleteColumn($clients)
-    {
-        if (auth()->user()->hasPermissionTo('Borrar Clientes')) {
-            return Column::delete('id')->label("Borrar");
-        }
-    }
-    public function delete($id)
-    {
-        $client = Client::find($id);
-        $generic=auth()->user()->store->generic;
-        if ($id !== $generic->id) {
-            $client->contable->delete();
-            $client->delete();
-        } else {
-            $this->emit('showAlert', 'No puede eliminar este cliente', 'warning');
-        }
-    }
+  
+    
 }

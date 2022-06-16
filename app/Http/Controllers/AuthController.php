@@ -17,7 +17,7 @@ class AuthController extends Controller
         }
         $store=Store::whereId(env('STORE_ID'))->with('users')->first();
         $users=$store->users()->where('loggeable','yes')->pluck('fullname','username');
-        return view('auth.login', compact('users'));;
+        return view('auth.login', compact('users', 'store'));;
     }
     public function store(Request $request)
     {

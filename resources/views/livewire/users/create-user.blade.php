@@ -1,6 +1,6 @@
 
 <div>
-    <x-modal :fitV="false">
+    <x-modal :fitV="false" maxWidth="max-w-3xl">
         <x-slot name="title">
             <span> Nuevo Usuario</span>
         </x-slot>
@@ -28,6 +28,10 @@
                         <x-input label="Correo Electrónico" id="email" type="email" wire:model.lazy="form.email" />
                         <x-input-error for="form.email" />
                     </div>
+                    <div class="w-full">
+                        <x-input type="tel" label="No. Teléfono" id="phone" wire:model.lazy="form.phone" />
+                        <x-input-error for="form.phone" />
+                    </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-1/2">
@@ -41,10 +45,7 @@
                     </div>
                 </div>
                 <div class="  pb-6 flex items-end space-y-0 space-x-3">
-                    <div class="w-full">
-                        <x-input type="tel" label="No. Teléfono" id="phone" wire:model.lazy="form.phone" />
-                        <x-input-error for="form.phone" />
-                    </div>
+                   
                     <div class="w-full pb-0 select2-div">
                         <label for="role">Rol de usuario</label>
                         <x-select id="frole" wire:model.lazy="role" class=" select2">
@@ -55,8 +56,6 @@
                         </x-select>
                         <x-input-error for="frole" />
                     </div>
-                </div>
-                <div class="  pb-6 flex items-end space-y-0 space-x-3">
                     <div class="w-full pb-0">
                         <label for="place_id">Sucursal Predeterminada</label>
                         <x-select id="place_id" wire:model.lazy="form.place_id" class="select2">
@@ -67,6 +66,7 @@
                         <x-input-error for="form.place_id" />
                     </div>
                 </div>
+               
                 <input type="hidden" name="store_id" wire:model="store_id">
                 <div class="    pb-6 ">
                     <div class="w-full">

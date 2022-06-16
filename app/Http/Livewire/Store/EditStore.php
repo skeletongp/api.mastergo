@@ -58,10 +58,17 @@ class EditStore extends Component
         $this->validate([
             'logo'=>'image|max:2048'
         ]);
-        $ext = pathinfo($this->logo->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->logo->storeAs('/logos', date('Y_m_d_H_i_s') . '.' . $ext);
+        $path = cloudinary()->upload($this->logo->getRealPath(),
+        [
+            'folder' => 'carnibores/logo',
+            'transformation' => [
+                      'width' => 250,
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+      
         $this->photo_prev = $this->store->logo;
-        $this->photo_path = asset("storage/{$photo}");
+        $this->photo_path = $path;
     }
     public function deletePrevPhoto()
     {

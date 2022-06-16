@@ -19,10 +19,14 @@ class AssignPermission extends Component
     {
         $this->permissionsSelected = $this->user['permissions'];
         $spatiePermissionCache = Cache::get('spatie.permission.cache')['permissions'];
-        $this->permissions = Arr::pluck($spatiePermissionCache, 'n', 'i');
+        if (count($this->user['permissionsViaRole'])) {
+            $this->permissions = Arr::pluck($spatiePermissionCache, 'n', 'i');
+        } else {
+            $this->permissions = Arr::pluck($spatiePermissionCache, 'b', 'a');
+        }
+
         $this->permissions = array_diff($this->permissions, $this->user['permissionsViaRole']);
         $this->selectAll = count($this->permissionsSelected) === count($this->permissions);
-        
     }
 
     public function render()

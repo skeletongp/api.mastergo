@@ -10,7 +10,7 @@ trait ShowPayments
 {
 
 
-    public $banks, $payment, $reference, $bank, $bank_id, $photo_path, $cheque, $cobrable=true;
+    public $banks, $payment, $reference, $bank, $bank_id, $cobrable=true;
 
     public function rules2(): array
     {
@@ -24,16 +24,13 @@ trait ShowPayments
     {
         $rules = $this->rules2();
         if (auth()->user()->store->banks->count()) {
-            # code...
             $rules = array_merge($rules, ['payment.transferencia' => 'required|numeric|min:0']);
         }
         if (!empty($this->payment['transferencia']) && $this->payment['transferencia'] > 0) {
             $rules = array_merge($rules, ['bank' => 'required']);
             $rules = array_merge($rules, ['reference' => 'required']);
         }
-        if (!empty($this->payment['tarjeta']) && $this->payment['tarjeta'] > 0) {
-            $rules = array_merge($rules, ['cheque' => 'required']);
-        }
+      
         $this->bank = Bank::find($this->bank_id);
         $this->validate($rules);
     }
@@ -60,11 +57,11 @@ trait ShowPayments
             $cambio = $payed - $total;
         }
         $forma='cobro';
-
+        
         if ($invoice->day==date('Y-m-d')) {
             $forma=$invoice->condiction=='De Contado'?'contado':'credito';
         }
-
+        
         $data = [
             'ncf' => $invoice->payment->ncf,
             'amount' => $subtotal,
@@ -81,10 +78,9 @@ trait ShowPayments
             'contable_id'=>auth()->user()->id,
             'transferencia' => empty($this->payment['transferencia']) ? 0 : $this->payment['transferencia'],
         ];
-
-        $invoice->payment()->save(setPayment($data));
-
-
+        
+        $invoice->payments()->save(setPayment($data));
+        
         $payment = $invoice->payments()->orderBy('id', 'desc')->first();
         setIncome($invoice, 'Abono saldo Factura Nº. ' . $invoice->number, $payment->payed);
         $invoice->client->payments()->save($payment);
@@ -92,31 +88,16 @@ trait ShowPayments
         $invoice->update([
             'rest' => $invoice->rest - ($payment->payed - $payment->cambio)
         ]);
-        if ($this->photo_path) {
-            $invoice->image()->updateOrCreate(['imageable_id' => $invoice->id], [
-                'path' => $this->photo_path
-            ]);
-            $payment->image()->create([
-                'path' => $this->photo_path
-            ]);
-        }
+       
         setPDFPath($invoice);
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
         $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'contable');
         $this->emit('printPayment', $payment);
         $this->emit('refreshLivewireDatatable');
-        $this->reset('payment', 'bank_id', 'cheque', 'photo_path');
+        $this->reset('payment', 'bank_id');
         $this->payment['efectivo']=0;
         $this->payment['tarjeta']=0;
         $this->payment['transferencia']=0;
     }
-    public function updatedCheque()
-    {
-        $this->reset('photo_path');
-        $this->validate([
-            'cheque' => 'image|max:2048'
-        ]);
-        $path = cloudinary()->upload($this->cheque->getRealPath())->getSecurePath();
-        $this->photo_path = $path;
-    }
+    
 }

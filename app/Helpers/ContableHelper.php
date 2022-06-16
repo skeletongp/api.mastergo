@@ -40,9 +40,11 @@ function setContable($model, String $code, String $origin, $name = null, $place_
         $model->contable()->save($count);
     }
 }
-function setTransaction($concept, $ref, $amount, $debitable, $creditable)
+function setTransaction($concept, $ref, $amount, $debitable, $creditable, $otherPermission=null)
 {
-    if ($amount > 0) {
+    $canCreate=auth()->user()->hasPermissionTo('Registrar Asientos');
+    $canOther= $otherPermission?auth()->user()->hasPermissionTo($otherPermission):false;
+    if ($amount > 0 && ($canCreate || $canOther)) {
         $trans = Transaction::create([
             'concepto' => $concept,
             'ref' => $ref,

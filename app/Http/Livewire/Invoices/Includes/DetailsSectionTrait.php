@@ -40,7 +40,7 @@ trait DetailsSectionTrait
         
         if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar')) {
             $this->action='confirmedAddItems';
-           $this->emit('openAuthorize');
+           $this->emit('openAuthorize', 'Para vender producto fuera de stock');
         } else{
             $this->confirmedAddItems();
         }
@@ -127,7 +127,13 @@ trait DetailsSectionTrait
     }
     public function updatedProductCode()
     {
-        $this->setProduct($this->product_code);
+        $code=substr($this->product_code,0,3);
+        $this->setProduct($code);
+    }
+    public function updatedProductName()
+    {
+        $code=substr($this->product_name,0,3);
+        $this->setProduct($code);
     }
     public function updatingPrice($newPrice)
     {

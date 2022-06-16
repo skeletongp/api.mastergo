@@ -40,9 +40,16 @@ class SettingUser extends Component
     public function updatedAvatar()
     {
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->avatar->storeAs('/avatars', date('Y_m_d_H_i_s') . '.' . $ext);
+        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        [
+            'folder' => 'carnibores/avatars',
+            'transformation' => [
+                      'width' => 250,
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+        $this->photo_path = $path;
         $this->photo_prev = $this->user->avatar;
-        $this->photo_path = asset("storage/{$photo}");
     }
 
     public function updateUser()

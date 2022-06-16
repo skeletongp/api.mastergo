@@ -24,9 +24,16 @@ class TableUser extends LivewireDatatable
     public function builder()
     {
         $this->roles = auth()->user()->store->roles;
-        return auth()->user()->store->users()->with('roles', 'image')->whereHas('roles', function ($role) {
-            $role->where('name', '!=', 'Super Admin');
-        })->whereNull('deleted_at');
+        $users = auth()->user()->store->users()->whereNull('deleted_at');
+        
+        if ($users->count() == 1) {
+            return $users->with('image', 'roles');
+        }
+        $users = $users->get();
+        $users = $users->reject(function ($user, $key) {
+            return $user->hasRole('Super Admin');
+        });
+        return $users->toQuery()->with('image', 'roles');
     }
 
     public function columns()

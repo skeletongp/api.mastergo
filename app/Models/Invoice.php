@@ -19,10 +19,9 @@ protected $connection="mysql";
     public static function boot()
     {
         parent::boot();
-        self::updated(function ($model)  {
-            if ($model->total>$model->rest) {
+        self::updating(function ($model)  {
+            if ($model->payment->total>$model->rest) {
                 $model->isEditable = 0;
-                $model->save();
             }
             
         });
@@ -77,11 +76,11 @@ protected $connection="mysql";
     }
     public function getPdfLetterAttribute()
     {
-        return $this->pdf->pathLetter;
+        return optional($this->pdf)->pathLetter?:'none';
     }
     public function getPdfThermalAttribute()
     {
-        return $this->pdf->pathThermal;
+        return optional($this->pdf)->pathThermal?:'none';
     }
     public function incomes()
     {

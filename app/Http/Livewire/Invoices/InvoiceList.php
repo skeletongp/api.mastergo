@@ -31,8 +31,14 @@ class InvoiceList extends LivewireDatatable
             })->label('Cliente'),
             Column::name('uid')->callback(['uid','id'], function ($total, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
-
-                return '$' . formatNumber($result['payment']['total']);
+                $debe=" <span class='fas fa-times text-red-400'></span>";
+                $pagado=" <span class='fas fa-check text-green-400'></span>";
+                $mark=$pagado;
+                if ($result['rest']>0) {
+                  $mark=$debe;
+                } 
+                
+                return '$' . formatNumber($result['payment']['total']).$mark;
             })->label('Monto'),
             Column::name('id')->label('Ver')->view('livewire.invoices.includes.setPDF')->sortable(),
         ];

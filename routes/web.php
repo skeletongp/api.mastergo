@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(ClientController::class)->group(function () {
             Route::get('/clients', 'index')->name('clients.index');
+            Route::get('/clients/invoices/{client_id}', 'invoices')->name('clients.invoices');
         });
         Route::controller(ProviderController::class)->group(function () {
             Route::get('providers', 'index')->name('providers.index');
@@ -109,12 +110,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
 
-    $model = "App\Models\User";
-    dd($model::find(1));
-
-    dd($model::setContable(1,'201','credit'));
-    $user=DB::table('users')->select('*')->first();
-    dd($user->contable);
-    $counts = Count::with('contable')->get();
-    dd($counts);
+   
 })->name('prueba');

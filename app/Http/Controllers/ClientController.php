@@ -10,4 +10,8 @@ class ClientController extends Controller
     {
         return view('pages.clients.index');
     }
+    public function invoices($client_id)
+    {
+        return view('pages.clients.client-invoice', ['client_id'=>$client_id]);
+    }
 }

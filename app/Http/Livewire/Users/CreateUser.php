@@ -63,8 +63,15 @@ class CreateUser extends Component
             'avatar'=>'image|max:2048'
         ]);
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->avatar->storeAs('avatars', date('Y_m_d_H_i_s') . '.' . $ext);
-        $this->photo_path = asset("storage/{$photo}");
+        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        [
+            'folder' => 'carnibores/avatars',
+            'transformation' => [
+                      'width' => 250,
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+        $this->photo_path = $path;
     } 
    public function updatedFormLastname($value)
    {
@@ -72,7 +79,8 @@ class CreateUser extends Component
       if (array_key_exists('name',$this->form)) {
         $name=$this->form['name'];
       }
-      $this->form['username']=strtolower(substr($name,0,1).strtok($value, " "));
+      $username=strtolower(substr($name,0,1).strtok($value, " "));
+      $this->form['username']=preg_replace('/[^A-Za-z0-9\-]/', '', $username);
    }
    public function updatedFormName($value)
    {
@@ -80,7 +88,8 @@ class CreateUser extends Component
       if (array_key_exists('lastname',$this->form)) {
         $lastname=$this->form['lastname'];
       }
-      $this->form['username']=strtolower(substr($value,0,1).strtok($lastname, " "));
+      $username=strtolower(substr($value,0,1).strtok($lastname, " "));
+      $this->form['username']=preg_replace('/[^A-Za-z0-9\-]/', '', $username);
    }
    
     

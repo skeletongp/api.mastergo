@@ -57,7 +57,7 @@ trait GenerateInvoiceTrait
 
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
             $this->action = 'sendInvoice';
-            $this->emit('openAuthorize');
+            $this->emit('openAuthorize', 'Cliente ha superado su crédito');
         } else {
             $this->sendInvoice();
         }

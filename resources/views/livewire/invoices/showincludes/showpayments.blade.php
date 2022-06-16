@@ -67,36 +67,7 @@
 
                     </div>
                 @endif
-                @if (!empty($payment['tarjeta']) && $payment['tarjeta'] > 0)
-                    <div class="flex space-x-4 col-span-5 mt-4">
-                        <div class="w-full">
-                            <label for="cheque" class="flex items-center space-x-4 pb-4 cursor-pointer">
-                                <span class="fas fa-image text-xl"></span>
-                                <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen del adjunto</span>
-                                @if ($photo_path)
-                                    <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                                        {{ formatNumber($cheque->getSize() / 1024) }} KB</span>
-                                @endif
-                                <input wire:model="cheque" type="file" class="hidden" name="cheque" id="cheque"
-                                    accept="image/*" capture>
-                            </label>
-                            <hr>
-                            <x-input-error for="cheque" />
-                        </div>
-                        <div class="w-96 h-[3rem]  bg-center bg-cover"
-                            style="background-image: url({{ $photo_path ? $cheque->temporaryUrl() : '' }})">
-                        </div>
-                        <div class="">
-                            <x-button class="space-x-2 z-50 text-sm flex items-center" wire:target="cheque" wire:loading>
-                                <div class="animate-spin">
-                                    <span class="fa fa-spinner ">
-                                    </span>
-                                </div>
-                                <h1>Procesando</h1>
-                            </x-button>
-                        </div>
-                    </div>
-                @endif
+            
             </form>
         @endif
     @endcan

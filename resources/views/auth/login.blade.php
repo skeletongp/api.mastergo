@@ -42,14 +42,10 @@
                 <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                     <form class="w-full" action="{{ route('login.store') }}" method="POST">
                         @csrf
-                        <h1 class="font-bold text-center uppercase text-2xl">
-                            Bienvenido a Mastergo
-                        </h1>
-                        <hr class="my-8 mt-2" />
 
                         <div class="flex justify-center">
-                            <div class="w-16 h-16 bg-cover bg-center"
-                                style="background-image: url({{ asset('/images/icon.png') }})">
+                            <div class="w-44 h-24 bg-contain bg-no-repeat bg-center"
+                                style="background-image: url({{ $store->logo }})">
 
                             </div>
                         </div>
@@ -99,6 +95,13 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
+        $('#username').on('change',function(){
+            val=$(this).val();
+            localStorage.setItem('username',val);
+        })
+      if (localStorage.getItem('username')) {
+        $('#username').val(localStorage.getItem('username'));
+      }
         msg = '{{ Session::get('msg') }}';
         colors = {
             "success": {
@@ -118,6 +121,7 @@
                 "bg": 'bg-teal-100'
             }
         };
+        
         if (msg) {
             msg = msg.split('|');
             Swal.fire({

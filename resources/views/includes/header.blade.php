@@ -25,27 +25,34 @@
         </div>
         <x-actions>
             <x-slot name="content">
-                @can('Crear Usuarios')
-                    <span class="float-element">
-                        <livewire:users.create-user />
-                    </span>
-                @endcan
+                @scope('Usuarios')
+                    @can('Crear Usuarios')
+                        <span class="float-element">
+                            <livewire:users.create-user />
+                        </span>
+                    @endcan
+                @endscope
                 @can('Crear Negocios')
                     <span class="float-element">
                         <livewire:store.create-store />
                     </span>
                 @endcan
-                @can('Crear Clientes')
-                    <span class="float-element">
-                        <livewire:clients.create-client />
-                    </span>
-                @endcan
+                @scope('Clientes')
+                    @can('Crear Clientes')
+                        <span class="float-element">
+                            <livewire:clients.create-client />
+                        </span>
+                    @endcan
+                @endscope
+                @scope('Productos')
                 @can('Crear Productos')
-                    <span class="float-element">
-                        <livewire:products.create-product />
-                    </span>
-                   
-                @endcan
+                <span class="float-element">
+                    <livewire:products.create-product />
+                </span>
+            @endcan
+                @endscope
+
+                @scope('Facturas')
                 @can('Crear Facturas')
                     <div>
                         <a href="{{ route('invoices.create') }}"
@@ -55,6 +62,9 @@
                         </a>
                     </div>
                 @endcan
+                @endscope
+               
+              
             </x-slot>
 
         </x-actions>

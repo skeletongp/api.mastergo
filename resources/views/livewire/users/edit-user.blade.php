@@ -9,6 +9,9 @@
             <x-tooltip id="editId{{ $user['id'] }}">Editar registro</x-tooltip>
         </x-slot>
         <form wire:submit.prevent="updateUser">
+            <div class="flex py-4 justify-end">
+                <x-toggle id="logueable{{ $user['id'] }}" label="Logueable" value="yes" wire:model="loggeable" ></x-toggle>
+            </div>
             <div class="  pb-6 flex items-center space-x-3">
                 <div class="w-full">
                     <x-input label="Primer nombre" id="name{{ $user['id'] }}" wire:model.defer="user.name" />

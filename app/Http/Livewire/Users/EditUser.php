@@ -12,7 +12,7 @@ use Livewire\WithFileUploads;
 class EditUser extends Component
 {
     public  $user, $isAdmin, $userRoles, $roles;
-    public  $avatar, $photo_path, $role;
+    public  $avatar, $photo_path, $role, $loggeable=false;
     use WithFileUploads;
     function rules()
     {
@@ -31,13 +31,18 @@ class EditUser extends Component
         $this->userRoles=$user['roles'];
         $this->role=count($this->userRoles)?$this->userRoles[0]['name']:'';
         $this->user = $user;
+        if($user['loggeable']=='yes'){
+            $this->loggeable=true;
+        }
     }
     public function render()
     {
-        $store=auth()->user()->store;
-        $roles=$this->roles->pluck('name');
-       
-        return view('livewire.users.edit-user', ['roles'=>$roles]);
+        $user=auth()->user();
+        $this->roles=$this->roles->pluck('name');
+        if (!$user->hasRole('Super Admin')) {
+           unset($this->roles[0]);
+        }
+        return view('livewire.users.edit-user');
     }
     public function updateUser()
     {
@@ -49,6 +54,7 @@ class EditUser extends Component
                 'path'=>$this->photo_path
             ]);
         }
+        $this->user['loggeable']=$this->loggeable?'yes':'no';
         $user->update(Arr::except($this->user,['avatar','pivot','roles','image','updated_at']));
         $user->syncRoles($this->role);
         $user->save();
@@ -63,8 +69,14 @@ class EditUser extends Component
         $this->validate([
             'avatar'=>'image|max:2048'
         ]);
-        $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->avatar->storeAs('/avatars', date('Y_m_d_H_i_s') . '.' . $ext);
-        $this->photo_path = asset("storage/{$photo}");
+        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        [
+            'folder' => 'carnibores/avatars',
+            'transformation' => [
+                      'width' => 250,
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+        $this->photo_path = $path;
     }
 }

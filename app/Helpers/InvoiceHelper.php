@@ -58,20 +58,20 @@ function setIncome($model, $concepto, $amount)
    
     switch ($max) {
         case 0:
-            setTransaction('Reg. abono Ref. Nº. ' . $ref, $ref, $moneys[$max], $place->cash(), $creditable);
+            setTransaction('Reg. abono Ref. Nº. ' . $ref, $ref, $moneys[$max], $place->cash(), $creditable, 'Cobrar Facturas');
             break;
         case 1:
-            setTransaction('Reg. abono Ref. Nº. ' . $ref, $ref, $moneys[$max], $place->check(), $creditable);
+            setTransaction('Reg. abono Ref. Nº. ' . $ref, $ref, $moneys[$max], $place->check(), $creditable, 'Cobrar Facturas');
             break;
         case 2:
-            setTransaction('Reg. abono Ref. Nº. ' . $ref, $reference, $moneys[$max], $bank->contable()->first(), $creditable);
+            setTransaction('Reg. abono Ref. Nº. ' . $ref, $reference, $moneys[$max], $bank->contable()->first(), $creditable, 'Cobrar Facturas');
             break;
     }
     $moneys[$max] = 0;
-    setTransaction('Reg. abono en Efectivo', $ref,  $moneys[0] , $place->cash(), $creditable);
-    setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash());
-    setTransaction('Reg. abono por Cheque', $ref,  $moneys[1], $place->check(), $creditable);
-    setTransaction('Reg. abono por Transferencia', $ref.' | '.$reference,  $moneys[2], optional($bank)->contable, $creditable);
+    setTransaction('Reg. abono en Efectivo', $ref,  $moneys[0] , $place->cash(), $creditable, 'Cobrar Facturas');
+    setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash(), 'Cobrar Facturas');
+    setTransaction('Reg. abono por Cheque', $ref,  $moneys[1], $place->check(), $creditable, 'Cobrar Facturas');
+    setTransaction('Reg. abono por Transferencia', $ref.' | '.$reference,  $moneys[2], optional($bank)->contable, $creditable, 'Cobrar Facturas');
  
     $client->update([
         'limit' => $client->limit + $payment->payed
