@@ -14,4 +14,21 @@ protected $connection="mysql";
     protected $fillable=[
         'amount','concepto','ref','ncf','user_id','store_id'
     ];
+
+    public function outcomeable()
+    {
+        return $this->morphTo();
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function payment()
+    {
+        return $this->morphOne(Payment::class, 'payable');
+    }
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'payable');
+    }
 }

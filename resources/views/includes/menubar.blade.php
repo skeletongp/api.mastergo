@@ -87,44 +87,41 @@
                     @endcanany
                 </x-dropitem>
 
-                <x-dropitem text="Informes" icon="far fa-file-alt">
-                    <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-chart-pie fa-lg'
-                        text='Estadísticas' activeRoute="invoices.*" scope="Estadísticas" />
-                    <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-chart-line fa-lg'
-                        text='Reportes' activeRoute="home.*" scope="Reportes" />
-                    <x-side-link routeName='users.index' icon='far w-10 text-center fa-download fa-lg'
-                        text='Exportaciones' activeRoute="home.*" scope="Reportes" />
-                    <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-chart-line fa-lg'
-                        text='Ingresos' activeRoute="invoices.*" scope="Ingresos" />
-                    <x-side-link routeName='users.index' icon='far w-10 text-center fa-chart-line-down fa-lg'
-                        text='Gastos' activeRoute="home.*" scope="Gastos" />
+                <x-dropitem text="Finanzas" icon="far fa-file-invoice-dollar">
+
+
+                    @can('Ver Cuadre')
+                        <x-side-link routeName='reports.incomes' icon='far w-10 text-center fa-chart-line fa-lg'
+                            text='Ingresos' activeRoute="reports.*" scope="Ingresos" />
+                    @endcan
+                    @can('Ver Gastos')
+                        <x-side-link routeName='reports.outcomes' icon='far w-10 text-center fa-chart-line-down fa-lg'
+                            text='Gastos' activeRoute="reports.*" scope="Gastos" />
+                    @endcan
                 </x-dropitem>
 
                 <x-dropitem text="Contabilidad" icon="far fa-wallet">
                     @can('Ver Transacciones')
-                        <x-side-link routeName='reports.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
+                        <x-side-link routeName='contables.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
                             text='Diario General' activeRoute="home.*" scope="Reportes" />
                     @endcan
                     @can('Ver Transacciones')
-                        <x-side-link routeName='reports.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
+                        <x-side-link routeName='contables.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
                             text='Balance General' activeRoute="home.*" scope="Reportes" />
                     @endcan
                     @can('Ver Comprobantes')
                         <x-side-link routeName='comprobantes.index' icon='far w-10 text-center fa-receipt fa-lg'
                             text='Comprobantes' activeRoute="comprobantes.*" scope="Impuestos" />
                     @endcan
+                   
                     @can('Ver Cuadre')
-                        <x-side-link routeName='cuadres.index' icon='far w-10 text-center fa-receipt fa-lg'
-                            text='Cuadre Diario' activeRoute="cuadres.*" scope="Impuestos" />
+                        <x-side-link routeName='contables.results' icon='far w-10 text-center fa-chart-line fa-lg'
+                            text='Estado G/P' activeRoute="contables.*" scope="Impuestos" />
                     @endcan
                     @can('Ver Catálogo')
-                        <x-side-link routeName='reports.catalogue' icon='far w-10 text-center fa-list fa-lg'
-                            text='Catalógo de Ctas.' activeRoute="reports.*" scope="Impuestos" />
+                        <x-side-link routeName='contables.catalogue' icon='far w-10 text-center fa-list fa-lg'
+                            text='Catalógo de Ctas.' activeRoute="contables.*" scope="Impuestos" />
                     @endcan
-
-
-
-
                 </x-dropitem>
 
 

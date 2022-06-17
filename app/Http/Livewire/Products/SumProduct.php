@@ -2,24 +2,33 @@
 
 namespace App\Http\Livewire\Products;
 
+use App\Http\Livewire\Products\Includes\SumProductTrait;
+use App\Models\Outcome;
 use App\Models\Product;
+use App\Models\Provider;
 use App\Models\Provision;
 use App\Models\Unit;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class SumProduct extends Component
 {
+    use SumProductTrait;
     public $products, $units, $form, $productAdded = [], $provider_id, $counts, $count_code, $ref;
+    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax;
     public $setCost = false;
 
     protected $listeners = ['getUnits'];
-    protected $queryString = ['productAdded'];
+    protected $queryString = ['productAdded', 'setCost'];
     public function mount()
     {
-        $place=auth()->user()->place;
+        $place = auth()->user()->place;
+        $store = auth()->user()->store;
         $this->products = $place->products->pluck('name', 'id');
         $this->units = $place->units->pluck('name', 'id');
-        $this->counts = $place->counts()->where('code','like', '100%')->pluck('name','code');
+        $this->counts = $place->counts()->where('code', 'like', '104%')->pluck('name', 'code');
+        $this->banks = $store->banks()->select(DB::raw('CONCAT(bank_name," ",bank_number) AS name, id'))->pluck('name', 'id');
     }
 
     protected $rules1 = [
@@ -39,6 +48,10 @@ class SumProduct extends Component
     public function updatedFormProductId()
     {
         $this->emit('getUnits');
+    }
+    public function updatedSetcost()
+    {
+        $this->render();
     }
     public function addProduct()
     {
@@ -63,9 +76,17 @@ class SumProduct extends Component
     }
 
     public function sumCant()
-    {   
+    {
         if ($this->setCost) {
-            $this->rules=array_merge($this->rules, ['count_code'=>'required']);
+            $this->rules = array_merge($this->rules, ['count_code' => 'required']);
+            $this->rules = array_merge($this->rules, ['efectivo' => 'required']);
+            $this->rules = array_merge($this->rules, ['tarjeta' => 'required']);
+            $this->rules = array_merge($this->rules, ['transferencia' => 'required']);
+            $this->rules = array_merge($this->rules, ['tax' => 'required']);
+        }
+        if ($this->transferencia>0) {
+            $this->rules = array_merge($this->rules, ['bank_id' => 'required']);
+            $this->rules = array_merge($this->rules, ['ref_bank' => 'required']);
         }
         $this->validate();
         $amount = 0;
@@ -81,16 +102,16 @@ class SumProduct extends Component
             $this->createProvision($product, $added['cant'], $code, $added['unit'],  $unit->cost);
         }
         if ($this->setCost) {
-            setOutcome($amount, 'Ingreso de productos a inventario', $this->ref);
+            $provider=Provider::whereId($this->provider_id)->first();
+            $outcome = setOutcome($amount, 'Ingreso de productos a inventario', $this->ref);
+            $provider->outcomes()->save($outcome);
+            $this->createPayment($outcome, $code);
             $place = auth()->user()->place;
-            $debitable = $place->findCount('104-01');
-            $creditable = $place->counts()->where('code', $this->count_code)->first();
-            setTransaction('Compra de mercancía',$code, $amount, $debitable, $creditable);
-            $provisions=Provision::wherecode($code)->get();
+            $provisions = Provision::wherecode($code)->get();
             $this->emit('printProvision', $provisions);
         }
 
-        $this->reset('form', 'productAdded');
+        $this->reset('form', 'productAdded', 'efectivo','tarjeta','transferencia','count_code','bank_id','ref_bank','tax','ref');
         $this->emit('showAlert', 'Productos añadidos al stock', 'success');
     }
     public function getUnits()
@@ -100,15 +121,5 @@ class SumProduct extends Component
             $this->units = $prod->units()->distinct('name')->pluck('name', 'units.id');
             $this->render();
         }
-    }
-    public function createProvision($product, $cant, $code, $unit_id)
-    {
-        $product->provisions()->create([
-            'code' => $code,
-            'cant' => $cant,
-            'atribuible_type' => Unit::class,
-            'atribuible_id' => $unit_id,
-            'provider_id' => $this->provider_id,
-        ]);
     }
 }

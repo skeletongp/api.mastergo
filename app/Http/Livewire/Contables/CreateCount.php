@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Reports;
+namespace App\Http\Livewire\Contables;
 
 use App\Models\CountMain;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +25,7 @@ class CreateCount extends Component
         } else {
             $this->instances = $this->model::pluck('name', 'id');
         }
-        return view('livewire.reports.create-count', compact('counts'));
+        return view('livewire.contables.create-count', compact('counts'));
     }
     public function createCount()
     {
@@ -42,6 +42,6 @@ class CreateCount extends Component
         }
         setContable($instance, $this->code, $this->origin, $name, $place->id, 1);
         $this->emit('showAlert','Cuenta creada existosamente','success');
-        return redirect(route('reports.catalogue'));
+        return redirect(route('contables.catalogue'));
     }
 }

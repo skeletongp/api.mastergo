@@ -64,5 +64,9 @@ class Provider extends Model
     {
         return $this->hasMany(Provision::class);
     }
+    public function outcomes()
+    {
+        return $this->morphMany(Outcome::class, 'outcomeable');
+    }
 
 }

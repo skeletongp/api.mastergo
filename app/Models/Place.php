@@ -86,17 +86,22 @@ protected $connection="mysql";
     public function check()
     {
         return $this->morphOne(Count::class, 'contable')
-        ->where('code','100-02')->first();
+        ->where('code','100-03')->first();
     }
     public function inventario()
     {
         return $this->morphOne(Count::class, 'contable')
         ->where('code','104-01')->first();
     }
+    public function ventas()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','500-01')->first();
+    }
     public function other()
     {
         return $this->morphOne(Count::class, 'contable')
-        ->where('code','100-03')->first();
+        ->where('code','100-04')->first();
     }
     public function preference()
     {

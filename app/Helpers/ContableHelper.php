@@ -87,6 +87,7 @@ function setOutcome($amount, $concepto, $ref, $outcomeable = null, $ncf = null)
     if ($outcomeable) {
         $outcomeable->outcomes()->save($outcome);
     }
+    return $outcome;
 }
 function setPayment($data)
 {

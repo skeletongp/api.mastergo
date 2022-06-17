@@ -14,7 +14,7 @@
                 </div>
             @endcan
             @can('Crear Productos')
-                @livewire('reports.create-count', ['model' => 'App\Models\Product', 'codes' => ['104', '500']], key(uniqid()))
+                @livewire('contables.create-count', ['model' => 'App\Models\Product', 'codes' => ['104', '500']], key(uniqid()))
             @endcan
         </div>
     @endslot

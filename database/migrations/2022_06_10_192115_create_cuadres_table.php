@@ -24,7 +24,11 @@ return new class extends Migration
             $table->decimal('devolucion', 14,4);
             $table->decimal('egreso', 14,4);
             $table->decimal('total', 14,4);
+            $table->decimal('retirado', 14,4);
+            $table->decimal('inicial', 14,4);
+            $table->decimal('final', 14,4);
             $table->date('day');
+            $table->enum('status',['open','close']);
             $table->foreignId('place_id')->constrained();
             $table->softDeletes();
             $table->timestamps();

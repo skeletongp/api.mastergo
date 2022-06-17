@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Reports;
+namespace App\Http\Livewire\Contables;
 
 use Illuminate\Support\Facades\DB;
 use Mediconesystems\LivewireDatatables\Column;
@@ -9,8 +9,8 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 
 class GeneralMayorTable extends LivewireDatatable
 {
-    public $hidePagination=true;
-    public $perPage=10000;
+    public $perPage=8;
+    public $headTitle="Balanza de comprobación";
     public function builder()
     {
         $counts=auth()->user()->place->counts()->orderBy('code')->orderBy('origin')->orderBy('balance','desc')
@@ -44,6 +44,9 @@ class GeneralMayorTable extends LivewireDatatable
     }
     public function summarize($column)
     {
+        if($this->perPage<500){
+            return '';
+        }
         $results=json_decode(json_encode($this->results->items()), true);
         foreach ($results as $key => $value) {
             $val=json_decode(json_encode($value), true);

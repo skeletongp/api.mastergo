@@ -45,26 +45,31 @@
                     @endcan
                 @endscope
                 @scope('Productos')
-                @can('Crear Productos')
-                <span class="float-element">
-                    <livewire:products.create-product />
-                </span>
-            @endcan
+                    @can('Crear Productos')
+                        <span class="float-element">
+                            <livewire:products.create-product />
+                        </span>
+                    @endcan
                 @endscope
+                @can('Abrir Cuadre')
+                    <span class="float-element">
+                        <livewire:cuadres.open-cuadre />
+                    </span>
+                @endcan
 
                 @scope('Facturas')
-                @can('Crear Facturas')
-                    <div>
-                        <a href="{{ route('invoices.create') }}"
-                            class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
-                            <span class="far w-6 text-center fa-plus"></span>
-                            <span> Factura</span>
-                        </a>
-                    </div>
-                @endcan
+                    @can('Crear Facturas')
+                        <div>
+                            <a href="{{ route('invoices.create') }}"
+                                class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                                <span class="far w-6 text-center fa-plus"></span>
+                                <span> Factura</span>
+                            </a>
+                        </div>
+                    @endcan
                 @endscope
-               
-              
+
+
             </x-slot>
 
         </x-actions>

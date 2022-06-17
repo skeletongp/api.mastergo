@@ -166,7 +166,7 @@
             <tr>
                 <th style="text-align: left">Doc.</th>
                 <th style="text-align: left">ID/RNC</th>
-                <th style="text-align: left">Cliente</th>
+                <th style="text-align: left">Responsable</th>
                 <th style="text-align: left">Tipo</th>
                 <th style="text-align: right">Monto</th>
 
@@ -177,10 +177,10 @@
             @foreach ($payments as $payment)
                 <tr>
                     <td style="width: 15%; text-align: left">
-                        {{ $payment->payable->number }}
+                        {{ $payment->payable->number?:$payment->payable->ref }}
                     </td>
                     <td style="width: 17%; text-align: left">
-                        {{ $payment->payer->rnc }}
+                        {{ $payment->payer->rnc?:'000-00000-0' }}
                     </td>
                     <td>
                         {{ $payment->payable->name ?: $payment->payer->fullname }}
@@ -261,6 +261,14 @@
             </td>
             <td colspan="2" style="padding-top:25px">
                 ${{ formatNumber($cuadre->total) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="2" style="padding-top:25px">
+                RETIRADO =>
+            </td>
+            <td colspan="2" style="padding-top:25px">
+                ${{ formatNumber($cuadre->retirado) }}
             </td>
         </tr>
     </table>

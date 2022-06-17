@@ -11,7 +11,7 @@
                 <h1 class="text-lg font-bold uppercase my-2">Débito</h1>
                 <div class="flex space-x-4 items-start">
                     <div class="w-full">
-                        <x-base-select wire:model="cMainDebit_id" label="Cuenta Principal">
+                        <x-base-select id="cMainDebit_id" wire:model="cMainDebit_id" label="Cuenta Principal">
                             <option></option>
                             @foreach ($countMains as $id => $cMain)
                                 <option value="{{ $id }}">{{ $cMain }}</option>
@@ -20,7 +20,7 @@
                         <x-input-error for="cMainDebit_id"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-base-select wire:model="cDetailDebit_id" label="Cuenta Detalle">
+                        <x-base-select id="cDetailDebit_id" wire:model="cDetailDebit_id" label="Cuenta Detalle">
                             <option></option>
                             @foreach ($countsDebit as $idDebit => $cDebit)
                                 <option value="{{ $idDebit }}">{{ $cDebit }}</option>
@@ -32,7 +32,7 @@
                 <h1 class="text-lg font-bold uppercase my-2 mt-4">Crédito</h1>
                 <div class="flex space-x-4 items-start">
                     <div class="w-full">
-                        <x-base-select wire:model="cMainCredit_id" label="Cuenta Principal">
+                        <x-base-select id="cMainCredit_id" wire:model="cMainCredit_id" label="Cuenta Principal">
                             <option></option>
                             @foreach ($countMains as $id => $cMain)
                                 <option value="{{ $id }}">{{ $cMain }}</option>
@@ -41,7 +41,7 @@
                         <x-input-error for="cMainCredit_id"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-base-select wire:model="cDetailCredit_id" label="Cuenta Detalle">
+                        <x-base-select id="cDetailCredit_id" wire:model="cDetailCredit_id" label="Cuenta Detalle">
                             <option></option>
                             @foreach ($countsCredit as $idCredit => $cCredit)
                                 <option value="{{ $idCredit }}">{{ $cCredit }}</option>
@@ -51,16 +51,16 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <x-base-input label="Concepto" wire:model.defer="concept" />
+                    <x-base-input id="trConcept" label="Concepto" wire:model.defer="concept" />
                     <x-input-error for="concept"></x-input-error>
                 </div>
                 <div class="flex space-x-4 items-start">
                     <div class="w-full">
-                        <x-base-input label="Referencia" wire:model.defer="ref" />
+                        <x-base-input id="trRef" label="Referencia" wire:model.defer="ref" />
                         <x-input-error for="ref"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-base-input label="Monto" wire:model.defer="amount" type="number" />
+                        <x-base-input id="trAmount" label="Monto" wire:model.defer="amount" type="number" />
                         <x-input-error for="amount"></x-input-error>
                     </div>
                 </div>

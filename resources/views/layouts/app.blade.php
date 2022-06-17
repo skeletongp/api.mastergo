@@ -62,7 +62,6 @@
                 </div>
                 <section class=" w-full mx-auto max-w-7xl bg-white ">
                     {{ $slot }}
-
                 </section>
             </main>
             {{-- Foot --}}
@@ -176,7 +175,7 @@
             z-index: 2000;
         }
     </style>
-    <div class="flex p-4 absolute bottom-0">
+    <div class="flex p-4 fixed bottom-0">
         <x-button type="button" onclick="history.back();" id="hBack">
             <small class="flex items-center space-x-1">
                 <span class="fas fa-angle-left text-xl"></span>

@@ -113,6 +113,11 @@ class DatabaseSeeder extends Seeder
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
         $store->roles()->save(Role::find(3));
+        $this->setCounts($place, $provider);
+        $roles = ['Administrador', 'Super Admin', 'Generico'];
+    }
+    public function setCounts($place, $provider)
+    {
         setContable($place, '100', 'debit', 'Efectivo en Caja General', $place->id);
         setContable($place, '100', 'debit', 'Efectivo en Caja Chica', $place->id);
         setContable($place, '100', 'debit', 'Efectivo en Cheques', $place->id);
@@ -127,6 +132,31 @@ class DatabaseSeeder extends Seeder
         setContable($place, '501', 'debit', 'Devoluciones en compras', $place->id);
         setContable($place, '501', 'debit', 'Descuentos en compras', $place->id);
         setContable($place, '300', 'credit', 'Capital Sucrito y Pagado', $place->id);
-        $roles = ['Administrador', 'Super Admin', 'Generico'];
+        setContable($provider, '200', 'credit', $provider->fullname, $place->id);
+        setContable($place, '600', 'debit', 'Sueldos y Salarios', $place->id);
+        setContable($place, '600', 'debit', 'Atención al Personal', $place->id);
+        setContable($place, '600', 'debit', 'Combustible', $place->id);
+        setContable($place, '600', 'debit', 'Materiales de Oficina', $place->id);
+        setContable($place, '600', 'debit', 'Materiales de Limpieza', $place->id);
+        setContable($place, '600', 'debit', 'Publicidad', $place->id);
+        setContable($place, '600', 'debit', 'Teléfono y Comunicación', $place->id);
+        setContable($place, '600', 'debit', 'Reparaciones', $place->id);
+        setContable($place, '600', 'debit', 'Mantenimiento', $place->id);
+        setContable($place, '600', 'debit', 'Depreciación Edificio', $place->id);
+        setContable($place, '600', 'debit', 'Depreciación Mobiliario', $place->id);
+        setContable($place, '600', 'debit', 'Depreciación Equipo Transporte', $place->id);
+        setContable($place, '600', 'debit', 'Depreciación Maquinaria', $place->id);
+        setContable($place, '600', 'debit', 'Infraestructura Tecnológica', $place->id);
+        setContable($place, '601', 'debit', 'Sueldos y Salarios Ventas', $place->id);
+        setContable($place, '601', 'debit', 'Comisiones Ventas', $place->id);
+        setContable($place, '601', 'debit', 'Atención al Personal Ventas', $place->id);
+        setContable($place, '601', 'debit', 'Transporte Ventas', $place->id);
+        setContable($place, '601', 'debit', 'Asignación de Vehículo Ventas', $place->id);
+        setContable($place, '602', 'debit', 'Intereses Préstamos', $place->id);
+        setContable($place, '602', 'debit', 'Comisiones Bancarias', $place->id);
+        setContable($place, '602', 'debit', 'Gastos de Seguros', $place->id);
+        setContable($place, '602', 'debit', 'Hipotecas', $place->id);
+       
+
     }
 }

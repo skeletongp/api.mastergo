@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Reports;
+namespace App\Http\Livewire\Contables;
 
 use App\Http\Helper\Universal;
 use App\Models\Count;

@@ -10,6 +10,7 @@ use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RecursoController;
+use App\Http\Controllers\ContableController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
@@ -91,11 +92,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('procesos/create', 'create')->name('procesos.create');
             Route::get('procesos/{proceso}', 'show')->name('procesos.show');
         });
-        Route::controller(ReportController::class)->group(function () {
-            Route::get('general_daily', 'general_daily')->name('reports.general_daily');
-            Route::get('general_mayor', 'general_mayor')->name('reports.general_mayor');
-            Route::get('catalogue', 'catalogue')->name('reports.catalogue');
-            Route::get('view_catalogue', 'view_catalogue')->name('reports.view_catalogue');
+        Route::controller(ContableController::class)->group(function () {
+            Route::get('general_daily', 'general_daily')->name('contables.general_daily');
+            Route::get('general_mayor', 'general_mayor')->name('contables.general_mayor');
+            Route::get('catalogue', 'catalogue')->name('contables.catalogue');
+            Route::get('view_catalogue', 'view_catalogue')->name('contables.view_catalogue');
+            Route::get('results', 'results')->name('contables.results');
         });
         Route::controller(ComprobanteController::class)->group(function () {
             Route::get('comprobantes', 'index')->name('comprobantes.index');
@@ -103,6 +105,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(CuadreController::class)->group(function () {
             Route::get('cuadres', 'index')->name('cuadres.index');
+        });
+        Route::controller(ReportController::class)->group(function(){
+            Route::get('/incomes','incomes')->name('reports.incomes');
+            Route::get('/outcomes','outcomes')->name('reports.outcomes');
         });
     });
 });

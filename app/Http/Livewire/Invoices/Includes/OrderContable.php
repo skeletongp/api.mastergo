@@ -34,7 +34,6 @@ trait OrderContable
                 break;
            
         }
-        setTransaction('Venta de Fact. '.$invoice->number, $ref, $invoice->gasto, $place->findCount('500-01'), $place->inventario());
         $moneys[$max] = 0;
         setTransaction('Reg. venta en Efectivo', $ref,  $moneys[0], $place->cash(), $creditable, 'Cobrar Facturas');
         setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash());
@@ -43,8 +42,9 @@ trait OrderContable
         setTransaction('Reg. venta a Crédito', $ref, $moneys[3],  $client->contable()->first(), $creditable, 'Cobrar Facturas');
         setTransaction('Descuento a Fct. '.$invoice->number, $ref, $payment->discount,  $discount, $creditable, 'Cobrar Facturas');
         foreach ($invoice->taxes as $tax) {
-            setTransaction('Reg. retención de ' . $tax->name, $ref, $tax->rate*$payment->amount,   $toTax, $tax->contable()->first(), 'Cobrar facturas');
+            setTransaction('Reg. retención de ' . $tax->name, $ref, $payment->tax,   $toTax, $tax->contable()->first(), 'Cobrar Facturas');
         }
+        setTransaction('Reg. Costo Mercancía Vendida', $ref,$invoice->gasto, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
         $client->update([
             'limit' => $client->limit - $invoice->payment->rest
         ]);
@@ -61,7 +61,7 @@ trait OrderContable
                     ],
                     [
                         'tax_id' => $tax->id,
-                        'amount' => DB::raw('amount +' . $tax->rate * $detail->subtotal)
+                        'amount' => DB::raw('amount +' . $tax->rate * $detail->total)
                     ]
                 );
             }

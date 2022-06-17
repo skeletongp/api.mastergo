@@ -1,6 +1,9 @@
 <?php
 
 // Home
+
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+
 Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'),['icon'=>'fas fa-home']);
 });
@@ -80,7 +83,7 @@ Breadcrumbs::for('recursos.sum', function ($trail) {
     $trail->push('Sumar recursos', route('recursos.sum'));
 });
 
-/* Recursos */
+/* Procesos */
 Breadcrumbs::for('procesos', function ($trail) {
     $trail->parent('home');
     $trail->push('Procesos', route('procesos.index'));
@@ -111,16 +114,30 @@ Breadcrumbs::for('cuadres', function ($trail) {
     $trail->push('Cuadre Diario', route('cuadres.index'),['icon'=>'far fa-receipt']);
 });
 
-/* reportes */
+/* Contables */
 Breadcrumbs::for('general-daily', function ($trail) {
     $trail->parent('home');
-    $trail->push('Diario General', route('reports.general_daily'),['icon'=>'far  fa-calendar-day']);
+    $trail->push('Diario General', route('contables.general_daily'),['icon'=>'far  fa-calendar-day']);
 });
 Breadcrumbs::for('general-mayor', function ($trail) {
     $trail->parent('general-daily');
-    $trail->push('Balance General', route('reports.general_mayor'),['icon'=>'far  fa-calendar-alt']);
+    $trail->push('Balance General', route('contables.general_mayor'),['icon'=>'far  fa-calendar-alt']);
 });
 Breadcrumbs::for('catalogue', function ($trail) {
     $trail->parent('general-mayor');
-    $trail->push('Catálogo de Cuentas', route('reports.catalogue'),['icon'=>'far  fa-list']);
+    $trail->push('Catálogo de Cuentas', route('contables.catalogue'),['icon'=>'far  fa-list']);
+});
+Breadcrumbs::for('results', function ($trail) {
+    $trail->parent('general-mayor');
+    $trail->push('Estado de Ganancias y Pérdidas', route('contables.results'),['icon'=>'far  fa-chart-bar']);
+});
+
+/* Reportes */
+Breadcrumbs::for('incomes', function($trial){
+    $trial->parent('home');
+    $trial->push('Ingresos',route('reports.incomes',['icon'=>'']));
+});
+Breadcrumbs::for('outcomes', function($trial){
+    $trial->parent('home');
+    $trial->push('Gastos',route('reports.outcomes',['icon'=>'']));
 });

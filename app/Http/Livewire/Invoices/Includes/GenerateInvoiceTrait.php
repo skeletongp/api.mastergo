@@ -23,13 +23,11 @@ trait GenerateInvoiceTrait
             $detail['detailable_id'] = $invoice->id;
             $detail['detailable_type'] = Invoice::class;
             $taxes = empty($detail['taxes']) ? [] : $detail['taxes'];
-            if ($invoice->type == 'B00' || $invoice->type == 'B14') {
                 $detail['total'] = $detail['subtotal'] - $detail['discount'];
-            }
             $det = Detail::create(Arr::except($detail, 'taxes'));
             if ($invoice->type != 'B00' && $invoice->type != 'B14') {
                 $det->taxes()->sync($taxes);
-                $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
+                $det->taxtotal = $det->taxes->sum('rate') * $det->total;
             }
             $det->save();
             $gasto += $det->cant * $det->cost;

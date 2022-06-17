@@ -12,7 +12,7 @@ class CreateBank extends Component
     protected $rules = [
         'form.bank_name' => 'required|string|max:100',
         'form.bank_number' => 'required|string|max:20|unique:banks,bank_number',
-        'form.titular_id' => 'required|exists:users,id',
+        'form.titular_id' => 'required|exists:moso_master.users,id',
     ];
 
     public function render()
