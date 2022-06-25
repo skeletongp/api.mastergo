@@ -154,7 +154,7 @@
                 align(conector, 'left');
                 conector.texto((toDecimal.format(det.cant)) + " ");
                 conector.texto(det.unit.symbol + " ");
-                conector.texto(det.product.name + " ");
+                conector.texto(det.product.code+" "+det.product.name + " ");
                 conector.feed(1);
                 align(conector, 'right');
                 conector.texto("Pr. " + formatter.format(det.price) + " ");
@@ -206,6 +206,7 @@
                 conector.texto('EFECTIVO: ');
                 conector.establecerEnfatizado(0);
                 conector.texto(formatter.format(sumField(obj.payments, 'efectivo')));
+                conector.feed(1);
             }
             if (sumField(obj.payments, 'transferencia') > 0) {
                 conector.establecerEnfatizado(1);

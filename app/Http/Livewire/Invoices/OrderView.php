@@ -30,7 +30,7 @@ class OrderView extends LivewireDatatable
     {
         $invoices = $this->builder()->get()->toArray();
         $store = auth()->user()->store;
-        $banks = $store->banks->pluck('bank_name', 'id');
+        $banks = $store->banks()->pluck('bank_name', 'id');
         return [
             Column::name('number')->label("Nro."),
             TimeColumn::name('created_at')->label("Hora")->hide(),

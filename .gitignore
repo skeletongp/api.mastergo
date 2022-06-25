@@ -4,7 +4,7 @@
 /storage/*.key
 /vendor
 /database/DatabaseSeeder.php
-.env
+*.env
 .env.backup
 .phpunit.result.cache
 Homestead.json

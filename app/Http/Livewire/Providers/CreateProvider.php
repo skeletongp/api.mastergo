@@ -7,7 +7,7 @@ use Livewire\Component;
 class CreateProvider extends Component
 {
     public $form, $provDocType;
-
+    protected $querystring = ['provDocType'];
     protected $rules = [
         'form.name' => 'required|string|max:50',
         'form.lastname' => 'required|string|max:75',

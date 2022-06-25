@@ -15,7 +15,7 @@
                         @isset($breadcrumb->icon)
                             <span class="{{ $breadcrumb->icon }}"></span>
                         @endisset
-                        <span>{{ $breadcrumb->title }}</span>
+                        <a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
 
                     </li>
                 @endif

@@ -4,7 +4,7 @@
             <span> Editar registro</span>
         </x-slot>
         <x-slot name="button">
-            <span data-tooltip-target="editId{{ $user['id'] }}" data-tooltip-style="light"
+            <span data-tooltip-target="editId{{ $user['id'] }}"
                 class="far fa-pen-square fa-xl text-green-600"></span>
             <x-tooltip id="editId{{ $user['id'] }}">Editar registro</x-tooltip>
         </x-slot>

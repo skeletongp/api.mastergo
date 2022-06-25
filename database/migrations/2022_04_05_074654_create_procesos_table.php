@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name')->commet('Nombre identificador del proceso');       
             $table->string('code')->commet('Nombre identificador del proceso');       
             $table->foreignId('place_id')->comment('Usuario responsable del proceso')->constrained();
+            $table->foreignId('unit_id')->comment('Unidad que se trabaja en el proceso')->constrained();
+            $table->foreignId('user_id')->comment('Unidad que se trabaja en el proceso')->constrained()->on('moso_master.users');
             $table->softDeletes();
             $table->timestamps();
         });

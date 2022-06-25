@@ -54,4 +54,8 @@ protected $connection="mysql";
    {
        return $this->morphMany(Provision::class, 'provisionable');
    }
+    public function formulas()
+    {
+         return $this->morphMany(Formula::class, 'formulable');
+    }
 }

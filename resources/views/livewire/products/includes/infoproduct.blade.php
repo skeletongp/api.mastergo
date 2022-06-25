@@ -48,8 +48,8 @@
             <div class="w-full">
                 <x-base-select wire:model.defer="form.type" label="Tipo de producto">
                     <option value=""></option>
-                    <option  >Producto</option>
-                    <option >Servicio</option>
+                    <option  value="Producto" >Producto</option>
+                    <option value="Servicio" >Servicio</option>
                 </x-base-select>
             <x-input-error for="form.type"></x-input-error>
             </div>

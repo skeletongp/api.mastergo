@@ -11,50 +11,52 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class TableRecurso extends LivewireDatatable
 {
-    public $exportable = true;
-    public $name = "Tabla Recursos";
+    public $headTitle = "Recursos";
 
 
     public function builder()
     {
-        $recursos = auth()->user()->place->recursos()->with('brands')
-          ;
+        $recursos = auth()->user()->place->recursos()->select()->with('brands');
         return $recursos;
     }
 
     public function columns()
     {
-        $canDelete = auth()->user()->hasPermissionTo('Borrar Recursos');
-        $canEdit = auth()->user()->hasPermissionTo('Editar Recursos');
-        $recursos=$this->builder()->get()->toArray();
+
+        $recursos = $this->builder()->get()->toArray();
         return [
-            Column::callback(['id','uid'], function($id){
-                return view('components.view', ['url'=>route('recursos.show',$id)]);
-            }),
-            Column::name('name')->label('Nombre')->searchable()->editable($canEdit),
-            Column::callback(['created_at','id'], function($created, $id) use ($recursos){
-                $result=arrayFind($recursos, 'id', $id);
-                return formatNumber(array_sum(array_column($result['brands'],'cant')));
+            Column::callback(['id', 'uid'], function ($id) use ($recursos) {
+                $result = arrayFind($recursos, 'id', $id);
+                if (array_key_exists('brands', $result)) {
+                    return view('components.view', ['url' => route('recursos.show', $id)]);
+                }
+                return formatNumber($result['stock']);
+            })->label('Ver'),
+            Column::name('name')->label('Nombre')->searchable(),
+            Column::callback(['created_at', 'id'], function ($created, $id) use ($recursos) {
+                $result = arrayFind($recursos, 'id', $id);
+                if (array_key_exists('brands', $result)) {
+                    return formatNumber(array_sum(array_column($result['brands'], 'cant')));
+                }
+                return formatNumber($result['stock']);
             })->label('Cant'),
-            Column::callback(['updated_at','id'], function($created, $id) use ($recursos){
-                $result=arrayFind($recursos, 'id', $id);
-                return formatNumber(array_sum(array_column($result['brands'],'cost'))/count($result['brands']));
+            Column::callback(['updated_at', 'id'], function ($created, $id) use ($recursos) {
+
+                $result = arrayFind($recursos, 'id', $id);
+                if (array_key_exists('brands', $result)) {
+                    $count= count($result['brands'])?:1;
+                    return '$' . formatNumber(array_sum(array_column($result['brands'], 'cost')) / $count);
+                }
+                return '$' . formatNumber($result['cost']);
             })->label('Costo'),
-           
-            $canDelete ?
+
+            /*  $canDelete ?
             Column::delete()->label('Eliminar') :
-                Column::delete()->label('Eliminar')->hide(false)
+                Column::delete()->label('Eliminar')->hide(false) */
         ];
     }
 
-    public function getUnitsProperty()
-    {
-        return Unit::pluck('name');
-    }
-    public function getStoresProperty()
-    {
-        return Store::pluck('name');
-    }
+
     public function delete($id)
     {
         Recurso::find($id)->delete();

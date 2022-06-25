@@ -13,14 +13,16 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class TableProduct extends LivewireDatatable
 {
     use AuthorizesRequests;
+    public $padding='px-2 py-1';
     public function builder()
     {
-        $products = auth()->user()->place->products()->orderBy('code')->whereNull('deleted_at');
+        $products = auth()->user()->place->products()->with('units')->orderBy('code')->whereNull('deleted_at');
         return $products;
     }
 
     public function columns()
     {
+        $products=$this->builder()->get()->toArray();
         return [
             Column::callback(['id', 'uid'], function ($id) {
                 return view('datatables::link', [
@@ -32,10 +34,22 @@ class TableProduct extends LivewireDatatable
             })->label('Ver')->unsortable(),
             Column::name('code')->label('Cód.')->searchable()->defaultSort(true),
             Column::name('name')->label('Nombre')->searchable(),
-            Column::name('description')->callback(['description'], function ($description) {
-                return "<div class='max-w-sm w-full pr-3  overflow-hidden overflow-ellipsis whitespace-nowrap '>$description</div>";
-            })->label('Detalles')->searchable(),
-            Column::name('created_at')->callback(['id', 'code'], function ($id) {
+            Column::callback(['type'], function ($type) {
+                return $type;
+            })->label('Tipo')->searchable(),
+            Column::callback(['created_at','id'], function ($created, $id) use ($products){
+                $result=arrayFind($products, 'id',$id);
+                $data='';
+                if ($result['type']=='Producto') {
+                    foreach ($result['units'] as $unit) {
+                        $data.=$unit['symbol'].' => '.formatNumber($unit['pivot']['stock']).'<br>';
+                    }
+                } else{
+                    $data='N/D';
+                }
+                return $data;
+            })->label('Stock'),
+            Column::callback(['id', 'code'], function ($id) {
                 if (auth()->user()->hasPermissionTo('Editar Productos')) {
                     return view('datatables::link', [
                         'href' => route('products.edit', $id),

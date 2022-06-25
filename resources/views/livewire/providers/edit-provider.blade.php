@@ -8,7 +8,7 @@
         </x-slot>
         <x-slot name="button">
             <span data-tooltip-target="editId{{$provider['id']}}"
-                data-tooltip-style="light" class="far fa-pen text-green-600"></span>
+                class="far fa-pen text-green-600"></span>
                 <x-tooltip id="editId{{$provider['id']}}">Editar registro</x-tooltip>
         </x-slot>
         <div class="relative pt-8">

@@ -3,7 +3,7 @@
      <x-slot name="button">
          <x-tooltip id="{{$production['id']}}1">Obtener resultados</x-tooltip>
          <span data-tooltip-target="{{$production['id']}}1"
-         data-tooltip-style="light" class="fas fa-angle-double-down  text-xl"></span>
+         class="fas fa-angle-double-down  text-xl"></span>
      </x-slot>
      <div>
         <form action="" class="py-8 space-y-4" wire:submit.prevent="addSelected">

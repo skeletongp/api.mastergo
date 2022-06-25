@@ -20,8 +20,8 @@ class EditProduct extends Component
     public function mount()
     {
         $this->units = $this->product->units->unique('symbol');
-        $taxes = $this->product->taxes->pluck('name', 'id');
-        $this->taxes = auth()->user()->store->taxes->pluck('name', 'id');
+        $taxes = $this->product->taxes()->pluck('name', 'id');
+        $this->taxes = auth()->user()->store->taxes()->pluck('name', 'id');
         foreach ($this->taxes as $id => $tax) {
             if (in_array($tax, $taxes->toArray())) {
                 array_push($this->taxSelected, $id);
@@ -43,7 +43,7 @@ class EditProduct extends Component
 
     protected $rules = [
         'product.name' => 'required',
-        'product.description' => 'required',
+        'product.type' => 'required',
         'photo'=>'max:2048'
 
     ];
@@ -80,10 +80,7 @@ class EditProduct extends Component
             $unit->pivot->min = $value['min'];
             $unit->pivot->margin = ($value['price_menor'] / $value['cost']) - 1;
             $unit->pivot->save();
-            $this->unit[$key] = [
-                'price' => floatval($unit->pivot->price),
-                'cost' => floatval($unit->pivot->cost),
-            ];
+            
         }
         $this->emit('showAlert', 'Precios Actualizados', 'success');
         $this->emit('reloadEditProduct');

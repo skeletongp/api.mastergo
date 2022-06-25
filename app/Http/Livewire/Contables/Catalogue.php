@@ -8,7 +8,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class Catalogue extends LivewireDatatable
 {
-    public $padding="px-0 py-0 border-b border-blue-200 h-full relative";
+    public $padding="px-2 py-0 border-b border-blue-200 h-full relative";
     public $headTitle="";
     public $perPage=15;
     public function builder()
@@ -22,11 +22,11 @@ class Catalogue extends LivewireDatatable
     {
         $controls=$this->builder()->get()->toArray();
         return [
-            Column::callback(['name','id'], function($name, $id) use ($controls){
+            Column::callback(['code','id'], function($name, $id) use ($controls){
                 $result=arrayFind($controls, 'id', $id);
                 return "<div class='px-2 py-1 h-full font-medium '>${result['code']} - ${result['name']} </div>";
             })->label('Cta. Control')->searchable(),
-            Column::callback(['code','id'], function($code, $id) use ($controls){
+            Column::callback(['name','id'], function($code, $id) use ($controls){
                 $result=arrayFind($controls, 'id', $id);
                 return view('pages.contables.rows.ctaname', ['counts'=>$result['counts']]);
             })->label('Cta. Detalle'),
@@ -52,6 +52,6 @@ class Catalogue extends LivewireDatatable
     public function cellClasses($row, $column)
     {
         return
-            'whitespace-nowrap overflow-hidden overflow-ellipsis  p-0';
+            'whitespace-nowrap overflow-hidden overflow-ellipsis  px-0';
     }
 }

@@ -11,11 +11,12 @@ class InvoiceList extends LivewireDatatable
 
     public$hideResults=true;
     public $headTitle="Facturas";
+    public $padding="px-2";
     public $perPage=15;
     public function builder()
     {
         $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
-            ->where('status', '!=', 'waiting')->with('pdf', 'payment','payments','client');
+            ->where('status', 'cerrada')->with('pdf', 'payment','payments','client');
         return $invoices;
     }
 
@@ -40,7 +41,9 @@ class InvoiceList extends LivewireDatatable
                 
                 return '$' . formatNumber($result['payment']['total']).$mark;
             })->label('Monto'),
-            Column::name('id')->label('Ver')->view('livewire.invoices.includes.setPDF')->sortable(),
+            Column::callback('id', function($id) use ($invoices){
+                return view('livewire.invoices.includes.actions',['value'=>$id]);
+            })->label('Acciones')->contentAlignCenter()->headerAlignCenter()
         ];
     }
     public function cellClasses($row, $column)

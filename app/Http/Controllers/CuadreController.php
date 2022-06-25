@@ -13,22 +13,30 @@ class CuadreController extends Controller
 {
     public function index (Request $request){
         $place=auth()->user()->place;
-        $payments=$place->payments()->with('payable','payer')->where('payable_type',Invoice::class)->where('day',date('Y-m-d'));
+        $payments=$place->payments()->with('payable','payer')->where('payable_type', Invoice::class)->where('day',date('Y-m-d'));
+        $gastos=$place->payments()->with('payable','payer')->where('payable_type', Outcome::class)->where('day',date('Y-m-d'));
+      
         $retirado=0;
         if ($request->has('retirado')) {
             $retirado=$request->retirado;
         }
         $pagos=$payments->get();
+        $movimientos=$pagos->merge($gastos->get());
         $cuadre=$this->createCuadre($payments, $retirado);
+        $ctaCajaGeneral=$place->findCount('100-01')->balance;
+        $efectivos=$place->counts()->where('code','like','100%')->pluck('balance','name');
         $PDF = App::make('dompdf.wrapper');
         $data = [
             'payments'=>$pagos,
+            'gastos'=>$gastos,
             'cuadre'=>$cuadre,
-            'pdf'=>$PDF
+            'ctaCajaGeneral'=>$ctaCajaGeneral,
+            'pdf'=>$PDF,
+            'efectivos'=>$efectivos,
         ];
         $pdf = $PDF->loadView('pages.cuadres.pdf-cuadre', $data);
-        file_put_contents('storage/cuadres/' . 'cuadre_diario_'.date('YmdHi'). '.pdf', $pdf->output());
-        $path = asset('storage/cuadres/' . 'cuadre_diario_'.date('YmdHi'). '.pdf');
+        file_put_contents('storage/cuadres/' . 'cuadre_diario_'.date('Ymd').$place->id.'.pdf', $pdf->output());
+        $path = asset('storage/cuadres/' . 'cuadre_diario_'.date('Ymd').$place->id.'.pdf');
         $cuadre->pdf()->updateOrCreate(['fileable_id'=>$cuadre->id],[
             'note' => 'Cuadre del ' . date('d/m/Y'),
             'pathLetter' => $path,
@@ -48,22 +56,30 @@ class CuadreController extends Controller
         });
         $cobro=$place->payments()->with('payable','payer')->where('day',date('Y-m-d'))->whereForma('cobro');
         $place=auth()->user()->place;
-        $outcomes=$place->payments()->with('payable','payer')->where('payable_type',Outcome::class)->where('day',date('Y-m-d'));
+        $outcomes=$place->payments()->with('payable','payer')->where('payable_type', Outcome::class)->where('day',date('Y-m-d'));
+
+        $todosEfectivos=$place->counts()->where('code','like','100%')->sum('balance');
+        $ctaEfectivo=$place->counts()->whereIn('code',['100-01','100-02'])->sum('balance');
+       
+        $ctaCajaGeneral=$place->findCount('100-01')->balance;
+        $ctaOtros=$place->counts()->whereIn('code',['100-03','100-04'])->sum('balance');
+        $ctaBancos=$todosEfectivos-$ctaEfectivo-$ctaOtros;
+
         $cuadre=$place->cuadres()->updateOrCreate(['day'=>date('Y-m-d')],[
-            'efectivo'=>$payments->sum(DB::raw('efectivo-cambio')),
-            'tarjeta'=>$payments->sum('tarjeta'),
-            'transferencia'=>$payments->sum('transferencia'),
+            'efectivo'=>$ctaEfectivo,
+            'tarjeta'=>$ctaOtros,
+            'transferencia'=> $ctaBancos,
             'contado'=>$contado,
             'credito'=>$credito,
             'cobro'=>$cobro->sum(DB::raw('efectivo + tarjeta + transferencia-cambio')),
             'egreso'=>$outcomes->sum('payed'),
             'day'=>date('Y-m-d'),
         ]);
-        $total=$cuadre->efectivo+$cuadre->tarjeta+$cuadre->transferencia-$cuadre->egreso;
+        $total=$cuadre->efectivo+$cuadre->tarjeta+$cuadre->transferencia;
         $cuadre->update([
             'total'=>$total,
             'retirado'=>$cuadre->retirado+$retirado,
-            'final'=>$total-($cuadre->retirado+$retirado)
+            'final'=>$total
         ]);
         $this->openNewCuadre($cuadre->final);
         return $cuadre;

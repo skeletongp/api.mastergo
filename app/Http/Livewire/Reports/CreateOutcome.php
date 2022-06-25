@@ -12,9 +12,9 @@ use Livewire\Component;
 class CreateOutcome extends Component
 {
 
-    public $provider_id, $counts, $count_code, $ref, $amount, $concept;
-    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax;
-    public $setCost = true;
+    public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount=0;
+    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax=0;
+    public $setCost = true, $hideTax=true;
     public function mount()
     {
         $place = auth()->user()->place;
@@ -96,6 +96,7 @@ class CreateOutcome extends Component
             setTransaction('Gasto por banco', $code, $payment->transferencia, $debitable, $bank->contable, 'Sumar Productos');
         }
         $provider = Provider::whereId($this->provider_id)->first();
-        setTransaction('Gasto a crédito', $code, $payment->transferencia, $debitable, $provider->contable, 'Sumar Productos');
+        setTransaction('Gasto a crédito', $code, $payment->rest, $debitable, $provider->contable, 'Sumar Productos');
+        
     }
 }

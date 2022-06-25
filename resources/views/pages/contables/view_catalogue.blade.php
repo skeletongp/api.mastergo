@@ -1,6 +1,6 @@
 <x-app-layout>
     @slot('bread')
-        {{ Breadcrumbs::render('cuadres') }}
+        {{ Breadcrumbs::render('catalogue') }}
     @endslot
 
     <div class="w-full bg-gray-50  mx-auto ">

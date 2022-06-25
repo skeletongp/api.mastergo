@@ -62,7 +62,6 @@ class EditStore extends Component
         [
             'folder' => 'carnibores/logo',
             'transformation' => [
-                      'width' => 250,
                       'height' => 250
              ]
         ])->getSecurePath();

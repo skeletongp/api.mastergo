@@ -23,7 +23,7 @@ class OrderConfirm extends Component
     {
         $store = auth()->user()->store;
         $this->form = $invoice;
-        $this->banks=$store->banks->pluck('bank_name','id');
+        $this->banks=$store->banks()->pluck('bank_name','id');
         unset($invoice['payment']['id']);
         $this->form = array_merge($this->form, $invoice['payment']);
         if ($invoice['client']['debt']>0 || $invoice['condition']!='De Contado') {

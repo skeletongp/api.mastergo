@@ -13,11 +13,15 @@
         </div>
         <div wire:click="setComponent('products.product-price')"
             class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-price' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }}  py-2 text-lg px-1">
-            Precios/Impuestos
+            Precios
         </div>
         <div wire:click="setComponent('products.product-history')"
             class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-history' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
-            Historial
+            Ventas
+        </div>
+        <div wire:click="setComponent('products.product-provisions')"
+            class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-provisions' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
+            Compras
         </div>
     </div>
 
@@ -32,6 +36,10 @@
 
         @case('products.product-history')
             <livewire:products.product-history :product="$product" :wire:key="uniqid().'det'" />
+        @break
+
+        @case('products.product-provisions')
+            <livewire:products.product-provisions :product="$product" :wire:key="uniqid().'det'" />
         @break
     @endswitch
 

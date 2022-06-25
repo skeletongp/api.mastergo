@@ -1,12 +1,12 @@
     <div class="w-full flex  items-start">
-        <div class=" relative">
+        <div class="w-2/5 relative">
             <div
                 class="w-full text-lg font-medium text-gray-900 bg-white  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <livewire:invoices.invoice-list />
             </div>
         </div>
        
-        <div class="w-full h-full  pl-0" x-data="{ open: true }">
+        <div class="w-3/5 h-full  pl-0" x-data="{ open: true }">
             @if ($invoices->count())
                 <div class="mx-auto ">
                     <div
@@ -17,7 +17,7 @@
 
                         <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
                         <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300" href="{{ route('orders') }}"
-                            data-tooltip-target="seeOrders" data-tooltip-style="light">
+                            data-tooltip-target="seeOrders">
                             <span class="far fa-copy"></span>
                         </a>
                         <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
@@ -32,7 +32,7 @@
                         @can('Imprimir Facturas')
                             <x-tooltip id="printAction">Imprimir</x-tooltip>
                             <button class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                                data-tooltip-target="printAction" data-tooltip-style="light"
+                                data-tooltip-target="printAction"
                                 wire:click="$emit('changeInvoice',{{ $invoice, true }})">
                                 <span class="far fa-print"></span>
                             </button>

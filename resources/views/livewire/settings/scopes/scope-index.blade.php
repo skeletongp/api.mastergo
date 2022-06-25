@@ -12,7 +12,7 @@
         <x-tooltip id="manageScopes">
             Ver/Cambiar Scopes
         </x-tooltip>
-        <span data-tooltip-target="manageScopes" data-tooltip-style="light" class="far fa-pen-square"
+        <span data-tooltip-target="manageScopes" class="far fa-pen-square"
             x-bind:class=" open ? ' text-green-600' : 'text-yellow-600'"></span>
     </h1>
     <form action="" wire:submit.prevent="changeScopes" x-show="open" x-transition>

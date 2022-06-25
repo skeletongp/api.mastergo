@@ -48,6 +48,10 @@ protected $connection="mysql";
     {
         return $this->hasMany(Recurso::class);
     }
+    public function condiments()
+    {
+        return $this->hasMany(Condiment::class);
+    }
     public function procesos()
     {
         return $this->hasMany(Proceso::class);
@@ -77,6 +81,10 @@ protected $connection="mysql";
     {
         return $this->hasMany(Outcome::class);
     }
+    public function provisions()
+    {
+        return $this->hasMany(Provision::class);
+    }
     public function cash()
     {
         return $this->morphOne(Count::class, 'contable')
@@ -98,6 +106,11 @@ protected $connection="mysql";
         return $this->morphOne(Count::class, 'contable')
         ->where('code','500-01')->first();
     }
+    public function ventas_service()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','500-02')->first();
+    }
     public function other()
     {
         return $this->morphOne(Count::class, 'contable')
@@ -117,7 +130,8 @@ protected $connection="mysql";
     }
     public function findCount($code)
     {
-        return $this->morphOne(Count::class, 'contable')
+        return $this->hasOne(Count::class)
         ->where('code',$code)->first();
     }
+    
 }

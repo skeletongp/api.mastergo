@@ -21,19 +21,19 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements Searchable
 {
     use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes;
-    protected $connection="moso_master";
+    protected $connection = "moso_master";
 
     public function getSearchResult(): SearchResult
-     {
+    {
         $url = route('users.index', $this->id);
-     
-         return new SearchResult(
+
+        return new SearchResult(
             $this,
             $this->fullname,
             $url
-         );
-     }
-     
+        );
+    }
+
 
     protected $fillable = [
         'name',
@@ -86,7 +86,7 @@ class User extends Authenticatable implements Searchable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function password(): Attribute
     {
         return new Attribute(
@@ -113,10 +113,10 @@ class User extends Authenticatable implements Searchable
 
     public function stores()
     {
-        return $this->belongsToMany(Store::class, env('DB_DATABASE').'.store_users');
+        return $this->belongsToMany(Store::class, env('DB_DATABASE') . '.store_users');
     }
-   
-    
+
+
     public function contable()
     {
         return $this->morphMany(Count::class, 'contable');
@@ -129,9 +129,37 @@ class User extends Authenticatable implements Searchable
         if (!is_null($store)) {
             return $store;
         }
-        $store = $this->stores()->where('stores.id', $this->store_id)->with('clients','products','roles','invoices','providers','incomes','banks','recursos','comprobantes','units','places')->first();
+        $store = $this->stores()->where('stores.id', $this->store_id)
+            ->with(
+                'clients',
+                'products',
+                'roles',
+                'invoices',
+                'providers',
+                'incomes',
+                'banks',
+                'recursos',
+                'comprobantes',
+                'units',
+                'places'
+            )
+            ->first();
         if (is_null($store)) {
-            $store = $this->stores()->where('stores.id',env('STORE_ID'))->with('clients','products','roles','invoices','providers','incomes','banks','recursos','comprobantes','units','places')->first();
+            $store = $this->stores()->where('stores.id', env('STORE_ID'))
+                ->with(
+                    'clients',
+                    'products',
+                    'roles',
+                    'invoices',
+                    'providers',
+                    'incomes',
+                    'banks',
+                    'recursos',
+                    'comprobantes',
+                    'units',
+                    'places'
+                )
+                ->first();
         }
         Cache::put('store_' . $this->id, $store);
         return $store;
@@ -150,18 +178,18 @@ class User extends Authenticatable implements Searchable
         }
         $placeOnStore = $this->store->places()->whereId($this->place_id)->first();
         if (!$placeOnStore) {
-            $place=$this->store->places()->first();
-            $this->update(['place_id'=>$place->id]);
-        } else{
-            $place=$placeOnStore;
+            $place = $this->store->places()->first();
+            $this->update(['place_id' => $place->id]);
+        } else {
+            $place = $placeOnStore;
         }
         Cache::put('place_' . $this->id, $place);
         return $place;
     }
-    
+
 
     public function payments()
     {
-        return $this->morphMany(Payment::class,'contable');
+        return $this->morphMany(Payment::class, 'contable');
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\ContableController;
+use App\Http\Controllers\ProvisionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
@@ -90,7 +91,9 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ProcesoController::class)->group(function () {
             Route::get('procesos', 'index')->name('procesos.index');
             Route::get('procesos/create', 'create')->name('procesos.create');
+            Route::get('procesos/formula/{proceso}', 'formula')->name('procesos.formula');
             Route::get('procesos/{proceso}', 'show')->name('procesos.show');
+            Route::get('productions/{production}', 'production_show')->name('productions.show');
         });
         Route::controller(ContableController::class)->group(function () {
             Route::get('general_daily', 'general_daily')->name('contables.general_daily');
@@ -109,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ReportController::class)->group(function(){
             Route::get('/incomes','incomes')->name('reports.incomes');
             Route::get('/outcomes','outcomes')->name('reports.outcomes');
+        });
+        Route::controller(ProvisionController::class)->group(function(){
+            Route::get('/provisions','index')->name('provisions.index');
         });
     });
 });

@@ -2,7 +2,7 @@
     <x-modal :maxWidth="'max-w-3xl'" title="Añadir Recursos" >
         <x-slot name="button">
             <x-tooltip id="{{ $production['id'] }}2">Añadir recursos</x-tooltip>
-            <span data-tooltip-target="{{ $production['id'] }}2" data-tooltip-style="light"
+            <span data-tooltip-target="{{ $production['id'] }}2"
                 class="fas fa-angle-double-up text-xl"></span>
         </x-slot>
         <div>

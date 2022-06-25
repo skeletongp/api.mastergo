@@ -20,7 +20,8 @@ class CreateCount extends Component
         $counts = CountMain::select(DB::raw("CONCAT(code,'-',name) as name, code"))
             ->whereIn('code', $this->codes)
             ->pluck('name', 'code');
-        if ($this->model::find(1) && $this->model::find(1)->fullname) {
+            $mod=$this->model::find(1);
+        if ($mod && $mod->fullname) {
             $this->instances = $this->model::pluck('fullname', 'id');
         } else {
             $this->instances = $this->model::pluck('name', 'id');

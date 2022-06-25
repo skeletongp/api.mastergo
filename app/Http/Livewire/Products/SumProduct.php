@@ -15,30 +15,34 @@ use Livewire\Component;
 class SumProduct extends Component
 {
     use SumProductTrait;
-    public $products, $units, $form, $productAdded = [], $provider_id, $counts, $count_code, $ref;
-    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax;
-    public $setCost = false;
+    public $products, $providers, $units, $form=[], $productAdded = [], $provider_id, $counts, $count_code, $ref='N/D';
+    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax=0, $discount=0;
+    public $setCost = false, $total=0;
 
     protected $listeners = ['getUnits'];
-    protected $queryString = ['productAdded', 'setCost'];
+    protected $queryString = ['productAdded', 'setCost', 'total','discount'];
     public function mount()
     {
         $place = auth()->user()->place;
         $store = auth()->user()->store;
-        $this->products = $place->products->pluck('name', 'id');
-        $this->units = $place->units->pluck('name', 'id');
-        $this->counts = $place->counts()->where('code', 'like', '104%')->pluck('name', 'code');
-        $this->banks = $store->banks()->select(DB::raw('CONCAT(bank_name," ",bank_number) AS name, id'))->pluck('name', 'id');
+        $this->providers = $store->providers()->pluck('fullname', 'providers.id');
+        $this->products = $place->products()->where('type','Producto')->pluck('name', 'products.id');
+        $this->units = $place->units()->pluck('name', 'units.id');
+        $this->counts = $place->counts()->where('code', 'like', '104%')->pluck('name', 'counts.code');
+        $this->banks = $store->banks()->select(DB::raw('CONCAT(bank_name," ",bank_number) AS name, id'))->pluck('name', 'banks.id');
     }
 
     protected $rules1 = [
         'form.product_id' => 'required|exists:products,id',
         'form.cant' => 'required|numeric|min:1',
         'form.unit' => 'required|numeric|exists:units,id',
+        'form.cost' => 'required|numeric',
+        
     ];
     protected $rules = [
         'productAdded' => 'required|min:1',
         'provider_id' => 'required',
+        'ref' => 'required',
     ];
 
     public function render()
@@ -47,10 +51,17 @@ class SumProduct extends Component
     }
     public function updatedFormProductId()
     {
+        $this->form['unit']=null;
+        $this->render();
         $this->emit('getUnits');
     }
     public function updatedSetcost()
     {
+        $this->render();
+    }
+    public function updatedDiscount($value)
+    {
+        $this->total=$this->total-$value;
         $this->render();
     }
     public function addProduct()
@@ -64,6 +75,7 @@ class SumProduct extends Component
         if (!$exist) {
             $this->form['id'] = count($this->productAdded);
             array_push($this->productAdded, $this->form);
+            $this->total+=($this->form['cant']*$this->form['cost']);
         } else {
             $this->emit('showAlert', 'El producto ya ha sido añadido', 'warning');
         }
@@ -71,6 +83,7 @@ class SumProduct extends Component
     }
     public function remove($id)
     {
+        $this->total-=($this->productAdded[$id]['cant']*$this->productAdded[$id]['cost']);
         unset($this->productAdded[$id]);
         $this->render();
     }
@@ -89,21 +102,24 @@ class SumProduct extends Component
             $this->rules = array_merge($this->rules, ['ref_bank' => 'required']);
         }
         $this->validate();
-        $amount = 0;
-        $code = Provision::LETTER[rand(0, 25)] . date('His');
+        
+        $code = Provision::code();
         foreach ($this->productAdded as $added) {
             $unit = auth()->user()->place->units()
-                ->where('product_id', $added['product_id'])
-                ->where('unit_id', $added['unit'])->first();
+            ->where('product_id', $added['product_id'])
+            ->where('unit_id', $added['unit'])->first();
             $product = Product::find($added['product_id']);
-            $unit->pivot->stock = $unit->stock + $added['cant'];
+            $unit->pivot->stock = removeComma($unit->stock) + removeComma($added['cant']);
+            $cost=($added['cost']+$unit->pivot->cost)/2;
+            $unit->pivot->cost=$cost;
             $unit->pivot->save();
-            $amount += $added['cant'] * $unit->cost;
-            $this->createProvision($product, $added['cant'], $code, $added['unit'],  $unit->cost);
+           
+            $this->createProvision($product, $added['cant'], $code, $added['unit'],  $added['cost']);
         }
+        $this->print($code);
         if ($this->setCost) {
             $provider=Provider::whereId($this->provider_id)->first();
-            $outcome = setOutcome($amount, 'Ingreso de productos a inventario', $this->ref);
+            $outcome = setOutcome($this->total, 'Ingreso de productos a inventario', $this->ref);
             $provider->outcomes()->save($outcome);
             $this->createPayment($outcome, $code);
             $place = auth()->user()->place;
@@ -119,6 +135,17 @@ class SumProduct extends Component
         $prod = Product::find($this->form['product_id']);
         if ($prod) {
             $this->units = $prod->units()->distinct('name')->pluck('name', 'units.id');
+            $this->render();
+        }
+    }
+    public function updatedFormUnit($value)
+    {
+        $prod = Product::find($this->form['product_id']);
+        if ($prod) {
+            $unit = $prod->units()->where('units.id',$value)->first();
+            if ($unit) {
+                $this->form['cost']=$unit->pivot->cost;
+            }
             $this->render();
         }
     }

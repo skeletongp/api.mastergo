@@ -6,7 +6,7 @@
         </x-slot>
         <x-slot name="button">
             <span data-tooltip-target="editId{{$client['id']}}"
-            data-tooltip-style="light" class="far fa-pen text-green-600"></span>
+            class="far fa-pen text-green-600"></span>
             <x-tooltip id="editId{{$client['id']}}">Editar registro</x-tooltip>
         </x-slot>
         <form wire:submit.prevent="updateClient" class="space-y-8">

@@ -16,7 +16,4 @@ mix.js("resources/js/app.js", "public/js").postCss(
     "public/css",
     [require("tailwindcss")]
 );
-mix.js("resources/js/main.js", "public/js").css(
-    "resources/css/main.css",
-    "public/css"
-);
+mix.js("resources/js/main.js", "public/js");

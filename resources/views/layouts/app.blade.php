@@ -44,7 +44,7 @@
             {{-- Navbar --}}
             <header class="sticky top-[4.5rem] z-50 w-full mx-auto py-2 bg-white">
                 @include('includes.header')
-                <div class=" w-full bg-gray-50 py-1 px-4 flex justify-between">
+                <div class=" w-full bg-gray-50 py-1 px-4 flex justify-between items-center">
                     @if (isset($bread))
                         {{ $bread }}
                     @endif
@@ -87,6 +87,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/formatPhoneNumber.js') }}"></script>
     <script src="{{ asset('js/printer-script.js') }}"></script>
+
     <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     @stack('js')
@@ -111,7 +112,29 @@
             }
         };
 
-
+        $("input[type=number]").bind({
+            keydown: function(e) {
+                if (e.shiftKey === true) {
+                    if (e.which == 9) {
+                        return true;
+                    }
+                    return false;
+                }
+                if (e.which == 110 || e.which==190) {
+                    return true;
+                }
+                if (e.which > 95 && e.which<106) {
+                    return true;
+                }
+                if (e.which > 57) {
+                    return false;
+                }
+                if (e.which == 32) {
+                    return false;
+                }
+                return true;
+            }
+        });
 
         Livewire.on('showAlert', (alert, type) => {
             icons = ['success', 'error', 'info', 'warning'];
@@ -184,16 +207,16 @@
         </x-button>
     </div>
     <script>
-        $('#hBack').mouseenter( function(){
-            $('#sVolver').toggle('',false);
+        $('#hBack').mouseenter(function() {
+            $('#sVolver').toggle('', false);
         })
-        $('#hBack').mouseleave( function(){
-            $('#sVolver').toggle('',false);
+        $('#hBack').mouseleave(function() {
+            $('#sVolver').toggle('', false);
         })
-        if (window.location.pathname=='/') {
-           $('#hBack').addClass('hidden');
+        if (window.location.pathname == '/') {
+            $('#hBack').addClass('hidden');
         } else {
-           
+
         }
     </script>
 </body>

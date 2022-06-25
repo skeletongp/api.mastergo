@@ -19,7 +19,7 @@
             </div>
         </div>
     </form>
-    <x-input-error for="brands">Agregue una marca</x-input-error>
+    <x-input-error for="brands">Agregue un atributo</x-input-error>
     <div class="py-4">
         @foreach ($brands as $id=> $brand)
             <div

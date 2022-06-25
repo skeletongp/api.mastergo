@@ -17,7 +17,7 @@ return new class extends Migration
 
         Schema::connection($this->connection)->whenTableDoesntHaveColumn('users','place_id', function (Blueprint $table) {
           
-                $table->foreignId('place_id')->constrained()->on(env('DB_DATABASE') . '.places');
+                $table->foreignId('place_id');
                 $table->foreignId('store_id')->constrained()->on('moso_master.stores');
         });
     }

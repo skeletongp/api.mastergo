@@ -51,11 +51,7 @@
                         </span>
                     @endcan
                 @endscope
-                @can('Abrir Cuadre')
-                    <span class="float-element">
-                        <livewire:cuadres.open-cuadre />
-                    </span>
-                @endcan
+               
 
                 @scope('Facturas')
                     @can('Crear Facturas')

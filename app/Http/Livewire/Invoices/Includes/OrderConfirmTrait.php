@@ -29,11 +29,12 @@ trait OrderConfirmTrait
             return;
         }
         if ($this->form['rest'] <= 0 && $this->form['status'] != 'entregado') {
-            $this->form['status'] = 'pagado';
+           
             $this->form['condition'] = 'De Contado';
         } else {
-            $this->form['status'] = 'adeudado';
+           
         }
+        $this->form['status'] = 'cerrada';
         $pagos = ['Efectivo' => $invoice->efectivo, 'Tarjeta' => $invoice->tarjeta, 'Transferencia' => $invoice->transferencia];
         $this->form['payway'] = array_search(max($pagos), $pagos);
         $payment = $invoice->payment;

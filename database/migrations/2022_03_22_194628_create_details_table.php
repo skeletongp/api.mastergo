@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('subtotal',14,4)->comment('Subtotal de lo que hace el detalle');
             $table->decimal('total',14,4)->comment('Total de lo que hace el detalle');
             $table->decimal('cost',14,4)->comment('Costo que tenía el producto al momento de ser añadido');
+            $table->decimal('cost_service',14,4)->comment('Costo que tenía el servicio al momento de ser añadido');
             $table->decimal('taxtotal',14,4)->comment('Total de impuestos del detalle');
             $table->decimal('discount',14,4)->comment('Descontado al producto en dinero');
             $table->decimal('discount_rate',14,4)->comment('Descontado al producto en porciento');

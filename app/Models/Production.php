@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Production extends Model
 {
     use HasFactory;
-protected $connection="mysql";
-    protected $guarded=[];
+    protected $connection = "mysql";
+    protected $guarded = [];
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
-        static::created(function ($production){
+        static::created(function ($production) {
             $production->update([
-                'code'=>str_pad($production->id,4,'0', STR_PAD_LEFT )
+                'code' => str_pad($production->id, 4, '0', STR_PAD_LEFT)
             ]);
         });
-        
     }
     public function proceso()
     {
@@ -28,13 +28,19 @@ protected $connection="mysql";
     {
         return $this->belongsTo(Unit::class);
     }
-    public function recursos(){
-        return $this->belongsToMany(Recurso::class, 'production_recursos')->withPivot('cant','stock','status');
+    public function recursos()
+    {
+        return $this->belongsToMany(Recurso::class, 'production_recursos')->withPivot('cant', 'stock', 'status')->withTimestamps();
     }
-    public function brands(){
-        return $this->belongsToMany(Brand::class, 'production_recursos')->withPivot('cant','stock','status');
+    public function brands()
+    {
+        return $this->belongsToMany(Brand::class, 'production_recursos')->withPivot('cant', 'stock', 'status');
     }
-    
+    function condiments()
+    {
+        return $this->belongsToMany(Condiment::class, 'condiment_productions')->withPivot('cant', 'cost', 'total', 'attribute')->withTimestamps();
+    }
+
     public function products()
     {
         return $this->hasMany(ProductProduction::class);

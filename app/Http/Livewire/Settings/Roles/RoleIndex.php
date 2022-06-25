@@ -22,7 +22,7 @@ class RoleIndex extends Component
         $this->role_name=optional(auth()->user()->store->roles()->first())->name;
         $this->roleActual = Role::where('name', $this->role_name)->first();
         if ($this->roleActual) {
-            $this->permissionsSelected = $this->roleActual->permissions->pluck('name');
+            $this->permissionsSelected = $this->roleActual->permissions()->pluck('name');
         } else {
             $this->roleActual = Role::where('name', 'Super Admin')->first();
         }

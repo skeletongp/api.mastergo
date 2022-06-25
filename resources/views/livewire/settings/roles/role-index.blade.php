@@ -47,7 +47,7 @@
                                 <x-tooltip id="managePermissions">
                                     Ver/Cambiar permisos
                                 </x-tooltip>
-                                <span data-tooltip-target="managePermissions" data-tooltip-style="light" class="far fa-pen-square"
+                                <span data-tooltip-target="managePermissions" class="far fa-pen-square"
                                     x-bind:class=" open ? ' text-green-600' : 'text-yellow-600'"></span>
                             </button>
                         </td>

@@ -37,19 +37,19 @@ class SearchField extends Component
         $store=auth()->user()->store;
         $this->searchResults = (new Search())
         ->registerModel(User::class, function(ModelSearchAspect $modelSearchAspect) use ($store){
-          $users=$store->users->pluck('id')->toArray();
+          $users=$store->users()->pluck('id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('fullname')
           ->whereIn('id', $users);
         })
         ->registerModel(Product::class, function(ModelSearchAspect $modelSearchAspect) use ($store){
-          $products=$store->products->pluck('id')->toArray();
+          $products=$store->products()->pluck('id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('name')
           ->whereIn('id', $products);
         })
         ->registerModel(Client::class, function(ModelSearchAspect $modelSearchAspect) use ($store){
-          $clients=$store->clients->pluck('id')->toArray();
+          $clients=$store->clients()->pluck('id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('fullname')
           ->whereIn('id', $clients);

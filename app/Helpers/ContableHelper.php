@@ -3,6 +3,7 @@
 use App\Models\Count;
 use App\Models\CountMain;
 use App\Models\Payment;
+use App\Models\Place;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ function setContable($model, String $code, String $origin, $name = null, $place_
     $cMain = CountMain::where('code', $code)->with('counts')->first();
     $exist = $cMain->counts()->where('name', $name)->where('place_id', $place_id)->first();
     if (!$exist) {
+        $place=Place::find($place_id);
         $cant = Count::where('code','like',$code.'%')->where('place_id', $place_id)->count();
         $count = $cMain->counts()->create([
             'code' => $code . '-' . str_pad($cant + 1, 2, '0', STR_PAD_LEFT),
@@ -35,7 +37,8 @@ function setContable($model, String $code, String $origin, $name = null, $place_
             'place_id' => $place_id ?: 1,
             'origin' => $origin,
             'type'=>$type,
-            'borrable'=>$borrable
+            'borrable'=>$borrable,
+            'store_id'=>$place->store->id
         ]);
         $model->contable()->save($count);
     }

@@ -24,6 +24,7 @@ class Detail extends Model
         'discount_rate',
         'price_type',
         'cost',
+        'cost_service',
         'product_id',
         'unit_id',
         'utility',

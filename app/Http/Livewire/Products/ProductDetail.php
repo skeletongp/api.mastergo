@@ -21,7 +21,7 @@ class ProductDetail extends Component
         $price = $this->product->units()->
         select(
             DB::raw("CONCAT(ROUND(stock,2),' → ',name) AS name"),'price_menor')->pluck('pivot.price_menor', 'name');
-        $taxes = $this->product->taxes->pluck('rate', 'name');
+        $taxes = $this->product->taxes()->pluck('rate', 'name');
        
         $wTax = [];
         foreach ($price as $in => $priz) {

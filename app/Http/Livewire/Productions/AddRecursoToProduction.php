@@ -14,7 +14,7 @@ class AddRecursoToProduction extends Component
     public $cant, $recurso_id, $brand_id, $selected=[], $restar=true;
     public function render()
     {
-        $this->recursos=auth()->user()->place->recursos->pluck('name','id');
+        $this->recursos=auth()->user()->place->recursos()->pluck('name','id');
         return view('livewire.productions.add-recurso-to-production');
     }
     public function addSelected()

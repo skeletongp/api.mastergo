@@ -96,6 +96,10 @@ Breadcrumbs::for('procesos.show', function ($trail, $proceso) {
     $trail->parent('procesos');
     $trail->push('Detalles -> '.$proceso->name, route('procesos.show', $proceso));
 });
+Breadcrumbs::for('procesos.formula', function ($trail, $proceso) {
+    $trail->parent('procesos');
+    $trail->push('Fórmula del proceso', route('procesos.formula', $proceso), ['icon'=>'fas fa-flask']);
+});
 /* Ajustes */
 Breadcrumbs::for('settings', function ($trail) {
     $trail->parent('home');
@@ -140,4 +144,9 @@ Breadcrumbs::for('incomes', function($trial){
 Breadcrumbs::for('outcomes', function($trial){
     $trial->parent('home');
     $trial->push('Gastos',route('reports.outcomes',['icon'=>'']));
+});
+/* Reportes */
+Breadcrumbs::for('provisions', function($trial){
+    $trial->parent('home');
+    $trial->push('Compras y Provisiones',route('provisions.index',['icon'=>'']));
 });

@@ -30,7 +30,7 @@ class AuthController extends Controller
             if (!Cache::has('scopes_' . auth()->user()->store->id)) {
                 Cache::put(
                     'scopes_' . auth()->user()->store->id,
-                    auth()->user()->store->scope->pluck('name')
+                    auth()->user()->store->scope()->pluck('name')
                 );
             }
             return redirect()->intended(route('home'));

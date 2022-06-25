@@ -20,9 +20,11 @@ return new class extends Migration
             $table->string('prefix');
             $table->string('number');
             $table->string('ncf');
-            $table->enum('status',['disponible','usado','anulado']);
+            $table->string('period');
+            $table->enum('status',['disponible','usado','anulado','reportado']);
             $table->foreignId('user_id')->nullable()->constrained()->on('moso_master.users');
             $table->foreignId('client_id')->nullable()->constrained();
+            $table->foreignId('place_id')->nullable()->constrained();
             $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();

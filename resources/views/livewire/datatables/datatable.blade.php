@@ -210,7 +210,7 @@
                                 @unless($column['hidden'])
                                     @if ($column['summary'])
                                         <div
-                                            class="table-cell px-6 py-2 @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
+                                            class="table-cell {{isset($padding)?$padding:'py-2 px-6 '}} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
                                             {!! $this->summarize($column['name']) !!}
                                         </div>
                                     @else
@@ -223,7 +223,7 @@
                 </div>
             </div>
             @if ($this->results->isEmpty())
-                <p class="p-3 text-lg text-center font-bold uppercase my-8 overflow-hidden overflow-ellipsis whitespace-nowrap">
+                <p class="p-3 text-lg text-center font-bold uppercase  overflow-hidden overflow-ellipsis whitespace-nowrap">
                     {{ __('No hay ningún resultado para mostrar') }}
                 </p>
             @endif

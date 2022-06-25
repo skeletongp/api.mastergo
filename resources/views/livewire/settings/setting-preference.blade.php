@@ -21,7 +21,7 @@
                             </div>
                             <div class="">
                                 <x-base-select label="Medida" wire:model="preference.unit_id" id="unit_id">
-                                    @foreach ($place->store->units->pluck('name', 'id') as $id => $name)
+                                    @foreach ($place->store->units()->pluck('name', 'id') as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}
                                         </option>
                                     @endforeach
@@ -30,7 +30,7 @@
                             </div>
                             <div class="">
                                 <x-base-select label="Impuestos" wire:model="preference.tax_id" id="tax_id">
-                                    @foreach ($place->store->taxes->pluck('name', 'id') as $id => $name)
+                                    @foreach ($place->store->taxes()->pluck('name', 'id') as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}
                                         </option>
                                     @endforeach

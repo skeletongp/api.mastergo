@@ -3,12 +3,14 @@
 namespace Database\Seeders;
 
 use App\Http\Livewire\Store\CreateStore;
+use App\Jobs\CreateCountForPlaceJob;
 use App\Models\Invoice;
 use App\Models\Store;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Models\Role;
@@ -40,7 +42,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Libra',
             'symbol' => 'LB.'
         ]);
-
+        $unit2 = $store->units()->create([
+            'name' => 'Servicio',
+            'symbol' => 'SRV'
+        ]);
         $tax = $store->taxes()->create([
             'name' => 'ITBIS',
             'rate' => 0.18
@@ -62,7 +67,7 @@ class DatabaseSeeder extends Seeder
             'lastname' => 'Genérico ',
             'email' => $store->email,
             'address' => 'Sin Dirección',
-            'phone' => '(000) 000-0000)',
+            'phone' => '(000) 000-0000',
             'rnc' => '000-00000-0',
             'limit' => 0,
         ]);
@@ -98,13 +103,10 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 ScopeSeeder::class,
                 CountMainSeeder::class,
+              
             ]
         );
-        /* $bank = $store->banks()->create([
-            'bank_name' => 'Banco Popular Dominicano',
-            'bank_number' => '803579804',
-            'titular_id' => $user->id
-        ]); */
+        
         setContable($client, '101', 'debit', $client->fullname, $place->id);
         setContable($tax, '203', 'credit', 'ITBIS por Pagar', $place->id);
         setContable($tax, '103', 'debit', $tax->name . ' por Cobrar', $place->id);
@@ -114,7 +116,11 @@ class DatabaseSeeder extends Seeder
         $store->roles()->save(Role::find(2));
         $store->roles()->save(Role::find(3));
         $this->setCounts($place, $provider);
+        $this->call([
+            OtherSeeder::class
+        ]);
         $roles = ['Administrador', 'Super Admin', 'Generico'];
+      
     }
     public function setCounts($place, $provider)
     {
@@ -123,14 +129,16 @@ class DatabaseSeeder extends Seeder
         setContable($place, '100', 'debit', 'Efectivo en Cheques', $place->id);
         setContable($place, '100', 'debit', 'Otros Efectivos', $place->id);
         setContable($place, '104', 'debit', 'Inventario general',  $place->id,);
-        setContable($place, '400', 'credit', 'Ingresos por Ventas', $place->id);
+        setContable($place, '400', 'credit', 'Ingresos por Ventas de Productos', $place->id);
+        setContable($place, '400', 'credit', 'Ingresos por Ventas de Servicios', $place->id);
         setContable($place, '401', 'debit', 'Devoluciones en Ventas', $place->id);
         setContable($place, '401', 'debit', 'Otras notas de crédito', $place->id);
         setContable($place, '401', 'debit', 'Descuentos en Ventas', $place->id);
         setContable($place, '402', 'credit', 'Otros Ingresos', $place->id);
         setContable($place, '500', 'debit', 'Compra de mercancías', $place->id);
-        setContable($place, '501', 'debit', 'Devoluciones en compras', $place->id);
-        setContable($place, '501', 'debit', 'Descuentos en compras', $place->id);
+        setContable($place, '500', 'debit', 'Generación de servicios', $place->id);
+        setContable($place, '501', 'credit', 'Devoluciones en compras', $place->id);
+        setContable($place, '501', 'credit', 'Descuentos en compras', $place->id);
         setContable($place, '300', 'credit', 'Capital Sucrito y Pagado', $place->id);
         setContable($provider, '200', 'credit', $provider->fullname, $place->id);
         setContable($place, '600', 'debit', 'Sueldos y Salarios', $place->id);
@@ -156,7 +164,5 @@ class DatabaseSeeder extends Seeder
         setContable($place, '602', 'debit', 'Comisiones Bancarias', $place->id);
         setContable($place, '602', 'debit', 'Gastos de Seguros', $place->id);
         setContable($place, '602', 'debit', 'Hipotecas', $place->id);
-       
-
     }
 }

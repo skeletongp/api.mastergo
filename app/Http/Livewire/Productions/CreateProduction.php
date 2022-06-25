@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Productions;
 
 use App\Http\Traits\Livewire\Confirm;
+use App\Models\Brand;
 use Livewire\Component;
 
 class CreateProduction extends Component
@@ -33,9 +34,45 @@ class CreateProduction extends Component
         } 
         $this->form['user_id']=auth()->user()->id;
         $this->form['unit_id']=$this->unit_id;
-        $this->proceso->productions()->create($this->form);
+        $production=$this->proceso->productions()->create($this->form);
+        foreach ($this->proceso->formulas as $formula) {
+           $this->addRecursos($production, $formula);
+        }
         $this->reset('form');
         $this->emit('refreshLivewireDatatable');
+    }
+    function addRecursos($production, $formula){
+        if ($formula->formulable_type == 'App\Models\Recurso') {
+            $production->recursos()->attach($formula->formulable_id,
+            [
+                'cant'=>$formula->cant*$production->setted,
+                'brand_id'=>$formula->brand_id,
+                'cost'=>Brand::find($formula->brand_id)->cost,
+            ]);
+            $this->reduceBrand($formula->brand_id, $formula->cant*$production->setted);
+        } else {
+            $production->condiments()->attach($formula->formulable_id,
+            [
+                'cant'=>$formula->cant*$production->setted,
+                'unit_id'=>$formula->unit_id,
+                'cost'=>$formula->formulable->cost,
+                'total'=>$formula->formulable->cost*$formula->cant*$production->setted
+            ]);
+            $this->reduceFormulable($formula->formulable, $formula->cant*$production->setted);
+        }
+        
+    }
+    function reduceBrand($brand_id, $cant)
+    {
+        $brand=Brand::find($brand_id);
+        $brand->cant-=$cant;
+        $brand->save();
+    }
 
+    function reduceFormulable($formulable, $cant)
+    {
+      
+        $formulable->cant-=$cant;
+        $formulable->save();
     }
 }

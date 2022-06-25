@@ -3,7 +3,7 @@
     <x-tooltip id="{{$idTT}}">
       {{$msg}}
     </x-tooltip>
-    <div data-tooltip-target="{{$idTT}}" data-tooltip-style="light">
+    <div data-tooltip-target="{{$idTT}}">
         {{$slot}}
     </div>
 </div>

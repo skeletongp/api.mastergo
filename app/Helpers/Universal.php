@@ -13,6 +13,14 @@ function formatNumber($number)
     }
     return $formatted;
 }
+function removeComma($number)
+{
+   $withoutComma=preg_replace("/[^0-9.]/", "", $number );
+   if (is_numeric($withoutComma)) {
+       return $withoutComma;
+   }
+    return 0;
+}
 function linkPhoto($link)
 {
 
@@ -54,7 +62,8 @@ function admins()
 {
     $store = auth()->user()->store;
     if (!Cache::get($store->id.'admins')) {
-        Cache::put($store->id.'admins',$store->users()->role('Administrador')->where('loggeable', 'yes')->orderBy('lastname')->pluck('password', 'fullname'));
+        Cache::put($store->id.'admins',$store->users()->role('Administrador')->where('loggeable', 'yes')
+        ->orderBy('lastname')->pluck('password', 'fullname'));
     }
     
     return Cache::get($store->id.'admins');

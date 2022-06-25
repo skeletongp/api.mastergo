@@ -15,10 +15,12 @@
                         </a>
                     </div>
                 @endcan
-                <div class="grid grid-cols-2 gap-6 max-w-6x w-full mx-auto">
+                <div class="grid grid-cols-3 gap-6 max-w-6xl w-full mx-auto">
+                   <div  class="col-span-2">
                     <livewire:products.product-show :product="$product" />
-                    <div class="flex items-center justify-center">
-                        <div class="w-full h-full  bg-center bg-contain bg-no-repeat"
+                   </div>
+                    <div class="flex items-center justify-center col-span-1">
+                        <div class="w-48 h-48 rounded-full  bg-center bg-cover border-4 border-gray-300 bg-no-repeat"
                             style="background-image: url({{ $product->photo }})">
 
                         </div>

@@ -44,7 +44,7 @@ class InvoiceShow extends Component
         }
         $this->seller = $this->invoice->seller->toArray();
         $this->contable = $this->invoice->contable->toArray();
-        $this->banks = auth()->user()->store->banks->pluck('bank_name', 'id');
+        $this->banks = auth()->user()->store->banks()->pluck('bank_name', 'id');
         $this->client['balance'] = '$' . formatNumber($this->client['limit']);
         $this->client['gasto'] = '$' . formatNumber(array_sum(array_column($this->client['payments'], 'payed')));
         $this->client_code = $this->client['code'];

@@ -1,5 +1,5 @@
 <div class="relative">
-    <x-modal :fitV="false" minHeight='min-h-[50vh]'>
+    <x-modal :fitV="false" minHeight='min-h-[50vh]' maxWidth="max-w-xl">
         <x-slot name="button">
             <span class="fas fa-plus text-xl mr-2"></span>
             <span>Añadir Medida</span>
@@ -21,9 +21,19 @@
                                 <x-input-error for="form.{{ $id }}.cost"></x-input-error>
                             </div>
                             <div class="max-w-xs">
-                                <x-input label="Precio" type="number" id="price{{ $id }}"
-                                    wire:model.defer="form.{{ $id }}.price"></x-input>
-                                <x-input-error for="form.{{ $id }}.price"></x-input-error>
+                                <x-input label="Detalle" type="number" id="price{{ $id }}"
+                                    wire:model.defer="form.{{ $id }}.price_menor"></x-input>
+                                <x-input-error for="form.{{ $id }}.price_menor"></x-input-error>
+                            </div>
+                            <div class="max-w-xs">
+                                <x-input label="Mayor" type="number" id="price{{ $id }}.mayor"
+                                    wire:model.defer="form.{{ $id }}.price_mayor"></x-input>
+                                <x-input-error for="form.{{ $id }}.price_mayor"></x-input-error>
+                            </div>
+                            <div class="max-w-xs">
+                                <x-input label="Mínimo" type="number" id="price{{ $id }}.min"
+                                    wire:model.defer="form.{{ $id }}.min"></x-input>
+                                <x-input-error for="form.{{ $id }}.min"></x-input-error>
                             </div>
                             <div class="max-w-xs">
                                 <x-button>

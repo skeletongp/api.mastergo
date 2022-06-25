@@ -18,11 +18,8 @@ class Product extends Model implements Searchable
     protected $connection="mysql";
 
 
-    protected $fillable=[
-        'name',
-        'name',
-        'description',
-        'store_id',
+    protected $guarded=[
+      
     ];
     protected $searchable = [
         'columns' => [
@@ -34,11 +31,13 @@ class Product extends Model implements Searchable
     {
         parent::boot();
         self::creating(function ($model) {
-            $store=optional(auth()->user())->store?:Store::first();
+          if (auth()->user()) {
+            $store=optional(auth()->user())->store;
             $num=$store->products()->count()+1;
             $code=str_pad($num,3,'0', STR_PAD_LEFT);
             $model->uid = (string) Uuid::uuid4();
             $model->code=$code;
+          }
         });
     }
 

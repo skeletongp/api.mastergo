@@ -1,11 +1,11 @@
-<div class="px-2">
+<div class="px-2" style="z-index:150">
     <div class="flex items-center space-x-4">
         @if ($label)
             <span class="w-full text-xl font-bold uppercase">Cambiar de negocio</span>
         @endif
         @if ($title)
             <select name="store" id="store" data-tooltip-target="storeTT"
-            data-tooltip-style="light"
+            data-tooltip-placement="right"
                 class="uppercase font-bold text-xl appearance-none outline-none border-0 focus:border-0 active:border-0"
                 wire:model="store_id">
                 @foreach ($stores as $store)

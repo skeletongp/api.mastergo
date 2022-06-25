@@ -14,7 +14,22 @@
                         <b>Cod.: </b>{{$form['code']}}
                     </span>
                 </div>
-                <x-base-input inputClass="text-lg" id="form.proc.name" wire:model.defer="form.name" label="Nombre"></x-base-input>
+                <div class="flex space-x-4">
+                    <div class="w-full">
+                        <x-base-input class="py-1.5" inputClass="text-lg" id="form.proc.name" wire:model.defer="form.name" label="Nombre"></x-base-input>
+                    </div>
+                    <div class="w-full">
+                        <x-base-select label="Medida "  id="form.proc.unit_id" wire:model.defer="form.unit_id">
+                            <option value=""></option>
+                            @foreach ($units as $id=> $name)
+                                <option value="{{$id}}">{{$name}}</option>
+                            @endforeach
+                        </x-base-select>
+                    </div>
+                </div>
+                <div class="flex justify-end py-4">
+                    <x-button>Guardar</x-button>
+                </div>
             </form>
         </div>
     </x-modal>

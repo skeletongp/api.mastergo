@@ -48,7 +48,11 @@ class Provider extends Model
     }
     public function contable()
     {
-        return $this->morphOne(Count::class,'contable');
+         $place_id=1;
+        if (auth()->user()) {
+            $place_id=auth()->user()->place->id;
+        }
+        return $this->morphOne(Count::class,'contable')->where('place_id',$place_id);;
     }
     public function avatar(): Attribute
     {

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('balance', 14,4);
             $table->foreignId('count_main_id')->constrained();
             $table->foreignId('place_id')->constrained();
+            $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->morphs('contable');
             $table->tinyInteger('borrable')->nullable();
             $table->softDeletes();

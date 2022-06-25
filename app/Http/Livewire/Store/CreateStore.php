@@ -41,7 +41,7 @@ class CreateStore extends Component
                 ['path' => $this->photo_path]
             );
         }
-        $this->createPlace($store);
+       /*  $this->createPlace($store);
         $this->createUnit($store);
         $this->createTax($store);
         $this->createClient($store);
@@ -50,7 +50,7 @@ class CreateStore extends Component
         $this->setPreference($store->places()->first(), $store);
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
-        $store->roles()->save(Role::find(3));
+        $store->roles()->save(Role::find(3)); */
         $this->reset();
         $this->emit('reloadUsers');
         $this->emitUp('reloadSettingStore');

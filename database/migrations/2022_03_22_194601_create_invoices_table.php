@@ -24,11 +24,14 @@ return new class extends Migration
             $table->string('note')->comment('Nota o descripción opcional')->nullable();
             $table->string('name')->comment('Para colocar nombre de cliente genérico')->nullable();
             $table->enum('type', Invoice::TYPES)->default('B00');
-            $table->enum('status',['pagado','adeudado','entregado', 'waiting']);
+            $table->enum('status',['waiting','anulada','cerrada']);
             $table->enum('condition',['De Contado','1 A 15 Días','16 A 30 Días', '31 a 45 Días']);
             $table->enum('payway',['Efectivo','Tarjeta','Transferencia', 'Mixto']);
             $table->decimal('rest', 14,4)->comment('Deuda pendiente de la factura');
             $table->decimal('gasto', 14,4)->comment('Costo de compra de los productos');
+            $table->decimal('gasto_service', 14,4)->comment('Costo de generación de los servicios');
+            $table->decimal('venta', 14,4)->comment('Ingreso de venta de los productos');
+            $table->decimal('venta_service', 14,4)->comment('Ingreso de venta de los servicios');
             $table->decimal('ingreso', 14,4)->comment('Costo de venta de los productos');
             $table->foreignId('client_id')->comment('Cliente que hace la compra')->nullable()->constrained();
             $table->foreignId('place_id')->comment('Sucursal a la que pertenece la compra')->constrained();

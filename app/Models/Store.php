@@ -66,6 +66,10 @@ class Store extends Model
     {
         return $this->hasMany(Place::class);
     }
+    public function counts()
+    {
+        return $this->hasMany(Count::class);
+    }
     public function clients()
     {
         return $this->hasMany(Client::class);
@@ -93,6 +97,10 @@ class Store extends Model
     public function recursos()
     {
         return $this->hasMany(Recurso::class);
+    }
+    public function condiments()
+    {
+        return $this->hasMany(Condiment::class);
     }
     public function invoices()
     {

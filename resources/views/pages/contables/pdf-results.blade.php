@@ -14,7 +14,7 @@
         body {
             text-align: center;
             color: #222;
-            margin-top: 13.5rem;
+            margin-top: 11.5rem;
             margin-bottom: 20px;
         }
 
@@ -306,6 +306,26 @@
                 </td>
             </tr>
             <tr class="row-second">
+                <th style="padding-left: 60px">
+                   Devolución en compras
+                </th>
+                <td>
+                    ${{ formatNumber($data['devolucionCompras']) }}
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr class="row-second">
+                <th style="padding-left: 60px">
+                   Descuentos en compras
+                </th>
+                <td>
+                    ${{ formatNumber($data['descuentosCompras']) }}
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr class="row-second">
                 <th>
                    Costos de Fletes
                 </th>
@@ -379,7 +399,7 @@
             </tr>
             <tr class="row-third">
                 <th>
-                    Utilidad Antes de ISR
+                    Utilidad Antes de ISR (27%)
                 </th>
                 <td>
                 </td>
@@ -390,9 +410,10 @@
             </tr>
             <tr class="row">
                 <th>
-                    Utilidad Neta
+                    Utilidad Neta 
                 </th>
-                <td style="text-align: center" colspan="2">
+                <td></td>
+                <td style="font-size: large">
                     ${{ formatNumber($data['utilidad_neta']) }}
                 </td>
             </tr>

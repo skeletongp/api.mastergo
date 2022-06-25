@@ -30,6 +30,14 @@
 
                 </div>
             </div>
+            <div class="w-full">
+                <x-base-select wire:model.defer="product.type" label="Tipo de producto">
+                    <option value=""></option>
+                    <option  >Producto</option>
+                    <option >Servicio</option>
+                </x-base-select>
+            <x-input-error for="product.type"></x-input-error>
+            </div>
             <div class="flex justify-end pb-2 pt-1">
                 <x-button wire:loading.attr="disabled">
                     Actualizar

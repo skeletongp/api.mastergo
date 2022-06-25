@@ -14,7 +14,7 @@ class LastSales extends LivewireDatatable
     public function builder()
     {
         $invoices=auth()->user()->place->invoices()->where('created_at', '>=', Carbon::now()->subWeek())
-        ->orderBy('created_at','desc')->with('payment','client','seller','contable','payments');
+        ->orderBy('created_at','desc')->where('status','!=','anulada')->with('payment','client','seller','contable','payments');
         return $invoices;
     }
 

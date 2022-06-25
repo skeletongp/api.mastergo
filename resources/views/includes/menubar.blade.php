@@ -85,6 +85,9 @@
                         <x-side-link routeName='procesos.index' icon='far w-10 text-center fa-copy fa-lg' text='Procesos'
                             activeRoute="procesos.*" scope="Procesos" />
                     @endcanany
+                    @can('Ver Gastos')
+                    <x-side-link routeName='provisions.index' icon='far w-10 text-center fa-calendar-alt fa-lg'
+                        text='Compras' activeRoute="provisions.*" scope="Gastos" />
                 </x-dropitem>
 
                 <x-dropitem text="Finanzas" icon="far fa-file-invoice-dollar">
@@ -98,6 +101,8 @@
                         <x-side-link routeName='reports.outcomes' icon='far w-10 text-center fa-chart-line-down fa-lg'
                             text='Gastos' activeRoute="reports.*" scope="Gastos" />
                     @endcan
+                 
+                @endcan
                 </x-dropitem>
 
                 <x-dropitem text="Contabilidad" icon="far fa-wallet">
@@ -113,7 +118,10 @@
                         <x-side-link routeName='comprobantes.index' icon='far w-10 text-center fa-receipt fa-lg'
                             text='Comprobantes' activeRoute="comprobantes.*" scope="Impuestos" />
                     @endcan
-                   
+                    @can('Ver Cuadre')
+                        <x-side-link routeName='cuadres.index' icon='far w-10 text-center fa-chart-bar fa-lg'
+                            text='Cuadre Diario' activeRoute="cuadres.*" scope="Impuestos" />
+                    @endcan
                     @can('Ver Cuadre')
                         <x-side-link routeName='contables.results' icon='far w-10 text-center fa-chart-line fa-lg'
                             text='Estado G/P' activeRoute="contables.*" scope="Impuestos" />

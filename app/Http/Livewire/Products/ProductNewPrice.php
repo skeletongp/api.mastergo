@@ -12,14 +12,16 @@ class ProductNewPrice extends Component
     
     public function mount()
     {
-       $units=auth()->user()->store->units->pluck('name','id');
-       $hasUnit=$this->product->units->pluck('name','id');
+       $units=auth()->user()->store->units()->pluck('name','id');
+       $hasUnit=$this->product->units()->pluck('name','id');
        $this->units=array_diff($units->toArray(), $hasUnit->toArray());
        
     }
     protected $rules=[
         'form'=>'required',
-        'form.*.price'=>'required|min:1',
+        'form.*.price_menor'=>'required|min:1',
+        'form.*.price_mayor'=>'required|min:1',
+        'form.*.min'=>'required|min:1',
         'form.*.cost'=>'required|min:1',
     ];
     public function render()
@@ -32,7 +34,7 @@ class ProductNewPrice extends Component
         $this->validate($this->rules);
        foreach ($this->form as $key => $data) {
         $data['place_id'] = auth()->user()->place->id;
-        $data['margin'] = $data['price']/$data['cost']-1;
+        $data['margin'] = $data['price_menor']/$data['cost']-1;
         $data['stock']=0;
         $this->product->units()->attach(
             $key,

@@ -20,27 +20,26 @@
                                 {{-- Nombre y apellidos --}}
                                 <div class="flex space-x-4 items-center">
                                     <div class="w-full">
-                                        <x-input class="text-2xl" label="Nombre de la sucursal"
+                                        <x-base-input class="text-2xl" label="Nombre de la sucursal"
                                             wire:model.defer="form.name" id="form.place.name">
-                                        </x-input>
+                                        </x-base-input>
                                         <x-input-error for="form.name"></x-input-error>
                                     </div>
-                                    <div class="w-2/5">
-                                        <x-input class="text-2xl" label="No. Teléfono"
+                                    <div class="w-full">
+                                        <x-base-input  type="tel" class="text-2xl" label="No. Teléfono"
                                             wire:model.defer="form.phone" id="form.place.phone">
-                                        </x-input>
+                                        </x-base-input>
                                         <x-input-error for="form.phone"></x-input-error>
                                     </div>
                                     <div class="w-full">
-                                        <label for="user_id">Usuario Responsable</label>
-                                        <div class="w-full pt-2"></div>
-                                        <x-select first="false" id="user_id" class="select2"
+                                        <div class="w-full "></div>
+                                        <x-base-select label="Usuario Titular" id="user_id"
                                             wire:model.defer="form.user_id">
                                             <option ></option>
                                             @foreach ($users as $id => $user)
                                                 <option value="{{ $id }}">{{ $user }}</option>
                                             @endforeach
-                                        </x-select>
+                                        </x-base-select>
                                         <x-input-error for="form.user_id"></x-input-error>
                                     </div>
                                 </div>

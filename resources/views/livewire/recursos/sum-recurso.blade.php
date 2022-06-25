@@ -1,14 +1,13 @@
     <div class="p-4 shadow-xl max-w-2xl w-full mx-auto">
-        <form action="" wire:submit.prevent="addSelected">
+        <form action="" wire:submit.prevent="addSelected" >
             <h1 class="my-4 font-bold text-xl text-center uppercase">Sumar stock de los recursos</h1>
             <div class="flex space-x-4 items-start">
                 <div class="w-full">
-                    <x-base-select label="Recurso" wire:model="recurso_id" id="recurso_id">
-                        <option value=""></option>
-                        @foreach ($recursos as $id=> $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
+                    <x-datalist label="Recurso" model="recurso" inputId="recurso_id" listName="recursosList">
+                        @foreach ($recursos as $id => $item)
+                            <option data-value="{{$id}}" value="{{$item}}"></option>
                         @endforeach
-                    </x-base-select>
+                    </x-datalist>
                     <x-input-error for="recurso_id">Requerido</x-input-error>
                 </div>
                 @if ($brands)
@@ -57,11 +56,21 @@
                             <h1 class="text-right">{{ $item['cant'] }}</h1>
                         </div>
                     </div>
+                    
                 @endforeach
+                <div class="py-2 flex justify-end">
+                    ${{formatNumber($total)}}
+                </div>
             </div>
+            @if (count($selected) && $setCost)
+            <div class="w-full">
+                @include('livewire.products.includes.sumproductmoney')
+            </div>
+          
+        @endif
             <div class="flex w-full my-4 justify-between ">
                 <div>
-                    <x-toggle label="Generar Gasto" id="gasto" wire:model="gasto" value="true"></x-toggle>
+                    <x-toggle label="Generar Gasto" id="setCost" wire:model="setCost" value="true"></x-toggle>
                 </div>
                 <x-button role="button" class="bg-cyan-700" wire:click="storeSelected">Guardar</x-button>
             </div>

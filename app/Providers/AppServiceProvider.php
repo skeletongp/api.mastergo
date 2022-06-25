@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Dotenv\Dotenv;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 

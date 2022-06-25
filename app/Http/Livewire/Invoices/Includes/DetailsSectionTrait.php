@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Invoices\Includes;
 trait DetailsSectionTrait
 {
     public $producto;
-    public $product, $product_code, $product_name, $products, $stock, $unit, $open=false;
+    public $product, $product_code, $product_name, $products, $stock, $unit, $open = false;
 
 
     function rules()
@@ -23,7 +23,8 @@ trait DetailsSectionTrait
                 'name' => $product->name,
                 'code' => $product->code,
                 'units' => $product->units,
-                'taxes' => $product->taxes->pluck('id')
+                'type' => $product->type,
+                'taxes' => $product->taxes()->pluck('taxes.id')
             ];
             $this->form['product_id'] = $product->id;
             $this->unit_id = $product->units->first()->pivot->id;
@@ -37,21 +38,20 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
-        
+
         if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar')) {
-            $this->action='confirmedAddItems';
-           $this->emit('openAuthorize', 'Para vender producto fuera de stock');
-        } else{
+            $this->action = 'confirmedAddItems';
+            $this->emit('openAuthorize', 'Para vender producto fuera de stock');
+        } else {
             $this->confirmedAddItems();
         }
-       
     }
     public function confirmedAddItems()
     {
-        $this->price=str_replace(',','',$this->price);
+        $this->price = str_replace(',', '', $this->price);
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
-        $this->form['price'] = str_replace(',','',$this->price);
+        $this->form['price'] = str_replace(',', '', $this->price);
         $this->validate();
         $this->form['subtotal'] =  $this->cant * $this->price;
         $this->form['discount_rate'] =  ($this->discount / 100);
@@ -73,7 +73,7 @@ trait DetailsSectionTrait
     }
     public function removeItem($id)
     {
-        $this->form['product_id']=$this->details[$id]['product_id'];
+        $this->form['product_id'] = $this->details[$id]['product_id'];
         unset($this->details[$id]);
         $this->details = array_values($this->details);
         foreach ($this->details as $ind => $det) {
@@ -107,45 +107,47 @@ trait DetailsSectionTrait
                 $this->price = formatNumber($unit->pivot->price_menor);
                 $this->form['price_type'] = 'detalle';
             }
-            $this->form['cost'] = $unit->pivot->cost;
+           
+           
+
+
             $this->form['unit_name'] = $unit->symbol;
             $discount = 0;
             if ($this->discount) {
                 $discount = $this->discount;
             }
-           $pr=str_replace(',','',$this->price);
-            $sub = str_replace(',', '', formatNumber(($this->cant  * $pr) * (1 - ($discount / 100))));
+            $pr = str_replace(',', '', $this->price);
+            $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ($discount / 100))));
             if ($this->product) {
-
+                $this->form['cost'] = $unit->pivot->cost;
                 $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
                 $this->checkStock();
             }
             $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
             $this->pivot_id = $unit->pivot->id;
-
         }
     }
     public function updatedProductCode()
     {
-        $code=substr($this->product_code,0,3);
+        $code = substr($this->product_code, 0, 3);
         $this->setProduct($code);
     }
     public function updatedProductName()
     {
-        $code=substr($this->product_name,0,3);
+        $code = substr($this->product_name, 0, 3);
         $this->setProduct($code);
     }
     public function updatingPrice($newPrice)
     {
-        $oldPrice=$this->price;
-        if ($oldPrice>$newPrice) {
-            $discount=formatNumber(1-($newPrice/$oldPrice));
-           $this->discount=$discount*100;
+        $oldPrice = floatVal($this->price);
+        if ($oldPrice > $newPrice) {
+            $discount = formatNumber(1 - (floatVal($newPrice) / $oldPrice));
+            $this->discount = $discount * 100;
         }
-        $this->price=$newPrice;
+        $this->price = $newPrice;
     }
     public function updatingDiscount($desc)
     {
-      $this->discount=$desc*100;
+        $this->discount = $desc * 100;
     }
 }

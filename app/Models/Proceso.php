@@ -17,6 +17,7 @@ protected $connection="mysql";
         'code',
         'start_at',
         'user_id',
+        'unit_id',
         'place_id'
     ];
 
@@ -28,5 +29,7 @@ protected $connection="mysql";
     public function productions(){
         return $this->hasMany(Production::class);
     }
-   
+   function formulas(){
+       return $this->hasMany(Formula::class);
+   }
 }

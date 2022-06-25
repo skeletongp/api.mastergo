@@ -28,7 +28,8 @@ class TableProduction extends LivewireDatatable
         return [
             Column::callback('id',function($id) use ($productions) {
                 $production = arrayFind($productions, 'id', $id);
-                return view('pages.productions.show', get_defined_vars());
+               
+                return "<a href='".route('productions.show',$id)."'><span class='fas fa-eye'> </span> </a>";
             })->label('Ver'),
             Column::callback('setted', function ($setted) {
                 return formatNumber($setted);
@@ -50,7 +51,7 @@ class TableProduction extends LivewireDatatable
             Column::callback(['id','created_at'], function($id) use ($productions){
                 $production = arrayFind($productions, 'id', $id);
                 return view('pages.productions.actions', get_defined_vars());
-            })->label('Acciones')
+            })->label('Acciones')->contentAlignCenter()
         ];
     }
 }

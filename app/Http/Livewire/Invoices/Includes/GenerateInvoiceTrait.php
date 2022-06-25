@@ -16,6 +16,9 @@ trait GenerateInvoiceTrait
     public function createDetails($invoice)
     {
         $gasto = 0;
+        $gasto_service = 0;
+        $venta=0;
+        $venta_service=0;
         foreach ($this->details as $ind => $detail) {
             unset($this->details[$ind]['product_name']);
             unset($this->details[$ind]['unit_name']);
@@ -30,11 +33,26 @@ trait GenerateInvoiceTrait
                 $det->taxtotal = $det->taxes->sum('rate') * $det->total;
             }
             $det->save();
-            $gasto += $det->cant * $det->cost;
+           
+           
             $product = $det->product;
+            if ($product->type=='Producto') {
+                $venta += $det->subtotal-$det->discount;
+            } else {
+                $det->update([
+                    'cost_service'=>$det->cost,
+                    'cost'=>0,
+                ]);
+                $venta_service += $det->subtotal-$det->discount;
+            }
+            $gasto += $det->cant * $det->cost;
+            $gasto_service += $det->cant * $det->cost_service;
             $this->restStock($detail['unit_pivot_id'], $detail['cant'], $product);
         }
         $invoice->update(['gasto' => $gasto]);
+        $invoice->update(['venta' => $venta]);
+        $invoice->update(['gasto_service' => $gasto_service]);
+        $invoice->update(['venta_service' => $venta_service]);
     }
     public function setFromScan()
     {
@@ -72,7 +90,13 @@ trait GenerateInvoiceTrait
         if ($this->type != 'B00' && $this->type != 'B14') {
             $comp_id = $this->comprobante_id;
             $comprobante = Comprobante::whereId($comp_id)->first();
-            $comprobante->update(['status' => 'usado']);
+            $comprobante->update([
+                'status' => 'usado',
+                'period'=>date('Ym'),
+                'user_id'=>$user->id,
+                'place_id'=>$user->place->id,
+                'client_id'=>$this->client['id'],
+            ]);
         }
         $invoice = $user->store->invoices()->create(
             [
@@ -139,7 +163,7 @@ trait GenerateInvoiceTrait
         if ($product->type == 'Producto') {
             $user = auth()->user();
             $unit = $user->place->units()->wherePivot('id', $pivotUnitId)->first();
-            $unit->pivot->stock = floatval($unit->stock) - $cant;
+            $unit->pivot->stock =floatVal(str_replace(',','',$unit->stock)) - $cant;
             $unit->pivot->save();
         }
     }

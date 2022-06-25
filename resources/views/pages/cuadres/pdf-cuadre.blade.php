@@ -17,7 +17,7 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
-       
+
 
         body h1 {
             font-weight: 300;
@@ -144,7 +144,7 @@
                         </td>
                         <td colspan="2" style="text-align:right; line-height: 20px ">
                             <b style="text-transform: uppercase; font-size:x-large"> {!! auth()->user()->store->name !!}</b><br />
-                          <i>{!! auth()->user()->store->lema !!}</i><br />
+                            <i>{!! auth()->user()->store->lema !!}</i><br />
                             <b>Tel.: </b>{{ auth()->user()->store->phone }}<br />
                             <b>Rnc: </b>{{ auth()->user()->store->rnc }}<br />
 
@@ -173,14 +173,22 @@
             </tr>
         </thead>
         <tbody class="cuerpo">
-
-            @foreach ($payments as $payment)
+            <tr>
+                <td colspan="5">
+                    <hr>
+                    <div
+                        style="width: 100%; text-align:center; font-size:large; font-weight:bold; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
+                        Ventas
+                    </div>
+                </td>
+            </tr>
+            @forelse ($payments as $payment)
                 <tr>
                     <td style="width: 15%; text-align: left">
-                        {{ $payment->payable->number?:$payment->payable->ref }}
+                        {{ $payment->payable->number ?: $payment->payable->ref }}
                     </td>
                     <td style="width: 17%; text-align: left">
-                        {{ $payment->payer->rnc?:'000-00000-0' }}
+                        {{ $payment->payer->rnc ?: '000-00000-0' }}
                     </td>
                     <td>
                         {{ $payment->payable->name ?: $payment->payer->fullname }}
@@ -194,60 +202,130 @@
                     </td>
 
                 </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="5">
+                    <div
+                    style="width: 100%; text-align:center; font-size:medium; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
+                    Sin registros
+                </div>
+                </td>
+            </tr>
+                
+            @endforelse
+
+            <tr>
+                <td colspan="5">
+                    <hr>
+                    <div
+                        style="width: 100%; text-align:center; font-size:large; font-weight:bold; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
+                        Gastos
+                    </div>
+                </td>
+            </tr>
+            @forelse ($gastos->get() as $gasto)
+                <tr>
+                    <td style="width: 15%; text-align: left">
+                        {{ $gasto->payable->ref }}
+                    </td>
+                    <td style="width: 17%; text-align: left">
+                        {{ $gasto->payer->rnc ?: '000-00000-0' }}
+                    </td>
+                    <td>
+                        {{ $gasto->payable->name ?: $gasto->payer->fullname }}
+                    </td>
+                    <td style="width: 12%; text-align: left">
+                        {{ ucfirst($gasto->forma) }}
+                    </td>
+                    <td style="width: 23%; text-align:right">
+                        ${{ formatNumber($gasto->total) }}
+
+                    </td>
+
+                </tr>
+            @empty
+            <tr>
+                <td colspan="5">
+                    <div
+                    style="width: 100%; text-align:center; font-size:medium; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
+                    Sin registros
+                </div>
+                </td>
+            </tr>
+            @endforelse
 
         </tbody>
     </table>
     <hr>
     <script type="text/php">if ( isset($pdf) ) {
-                $font = $fontMetrics->get_font("helvarialetica", "bold");
-                $pdf->page_text(400, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
-                $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
-                $pdf->page_text(18, 740, "Reporte de cierre de caja diario", $font, 10, array(0,0,0));
-            }</script>
-    @if ($payments->count() > 18*$payments->count()/2+2 )
+                        $font = $fontMetrics->get_font("helvarialetica", "bold");
+                        $pdf->page_text(400, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
+                        $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
+                        $pdf->page_text(18, 740, "Reporte de cierre de caja diario", $font, 10, array(0,0,0));
+                    }</script>
+    @if ($payments->count() > (18 * $payments->count()) / 2 + 2)
         <div style="page-break-after: always"></div>
     @endif
     <table style="width: 40%; margin-top:35px;float: left; line-height:10px">
-        <tr style="">
+        <tr style="font-weight:bold">
             <td colspan="2">
-                + Efectivo...
+                + Disponible...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->efectivo) }}
-            </td>
-        </tr>
-        <tr style="">
-            <td colspan="2">
-                + Transferencia...
-            </td>
-            <td colspan="2">
-                ${{ formatNumber($cuadre->transferencia) }}
+                ${{ formatNumber($cuadre->efectivo + $cuadre->transferencia + $cuadre->tarjeta) }}
             </td>
         </tr>
+        @foreach ($efectivos as $name=> $balance)
         <tr style="">
-            <td colspan="2">
-                + Otros...
+            <td colspan="2" style="padding-left: 15px">
+              {{str_replace('Efectivo en', '', $name)}}
             </td>
-            <td colspan="2">
-                ${{ formatNumber($cuadre->tarjeta) }}
+            <td colspan="2" style="font-size: small">
+                ${{ formatNumber($balance) }}
             </td>
         </tr>
+        @endforeach
+        
+       
 
         <tr style="">
-            <td colspan="2">
+            <td colspan="2" style="font-weight: bold; padding-top:10px">
                 - Devolución...
             </td>
-            <td colspan="2">
+            <td colspan="2" style="font-weight: bold; padding-top:10px">
                 (${{ formatNumber($cuadre->devolucion) }})
             </td>
         </tr>
-        <tr style="">
-            <td colspan="2">
+        <tr style="font-weight:bold">
+            <td colspan="2" style="padding-top:18px">
                 - Egresos...
             </td>
-            <td colspan="2">
+            <td colspan="2" style="padding-top:18px">
                 (${{ formatNumber($cuadre->egreso) }})
+            </td>
+        </tr>
+        <tr style="">
+            <td colspan="2" style="padding-left: 15px">
+                Efectivo...
+            </td>
+            <td colspan="2" style="font-size: small">
+                ${{ formatNumber($gastos->sum('efectivo')) }}
+            </td>
+        </tr>
+        <tr style="">
+            <td colspan="2" style="padding-left: 15px">
+                Bancos...
+            </td>
+            <td colspan="2" style="font-size: small">
+                ${{ formatNumber($gastos->sum('transferencia')) }}
+            </td>
+        </tr>
+        <tr style="">
+            <td colspan="2" style="padding-left: 15px">
+                Otros...
+            </td>
+            <td colspan="2" style="font-size: small">
+                ${{ formatNumber($gastos->sum('tarjeta')) }}
             </td>
         </tr>
         <tr>
@@ -257,18 +335,18 @@
         </tr>
         <tr style="font-weight: bold">
             <td colspan="2" style="padding-top:25px">
-                BALANCE =>
+                SALDO INICIAL =>
             </td>
             <td colspan="2" style="padding-top:25px">
-                ${{ formatNumber($cuadre->total) }}
+                ${{ formatNumber($cuadre->inicial) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
-            <td colspan="2" style="padding-top:25px">
-                RETIRADO =>
+            <td colspan="2" style="padding-top:10px">
+                SALDO FINAL =>
             </td>
-            <td colspan="2" style="padding-top:25px">
-                ${{ formatNumber($cuadre->retirado) }}
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($cuadre->final) }}
             </td>
         </tr>
     </table>

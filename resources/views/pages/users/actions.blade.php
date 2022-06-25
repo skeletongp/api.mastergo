@@ -19,7 +19,7 @@
                 <div>
                    <a href="{{route('users.setPermissions', $user)}}">
                     <span class="far fa-shield-check fa-xl text-yellow-600" data-tooltip-target="assignPermission{{$user['id']}}"
-                    data-tooltip-style="light"></span>
+                   ></span>
                     <x-tooltip id="assignPermission{{$user['id']}}">Gestionar permisos</x-tooltip>
                    </a>  
                 </div>

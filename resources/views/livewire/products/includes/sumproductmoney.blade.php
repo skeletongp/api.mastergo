@@ -3,8 +3,8 @@
         <div class="w-full">
             <x-base-select id="outProvider" label="Proveedor" wire:model.defer="provider_id">
                 <option class="text-gray-300"> Elija un proveedor</option>
-                @foreach (auth()->user()->store->providers as $prov)
-                    <option value="{{ $prov->id }}">{{ $prov->fullname }}</option>
+                @foreach ($providers as $idProv => $prov)
+                    <option value="{{ $idProv }}">{{ $prov }}</option>
                 @endforeach
             </x-base-select>
             <x-input-error for="provider_id">Campo requerido</x-input-error>
@@ -64,14 +64,25 @@
 
         </div>
     @endif
-    <div class="w-40 py-4">
-        <x-base-input type="text" id="outTax" label="Impuestos" placeholder="Impuestos facturados"
-            wire:model.defer="tax"></x-base-input>
-        <x-input-error for="tax">Campo requerido</x-input-error>
-    </div>
-    <div class="flex justify-end py-4 bottom-0 right-2">
-        <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
-        wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
+    @if ($setCost && !isset($hideTax))
+        <div class="flex space-x-4 items-start">
+            <div class="w-40 py-4">
+                <x-base-input type="text" id="outTax" label="Impuestos pagado" placeholder="Impuestos facturados"
+                    wire:model.defer="tax"></x-base-input>
+                <x-input-error for="tax">Campo requerido</x-input-error>
+            </div>
+            <div class="w-40 py-4">
+                <x-base-input type="text" id="outDiscount" label="Descuento aplicado"
+                    placeholder="Descuentos aplicados" wire:model.lazy="discount"></x-base-input>
+                <x-input-error for="discount">Campo requerido</x-input-error>
+            </div>
+        </div>
 
-    </div>
+        @if (!isset($hideButton))
+            <div class="flex justify-end py-4 bottom-0 right-2">
+                <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
+                    wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
+            </div>
+        @endif
+    @endif
 </div>

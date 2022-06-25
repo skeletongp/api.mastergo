@@ -43,12 +43,12 @@
                 </td>
                 <td class=" pt-0 border-gray-200 border  max-w-[12rem]">
                     <div class="w-48 max-w-[12rem] px-1">
-                        {{-- <x-base-input id="pr_name" class="uppercase border-none text-center bg-transparent overflow-hidden overflow-ellipsis whitespace-nowrap " disabled
-                            placeholder="Nombre del producto" wire:model="product_name" label=""></x-base-input> --}}
-                        <x-datalist wire:model.lazy="product_name" id="pr_name" type="text" placeholder="Producto"
+                       
+                        <x-datalist :inputId="'pr_name'"  wire:model.lazy="product_name" type="text" placeholder="Producto"
                             listName="pr_code_name" wire:keydown.enter="$emit('focusCant')">
                             @foreach ($products as $index => $prod)
                                 <option class="bg-gray-200 py-1" value="{{ $index . ' ' . $prod }}">
+                                </option>
                             @endforeach
                         </x-datalist>
                     </div>
@@ -58,7 +58,7 @@
                         <x-tooltip id="ttStock">Disp.: {{ formatNumber($this->stock) }}</x-tooltip>
                         <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
                             placeholder="Cant." wire:model.lazy="cant" wire:keydown.enter="tryAddItems" id="cant"
-                            data-tooltip-target="ttStock" data-tooltip-style="light" label=""></x-base-input>
+                            data-tooltip-target="ttStock" label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">

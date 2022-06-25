@@ -16,6 +16,7 @@ protected $connection="mysql";
         'prefix',
         'number',
         'status',
+        'period',
         'ncf',
         'user_id',
         'store_id',

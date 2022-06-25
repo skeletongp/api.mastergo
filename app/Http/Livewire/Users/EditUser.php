@@ -34,14 +34,16 @@ class EditUser extends Component
         if($user['loggeable']=='yes'){
             $this->loggeable=true;
         }
-    }
-    public function render()
-    {
-        $user=auth()->user();
         $this->roles=$this->roles->pluck('name');
+        $user=auth()->user();
         if (!$user->hasRole('Super Admin')) {
            unset($this->roles[0]);
         }
+    }
+    public function render()
+    {
+       
+       
         return view('livewire.users.edit-user');
     }
     public function updateUser()

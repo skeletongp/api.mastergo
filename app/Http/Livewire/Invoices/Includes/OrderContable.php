@@ -8,43 +8,66 @@ trait OrderContable
 {
     public function setTransaction($invoice, $payment, $client)
     {
-        $place = auth()->user()->place;
+        $place = $invoice->place;
         $creditable = $place->findCount('400-01');
+        $ingresos_service = $place->findCount('400-02');
         $discount = $place->findCount('401-03');
-        $ref = $invoice->comprobante ?$invoice->comprobante->ncf: $invoice->number;
+        $ref = $invoice->comprobante ? $invoice->comprobante->ncf : $invoice->number;
         $moneys = array($payment->efectivo, $payment->tarjeta, $payment->transferencia, $payment->rest);
         $max = array_search(max($moneys), $moneys);
         $toTax = null;
+        /* 
+        rp=Rate Product / Porcentaje que corresponde a la venta de productos
+        rs=Rate Service / Porcentaje que corresponde a la venta de servicios
+         */
+        $rp = $invoice->venta / ($invoice->payment->amount - $invoice->payment->discount);
+        $rs = $invoice->venta_service / ($invoice->payment->amount - $invoice->payment->discount);
         switch ($max) {
             case 0:
-                setTransaction('Reg. venta Ref. Nº. ' . $ref, $ref, $moneys[$max] - $payment->tax, $place->cash(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de productos Ref. Nº. ' . $ref, $ref, ($moneys[$max] - $payment->tax) * $rp, $place->cash(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de servicios Ref. Nº. ' . $ref, $ref, ($moneys[$max] - $payment->tax) * $rs, $place->cash(), $ingresos_service, 'Cobrar Facturas');
                 $toTax = $place->cash();
                 break;
             case 1:
-                setTransaction('Reg. venta Ref. Nº. ' . $ref, $ref, $moneys[$max] - $payment->tax, $place->check(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de productos Ref. Nº. ' . $ref, $ref, ($moneys[$max] - $payment->tax) * $rp, $place->check(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de servicios Ref. Nº. ' . $ref, $ref, ($moneys[$max] - $payment->tax) * $rs, $place->check(), $ingresos_service, 'Cobrar Facturas');
                 $toTax =  $place->check();
                 break;
             case 2:
-                setTransaction('Reg. venta Ref. Nº. ' . $ref, $this->reference, $moneys[$max] - $payment->tax, $this->bank->contable()->first(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de productos Ref. Nº. ' . $ref, $this->reference, ($moneys[$max] - $payment->tax * $rp), $this->bank->contable()->first(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de servicios Ref. Nº. ' . $ref, $this->reference, ($moneys[$max] - $payment->tax) * $rs, $this->bank->contable()->first(), $ingresos_service, 'Cobrar Facturas');
                 $toTax =  $this->bank->contable()->first();
                 break;
             case 3:
-                setTransaction('Reg. venta Ref. Nº. ' . $ref, $ref, $moneys[$max] - $payment->tax, $client->contable()->first(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de productos Ref. Nº. ' . $ref, $ref, ($moneys[$max] - $payment->tax)*$rp, $client->contable()->first(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de servicios Ref. Nº. ' . $ref, $ref, ($moneys[$max] - $payment->tax)*$rs, $client->contable()->first(), $ingresos_service, 'Cobrar Facturas');
                 $toTax = $client->contable()->first();
                 break;
-           
         }
         $moneys[$max] = 0;
-        setTransaction('Reg. venta en Efectivo', $ref,  $moneys[0], $place->cash(), $creditable, 'Cobrar Facturas');
-        setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash());
-        setTransaction('Reg. venta por Cheque', $ref,  $moneys[1], $place->check(), $creditable, 'Cobrar Facturas');
-        setTransaction('Reg. venta por Transferencia', $ref.' | '.$this->reference,  $moneys[2], optional($this->bank)->contable, $creditable, 'Cobrar Facturas');
-        setTransaction('Reg. venta a Crédito', $ref, $moneys[3],  $client->contable()->first(), $creditable, 'Cobrar Facturas');
-        setTransaction('Descuento a Fct. '.$invoice->number, $ref, $payment->discount,  $discount, $creditable, 'Cobrar Facturas');
-        foreach ($invoice->taxes as $tax) {
-            setTransaction('Reg. retención de ' . $tax->name, $ref, $payment->tax,   $toTax, $tax->contable()->first(), 'Cobrar Facturas');
-        }
-        setTransaction('Reg. Costo Mercancía Vendida', $ref,$invoice->gasto, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
+
+
+        setTransaction('Reg. venta de productos en Efectivo', $ref,  $moneys[0]*$rp, $place->cash(), $creditable, 'Cobrar Facturas');
+        setTransaction('Reg. vuelto de cambio por productos', $ref,  $payment->cambio*$rp, $creditable, $place->cash());
+        setTransaction('Reg. venta de productos por Cheque', $ref,  $moneys[1]*$rp, $place->check(), $creditable, 'Cobrar Facturas');
+        setTransaction('Reg. venta de productos por Transferencia', $ref . ' | ' . $this->reference,  $moneys[2]*$rp, optional($this->bank)->contable, $creditable, 'Cobrar Facturas');
+
+        setTransaction('Reg. venta de servicios en Efectivo', $ref,  $moneys[0]*$rs, $place->cash(), $ingresos_service, 'Cobrar Facturas');
+        setTransaction('Reg. vuelto de cambio por servicios', $ref,  $payment->cambio*$rs, $ingresos_service, $place->cash());
+        setTransaction('Reg. venta de servicios por Cheque', $ref,  $moneys[1]*$rs, $place->check(), $ingresos_service, 'Cobrar Facturas');
+        setTransaction('Reg. venta de servicios por Transferencia', $ref . ' | ' . $this->reference,  $moneys[2]*$rs, optional($this->bank)->contable, $ingresos_service, 'Cobrar Facturas');
+
+
+        setTransaction('Reg. venta de productos a Crédito', $ref, $moneys[3]*$rp,  $client->contable()->first(), $creditable, 'Cobrar Facturas');
+        setTransaction('Reg. venta de servicios a Crédito', $ref, $moneys[3]*$rs,  $client->contable()->first(), $ingresos_service, 'Cobrar Facturas');
+        setTransaction('Descuento en productos a Fct. ' . $invoice->number, $ref, $payment->discount*$rp,  $discount, $creditable, 'Cobrar Facturas');
+        setTransaction('Descuento en servicios a Fct. ' . $invoice->number, $ref, $payment->discount*$rs,  $discount, $ingresos_service, 'Cobrar Facturas');
+
+        $itbisCount=$place->findCount('203-01');
+        setTransaction('Reg. retención de ITBIS', $ref, $payment->tax,   $toTax, $itbisCount, 'Cobrar Facturas');
+        setTransaction('Reg. Costo Mercancía Vendida', $ref, $invoice->gasto, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
+
+     
         $client->update([
             'limit' => $client->limit - $invoice->payment->rest
         ]);

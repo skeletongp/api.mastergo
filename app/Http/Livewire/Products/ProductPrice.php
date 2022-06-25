@@ -18,10 +18,10 @@ class ProductPrice extends Component
     }
     public function formatedData() : Collection
     {
-        $mins=$this->product->units->pluck('pivot.min','name');
-        $price=$this->product->units->pluck('pivot.price_menor','name');
-        $price2=$this->product->units->pluck('pivot.price_mayor','name');
-        $taxes=$this->product->taxes->pluck('rate','name');
+        $mins=$this->product->units()->pluck('min','name');
+        $price=$this->product->units()->pluck('price_menor','name');
+        $price2=$this->product->units()->pluck('price_mayor','name');
+        $taxes=$this->product->taxes()->pluck('rate','name');
         foreach($price as $in=> $priz){
             $wTax=[];
             $wTax2=[];
