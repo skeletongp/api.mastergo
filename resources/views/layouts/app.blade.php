@@ -136,7 +136,7 @@
             }
         });
 
-        Livewire.on('showAlert', (alert, type) => {
+        Livewire.on('showAlert', (alert, type, timer=2000) => {
             icons = ['success', 'error', 'info', 'warning'];
 
             if (!icons.includes(type)) {
@@ -147,7 +147,7 @@
                 rounded-lg font-bold role="alert"> ${alert} </div>`,
                 icon: type,
                 showConfirmButton: false,
-                timer: 2000,
+                timer: timer,
                 position: 'top-end',
             });
         });

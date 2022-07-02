@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('code');
             $table->decimal('cant',14,4);
             $table->decimal('cost',14,4);
-            $table->foreignId('provider_id');
+            $table->foreignId('provider_id')->nullable()->constrained();
+            $table->string('prov_name')->nullable();
+            $table->string('prov_rnc')->nullable();
             $table->morphs('atribuible');
             $table->morphs('provisionable');
             $table->foreignId('place_id')->constrained();

@@ -87,7 +87,7 @@ trait GenerateInvoiceTrait
         $total = array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
         $comp_id = null;
-        if ($this->type != 'B00' && $this->type != 'B14') {
+        if ($this->type != 'B00' ) {
             $comp_id = $this->comprobante_id;
             $comprobante = Comprobante::whereId($comp_id)->first();
             $comprobante->update([
@@ -107,6 +107,7 @@ trait GenerateInvoiceTrait
                 'contable_id' => $user->id,
                 'number' => $this->number,
                 'name' => $this->name,
+                'rnc' => $this->rnc,
                 'place_id' => $user->place->id,
                 'store_id' => $user->store->id,
                 'client_id' => $this->client['id'],
@@ -123,6 +124,7 @@ trait GenerateInvoiceTrait
         event(new NewInvoice($invoice));
         $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name', 'name');
         $this->invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
+        $this->emit('printOrder', $this->invoice);
         $this->mount();
     }
     public function createPayment($invoice)

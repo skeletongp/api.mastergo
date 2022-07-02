@@ -20,7 +20,6 @@ class ClientObserver
         $store=optional(auth()->user())->store?:Store::first();
         $num=$store->clients()->count()+1;
         $code=str_pad($num,4,'0', STR_PAD_LEFT);
-        $client->fullname =$client->name.' '.(string) rtrim($client->lastname);
         $client->code = $code;
     }
    
@@ -28,7 +27,7 @@ class ClientObserver
     public function updating(Client $client)
     {
         Cache::forget('clients' . $client->store_id);
-        $client->fullname = $client->name.' '.(string) rtrim($client->lastname);
+        
     }
 
     

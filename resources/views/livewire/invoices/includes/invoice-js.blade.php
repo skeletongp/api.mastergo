@@ -106,13 +106,18 @@
             conector.establecerEnfatizado(1);
             conector.texto('CLIENTE: ')
             conector.establecerEnfatizado(0);
-            conector.texto(obj.name ? obj.name.toUpperCase() : obj.client.fullname.toUpperCase());
+            conector.texto(obj.name ? obj.name.toUpperCase() : obj.client.name.toUpperCase());
             conector.feed(1);
 
             conector.establecerEnfatizado(1);
             conector.texto('RNC: ');
             conector.establecerEnfatizado(0);
-            conector.texto(obj.client.rnc ? obj.client.rnc : '0000000000')
+            if (obj.rnc) {
+                conector.texto(obj.rnc);
+            } else {
+                conector.texto(obj.client.rnc ? obj.client.rnc : '0000000000')
+            }
+                
             conector.texto(' / ');
 
             conector.establecerEnfatizado(1);
@@ -161,7 +166,7 @@
                 if (det.discount_rate > 0 && obj.type !== 'B00' && obj.type !== 'B14') {
                     conector.texto("Desc. " + toDecimal.format(det.discount_rate * 100) + "% ");
                 }
-                if (det.taxtotal > 0) {
+                if (det.taxtotal > 0 && obj.type !== 'B14') {
                     conector.texto("Imp. " + formatter.format(det.taxtotal) + " ");
                 }
                 conector.texto("Subt. " + formatter.format(det.total));

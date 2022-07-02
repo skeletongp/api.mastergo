@@ -47,7 +47,7 @@ class CreateProduction extends Component
             [
                 'cant'=>$formula->cant*$production->setted,
                 'brand_id'=>$formula->brand_id,
-                'cost'=>Brand::find($formula->brand_id)->cost,
+                
             ]);
             $this->reduceBrand($formula->brand_id, $formula->cant*$production->setted);
         } else {
@@ -71,7 +71,7 @@ class CreateProduction extends Component
 
     function reduceFormulable($formulable, $cant)
     {
-      
+        dd($formulable);
         $formulable->cant-=$cant;
         $formulable->save();
     }

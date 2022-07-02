@@ -94,18 +94,23 @@ Breadcrumbs::for('procesos.create', function ($trail) {
 });
 Breadcrumbs::for('procesos.show', function ($trail, $proceso) {
     $trail->parent('procesos');
-    $trail->push('Detalles -> '.$proceso->name, route('procesos.show', $proceso));
+    $trail->push($proceso->name, route('procesos.show', $proceso));
 });
 Breadcrumbs::for('procesos.formula', function ($trail, $proceso) {
     $trail->parent('procesos');
     $trail->push('Fórmula del proceso', route('procesos.formula', $proceso), ['icon'=>'fas fa-flask']);
+});
+
+/* Producciones */
+Breadcrumbs::for('productions', function ($trail, $production) {
+    $trail->parent('procesos.show', $production->proceso);
+    $trail->push('Producción de '.$production->proceso->name, route('productions.show', $production));
 });
 /* Ajustes */
 Breadcrumbs::for('settings', function ($trail) {
     $trail->parent('home');
     $trail->push('Ajustes', route('settings.index'));
 });
-
 /* Comprobantes */
 Breadcrumbs::for('comprobantes', function ($trail) {
     $trail->parent('home');
@@ -145,8 +150,15 @@ Breadcrumbs::for('outcomes', function($trial){
     $trial->parent('home');
     $trial->push('Gastos',route('reports.outcomes',['icon'=>'']));
 });
-/* Reportes */
+
+/* Provisiones */
 Breadcrumbs::for('provisions', function($trial){
     $trial->parent('home');
     $trial->push('Compras y Provisiones',route('provisions.index',['icon'=>'']));
+});
+
+/* Cheques */
+Breadcrumbs::for('cheques', function($trial){
+    $trial->parent('home');
+    $trial->push('Cheques',route('cheques.index',['icon'=>'far fa-money-check-alt']));
 });

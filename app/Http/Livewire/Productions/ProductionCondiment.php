@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Productions;
 
+use App\Models\Condiment;
+use App\Models\CondimentProduction;
+use Illuminate\Support\Facades\DB;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\NumberColumn;
+use Illuminate\Support\Str;
 
 class ProductionCondiment extends LivewireDatatable
 {
@@ -13,34 +16,32 @@ class ProductionCondiment extends LivewireDatatable
     public $padding = 'px-2';
     public function builder()
     {
-        $condiments=$this->production->condiments()->with('unit');
+        $condiments = CondimentProduction::query()
+            ->leftJoin('condiments', 'condiment_productions.condiment_id', '=', 'condiments.id')
+            ->leftJoin('units', 'condiment_productions.unit_id', '=', 'units.id')
+            ->where('condiment_productions.production_id', $this->production->id);
         return $condiments;
     }
 
     public function columns()
     {
-        $condiments=$this->builder()->get()->toArray();
+        //$condiments=$this->builder()->get()->toArray();
         return [
             Column::index($this),
-            Column::callback('name', function ($name) {
-                return $name;
-            })->label('Nombre')->searchable(),
-            Column::callback(['created_at','id'], function ($created, $id) use ($condiments) {
-                $result=arrayFind($condiments, 'id', $id);
-                return $result['pivot']['cant'];
-            })->label('Cant.'),
-            Column::callback(['unit_id','id'], function ($unit, $id) use ($condiments) {
-                $result=arrayFind($condiments, 'id', $id);
-                return $result['unit']['name'];
-            })->label('Und.'),
-            Column::callback(['updated_at','id'], function ($updated, $id) use ($condiments) {
-                $result=arrayFind($condiments, 'id', $id);
-                return '$'.$result['pivot']['cost'];
-            })->label('Costo'),
-            Column::callback(['deleted_at','id'], function ($deleted, $id) use ($condiments) {
-                $result=arrayFind($condiments, 'id', $id);
-                return '$'.$result['pivot']['total'];
-            })->label('Total.'),
+            Column::name('condiments.name')->label('Nombre')->searchable(),
+            Column::name('condiment_productions.cant')->label('Cant.')->editable(),
+            Column::name('units.name')->label('Unidad')->searchable(),
+            Column::name('condiment_productions.cost')->label('Costo')->editable(),
+            Column::name('condiment_productions.total')->label('Total')->searchable(),
+
         ];
+    }
+    function edited($value, $key, $column, $rowId)
+    {
+        $cnd=CondimentProduction::where('id', $rowId)->first();
+        
+            $cnd->update([$column => $value]);
+        $this->emit('fieldEdited', $rowId);
+        $this->emit('refreshLivewireDatatable');
     }
 }

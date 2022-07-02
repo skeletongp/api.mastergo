@@ -12,7 +12,7 @@
     </div>
    
     <div class="{{auth()->user()->store->generic->code==$client_code?'':'hidden'}}">
-        <x-base-input wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre" id="clt.inv.name">
+        <x-base-input wire:keydown.enter.prevent='rncEnter' wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre/RNC" id="clt.inv.name">
         </x-base-input>
     </div>
     <div class="w-full  ">

@@ -36,7 +36,7 @@ class InvoiceShow extends Component
     {
         $store = auth()->user()->store;
         $this->det=$this->invoice->details;
-        $this->clients = $store->clients()->orderBy('name')->pluck('fullname', 'code');
+        $this->clients = $store->clients()->orderBy('name')->pluck('name', 'code');
         $this->client = $this->invoice->client->load('payments')->toArray();
         $inv=$this->invoice->client->invoices()->where('id', '<', $this->invoice->id)->where('rest','>',0)->first();
         if($inv){

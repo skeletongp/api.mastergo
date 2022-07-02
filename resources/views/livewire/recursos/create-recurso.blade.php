@@ -14,7 +14,15 @@
                 </div>
                 <div class="flex space-x-4">
                     <div class="w-full">
-                        <x-datalist label="Proveedor" model="form.provider_id" listName="providerList" inputId="formProvider_id">
+                        <x-base-select label="Tipo" wire:model="type" id="r.type">
+                            <option value="Recurso">Recurso</option>
+                            <option value="Condimento">Condimento</option>
+                        </x-base-select>
+                        <x-input-error for="form.type">Verifique el campo</x-input-error>
+                    </div>
+                    <div class="w-full">
+                        <x-datalist label="Proveedor" model="form.provider_id" listName="providerList"
+                            inputId="formProvider_id">
                             @foreach ($providers as $id => $provider)
                                 <option data-value="{{ $id }}" value="{{ $provider }}"></option>
                             @endforeach
@@ -29,23 +37,18 @@
                         </x-datalist>
                         <x-input-error for="form.unit_id">Verifique el campo</x-input-error>
                     </div>
-                    <div class="w-full">
-                        <x-base-select label="Tipo" wire:model="type" id="r.type">
-                            <option value="Recurso">Recurso</option>
-                            <option value="Condimento">Condimento</option>
-                        </x-base-select>
-                        <x-input-error for="form.type">Verifique el campo</x-input-error>
-                    </div>
+                   
                 </div>
-                
+              
+
             </form>
             <div class="py-4">
                 @if ($type == 'Recurso')
                     @include('livewire.recursos.includes.brandsection')
                 @else
                     <div class="w-1/4">
-                        <x-base-input type="number" id="cost" label="Costo" wire:model.defer="cost"
-                            ></x-base-input>
+                        <x-base-input type="number" id="cost" label="Costo" wire:model.defer="cost">
+                        </x-base-input>
                         <x-input-error for="cost">Requerido</x-input-error>
                     </div>
                 @endif

@@ -8,6 +8,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class ComprobantesTable extends LivewireDatatable
 {
     public $headTitle="Tabla de comprobantes";
+    public $padding="px-2";
     public function builder()
     {
        $store=auth()->user()->store;
@@ -20,9 +21,16 @@ class ComprobantesTable extends LivewireDatatable
        return [
            Column::callback(['prefix','ncf'], function($prefix, $ncf){
                return $ncf;
-           })->label('NCF')->searchable()->filterable(),
+           })->label('NCF')->searchable()->filterable([
+            'B01'=>'Cr. Fiscal',
+            'B02'=>'Cons. Final',
+            'B14'=>'Reg. Especial',
+            'B15'=>'Gubernamental',
+           ]),
            
-           Column::name('status')->label('Estado')->filterable(),
+           Column::callback('status', function($status){
+            return ucwords($status);
+           })->label('Estado')->filterable(['Usado','Disponible']),
            Column::callback('id', function($id) use ($comprobantes){
                $result=arrayFind($comprobantes, 'id', $id);
                 if ($result['invoice']) {

@@ -12,13 +12,14 @@ use Livewire\Component;
 class CreateOutcome extends Component
 {
 
-    public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount=0;
+    public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount=0, $providers;
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax=0;
     public $setCost = true, $hideTax=true;
     public function mount()
     {
         $place = auth()->user()->place;
         $store = auth()->user()->store;
+        $this->providers = $store->providers()->pluck('fullname', 'id');
         $this->counts = $place->counts()->where('code', 'like', '6%')->select(DB::raw('CONCAT(code," ",name) AS name, code'))->pluck('name', 'code');
         $this->banks = $store->banks()->select(DB::raw('CONCAT(bank_name," ",bank_number) AS name, id'))->pluck('name', 'id');
     }

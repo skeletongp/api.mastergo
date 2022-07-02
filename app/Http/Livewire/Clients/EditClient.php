@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Clients;
 
 use App\Models\Client;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EditClient extends Component
 {
     public  $client;
     public  $avatar, $photo_path;
-
+    use WithFileUploads;
     public function render()
     {
         return view('livewire.clients.edit-client');
@@ -19,7 +20,6 @@ class EditClient extends Component
         return  [
             'client' => 'required',
             'client.name' => 'required|string|max:50',
-            'client.lastname' => 'required|string|max:75',
             'client.address' => 'required|string|max:100',
             'client.email' => 'required|string|max:100|unique:clients,email,' . $this->client['id'],
             'client.limit' => 'required|numeric',

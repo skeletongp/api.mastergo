@@ -28,6 +28,11 @@ class ShowProduction extends Component
             $production->delete();
             $this->emit('showAlert','Resultado eliminado','success');
             $this->production=$production->production->load('recursos','unit','brands.recurso','proceso','products.productible','products.unitable');
+            $newCant=$this->production->getted-$production->cant;
+            $this->production->update([
+                'getted' => $newCant,
+                'eficiency' => $newCant / $this->production->setted * 100,
+            ]);
             $this->render();
         } catch (\Throwable $th) {
             throw $th;

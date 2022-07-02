@@ -18,7 +18,7 @@ class GetProductFromProduction extends Component
 
     public function render()
     {
-        $products = auth()->user()->place->products()->orderBy('name')->with('units')->get();
+        $products = auth()->user()->place->products()->orderBy('name')->whereType('Producto')->with('units')->get();
         $recursos = auth()->user()->place->recursos()->orderBy('name')->with('brands')->get();
         $collect = collect($products);
         $collect2 = collect($recursos);
@@ -83,6 +83,11 @@ class GetProductFromProduction extends Component
                 'unitable_id' => $item['unitable_id'],
                 'cant' => $item['cant'],
             ]);
+            $newCant=$this->production->getted + $item['cant'];
+           $this->production->update([
+                'getted' => $newCant,
+                'eficiency' => $newCant/$this->production->setted* 100,
+           ]);
             $this->sumStock($item);
         }
         $this->emit('render');

@@ -144,7 +144,7 @@ class SumRecurso extends Component
             } else {
                 $recurso=Condiment::whereId($selected['recurso_id'])->with('unit')->first();
                 $recurso->update([
-                    'stock' => $recurso->stock + $selected['cant']
+                    'cant' => $recurso->cant + $selected['cant']
                 ]);
                 $cost=$recurso->cost;
             }

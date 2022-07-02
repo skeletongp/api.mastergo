@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Comprobantes\ComprobanteExport;
 use App\Models\CountMain;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContableController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:Ver Transacciones'])->only(['general_daily','general_mayor', 'results']);
+        $this->middleware(['permission:Ver Catálogo'])->only(['catalogue','view_catalogue']);
+  
+    }
     public function general_daily()
     {
         return view('pages.contables.general_daily');
@@ -74,5 +82,8 @@ class ContableController extends Controller
         file_put_contents('storage/cuadres/' . 'result' . date('Ymd') .$place->id. '.pdf', $pdf->output());
         $path = asset('storage/cuadres/' . 'result' . date('Ymd') .$place->id. '.pdf');
         return view('pages.contables.view-results', compact('path'));
+    }
+    public function report_607(){
+        return Excel::download(new ComprobanteExport, 'comprobantes.xlsx');
     }
 }

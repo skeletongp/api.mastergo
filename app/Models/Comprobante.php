@@ -37,4 +37,20 @@ protected $connection="mysql";
     {
         return $this->hasOne(Invoice::class);
     }
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+    public function place()
+    {
+        return $this->belongsTo(Place::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

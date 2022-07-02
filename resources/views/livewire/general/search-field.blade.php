@@ -8,6 +8,7 @@
             @if ($searchResults)
                 <div class="bg-white z-50  shadow-xl text-sm" x-show="open">
                     @foreach ($searchResults->groupByType() as $type => $modelSearchResults)
+                        @can('Ver '.$models[$type])
                         <div class="shadow-lg p-3">
                             <h2 class="font-bold uppercase mt-2">{{ $models[$type] }}</h2>
                             <hr>
@@ -21,6 +22,7 @@
                                 @endforeach
                             </ul>
                         </div>
+                        @endcan
                     @endforeach
                 </div>
             @endif

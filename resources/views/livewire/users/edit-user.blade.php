@@ -52,7 +52,7 @@
                             <option value=""></option>
                             
                             @foreach ($roles as $name)
-                                <option value="{{ $name }}">{{ $name }}</option>
+                                <option value="{{ $name }}">{{ preg_replace('/[0-9]+/', '', $name) }}</option>
                             @endforeach
                         </x-select>
                         <x-input-error for="role"></x-input-error>

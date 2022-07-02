@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 function formatNumber($number)
 {
@@ -71,4 +72,26 @@ function admins()
 function formatDate($date, $format)
 {
    return Carbon::parse($date)->format($format);
+}
+function getApi($endPoint)
+{
+    $url=null;
+    if (strpos($endPoint,'api')) {
+       $url= $endPoint;
+    } else {
+       $url=env('BASE_URL') . $endPoint;;
+    }
+    $response = Http::withHeaders([
+            'Accept' => 'application/json',
+
+        ])->withToken(env('TOKEN'))
+        ->get($url);
+    return $response->json();
+}
+function ellipsis($string, $maxLength)
+{
+    if (strlen($string) > $maxLength) {
+        return substr($string, 0, $maxLength) . '...';
+    }
+    return $string;
 }

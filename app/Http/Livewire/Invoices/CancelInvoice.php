@@ -9,7 +9,7 @@ use Livewire\Component;
 class CancelInvoice extends Component
 {
     use Confirm;
-    public $invoice_id;
+    public $invoice_id, $rTax = 0;
     protected $listeners = ['cancelInvoice', 'validateAuthorization'];
 
     public function render()
@@ -19,7 +19,7 @@ class CancelInvoice extends Component
 
     public function cancelInvoice()
     {
-        $invoice = Invoice::whereId($this->invoice_id)->with('payments', 'details.product', 'comprobante', 'payments', 'payments', 'seller', 'contable', 'client')->first();
+        $invoice = Invoice::whereId($this->invoice_id)->with('payments', 'details.product', 'details.taxes', 'comprobante', 'payments', 'payments', 'seller', 'contable', 'client')->first();
         $comprobante = $invoice->comprobante;
         $details = $invoice->details;
 
@@ -27,39 +27,34 @@ class CancelInvoice extends Component
             $this->emit('showAlert', 'Esta factura no puede anularse porque ya está reportada', 'warning');
             return false;
         }
-        if ($invoice->day !== date('Y-m-d')) {
-            $this->emit('showAlert', 'No puede anularse factura porque no es de hoy', 'warning');
-            return false;
-        }
-        if ($comprobante) {
+
+        /* if ($comprobante) {
             $this->cancelComprobante($comprobante);
-        }
+        } */
+        $this->rTax = $invoice->taxes()->sum('rate');
         $this->deleteDetails($details);
         $this->deleteTaxes($invoice);
         $this->deletePayments($invoice);
-        $invoice->update(['status' => 'anulada']);
-        $this->emit('showAlert', 'Factura anulada correctamente', 'success');
+        $this->emit('showAlert', 'Factura ajustada correctamente', 'success');
         $this->emit('refreshLivewireDatatable');
+        /* 
+        $invoice->update(['status' => 'anulada']);*/
     }
-    public function cancelComprobante($comprobante)
-    {
-        $comprobante->update([
-            'status' => 'disponible',
-            'period' => NULL,
-            'user_id' => NULL,
-            'place_id' => NULL,
-            'client_id' => NULL,
-        ]);
-    }
+
     public function deleteTaxes($invoice)
     {
         $invoice->taxes()->sync([]);
     }
     public function deleteDetails($details)
     {
+        $id = $details->first()->id;
         foreach ($details as $det) {
             $this->restoreProducto($det->product, $det->unit_id, $det->cant);
-            $det->delete();
+            if ($id != $det->id) {
+                $det->delete();
+            } else {
+                $this->rTax = $det->taxes()->sum('rate');
+            }
         }
     }
     public function restoreProducto($product, $unit_id, $cant)
@@ -71,6 +66,7 @@ class CancelInvoice extends Component
     public function deletePayments($invoice)
     {
         $place = $invoice->place;
+
         $payments = $invoice->payments;
         $payment = $invoice->payment;
         $ref = $invoice->comprobante ? $invoice->comprobante->ncf : $invoice->number;
@@ -78,18 +74,55 @@ class CancelInvoice extends Component
         $rs = $invoice->venta_service / ($invoice->payment->amount - $invoice->payment->discount);
         $devVentas = $place->findCount('401-01');
         $ingresos_service = $place->findCount('400-02');
-        $client=$invoice->client;
-        $rTax=$payment->tax/($payment->amount-$payment->discount);
+        $client = $invoice->client;
+        $rTax = $this->rTax;
         $caja = $place->findCount('100-01');
         $itbisCount = $place->findCount('203-01');
-        setTransaction('Reg. Dev. ventas de productos', $ref, $payments->sum('payed') * (1-$rTax), $devVentas, $caja, 'Borrar Facturas');
-       
-        setTransaction('Reg.  Dev. de productos a Crédito', $ref, $invoice->rest * (1-$rTax),  $devVentas, $client->contable()->first(), 'Cobrar Facturas');
-      
+        setTransaction('Reg. Dev. ventas de productos', $ref, $payments->sum('payed') * (1 - $rTax), $devVentas, $caja, 'Borrar Facturas');
+        setTransaction('Reg.  Dev. de productos a Crédito', $ref, $invoice->rest * (1 - $rTax),  $devVentas, $client->contable()->first(), 'Cobrar Facturas');
         setTransaction('Reg. reversión de ITBIS x Pagar', $ref,  $payment->tax, $devVentas, $itbisCount, 'Borrar Facturas');
         setTransaction('Reg. reversión costo de ventas', $ref, $invoice->gasto, $place->inventario(), $place->ventas(), 'Cobrar Facturas');
         foreach ($payments as $pay) {
             $pay->delete();
         }
+        $price = 50 / (1 + $rTax);
+        $itbisCount = $place->findCount('203-01');
+        $newPay = setPayment(
+            [
+                'ncf' => optional($invoice->comprobante)->ncf,
+                'amount' => $price,
+                'discount' => 0,
+                'total' => $price * (1 + $rTax),
+                'tax' =>  $price * $rTax,
+                'payed' => 50,
+                'rest' => 0,
+                'cambio' =>  0,
+                'efectivo' => 50,
+                'tarjeta' => 0,
+                'transferencia' => 0,
+                'forma' => 'Contado'
+            ]
+        );
+        $invoice->payment()->save($newPay);
+        $invoice->client->payments()->save($newPay);
+        setTransaction('Reg.$42.37 base ajuste Fct.', $ref, $price, $place->cash(), $devVentas, 'Cobrar Facturas');
+        setTransaction('Reg. $7.63 base ajuste Fct.', $ref, $price * $rTax, $itbisCount, $devVentas, 'Cobrar Facturas');
+        $this->setNewDet($invoice->details->first(), $rTax);
+    }
+    function setNewDet($det, $rTax)
+    {
+        $price = 50 / (1 + $rTax);
+        $det->cant = 1;
+        $det->subtotal = $price;
+        $det->total = $price;
+        $det->cost = $price * (1 + $rTax);
+        $det->taxTotal = $price * $rTax;
+        $det->discount = 0;
+        $det->discount_rate = 0;
+        $det->utility = 0;
+        $det->price_type = 'detalle';
+        $det->price = $price;
+        $det->save();
+        $det->detailable()->update(['rest' => 0]);
     }
 }

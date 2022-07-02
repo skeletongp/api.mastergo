@@ -28,8 +28,17 @@ class TableClient extends LivewireDatatable
         $clients = $this->builder()->get()->toArray();
        
         return [
-            NumberColumn::name('id')->defaultSort('asc')->headerAlignCenter(),
-            Column::name("fullname")->searchable(),
+            Column::callback('id', function ($id) use ($clients) {
+                $result = arrayFind($clients, 'id', $id);
+                if ($result['image']) {
+                    return view('components.avatar', ['avatar' => $result['image']['path']]);
+                } else {
+                    return view('components.avatar', ['avatar' => env('NO_IMAGE')]);
+                }
+            })->defaultSort('asc'),
+            Column::callback("name", function($name){
+                return ellipsis($name,25);
+            })->searchable()->label('Nombre'),
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
             Column::callback(['limit'], function($limit){
                 return '$'. formatNumber($limit);

@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class CuadreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:Ver Cuadre'])->only(['index']);
+        $this->middleware(['permission:Abrir Cuadre'])->only(['createCuadre']);
+    }
     public function index (Request $request){
         $place=auth()->user()->place;
         $payments=$place->payments()->with('payable','payer')->where('payable_type', Invoice::class)->where('day',date('Y-m-d'));

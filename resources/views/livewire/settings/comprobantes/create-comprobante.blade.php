@@ -2,27 +2,27 @@
     <form action="" wire:submit.prevent="createComprobante">
 
         <h1 class="font-semibold text-left uppercase mb-6">Registrar nuevos comprobantes</h1>
-        <div class="flex space-x-4 items-end">
+        <div class="flex space-x-4 items-start py-4">
             <div class="w-full">
-                <x-select wire:model.defer="form.type" id="comprobante.type">
-                    <option value="" class="text-gray-300">SELECCIONE UN TIPO</option>
+                <x-base-select wire:model.defer="form.type" id="comprobante.type" label="Tipo">
+                    <option value="" class="text-gray-300"></option>
                     @foreach (App\Models\Invoice::TYPES as $name => $type)
                         @if ($type !== 'B00')
                             <option value="{{ $name }}">{{ $name }}</option>
                         @endif
                     @endforeach
-                </x-select>
-                <x-input-error for="form.type"></x-input-error>
+                </x-base-select>
+                <x-input-error for="form.type">Requerido</x-input-error>
             </div>
             <div  >
-                <x-input label="Inicial" type="number" wire:model.defer="form.inicial" id="comprobante.inicial">
-                </x-input>
-                <x-input-error for="form.inicial"></x-input-error>
+                <x-base-input label="Inicial" type="number" wire:model.defer="form.inicial" id="comprobante.inicial">
+                </x-base-input>
+                <x-input-error for="form.inicial">Requerido</x-input-error>
             </div>
             <div  >
-                <x-input label="Final" type="number" wire:model.defer="form.final" id="comprobante.final">
-                </x-input>
-                <x-input-error for="form.final"></x-input-error>
+                <x-base-input label="Final" type="number" wire:model.defer="form.final" id="comprobante.final">
+                </x-base-input>
+                <x-input-error for="form.final">Requerido</x-input-error>
             </div>
             <div class="">
                 <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"

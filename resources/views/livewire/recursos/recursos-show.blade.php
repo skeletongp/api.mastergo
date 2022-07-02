@@ -6,10 +6,7 @@
             class="cursor-pointer flex-grow  border-b-2  {{ $componentName == 'recursos.recurso-detail' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }}  py-2 text-lg px-1">
             Detalles
         </div>
-        <div wire:click="setComponent('recursos.recurso-price')"
-            class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'recursos.recurso-price' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }}  py-2 text-lg px-1">
-            Fórmula
-        </div>
+       
         <div wire:click="setComponent('recursos.recurso-history')"
             class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'recursos.recurso-history' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
             Historial

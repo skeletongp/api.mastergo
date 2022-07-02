@@ -39,17 +39,13 @@ class OrderView extends LivewireDatatable
             })->label("Monto"),
             Column::name('client.name')->callback(['uid', 'client_id'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
-                $client=  strlen($result['client']['fullname']) > 16 ? substr($result['client']['fullname'], 0, 16) : $result['client']['fullname'] ;
-                $ellipsis=strlen($result['client']['fullname']) > 16 ? '...' : '';
-                return $client.$ellipsis;
+                return ellipsis($result['client']['name'], 16);
 
             })->label('Cliente'),
 
             Column::name('seller.name')->callback(['uid', 'day'], function ($uid) use ($invoices) {
                 $result = arrayFind($invoices, 'uid', $uid);
-                $seller=  strlen($result['seller']['fullname']) > 14 ? substr($result['seller']['fullname'], 0, 14) : $result['seller']['fullname'] ;
-                $ellipsis=strlen($result['seller']['fullname']) > 14 ? '...' : '';
-                return $seller.$ellipsis;
+                return ellipsis($result['seller']['fullname'], 16);
             })->label('Vendedor'),
 
             Column::name('condition')->label("Condición"),

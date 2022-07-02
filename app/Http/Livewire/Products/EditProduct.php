@@ -20,8 +20,8 @@ class EditProduct extends Component
     public function mount()
     {
         $this->units = $this->product->units->unique('symbol');
-        $taxes = $this->product->taxes()->pluck('name', 'id');
-        $this->taxes = auth()->user()->store->taxes()->pluck('name', 'id');
+        $taxes = $this->product->taxes()->pluck('name', 'taxes.id');
+        $this->taxes = auth()->user()->store->taxes()->pluck('name', 'taxes.id');
         foreach ($this->taxes as $id => $tax) {
             if (in_array($tax, $taxes->toArray())) {
                 array_push($this->taxSelected, $id);

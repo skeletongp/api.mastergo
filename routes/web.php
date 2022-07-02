@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChequeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ComprobanteController;
 use App\Http\Controllers\CuadreController;
@@ -46,7 +47,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
 
         Route::controller(UserController::class)->group(function () {
-
             Route::get('users', 'index')->name('users.index');
             Route::get('users/set-permissions/{id}', 'setPermissions')->name('users.setPermissions');
         });
@@ -101,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('catalogue', 'catalogue')->name('contables.catalogue');
             Route::get('view_catalogue', 'view_catalogue')->name('contables.view_catalogue');
             Route::get('results', 'results')->name('contables.results');
+            Route::get('report_607', 'report_607')->name('contables.report_607');
         });
         Route::controller(ComprobanteController::class)->group(function () {
             Route::get('comprobantes', 'index')->name('comprobantes.index');
@@ -115,6 +116,9 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::controller(ProvisionController::class)->group(function(){
             Route::get('/provisions','index')->name('provisions.index');
+        });
+        Route::controller(ChequeController::class)->group(function(){
+            Route::get('/cheques','index')->name('cheques.index');
         });
     });
 });

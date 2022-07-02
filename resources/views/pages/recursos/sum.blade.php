@@ -8,9 +8,7 @@
             @livewire('recursos.sum-recurso', key(uniqid())) 
             
         </div>
-        <div class="w-full">
-            @livewire('condiments.sum-condiment', key(uniqid())) 
-        </div>
+      
     </div>
 
 </x-app-layout>

@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-   
+    public function __construct() {
+        $this->middleware(['permission:Ver Usuarios'])->only('index');
+        $this->middleware(['permission:Asignar Permisos'])->only('setPermissions');
+    }
+    
     public function index()
     {
         return view('pages.users.index');

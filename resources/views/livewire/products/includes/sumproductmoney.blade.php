@@ -1,7 +1,7 @@
 <div class="w-full">
     <div class="flex space-x-4 items-start pt-12">
         <div class="w-full">
-            <x-base-select id="outProvider" label="Proveedor" wire:model.defer="provider_id">
+            <x-base-select id="outProvider" label="Proveedor" wire:model="provider_id">
                 <option class="text-gray-300"> Elija un proveedor</option>
                 @foreach ($providers as $idProv => $prov)
                     <option value="{{ $idProv }}">{{ $prov }}</option>
@@ -25,6 +25,21 @@
             <x-input-error for="ref">Campo requerido</x-input-error>
         </div>
     </div>
+    @if ($provider_id == 1)
+        <div class="flex space-x-4 pt-4">
+            <div class="w-full">
+                <x-base-input label="Nombre del proveedor" wire:model.lazy="prov_name" id="provName">
+                </x-base-input>
+
+            </div>
+            <div class="w-full">
+                <x-base-input label="RNC del proveedor" wire:model.defer="prov_rnc" id="provRNC"
+                    wire:keydown.enter.prevent="loadProvFromRNC">
+                </x-base-input>
+                <x-input-error for="form.type">Verifique el campo</x-input-error>
+            </div>
+        </div>
+    @endif
     @if ($setCost)
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">

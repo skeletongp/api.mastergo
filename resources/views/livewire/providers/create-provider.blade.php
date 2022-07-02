@@ -54,7 +54,7 @@
                             </div>
                             <div class="w-full overflow-hidden">
                                 <x-base-input label="No. Documento" id="provider_RNC" type="text"
-                                    wire:model.defer="form.rnc" />
+                                    wire:model.defer="form.rnc" wire:keydown.enter.prevent="loadFromRNC"/>
                                 <x-input-error for="form.rnc" />
                             </div>
 

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer('copy_print')->default(1);
             $table->string('printer_nif')->nullable();
             $table->string('printer_ver')->nullable();
+            $table->enum('print_order',['yes','no'])->default('yes')->nullable();
+            $table->string('min_comprobante')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
         });

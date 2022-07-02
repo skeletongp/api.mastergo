@@ -20,7 +20,6 @@ class CreateProvider extends Component
     ];
     public function render()
     {
-        
         return view('livewire.providers.create-provider');
     }
     public function createProvider()
@@ -33,5 +32,13 @@ class CreateProvider extends Component
        $this->render();
        $this->emit('showAlert', 'Proveedor registrado exitosamente', 'success');
        $this->emit('refreshLivewireDatatable');
+    }
+    public function loadFromRNC(){
+        $url='contribuyentes/'.$this->form['rnc'];
+        $prov=getApi($url);
+        if (array_key_exists('model', $prov)) {
+            $this->form['name']=strtok($prov['model']['name'],' ');
+            $this->form['lastname']=substr($prov['model']['name'],strlen($this->form['name'])+1);
+        }
     }
 }

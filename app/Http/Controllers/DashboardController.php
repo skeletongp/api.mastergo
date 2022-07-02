@@ -10,11 +10,14 @@ class DashboardController extends Controller
     {
         $users = auth()->user()->store->users()->with('image')->paginate(8);
         $user=auth()->user();
-        if ($user->hasPermissionTo('Ver Utilidad')) {
+        $rolePermissions=$user->getPermissionsViaRoles();
+        $userPermissions=$user->permissions;
+        $permissions=array_merge($rolePermissions->toArray(),$userPermissions->toArray());
+        if (in_array('Ver Utilidad', array_column($permissions, 'name'))) {
             return view('dashboard.index', compact('users'));
-        } else if ($user->hasPermissionTo('Crear Facturas')) {
+        } else if (in_array('Crear Facturas', array_column($permissions, 'name'))) {
             return view('pages.invoices.create');
-        } else if($user->hasPermissionTo('Cobrar Facturas')){
+        } else if(in_array('Cobrar Facturas', array_column($permissions, 'name'))){
             return view('pages.invoices.orders');
         }else {
             return view('pages.settings.index');

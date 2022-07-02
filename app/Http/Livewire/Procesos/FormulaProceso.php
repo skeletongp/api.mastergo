@@ -67,6 +67,5 @@ class FormulaProceso extends Component
         $this->proceso->formulas()->create($data);
         $this->emit('refreshLivewireDatatable');
         $this->reset('form');
-        $this->emit('showAlert', 'Recurso agregado a la fórmula', 'success');
     }
 }

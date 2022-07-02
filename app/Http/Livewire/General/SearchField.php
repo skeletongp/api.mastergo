@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\General;
 
 use App\Models\Client;
+use App\Models\Proceso;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\User;
@@ -24,35 +25,44 @@ class SearchField extends Component
         $this->models=[
             'users'=>'Usuarios',
             'clients'=>'Clientes',
-            'products'=>'Productos'
+            'products'=>'Productos',
+            'procesos'=>'Procesos'
         ];
     }
     public function render()
     {
+
       return view('livewire.general.search-field');
     }
     public function updatedSearch()
     {
       if ($this->search) {
         $store=auth()->user()->store;
+        $place=auth()->user()->place;
         $this->searchResults = (new Search())
         ->registerModel(User::class, function(ModelSearchAspect $modelSearchAspect) use ($store){
-          $users=$store->users()->pluck('id')->toArray();
+          $users=$store->users()->pluck('users.id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('fullname')
           ->whereIn('id', $users);
         })
         ->registerModel(Product::class, function(ModelSearchAspect $modelSearchAspect) use ($store){
-          $products=$store->products()->pluck('id')->toArray();
+          $products=$store->products()->pluck('products.id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('name')
           ->whereIn('id', $products);
         })
         ->registerModel(Client::class, function(ModelSearchAspect $modelSearchAspect) use ($store){
-          $clients=$store->clients()->pluck('id')->toArray();
+          $clients=$store->clients()->pluck('clients.id')->toArray();
           $modelSearchAspect
-          ->addSearchableAttribute('fullname')
+          ->addSearchableAttribute('name')
           ->whereIn('id', $clients);
+        })
+        ->registerModel(Proceso::class, function(ModelSearchAspect $modelSearchAspect) use ($place){
+          $procesos=$place->procesos()->pluck('procesos.id')->toArray();
+          $modelSearchAspect
+          ->addSearchableAttribute('name')
+          ->whereIn('id', $procesos);
         })
         ->search($this->search);
       } else {

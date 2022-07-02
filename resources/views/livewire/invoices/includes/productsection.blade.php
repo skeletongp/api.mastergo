@@ -36,18 +36,17 @@
 
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-[3.5rem]">
-                        <x-base-input placeholder="Cód." class=" border-none" type="number"
+                        <x-base-input placeholder="Cód." class=" border-none" type="number" 
                             wire:model.lazy="product_code" id="code" label="" wire:keydown.enter="$emit('focusCant')">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border  max-w-[12rem]">
                     <div class="w-48 max-w-[12rem] px-1">
-                       
-                        <x-datalist :inputId="'pr_name'"  wire:model.lazy="product_name" type="text" placeholder="Producto"
-                            listName="pr_code_name" wire:keydown.enter="$emit('focusCant')">
+                        <x-datalist value="{{$product_name}}" class="border-none h-full" :inputId="'pr_name'"  model="product_name" type="text" placeholder="Producto"
+                            listName="pr_code_name" wire:keydown.enter.debounce.50ms="$emit('focusCant')">
                             @foreach ($products as $index => $prod)
-                                <option class="bg-gray-200 py-1" value="{{ $index . ' ' . $prod }}">
+                                <option class="bg-gray-200 " value="{{  $index }} {{  $prod }}" data-value="{{$index}}">
                                 </option>
                             @endforeach
                         </x-datalist>
@@ -150,9 +149,11 @@
                             {{ '$' . formatNumber($det['total']) }}
                         </td>
                         <td class="px-2  text-base border border-gray-200 text-right ">
-                            <div class="w-10 pt-2 flex items-center justify-center">
+                            <div class="w-10  flex items-center space-x-2 justify-center">
                                 <span wire:click="removeItem({{ $det['id'] }})"
                                     class=" text-sm fas fa-trash text-red-600"></span>
+                                    <span wire:click="editItem({{ $det['id'] }})"
+                                    class=" text-sm fas fa-pen text-green-600"></span>
                             </div>
                         </td>
                     </tr>

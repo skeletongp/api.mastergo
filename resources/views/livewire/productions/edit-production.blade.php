@@ -11,12 +11,12 @@
                             label="Invertido">
                         </x-base-input>
                     </div>
-                    <div>
+                   {{--  <div>
                         <x-base-input status="{{ count($production['products']) ? '' : 'disabled' }}"
                             id="edit..{{ $production['id'] }}.getted" wire:model.defer="production.getted"
                             label="Obtenido">
                         </x-base-input>
-                    </div>
+                    </div> --}}
                     @if (count($production['recursos']) && count($production['products']))
                         )
                         <div class="">

@@ -6,13 +6,12 @@ use App\Models\Recurso;
 
 trait BrandTrait
 {
-    public $marca, $cant, $cost;
+    public $marca,  $cost;
     public $brands = [];
     public function rules2()
     {
         return [
             'marca' => 'required|string',
-            'cant' => 'required|min:0',
             'cost' => 'required|min:0',
         ];
     }
@@ -23,11 +22,11 @@ trait BrandTrait
             $this->brands,
             [
                 'name' => $this->marca,
-                'cant' => $this->cant,
+               
                 'cost' => $this->cost,
             ]
         );
-        $this->reset('marca', 'cant', 'cost');
+        $this->reset('marca',  'cost');
     }
     public function createBrands(Recurso $recurso)
     {

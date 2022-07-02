@@ -46,7 +46,7 @@ class Client extends Model implements Searchable
     
         return new SearchResult(
            $this,
-           $this->fullname,
+           $this->name,
            $url
         );
     }
@@ -95,5 +95,9 @@ class Client extends Model implements Searchable
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+    function contact()
+    {
+        return $this->hasOne(Contact::class);
     }
 }

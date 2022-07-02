@@ -1,21 +1,19 @@
 <div>
     <form action="" wire:submit.prevent="addBrand">
-        <div class="flex space-x-4">
+        <div class="flex space-x-4 items-center">
             <div class="w-full">
-                <x-base-input label="Atributo" wire:model.defer="marca" id="marca" wire:keydown.enter="addBrand">
+                <x-base-input label="" placeholder="Atributo del recurso" wire:model.defer="marca" id="marca" wire:keydown.enter="addBrand">
                 </x-base-input>
                 <x-input-error for="marca">Requerido</x-input-error>
             </div>
+           
             <div class="w-1/4">
-                <x-base-input type="number" id="cant" label="Cantidad" wire:model.defer="cant"
-                    wire:keydown.enter="addBrand">
-                </x-base-input>
-                <x-input-error for="cant">Requerido</x-input-error>
-            </div>
-            <div class="w-1/4">
-                <x-base-input type="number" id="cost" label="Costo" wire:model.defer="cost"
+                <x-base-input type="number" id="cost" label="" placeholder="Costo" wire:model.defer="cost"
                     wire:keydown.enter="addBrand"></x-base-input>
                 <x-input-error for="cost">Requerido</x-input-error>
+            </div>
+            <div>
+                <span class="fas fa-plus cursor-pointer hover:shadow-xl hover:text-blue-400" wire:click="addBrand"></span>
             </div>
         </div>
     </form>
@@ -27,7 +25,6 @@
                 <span class="fas fa-times text-red-400" wire:click="removeBrand('{{$id}}')"></span>
                 <div class=" w-full grid grid-cols-3  items-center">
                     <span>{{ $brand['name'] }}</span>
-                    <span>{{ $brand['cant'] }}</span>
                     <h1 class="text-right">${{ formatNumber($brand['cost']) }}</h1>
                 </div>
             </div>

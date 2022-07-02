@@ -12,8 +12,8 @@ class ProductNewPrice extends Component
     
     public function mount()
     {
-       $units=auth()->user()->store->units()->pluck('name','id');
-       $hasUnit=$this->product->units()->pluck('name','id');
+       $units=auth()->user()->store->units()->pluck('name','units.id');
+       $hasUnit=$this->product->units()->pluck('name','units.id');
        $this->units=array_diff($units->toArray(), $hasUnit->toArray());
        
     }

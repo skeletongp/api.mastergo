@@ -25,7 +25,7 @@ class CreateRole extends Component
     public function createRole()
     {
         $this->validate();
-        $this->form['name']=$this->form['name'].auth()->user()->store->id;
+        $this->form['name']=$this->form['name'];
         $role=Role::create($this->form);
         auth()->user()->store->roles()->save($role);
         $this->emit('showAlert','El rol ha sido creado exitosamente', 'success');

@@ -133,5 +133,9 @@ protected $connection="mysql";
         return $this->hasOne(Count::class)
         ->where('code',$code)->first();
     }
+    function cheques()
+    {
+        return $this->hasMany(Cheque::class);
+    }
     
 }

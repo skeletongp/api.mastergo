@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('isEditable',[true,false]);
             $table->string('note')->comment('Nota o descripción opcional')->nullable();
             $table->string('name')->comment('Para colocar nombre de cliente genérico')->nullable();
+            $table->string('rnc')->comment('Para colocar rnc de cliente genérico')->nullable();
             $table->enum('type', Invoice::TYPES)->default('B00');
             $table->enum('status',['waiting','anulada','cerrada']);
             $table->enum('condition',['De Contado','1 A 15 Días','16 A 30 Días', '31 a 45 Días']);

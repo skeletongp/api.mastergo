@@ -8,7 +8,7 @@ use Livewire\Component;
 class CreateRecurso extends Component
 {
     use BrandTrait;
-    public $form, $units, $providers, $type = 'Recurso';
+    public $form = [], $units, $providers, $type = 'Recurso';
     public function render()
     {
         $store = auth()->user()->store;
@@ -29,9 +29,9 @@ class CreateRecurso extends Component
     {
         $this->form['place_id'] = auth()->user()->place->id;
         if ($this->type == 'Recurso') {
-           $this->rules= array_merge($this->rules, ['brands' => 'required|min:1']);
-        } else{
-            $this->rules= array_merge($this->rules, ['cost' => 'required']);
+            $this->rules = array_merge($this->rules, ['brands' => 'required|min:1']);
+        } else {
+            $this->rules = array_merge($this->rules, ['cost' => 'required']);
         }
         $this->validate($this->rules);
         $store = auth()->user()->store;
@@ -39,13 +39,17 @@ class CreateRecurso extends Component
             $recurso = $store->recursos()->create($this->form);
             $this->createBrands($recurso);
         } else {
-            $this->form['cost']=$this->cost;
+            $this->form['cost'] = $this->cost;
             $recurso = $store->condiments()->create($this->form);
-
         }
-
-        $this->reset('form', 'brands','cost');
+        $this->emit('clearSelect');
+        $this->reset("form",'marca', 'brands', 'cost');
         $this->emit('showAlert', 'Recurso registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
     }
+    public function updatedType()
+    {
+        $this->emit('clearSelect');
+    }
+    
 }

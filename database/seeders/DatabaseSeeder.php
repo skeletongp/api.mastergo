@@ -85,9 +85,9 @@ class DatabaseSeeder extends Seeder
         ]); */
         $user=User::find(1);
         $store->users()->attach($user);
+        $store->users()->attach([2,5]);
         $client = $store->clients()->create([
-            'name' => 'Clte.',
-            'lastname' => 'Genérico ',
+            'name' => 'Clte. Genérico',
             'email' => 'generico@ahumadosh.com',
             'address' => 'Sin Dirección',
             'phone' => '(000) 000-0000',

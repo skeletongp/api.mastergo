@@ -52,7 +52,7 @@ class EditUser extends Component
         $user=User::whereId($this->user['id'])->first();
         if ($this->photo_path) {
             $user=User::whereId($this->user['id'])->first();
-            $user->image()->update([
+            $user->image()->updateOrCreate([
                 'path'=>$this->photo_path
             ]);
         }
@@ -75,7 +75,6 @@ class EditUser extends Component
         [
             'folder' => 'carnibores/avatars',
             'transformation' => [
-                      'width' => 250,
                       'height' => 250
              ]
         ])->getSecurePath();

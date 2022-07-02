@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('recurso_id')->constrained();
             $table->decimal('cost')->comment('Costo base del recurso (valor de compra)');
             $table->decimal('cant')->comment('Cantidad del recurso');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

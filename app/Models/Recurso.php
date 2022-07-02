@@ -13,9 +13,9 @@ use Ramsey\Uuid\Uuid;
 class Recurso extends Model
 {
     use HasFactory, SoftDeletes;
-protected $connection="mysql";
+    protected $connection = "mysql";
 
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'description',
         'cant',
@@ -25,7 +25,7 @@ protected $connection="mysql";
         'unit_id',
         'provider_id',
 
-    ];  
+    ];
     public static function boot()
     {
         parent::boot();
@@ -35,8 +35,8 @@ protected $connection="mysql";
     }
 
     public function unit()
-    {   
-        return $this->belongsTo(Unit::class, 'unit_id','id');
+    {
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
     public function store()
     {
@@ -46,16 +46,24 @@ protected $connection="mysql";
     {
         return $this->belongsTo(Place::class);
     }
-   public function brands()
-   {
-       return $this->hasMany(Brand::class);
-   }
-   public function provisions()
-   {
-       return $this->morphMany(Provision::class, 'provisionable');
-   }
+    public function brands()
+    {
+        return $this->hasMany(Brand::class);
+    }
+    public function provisions()
+    {
+        return $this->morphMany(Provision::class, 'provisionable');
+    }
     public function formulas()
     {
-         return $this->morphMany(Formula::class, 'formulable');
+        return $this->morphMany(Formula::class, 'formulable');
+    }
+    function name(): Attribute
+    {
+        return  Attribute::make(
+            set: fn ($value) =>
+            $value . ' (MP)'
+
+        );
     }
 }

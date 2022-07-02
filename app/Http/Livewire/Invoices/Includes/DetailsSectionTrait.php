@@ -38,8 +38,9 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
+        $this->validate(['product'=>'required']);
 
-        if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar')) {
+        if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar') && $this->product['type'] != 'Servicio') {
             $this->action = 'confirmedAddItems';
             $this->emit('openAuthorize', 'Para vender producto fuera de stock');
         } else {
@@ -80,6 +81,22 @@ trait DetailsSectionTrait
             $this->details[$ind]['id'] = $ind;
         }
         $this->checkStock();
+    }
+    public function editItem($id)
+    {
+        $this->form = $this->details[$id];
+        $this->product_code = $this->form['product_code'];
+        $this->setProduct($this->product_code);
+        $this->product_name = $this->form['product_name'];
+        $this->cant = $this->form['cant'];
+        $this->price = $this->form['price'];
+        $this->discount = $this->form['discount'];
+        $this->total = $this->form['total'];
+        $this->taxTotal = $this->form['taxTotal'];
+        $this->unit_id = $this->form['unit_pivot_id'];
+        $this->pivot_id = $this->form['unit_pivot_id'];
+        $this->removeItem($id);
+        $this->emit('focusCode');
     }
     public function checkStock()
     {

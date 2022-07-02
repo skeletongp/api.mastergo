@@ -6,13 +6,16 @@ use App\Http\Helper\Universal;
 use App\Models\Recurso;
 use App\Models\Store;
 use App\Models\Unit;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class TableRecurso extends LivewireDatatable
 {
-    public $headTitle = "Recursos";
+    use AuthorizesRequests;
 
+    public $headTitle = "Recursos";
+    public $padding="px-2";
 
     public function builder()
     {
@@ -49,16 +52,14 @@ class TableRecurso extends LivewireDatatable
                 }
                 return '$' . formatNumber($result['cost']);
             })->label('Costo'),
-
-            /*  $canDelete ?
-            Column::delete()->label('Eliminar') :
-                Column::delete()->label('Eliminar')->hide(false) */
+            Column::delete()->label('')  
         ];
     }
 
 
     public function delete($id)
     {
+        $this->authorize('Borrar Recursos');
         Recurso::find($id)->delete();
         $this->emit('showAlert', 'Recurso borrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');

@@ -17,12 +17,15 @@
 
         {{-- Modal Container --}}
         <div
-            class=" bg-white rounded-lg flex flex-col p-4 mx-auto w-full {{ $maxWidth }} shadow-sm shadow-blue-500 dark:bg-gray-700 border border-blue-500 overflow-hidden" @click.away="open=false">
+            class=" bg-white rounded-lg flex flex-col p-4 mx-auto w-full {{ $maxWidth }} shadow-sm shadow-blue-500 dark:bg-gray-700 border border-blue-500 overflow-hidden" {{-- @click.away="open=false" --}}>
 
             {{-- Modal Header --}}
             <div class="flex justify-between ">
                 <h1 class="font-bold my-4 uppercase text-lg  text-left">{{ $title }}</h1>
-                <span class="fas fa-times cursor-pointer text-red-600" x-on:click.prevent="open = ! open"></span>
+                <div class="flex space-x-4 items-center text-red-600 cursor-pointer " x-on:click.prevent="open = ! open">
+                    <small>Cerrar</small>
+                    <span class="fas fa-times " ></span>
+                </div>
             </div>
             {{-- Modal Body --}}
             <div class="w-full mt-4">

@@ -5,7 +5,8 @@
             <h1 class="p-4 text-xl font-bold uppercase">Preferencias</h1>
             <form action="" class=" p-2" wire:submit.prevent="updatePreference">
                 <p class="my-4">En esta sección puedes configurar los valores predeterminados correspondientes a
-                    esta sucursal, tales como: impresora predeterminada, tipo de comprobante más utilizado, etc. Si no aparece la lista de impresoras instaladas, haga click en el icono de la lupa.</p>
+                    esta sucursal, tales como: impresora predeterminada, tipo de comprobante más utilizado, etc. Si no
+                    aparece la lista de impresoras instaladas, haga click en el icono de la lupa.</p>
                 <div class="w-full space-y-3  flex items-center ">
                     <div class="space-y-3 w-full">
                         <div class="flex space-x-4 items-center">
@@ -38,26 +39,44 @@
                                 <x-input-error for="preference.tax_id"></x-input-error>
                             </div>
                             <div class="">
-                                <x-base-input label="Copias" wire:model.defer="preference.copy_print" type="number">
+                                <x-base-input label="Copias" wire:model.defer="preference.copy_print" type="number" id="prcopy">
                                 </x-base-input>
                                 <x-input-error for="preference.copy_print"></x-input-error>
                             </div>
                         </div>
-                        <div class="w-full max-w-sm">
-                            <x-base-select wire:model="preference.printer" id="printer">
-                                <x-slot name="label">
-                                    <div class="flex justify-between items-center" id="searchPrinter" onclick="searchPrinter()">
-                                        <span class="">
-                                            Impresora predeterminada</span>
-                                        <span class="fas fa-search text-blue-400 cursor-pointer"></span>
-                                    </div>
-                                </x-slot>
-                                @foreach ($printers as $printer)
-                                    <option>{{ $printer }}
-                                    </option>
-                                @endforeach
-                            </x-base-select>
-                            <x-input-error for="preference.tax_id"></x-input-error>
+                        <div class="flex space-x-4">
+                            <div class="w-full max-w-sm">
+                                <x-base-select wire:model="preference.printer" id="printer">
+                                    <x-slot name="label">
+                                        <div class="flex justify-between items-center" id="searchPrinter"
+                                            onclick="searchPrinter()">
+                                            <span class="">
+                                                Impresora predeterminada</span>
+                                            <span class="fas fa-search text-blue-400 cursor-pointer"></span>
+                                        </div>
+                                    </x-slot>
+                                    <option value=""></option>
+                                    <option value="none">Ninguna</option>
+                                    @foreach ($printers as $printer)
+                                        <option>{{ $printer }}
+                                        </option>
+                                    @endforeach
+                                </x-base-select>
+                                <x-input-error for="preference.printer"></x-input-error>
+                            </div>
+                            <div class="">
+                                <x-base-input label="Comprobantes" placeholder="Alertar desde" wire:model.defer="preference.min_comprobante" type="number" id="minComp">
+                                </x-base-input>
+                                <x-input-error for="preference.min_comprobante"></x-input-error>
+                            </div>
+                            <div class="">
+                                <x-base-select label="Imprimir Orden" placeholder="Alertar desde" wire:model.defer="preference.print_order"  id="prntOrder">
+                                    <option value=""></option>
+                                    <option value="yes">Sí</option>
+                                    <option value="no">No</option>
+                                </x-base-select>
+                                <x-input-error for="preference.min_comprobante"></x-input-error>
+                            </div>
                         </div>
                         {{-- Botón --}}
                         <div class="flex my-4  items-center justify-end ">
@@ -76,5 +95,5 @@
             </form>
         </div>
     @endcan
-  
+
 </div>

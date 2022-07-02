@@ -15,14 +15,18 @@
             class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-price' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }}  py-2 text-lg px-1">
             Precios
         </div>
-        <div wire:click="setComponent('products.product-history')"
-            class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-history' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
-            Ventas
-        </div>
-        <div wire:click="setComponent('products.product-provisions')"
-            class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-provisions' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
-            Compras
-        </div>
+        @can('Ver Utilidad')
+            <div wire:click="setComponent('products.product-history')"
+                class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-history' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
+                Ventas
+            </div>
+        @endcan
+        @can('Ver Gastos')
+            <div wire:click="setComponent('products.product-provisions')"
+                class="cursor-pointer flex-grow border-b-2 {{ $componentName == 'products.product-provisions' ? 'text-indigo-500 border-indigo-500' : 'border-gray-300' }} py-2 text-lg px-1">
+                Compras
+            </div>
+        @endcan
     </div>
 
     @switch($componentName)

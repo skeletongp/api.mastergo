@@ -4,7 +4,9 @@
            @livewire('productions.production-condiment', ['production' => $production], key(uniqid()))
         </div>
         <div class=" overflow-x-auto shadow-md sm:rounded-lg">
-           
+            <div class=" overflow-x-auto shadow-md sm:rounded-lg">
+                @livewire('productions.production-recurso', ['production' => $production], key(uniqid()))
+             </div>
         </div>
     </div>
     <div>

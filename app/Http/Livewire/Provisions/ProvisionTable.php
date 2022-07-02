@@ -25,7 +25,7 @@ class ProvisionTable extends LivewireDatatable
         $place = auth()->user()->place;
         $provisions = $place->provisions()
             ->select(DB::raw('id, SUM(cant*cost) as totalGroup, provisionable_type, provisionable_id, 
-                                atribuible_type, atribuible_id,provider_id'))
+                                atribuible_type, atribuible_id,provider_id,prov_name, prov_rnc'))
             ->orderBy('created_at', 'desc')
             ->with('provider', 'provisionable', 'atribuible', 'place.store')
             ->groupBy('code');
@@ -42,6 +42,9 @@ class ProvisionTable extends LivewireDatatable
             Column::callback(['provider_id', 'id'], function ($provider, $id)
             use ($provisions) {
                 $result = arrayFind($provisions, 'id', $id);
+                if (array_key_exists('prov_name',$result) && $result['prov_name']) {
+                    return ellipsis($result['prov_name'], 20);
+                }
                 return $result['provider']['fullname'];
             })->label('Proveedor'),
             Column::callback(['provisionable_id', 'id'], function ($provisionable, $id)

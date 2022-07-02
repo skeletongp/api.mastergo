@@ -44,7 +44,6 @@ class FormulaTable extends LivewireDatatable
     {
         $formula = Formula::find($id);
         $formula->delete();
-        $this->emit('showAlert',  'Formula eliminada correctamente', 'success');
         $this->emit('refreshLivewireDatatable');
     }
 }

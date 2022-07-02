@@ -30,7 +30,7 @@ class Production extends Model
     }
     public function recursos()
     {
-        return $this->belongsToMany(Recurso::class, 'production_recursos')->withPivot('cant', 'stock', 'status')->withTimestamps();
+        return $this->belongsToMany(Recurso::class, 'production_recursos')->withPivot('cant', 'stock', 'status','brand_id')->withTimestamps();
     }
     public function brands()
     {

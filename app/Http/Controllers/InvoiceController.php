@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\App;
 
 class InvoiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:Ver Facturas'])->only(['index','show']);
+        $this->middleware(['permission:Crear Facturas'])->only('create');
+        $this->middleware(['permission:Cobrar Facturas'])->only('orders');
+    }
+
     public function index()
     {
         return view('pages.invoices.index');

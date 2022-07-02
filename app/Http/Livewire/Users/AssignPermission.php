@@ -19,7 +19,7 @@ class AssignPermission extends Component
     {
         $this->permissionsSelected = $this->user['permissions'];
         $spatiePermissionCache = Cache::get('spatie.permission.cache')['permissions'];
-        if (count($this->user['permissionsViaRole'])) {
+        if (array_key_exists('n',$spatiePermissionCache[0])) {
             $this->permissions = Arr::pluck($spatiePermissionCache, 'n', 'i');
         } else {
             $this->permissions = Arr::pluck($spatiePermissionCache, 'b', 'a');

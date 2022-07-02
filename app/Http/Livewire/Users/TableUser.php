@@ -23,7 +23,7 @@ class TableUser extends LivewireDatatable
 
     public function builder()
     {
-        $this->roles = auth()->user()->store->roles;
+        $this->roles = auth()->user()->store->roles()->get();
         $users = auth()->user()->store->users()->whereNull('deleted_at');
         
         if ($users->count() == 1) {

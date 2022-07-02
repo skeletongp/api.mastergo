@@ -12,20 +12,17 @@
         <form wire:submit.prevent="updateClient" class="space-y-8">
             <div class="   flex items-end space-x-3">
                 <div class="w-full">
-                    <x-input label="Primer nombre" id="client.{{$client['id']}}name" wire:model.defer="client.name" />
+                    <x-input label="Nombre" id="client.{{$client['id']}}name" wire:model.defer="client.name" />
                     <x-input-error for="client.name" />
                 </div>
-                <div class="w-full">
-                    <x-input label="Apellidos" id="client.{{$client['id']}}lastname" wire:model.defer="client.lastname" />
-                    <x-input-error for="client.lastname" />
-                </div>
-            </div>
-            <div class="   flex items-end space-x-3">
                 <div class="w-full">
                     <x-input label="Correo Electrónico" id="client.{{$client['id']}}email" type="email"
                         wire:model.defer="client.email" />
                     <x-input-error for="client.email" />
                 </div>
+            </div>
+            <div class="   flex items-end space-x-3">
+                
                 <div class="w-full">
                     <x-input label="Dirección" id="client.{{$client['id']}}address" wire:model.defer="client.address" />
                     <x-input-error for="client.address" />
@@ -36,7 +33,7 @@
            
             <div class="   flex items-end space-x-3">
                 <div class="w-full max-w-sm">
-                    <x-input label="RNC/Cédula" id="client.{{$client['id']}}RNC" type="number" wire:model.defer="client.rnc" />
+                    <x-input label="RNC/Cédula" id="client.{{$client['id']}}RNC" type="text" wire:model.defer="client.rnc" />
                     <x-input-error for="client.rnc" />
                 </div>
                 @can('Asignar Créditos')

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uid');
             $table->string('name')->comment('Identificador en texto');
             $table->decimal('cost',14,4)->comment('Costo general del condimiento');
-            $table->decimal('stock',14,4)->comment('Costo general del condimiento')->default(0);
+            $table->decimal('cant',14,4)->comment('Costo general del condimiento')->default(0);
             $table->foreignId('store_id')->comment('Tienda a la que pertenece el recurso')->constrained()->on('moso_master.stores');
             $table->foreignId(('place_id'))->comment('Sucursal a la que pertenedce el material')->constrained();
             $table->foreignId('unit_id')->comment('Unidad con que se gestiona el recurso')->constrained();

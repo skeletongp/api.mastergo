@@ -10,6 +10,7 @@ use App\Models\User;
 
 trait SumProductTrait
 {
+    public $prov_name, $prov_rnc;
     public function createProvision($product, $cant, $code, $unit_id, $cost)
     {
         $place = auth()->user()->place;
@@ -17,6 +18,8 @@ trait SumProductTrait
             'code' => $code,
             'cant' => $cant,
             'cost' => $cost,
+            'prov_name' => $this->prov_name,
+            'prov_rnc' => $this->prov_rnc,
             'atribuible_type' => Unit::class,
             'atribuible_id' => $unit_id,
             'provider_id' => $this->provider_id,
@@ -61,6 +64,20 @@ trait SumProductTrait
         $outcome->payments()->save($payment);
         $outcome->update(['rest' => $payment->rest]);
         $this->setTransaction($payment, $code);
+    }
+    public function updatedProvRNC()
+    {
+        $this->loadProvFromRNC();
+    }
+    public function loadProvFromRNC()
+    {
+        if ($this->prov_rnc) {
+            $url = 'contribuyentes/' . $this->prov_rnc;
+            $prov = getApi($url);
+            if (array_key_exists('model', $prov)) {
+                $this->prov_name = $prov['model']['name'];
+            }
+        }
     }
     public function setTransaction($payment, $code)
     {

@@ -36,7 +36,7 @@ class LastSales extends LivewireDatatable
             DateColumn::name('created_at')->label('Hora')->format('h:i A'),
             Column::name('client.name')->callback(['client_id', 'id' ], function ($client, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
-                return $result['client']['fullname'];
+                return $result['client']['name'];
             })->label('Cliente'),
             Column::callback(['uid', 'id'], function ($total, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);

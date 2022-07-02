@@ -112,7 +112,7 @@
             <div>
                 <div class="p-4 uppercase text-left w-full font-bold text-xl select-none">
                     @isset($headTitle)
-                        {{ $headTitle }}
+                        {!! $headTitle !!}
                     @endisset
                 </div>
                 <div class="table min-w-full align-middle">
@@ -232,18 +232,18 @@
         @unless($this->hidePagination)
             <div
                 class="max-w-screen bg-white @unless($complex) rounded-b-lg @endunless border-4 border-t-0 border-b-0 @if ($this->activeFilters) border-blue-500 @else border-transparent @endif">
-                <div class="items-center justify-between p-2 sm:flex">
+                <div class="items-center justify-between py-2 sm:flex">
                     {{-- check if there is any data --}}
                     @if (count($this->results))
                         <div class="flex items-center my-2 sm:my-0">
-                            <select name="perPage"
-                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 form-select leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                            <x-base-select name="perPage" label=""
+                                class="block w-full py-2 pl-3  mt-1 mr-2 text-base border-gray-300 form-select leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
                                 wire:model="perPage">
                                 @foreach (config('livewire-datatables.per_page_options', [10, 25, 50, 100]) as $per_page_option)
                                     <option value="{{ $per_page_option }}">{{ $per_page_option }}</option>
                                 @endforeach
-                                <option value="99999999">{{ __('Todos') }}</option>
-                            </select>
+                                <option value="99999999">{{ __('1000') }}</option>
+                            </x-base-select>
                         </div>
 
                         <div class="my-4 sm:my-0">
@@ -259,7 +259,7 @@
 
                         @if (!isset($hideResults))
                             <div class="flex justify-end text-gray-600">
-                                {{ __('Resultados') }} {{ $this->results->firstItem() }} -
+                                 {{ $this->results->firstItem() }} -
                                 {{ $this->results->lastItem() }} {{ __('de') }}
                                 {{ $this->results->total() }}
                             </div>

@@ -15,36 +15,36 @@
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-input label="Primer nombre" id="name" wire:model.lazy="form.name" />
+                        <x-base-input label="Primer nombre" id="name" wire:model.lazy="form.name" />
                         <x-input-error for="form.name" />
                     </div>
                     <div class="w-full">
-                        <x-input label="Apellidos" id="lastname" wire:model.lazy="form.lastname" />
+                        <x-base-input label="Apellidos" id="lastname" wire:model.lazy="form.lastname" />
                         <x-input-error for="form.lastname" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-input label="Correo Electrónico" id="email" type="email" wire:model.lazy="form.email" />
+                        <x-base-input label="Correo Electrónico" id="email" type="email" wire:model.lazy="form.email" />
                         <x-input-error for="form.email" />
                     </div>
                     <div class="w-full">
-                        <x-input type="tel" label="No. Teléfono" id="phone" wire:model.lazy="form.phone" />
+                        <x-base-input type="tel" label="No. Teléfono" id="phone" wire:model.lazy="form.phone" />
                         <x-input-error for="form.phone" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-1/2">
-                        <x-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.lazy="form.username" />
+                        <x-base-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.lazy="form.username" />
                         <x-input-error for="form.username" />
                     </div>
                     <div class="w-1/2">
-                        <x-input label="Contraseña" autocomplete="new-password" type="password" id="new-password"
+                        <x-base-input label="Contraseña" autocomplete="new-password" type="password" id="new-password"
                             wire:model.lazy="form.password" />
                         <x-input-error for="form.password" />
                     </div>
                 </div>
-                <div class="  pb-6 flex items-end space-y-0 space-x-3">
+                <div class="  pb-6 flex items-start space-y-0 space-x-3">
                    
                     <div class="w-full pb-0 select2-div">
                         <label for="role">Rol de usuario</label>
@@ -54,7 +54,7 @@
                                 <option value="{{ $name }}">{{ preg_replace('/[0-9]+/', '',  $name); }}</option>
                             @endforeach
                         </x-select>
-                        <x-input-error for="frole" />
+                        <x-input-error for="role" />
                     </div>
                     <div class="w-full pb-0">
                         <label for="place_id">Sucursal Predeterminada</label>
