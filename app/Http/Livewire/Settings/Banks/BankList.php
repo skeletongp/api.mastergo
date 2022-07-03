@@ -22,7 +22,7 @@ class BankList extends LivewireDatatable
         return [
             Column::index($this),
             Column::name('bank_name')->label('Banco')->editable()->searchable(),
-            Column::name('bank_number')->label('Cuenta')->editable()->searchable(),
+            Column::name('bank_number')->label('Cuenta')->searchable(),
             Column::name('id')->callback('id', function ($id)  use($banks) {
                 $result = arrayFind($banks, 'id', $id);
                 return $result['titular']['fullname'];
