@@ -45,7 +45,7 @@ class OtherSeeder extends Seeder
 
         $chuleta=$store->products()->create([
             'name'=>'Chuleta Importada',
-            'code'=>'003',
+            'code'=>'002',
             'type'=>'Producto'
         ]);
         $this->assignUnit(1,$place, $chuleta, 55,76,40,35);
