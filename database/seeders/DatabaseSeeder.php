@@ -42,10 +42,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Libra',
             'symbol' => 'LB.'
         ]);
-        $unit2 = $store->units()->create([
-            'name' => 'Servicio',
-            'symbol' => 'SRV'
-        ]);
+        
         $tax = $store->taxes()->create([
             'name' => 'ITBIS',
             'rate' => 0.18

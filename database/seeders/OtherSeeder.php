@@ -42,12 +42,7 @@ class OtherSeeder extends Seeder
             'type'=>'Producto'
         ]);
         $this->assignUnit(1,$place, $pierna, 65,80,80,50);
-        $envio=$store->products()->create([
-            'name'=>'Envío a domicilio',
-            'code'=>'002',
-            'type'=>'Servicio'
-        ]);
-        $this->assignUnit(2,$place, $envio, 125,175,1000,85);
+
         $chuleta=$store->products()->create([
             'name'=>'Chuleta Importada',
             'code'=>'003',
