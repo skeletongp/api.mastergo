@@ -10,7 +10,7 @@ class Catalogue extends LivewireDatatable
 {
     public $padding="px-2 py-0 border-b border-blue-200 h-full relative";
     public $headTitle="";
-    public $perPage=15;
+    public $perPage=5;
     public function builder()
     {
         $this->headTitle="Catálogo de Cuentas";

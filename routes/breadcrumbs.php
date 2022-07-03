@@ -98,7 +98,7 @@ Breadcrumbs::for('procesos.show', function ($trail, $proceso) {
 });
 Breadcrumbs::for('procesos.formula', function ($trail, $proceso) {
     $trail->parent('procesos');
-    $trail->push('Fórmula del proceso', route('procesos.formula', $proceso), ['icon'=>'fas fa-flask']);
+    $trail->push('Fórmula de '.$proceso->name, route('procesos.formula', $proceso), ['icon'=>'fas fa-flask']);
 });
 
 /* Producciones */

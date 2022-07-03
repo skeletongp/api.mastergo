@@ -41,5 +41,24 @@ class BladeServiceProvider extends ServiceProvider
             }
             return false;
         });
+        Blade::if('scopeanny', function(array $scopesArray){
+            if (Cache::has('scopes_'.auth()->user()->store->id)) {
+                $scopes=Cache::get('scopes_'.auth()->user()->store->id);
+            } else {
+               $scopes=auth()->user()->store->scope()->pluck('name');
+               Cache::put('scopes_'.auth()->user()->store->id, $scopes);
+            }
+            if (!$scopesArray || count($scopesArray)==0) {
+                return true;
+            }
+            if (auth()->user()) {
+               foreach ($scopesArray as $scope) {
+                if($scopes->contains($scope)){
+                    return true;
+                }
+               }
+            }
+            return false;
+        });
     }
 }

@@ -17,8 +17,7 @@
                             label="Obtenido">
                         </x-base-input>
                     </div> --}}
-                    @if (count($production['recursos']) && count($production['products']))
-                        )
+                    @if ( count($production['products']))
                         <div class="">
                             <label class="block text-base pb-4 font-medium text-gray-900 dark:text-gray">Estado</label>
                             <x-toggle id="production.{{ $production['id'] }}.status"

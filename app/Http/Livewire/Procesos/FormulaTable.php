@@ -20,15 +20,13 @@ class FormulaTable extends LivewireDatatable
     public function columns()
     {
         $formulas = $this->builder()->get()->toArray();
+        $canEdit = auth()->user()->hasPermissionTo('Editar Procesos');
         return [
             Column::callback(['formulable_id', 'id'], function ($formulable, $id) use ($formulas) {
                 $result = arrayFind($formulas, 'id', $id);
                 return $result['formulable']['name'];
             })->label('Recurso'),
-            Column::callback(['cant', 'id'], function ($formulable, $id) use ($formulas) {
-                $result = arrayFind($formulas, 'id', $id);
-                return $result['cant'];
-            })->label('Cant.'),
+            Column::name('cant')->label('Cant.')->editable(),
             Column::callback(['unit_id', 'id'], function ($formulable, $id) use ($formulas) {
                 $result = arrayFind($formulas, 'id', $id);
                 if ($result['formulable_type'] == 'App\Models\Recurso') {

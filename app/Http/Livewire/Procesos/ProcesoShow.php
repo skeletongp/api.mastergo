@@ -21,7 +21,7 @@ class ProcesoShow extends Component
 
     public function render()
     {
-        $proceso = $this->proceso->load('productions','formulas');
+        $proceso = $this->proceso->load('productions','formulas.brand','recursos','condiments');
         $productions = $proceso->productions()->paginate(7);
         return view('livewire.procesos.proceso-show', compact('proceso', 'productions'));
     }

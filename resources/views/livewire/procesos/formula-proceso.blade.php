@@ -18,7 +18,7 @@
                     <x-input-error for="form.recurso"> </x-input-error>
                 </div>
                 <div>
-                    <x-base-input wire:model.defer="form.cant" label="Cant." id="form.f.cant"></x-base-input>
+                    <x-base-input wire:model.defer="form.cant" label="Cant." type="number" id="form.f.cant"></x-base-input>
                     <x-input-error for="form.cant">Requerido </x-input-error>
                 </div>
             </div>

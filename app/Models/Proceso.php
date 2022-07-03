@@ -35,7 +35,11 @@ protected $connection="mysql";
     }
     public function recursos()
     {
-        return $this->belongsToMany(Recurso::class, 'proceso_recursos')->withPivot('cant')->withTimestamps();
+        return $this->belongsToMany(Recurso::class, 'formulas', 'proceso_id','formulable_id')->where('formulable_type',Recurso::class)->withPivot('cant');
+    }
+    public function condiments()
+    {
+        return $this->belongsToMany(Condiment::class, 'formulas', 'proceso_id','formulable_id')->where('formulable_type',Condiment::class)->withPivot('cant');
     }
     public function productions(){
         return $this->hasMany(Production::class);

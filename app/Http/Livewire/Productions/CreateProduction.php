@@ -9,20 +9,24 @@ use Livewire\Component;
 class CreateProduction extends Component
 {
     use Confirm;
-    public $proceso;
+    public $proceso, $units;
     public $form, $unit_id;
     protected $listeners=['validateAuthorization','storeProduction'];
     protected $rules=[
         'form'=>'required',
+        'form.setted'=>'required',
         'unit_id'=>'required|min:1',
         'form.start_at'=>'required',
     ];
+    function mount($proceso)
+    {
+        $this->units=auth()->user()->place->units()->pluck('name','units.id');
+        $this->proceso=$proceso;
+        $this->unit_id=$proceso->unit_id;
+    }
     public function render()
     {
-        $units=auth()->user()->place->units()->pluck('name','units.id');
-        if (count($units->toArray())) {
-           $this->unit_id=array_key_first($units->toArray());
-        }
+       
         return view('livewire.productions.create-production', get_defined_vars());
     }
     public function storeProduction()
@@ -32,6 +36,12 @@ class CreateProduction extends Component
             $this->emit('showAlert','Ya hay una producción pendiente','warning');
             return ;
         } 
+        if(!$this->validateRecursos()){
+            return ;
+        }
+        if(! $this->validateCondiments()){
+            return ;
+        }
         $this->form['user_id']=auth()->user()->id;
         $this->form['unit_id']=$this->unit_id;
         $production=$this->proceso->productions()->create($this->form);
@@ -40,6 +50,30 @@ class CreateProduction extends Component
         }
         $this->reset('form');
         $this->emit('refreshLivewireDatatable');
+    }
+    function validateCondiments(){
+        if ($this->proceso->condiments->count()) {
+            foreach($this->proceso->condiments as $cond){
+                if ($cond->pivot->cant*$this->form['setted']>$cond->cant){
+                    $this->emit('showAlert','No hay suficiente cantidad de '.$cond->name.' para la producción','warning', 5000);
+                    return false;
+                }
+            }
+        } else {
+            return true;
+        }
+    }
+    function validateRecursos(){
+        if($this->proceso->recursos->count()){
+            foreach($this->proceso->recursos as $recurso){
+                if ($recurso->pivot->cant*$this->form['setted']>$recurso->cant){
+                    $this->emit('showAlert','No hay suficiente cantidad de '.$recurso->name.' para la producción','warning', 5000);
+                    return false;
+                }
+            }
+        } else {
+            return true;
+        }
     }
     function addRecursos($production, $formula){
         if ($formula->formulable_type == 'App\Models\Recurso') {
@@ -71,7 +105,6 @@ class CreateProduction extends Component
 
     function reduceFormulable($formulable, $cant)
     {
-        dd($formulable);
         $formulable->cant-=$cant;
         $formulable->save();
     }

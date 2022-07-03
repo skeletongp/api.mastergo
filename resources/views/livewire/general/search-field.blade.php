@@ -6,7 +6,7 @@
                 </x-slot> --}}
             </x-input>
             @if ($searchResults)
-                <div class="bg-white z-50  shadow-xl text-sm" x-show="open">
+                <div class="bg-white   shadow-xl text-sm" x-show="open" style="z-index: 1950">
                     @foreach ($searchResults->groupByType() as $type => $modelSearchResults)
                         @can('Ver '.$models[$type])
                         <div class="shadow-lg p-3">

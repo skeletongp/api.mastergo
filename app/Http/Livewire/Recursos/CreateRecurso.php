@@ -44,7 +44,6 @@ class CreateRecurso extends Component
         }
         $this->emit('clearSelect');
         $this->reset("form",'marca', 'brands', 'cost');
-        $this->emit('showAlert', 'Recurso registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
     }
     public function updatedType()
