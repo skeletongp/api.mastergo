@@ -53,7 +53,7 @@ class GeneralDailyTable extends LivewireDatatable
             })->label('Descripción')->headerAlignCenter()->exportCallback(function ($debe, $haber, $concepto) {
                 return $debe . "\r " . $haber . "\r " . $concepto;
             })->searchable(),
-            Column::name('ref')->label('Referencia')->headerAlignCenter()->searchable(),
+            Column::name('ref')->label('Referencia')->headerAlignCenter()->searchable()->editable(),
             Column::name('income')->callback('income', function ($debe) {
                 return " 
                 <div class='leading'>

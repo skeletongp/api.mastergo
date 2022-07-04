@@ -9,12 +9,11 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ClientInvoice extends LivewireDatatable
 {
-    public $headTitle = "Facturas del cliente";
-    public $client_id;
+    public $headTitle = "Historial de compras";
+    public $client;
     public function builder()
     {
-        $client = Client::find($this->client_id);
-
+        $client=$this->client;
         $invoices = $client->invoices()->where('status','!=','waiting')->orderBy('created_at', 'desc')->with('payment', 'client', 'seller', 'contable', 'payments');
         return $invoices;
     }
@@ -33,10 +32,7 @@ class ClientInvoice extends LivewireDatatable
                 }
             })->label(''),
             DateColumn::name('created_at')->label('Hora')->format('h:i A'),
-            Column::name('client.name')->callback(['client_id', 'id'], function ($client, $id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                return $result['client']['name'];
-            })->label('Cliente'),
+            Column::name('condition')->label('Condición'),
             Column::callback(['uid', 'id'], function ($total, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 return '$' . formatNumber($result['payment']['total']);

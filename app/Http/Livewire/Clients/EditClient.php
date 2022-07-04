@@ -19,7 +19,6 @@ class EditClient extends Component
     {
         return  [
             'client' => 'required',
-            'client.name' => 'required|string|max:50',
             'client.address' => 'required|string|max:100',
             'client.email' => 'required|string|max:100|unique:clients,email,' . $this->client['id'],
             'client.limit' => 'required|numeric',
@@ -30,21 +29,29 @@ class EditClient extends Component
     public function updateClient()
     {
         $this->validate();
+        $client=Client::find($this->client['id']);
         if ($this->photo_path) {
-            $this->client->image()->update([
+            $client->image()->updateOrCreate([
                 'path' => $this->photo_path
             ]);
         }
-        Client::find($this->client['id'])->update($this->client);
+        $client->update($this->client);
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert', 'Cliente Actualizado Exitosamente', 'success');
     }
 
     public function updatedAvatar()
     {
-        $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->avatar->storeAs('/avatars', date('Y_m_d_H_i_s') . '.' . $ext);
-        $this->photo_path = asset("storage/{$photo}");
+        
+        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        [
+            'folder' => 'carnibores/avatars',
+            'transformation' => [
+                      'width' => 250,
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+        $this->photo_path = $path;
     }
     
 }

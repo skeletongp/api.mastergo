@@ -23,7 +23,10 @@ Breadcrumbs::for('clients', function ($trail) {
     $trail->parent('home');
     $trail->push('Clientes', route('clients.index'), ['icon'=>'fas fa-users']);
 });
-
+Breadcrumbs::for('clients.show', function ($trail, $client) {
+    $trail->parent('clients');
+    $trail->push($client->name, route('clients.show', $client), ['icon'=>'fas fa-user']);
+});
 // Proveedores
 Breadcrumbs::for('providers', function ($trail) {
     $trail->parent('home');

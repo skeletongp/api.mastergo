@@ -62,7 +62,6 @@ class CreateUser extends Component
         $this->validate([
             'avatar'=>'image|max:2048'
         ]);
-        $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
         $path = cloudinary()->upload($this->avatar->getRealPath(),
         [
             'folder' => 'carnibores/avatars',

@@ -52,26 +52,22 @@
           
             <div class="     ">
                 <div class="w-full">
-                    <label for="client_avatar" class="flex items-center space-x-4 pb-4 cursor-pointer">
+                    <label for="client_avatar{{$client['id']}}" class="flex items-center space-x-4 pb-4 cursor-pointer">
                         <span class="fas fa-image text-xl"></span>
                         <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen/Avatar</span>
-                       {{--  @if ($avatar)
+                        @if ($avatar)
                             <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
                                 {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
-                        @endif --}}
+                        @endif
                         <input wire:model="avatar" type="file" class="hidden" name="avatar"
-                            id="client_avatar" accept="image/png, image/gif, image/jpeg">
+                            id="client_avatar{{$client['id']}}" accept="image/png, image/gif, image/jpeg">
                     </label>
                     <hr>
                     <x-input-error for="avatar" />
                 </div>
                 <div class="py-3 flex justify-between items-center">
                     <div>
-                      {{--   @if ($avatar)
-                            <div class="w-12 h-12 rounded-full bg-cover"
-                                style="background-image: url({{ $avatar->temporaryUrl() }})">
-                            </div>
-                        @endif --}}
+                      
                         <div class="">
                             <x-button class="space-x-2 z-50 text-sm flex items-center" wire:target="avatar"
                                 wire:loading>

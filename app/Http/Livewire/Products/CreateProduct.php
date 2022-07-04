@@ -142,8 +142,15 @@ class CreateProduct extends Component
             'photo'=>'image|max:2048'
         ]);
         $ext = pathinfo($this->photo->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->photo->storeAs('products', date('Y_m_d_H_i_s') . '.' . $ext);
-        $this->photo_path = asset("storage/{$photo}");
+        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        [
+            'folder' => 'carnibores/avatars',
+            'transformation' => [
+                      'width' => 250,
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+        $this->photo_path = $path;
     }
    
     public function remove($id)

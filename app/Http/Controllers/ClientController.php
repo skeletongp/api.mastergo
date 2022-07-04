@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -15,6 +16,12 @@ class ClientController extends Controller
     {
         return view('pages.clients.index');
     }
+    public function show($client_id)
+    {
+        $client=Client::find($client_id);
+        return view('pages.clients.show', compact('client'));
+    }
+
     public function invoices($client_id)
     {
         return view('pages.clients.client-invoice', ['client_id'=>$client_id]);

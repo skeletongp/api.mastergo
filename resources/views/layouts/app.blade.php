@@ -48,7 +48,7 @@
                     @if (isset($bread))
                         {{ $bread }}
                     @endif
-                    <div class="z-45">
+                    <div class="z-50">
                         @if (isset($rightButton))
                             {{ $rightButton }}
                         @endif

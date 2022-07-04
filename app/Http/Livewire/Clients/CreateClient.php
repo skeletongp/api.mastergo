@@ -52,7 +52,7 @@ class CreateClient extends Component
                 'path' => $this->photo_path
             ]);
         }
-        setContable($client, '101', 'debit');
+        setContable($client, '101', 'debit', $client->contact->fullname.'-'.$client->name, null, true);
         $this->emit('realoadClients');
 
         $this->reset();

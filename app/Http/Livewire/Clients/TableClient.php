@@ -13,48 +13,49 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class TableClient extends LivewireDatatable
 {
 
-    public $headTitle="Clientes Registrados";
-    public  $hideable="select";
-
+    public $headTitle = "Clientes Registrados";
+    public  $hideable = "select";
+    public $padding = "px-2";
 
     public function builder()
     {
-        $clients=auth()->user()->store->clients()->whereNull('deleted_at');
+        $clients = auth()->user()->store->clients()->whereNull('deleted_at');
         return $clients;
     }
 
     public function columns()
     {
         $clients = $this->builder()->get()->toArray();
-       
         return [
             Column::callback('id', function ($id) use ($clients) {
                 $result = arrayFind($clients, 'id', $id);
                 if ($result['image']) {
-                    return view('components.avatar', ['avatar' => $result['image']['path']]);
+                    return view('components.avatar', ['url'=>route('clients.show',$id),'avatar' => $result['image']['path']]);
                 } else {
-                    return view('components.avatar', ['avatar' => env('NO_IMAGE')]);
+                    return view('components.avatar', ['url'=>route('clients.show',$id),'avatar' => env('NO_IMAGE')]);
                 }
-            })->defaultSort('asc'),
-            Column::callback("name", function($name){
-                return ellipsis($name,25);
+            }),
+            Column::callback(["name", "id"], function ($name, $id) use ($clients) {
+                $result = arrayFind($clients, 'id', $id);
+                if ($name) {
+                    return ellipsis($name, 25);
+                }
+                return ellipsis($result['contact']['fullname'], 25);
             })->searchable()->label('Nombre'),
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
-            Column::callback(['limit'], function($limit){
-                return '$'. formatNumber($limit);
+            Column::callback(['limit'], function ($limit) {
+                return '$' . formatNumber($limit);
             })->label('Crédito')->searchable()->headerAlignCenter(),
-            Column::callback(['updated_at','id'], function($updated, $id) use ($clients){
-                $client=arrayFind($clients, 'id', $id);
-                return  view('pages.clients.link-to-invoice', ['client_id' => $client['id'], 'debt' =>'$'. formatNumber($client['debt']), 'key' => uniqid()]);
+            Column::callback(['updated_at', 'id'], function ($updated, $id) use ($clients) {
+                $client = arrayFind($clients, 'id', $id);
+                return  '$' . formatNumber($client['debt']);
             })->label('Deuda')->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
-            Column::name('RNC')->label('No. Documento')->searchable()->headerAlignCenter()->hide(),
-            Column::name('created_at')->callback(['created_at','id'], function($created, $id) use ($clients) {
-                $client=arrayFind($clients, 'id', $id);
+            Column::name('RNC')->label('No. Documento')->searchable()->headerAlignCenter(),
+            Column::name('created_at')->callback(['created_at', 'id'], function ($created, $id) use ($clients) {
+                $client = arrayFind($clients, 'id', $id);
                 return view('pages.clients.actions', compact('client'));
             })->label('Acciones')->headerAlignCenter(),
         ];
     }
-  
-    
 }

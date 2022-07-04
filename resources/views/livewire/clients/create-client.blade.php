@@ -1,5 +1,5 @@
 <div>
-    <x-modal  :fitV='false' maxWidth="max-w-4xl">
+    <x-modal :fitV='false' maxWidth="max-w-4xl">
         <x-slot name="title">
             <div class="flex justify-between items-center">
                 <span> Nuevo Cliente</span>
@@ -31,13 +31,13 @@
                                     wire:model.defer="form.email" />
                                 <x-input-error for="form.email" />
                             </div>
-                        </div>   
+                        </div>
                         <div class="    pb-6 ">
                             <div class="w-full overflow-hidden">
                                 <x-base-input label="Dirección" id="client.address" wire:model.defer="form.address" />
                                 <x-input-error for="form.address" />
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="w-full overflow-hidden">
 
@@ -51,13 +51,20 @@
                                 </x-base-select>
                                 <x-input-error for="cltDocType">Indique el tipo de documento</x-input-error>
                             </div>
-                            <div class="w-full overflow-hidden">
-                                <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de documento"
-                                    id="client_RNC" type="text" wire:model.defer="form.rnc"
+                            <div class="w-full overflow-hidden {{ $cltDocType != 'RNC' ? 'hidden' : '' }}">
+                                <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de RNC" id="client_RNC"
+                                    type="text" wire:model.defer="form.rnc"
                                     wire:keydown.enter.prevent="loadFromRNC" />
                                 <x-input-error for="form.rnc" />
-                            </div>
 
+                            </div>
+                            <div class="w-full overflow-hidden {{ $cltDocType != 'Cédula' ? 'hidden' : '' }}">
+                                <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de Cédula"
+                                    id="client_Cedula" type="text" wire:model.defer="form.rnc"
+                                    wire:keydown.enter.prevent="loadFromRNC" />
+                                <x-input-error for="form.rnc" />
+
+                            </div>
                         </div>
                         <div class="  pb-6 flex items-start space-y-0 space-x-3">
                             <div class="w-full overflow-hidden">
@@ -80,8 +87,7 @@
                             <div class="w-full overflow-hidden">
                                 <label for="client_avatar" class="flex items-center space-x-4 pb-6 cursor-pointer">
                                     <span class="fas fa-image text-xl"></span>
-                                    <span
-                                        class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Logo/Avatar</span>
+                                    <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Logo/Avatar</span>
                                     @if ($avatar)
                                         <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
                                             {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
@@ -93,7 +99,7 @@
                                 <x-input-error for="avatar" />
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
                 <h1 class="text-center uppercase py-4 font-bold text-xl">Persona de Contacto</h1>
@@ -107,9 +113,10 @@
                             <x-base-input label="Apellidos" id="client.lastname" wire:model.defer="lastname" />
                             <x-input-error for="lastname" />
                         </div>
-                   
+
                         <div class="w-full overflow-hidden">
-                            <x-base-input type="tel" label="Nº. Celular" id="client.cellphone" wire:model.defer="cellphone" />
+                            <x-base-input type="tel" label="Nº. Celular" id="client.cellphone"
+                                wire:model.defer="cellphone" />
                             <x-input-error for="cellphone" />
                         </div>
 
@@ -125,24 +132,14 @@
 </div>
 @push('js')
     <script>
-        $('#cltDocType').on('change', function() {
-            if ($(this).val() === 'RNC') {
-                $('#client_RNC').formatPhoneNumber({
-                    format: '###-#####-#'
-                })
-              
-
-            } else if ($(this).val() === 'Cédula') {
-                $('#client_RNC').formatPhoneNumber({
-                    format: '###-#######-#'
-                })
-              
-            }
-       
-                $('#client_RNC').val('');
-                $('#client_RNC').focus();
-            
-
+        $('#cltDocType').on('change', function () {
+            $('#client_RNC').val(' ');
+        });
+        $('#client_RNC').formatPhoneNumber({
+            format: '###-#####-#'
+        })
+        $('#client_Cedula').formatPhoneNumber({
+            format: '###-#######-#'
         })
     </script>
 @endpush

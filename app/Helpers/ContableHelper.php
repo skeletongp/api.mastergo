@@ -6,8 +6,7 @@ use App\Models\Payment;
 use App\Models\Place;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 function setContable($model, String $code, String $origin, $name = null, $place_id = null, $borrable=NULL)
 {
@@ -30,9 +29,15 @@ function setContable($model, String $code, String $origin, $name = null, $place_
     $exist = $cMain->counts()->where('name', $name)->where('place_id', $place_id)->first();
     if (!$exist) {
         $place=Place::find($place_id);
-        $cant = Count::where('code','like',$code.'%')->where('place_id', $place_id)->count();
+        $bCode = Count::where('code','like',$code.'%')->where('place_id', $place_id)
+        ->orderBy('code','desc')->first();
+        if($bCode){
+            $bCode=$bCode->code;
+        } else{
+            $bCode='-0';
+        }
         $count = $cMain->counts()->create([
-            'code' => $code . '-' . str_pad($cant + 1, 2, '0', STR_PAD_LEFT),
+            'code' => $code . '-' . str_pad(intval(Str::after($bCode, '-')) + 1, 2, '0', STR_PAD_LEFT),
             'name' => $name,
             'place_id' => $place_id ?: 1,
             'origin' => $origin,

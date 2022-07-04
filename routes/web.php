@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ClientController::class)->group(function () {
             Route::get('/clients', 'index')->name('clients.index');
             Route::get('/clients/invoices/{client_id}', 'invoices')->name('clients.invoices');
+            Route::get('/clients/{client_id}', 'show')->name('clients.show');
         });
         Route::controller(ProviderController::class)->group(function () {
             Route::get('providers', 'index')->name('providers.index');
