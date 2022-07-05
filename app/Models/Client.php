@@ -45,11 +45,10 @@ class Client extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('clients.index', $this->id);
-
+        $url = route('clients.show', $this->id);
         return new SearchResult(
             $this,
-            $this->name,
+            $this->fullname,
             $url
         );
     }
