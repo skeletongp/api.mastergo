@@ -1,3 +1,3 @@
 <div>
-  @livewire('recursos.recurso-brand', ['recurso' => $recurso], key(uniqid()))
+  @livewire('recursos.provision-recurso', ['recurso' => $recurso], key(uniqid()))
 </div>

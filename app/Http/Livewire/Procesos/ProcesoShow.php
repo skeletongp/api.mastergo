@@ -28,7 +28,7 @@ class ProcesoShow extends Component
     public function updatedStatus()
     {
        
-        if ($this->statusTitle == 'En Proceso') {
+        if ($this->status == 'Completado') {
             $this->statusTitle = 'Completados';
         } else {
             $this->statusTitle = 'En Proceso';

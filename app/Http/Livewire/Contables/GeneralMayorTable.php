@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Contables;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -9,13 +10,15 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 
 class GeneralMayorTable extends LivewireDatatable
 {
-    public $perPage=8;
+    public $perPage=10;
+    public $padding='px-2';
+
     public $headTitle="Balanza de comprobación";
     public function builder()
     {
         $counts=auth()->user()->place->counts()->orderBy('code')->orderBy('origin')->orderBy('balance','desc')
         ->with('haber','debe')
-        ->select(DB::raw(('name, code, id' )))
+        ->select(DB::raw(('name, code, id, balance,balance_real' )))
         ->groupBy('counts.id')
         ;
         return $counts;
@@ -25,9 +28,8 @@ class GeneralMayorTable extends LivewireDatatable
     {
         $counts=$this->builder()->get()->toArray();
         return [
-           // Column::index($this),
-            Column::callback(['name','code'], function($name, $code) use ($counts){
-                return $code.'- '.$name;
+            Column::callback(['name','code','currency'], function($name, $code, $currency) use ($counts){
+                return $code.'- '.$name.'- '.$currency;
             })->label('Cuenta')->searchable(),
             NumberColumn::callback('id', function($id) use ($counts){
                 $count=arrayFind($counts, 'id',$id);
@@ -37,9 +39,12 @@ class GeneralMayorTable extends LivewireDatatable
                 $count=arrayFind($counts, 'id',$id);
                 return '$'.formatNumber(array_sum(array_column($count['haber'],'outcome')));
             })->label('Crédito')->enableSummary()->contentAlignRight(),
-            Column::callback('balance', function($balance){
+            Column::callback(['balance'], function($balance){
                 return "<span class='font-bold'>".'$'.formatNumber($balance)."</span>";
-            })->label('Balance')->contentAlignRight(),
+            })->label('Balance (RD$)')->contentAlignRight(),
+            Column::callback(['balance_real'], function($balance_real){
+                return "<i class='font-bold'>".'$'.formatNumber($balance_real)."</i>";
+            })->label('Balance Real')->contentAlignRight(),
         ];
     }
     public function summarize($column)

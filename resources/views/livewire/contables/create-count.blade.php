@@ -17,7 +17,7 @@
                                         <option value="{{ $class }}">{{ $name }}</option>
                                     @endforeach
                                     </x-select>
-                                    <x-input-error for="model"></x-input-error>
+                                <x-input-error for="model"></x-input-error>
                             </div>
                         </div>
                     @endif

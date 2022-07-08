@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('recursos', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uid');
+            $table->string('code');
             $table->string('name')->comment('Identificador en texto');
             $table->foreignId('store_id')->comment('Tienda a la que pertenece el recurso')->constrained()->on('moso_master.stores');
             $table->foreignId(('place_id'))->comment('Sucursal a la que pertenedce el material')->constrained();

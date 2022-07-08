@@ -30,7 +30,7 @@ class CreateCheque extends Component
         $providers=$store->providers()->select(DB::raw("fullname as name,CONCAT(id,'|','App\\\Models\\\Provider') AS id"))->pluck('name','id');
         $users=$store->users()->select(DB::raw("fullname as name, CONCAT(users.id,'|','App\\\Models\\\User') AS id"))->pluck('name','id');
         $this->persons=$clients->merge($providers)->merge($users);
-        $this->banks = $store->banks()->select(DB::raw("CONCAT(bank_number,' - ',bank_name) AS bank_number, id"))->pluck('bank_number', 'id');
+        $this->banks = $store->banks()->select(DB::raw("CONCAT(bank_name,' - ',currency) AS bank, id"))->pluck('bank', 'id');
     }
 
     public function updatedPerson()

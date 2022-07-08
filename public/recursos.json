@@ -1,0 +1,128 @@
+[
+    {
+        "code": "001",
+        "name": "Pierna Importada",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "002",
+        "name": "Pollo Fresco",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "003",
+        "name": "Masa de cerdo",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "004",
+        "name": "BM de Res",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "005",
+        "name": "Grasa de Cerdo",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "006",
+        "name": "Trimen de Res",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "007",
+        "name": "Papada",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "008",
+        "name": "Pulpa de Pollo",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "009",
+        "name": "Tripas",
+        "brand_name": "Kplus 70",
+        "cost": "0"
+    },
+    {
+        "code": "010",
+        "name": "Tripas",
+        "brand_name": "85 FR (Salami)",
+        "cost": "0"
+    },
+    {
+        "code": "011",
+        "name": "Tripas",
+        "brand_name": "Colágeno Advanced",
+        "cost": "0"
+    },
+    {
+        "code": "012",
+        "name": "Tripas",
+        "brand_name": "21x40",
+        "cost": "0"
+    },
+    {
+        "code": "013",
+        "name": "Pierna",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "014",
+        "name": "Trimen de Cerdo",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "015",
+        "name": "Paleta",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "016",
+        "name": "Tripas",
+        "brand_name": "90FR 6G",
+        "cost": "0"
+    },
+    {
+        "code": "017",
+        "name": "Tripas",
+        "brand_name": "Natural de Cerdo",
+        "cost": "0"
+    },
+    {
+        "code": "018",
+        "name": "Caldo de Pollo",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "019",
+        "name": "Ground Meat",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "020",
+        "name": "Grasa de Pollo",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "021",
+        "name": "Salmuera",
+        "brand_name": "General",
+        "cost": "0"
+    }
+]

@@ -28,13 +28,14 @@ class TableRecurso extends LivewireDatatable
 
         $recursos = $this->builder()->get()->toArray();
         return [
-            Column::callback(['id', 'uid'], function ($id) use ($recursos) {
+            Column::callback(['id', 'code'], function ($id) use ($recursos) {
                 $result = arrayFind($recursos, 'id', $id);
                 if (array_key_exists('brands', $result)) {
                     return view('components.view', ['url' => route('recursos.show', $id)]);
                 }
                 return formatNumber($result['stock']);
             })->label('Ver'),
+            Column::name('code')->label('Cód.')->searchable(),
             Column::name('name')->label('Nombre')->searchable(),
             Column::callback(['created_at', 'id'], function ($created, $id) use ($recursos) {
                 $result = arrayFind($recursos, 'id', $id);

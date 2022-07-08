@@ -24,7 +24,7 @@ class UnitTable extends LivewireDatatable
     public function delete($id)
     {
         $unit=Unit::where('id', $id)->firstOrFail();
-        if ($unit->symbol!=='UND') {
+        if ($unit->id!==1) {
             $unit->delete();
             $this->emit('refreshLivewireDatatable');
         } else {

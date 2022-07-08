@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\Place;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 function setContable($model, String $code, String $origin, $name = null, $place_id = null, $borrable=NULL)
@@ -15,6 +16,9 @@ function setContable($model, String $code, String $origin, $name = null, $place_
     }
     if ($model->fullname) {
         $model->name = $model->fullname;
+    }
+    if ($model->bank_name) {
+        $model->name = $model->bank_name;
     }
     if (!$name) {
         $name = $model->name;
@@ -43,6 +47,7 @@ function setContable($model, String $code, String $origin, $name = null, $place_
             'origin' => $origin,
             'type'=>$type,
             'borrable'=>$borrable,
+            'currency'=>$model->currency?:'DOP',
             'store_id'=>$place->store->id
         ]);
         $model->contable()->save($count);
@@ -50,21 +55,30 @@ function setContable($model, String $code, String $origin, $name = null, $place_
 }
 function setTransaction($concept, $ref, $amount, $debitable, $creditable, $otherPermission=null)
 {
+    //dd($concept, $ref, $amount, $debitable, $creditable, $otherPermission);
     $canCreate=auth()->user()->hasPermissionTo('Registrar Asientos');
+    $income=$amount;
+    $outcome=$amount;
+    if ($debitable && $debitable->currency && $debitable->currency != 'DOP') {
+        $outcome=$amount*Cache::get('currency');
+        $amount=$amount*Cache::get('currency');
+    } else if($creditable && $creditable->currency && $creditable->currency != 'DOP'){
+        $income=$amount*Cache::get('currency');
+        $amount=$amount*Cache::get('currency');
+    }
     $canOther= $otherPermission?auth()->user()->hasPermissionTo($otherPermission):false;
     if ($amount > 0 && ($canCreate || $canOther)) {
         $trans = Transaction::create([
             'concepto' => $concept,
             'ref' => $ref,
             'day' => date('Y-m-d'),
-            'income' => $amount,
-            'outcome' => $amount,
+            'income' => $income,
+            'outcome' => $outcome,
             'place_id' => auth()->user()->place->id,
             'debitable_id' => $debitable->id,
             'creditable_id' => $creditable->id,
         ]);
         if ($debitable->origin == "debit") {
-            $bal=$debitable;
             $debitable->balance = $debitable->balance + $amount;
             $debitable->save();
 
@@ -79,6 +93,8 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
             $creditable->balance = $creditable->balance - $amount;
             $creditable->save();
         }
+        $debitable->touch();
+        $creditable->touch();
     }
 }
 function setOutcome($amount, $concepto, $ref, $outcomeable = null, $ncf = null)

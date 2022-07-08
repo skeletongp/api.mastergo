@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('condiments', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uid');
+            $table->string('code');
             $table->string('name')->comment('Identificador en texto');
             $table->decimal('cost',14,4)->comment('Costo general del condimiento');
             $table->decimal('cant',14,4)->comment('Costo general del condimiento')->default(0);

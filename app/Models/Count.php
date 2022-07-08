@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class Count extends Model
 {
@@ -19,9 +20,18 @@ protected $connection="mysql";
         'credit'=>'Acreedor',
         'debit'=>'Deudor'
     ];
-   
 
-  
+    public static function boot(){
+        parent::boot();
+        static::updating(function($model){
+            if($model->currency=='USD'){
+                $model->balance_real=$model->balance/Cache::get('currency');
+            } else{
+                $model->balance_real=$model->balance;
+            }
+        });
+    }
+   
     public function contable()
     {
         return $this->morphTo('contable');
@@ -34,8 +44,14 @@ protected $connection="mysql";
     {
         return $this->hasMany(Transaction::class,  'debitable_id');
     }
-    public function scopeCant(Builder $query)
-    {
-        return $query->where('place_id',session('place_id')?:1)->count();
-    }
+   
+   public function getBalanceAttribute($value)
+   {
+       if($this->currency=='USD'){
+        return 33;
+           return $this->balance_real*Cache::get('currency');
+        }
+        return $value;
+   }
+
 }

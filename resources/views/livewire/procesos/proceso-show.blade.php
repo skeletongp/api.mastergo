@@ -4,7 +4,7 @@
             @can('Ver Producciones')
                 @can('Crear Producciones')
                     <div class="flex justify-between items-center">
-                        <x-toggle id="status" wire:model='status' value='completed' label='{{ $statusTitle }}'></x-toggle>
+                        <x-toggle id="status" wire:model='status' value='Completado' label='{{ $statusTitle }}'></x-toggle>
                         @livewire('productions.create-production', ['proceso' => $proceso], key($proceso->id))
                     </div>
                 @endcan

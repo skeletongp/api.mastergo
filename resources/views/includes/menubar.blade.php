@@ -24,8 +24,8 @@
                                     <livewire:general.toggle-place />
                                 </div>
                             @endif
-                            <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
-                                activeRoute="prueba.*" scope="" />
+                            {{-- <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
+                                activeRoute="prueba.*" scope="" /> --}}
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
@@ -116,6 +116,10 @@
                             @can('Ver Transacciones')
                                 <x-side-link routeName='cheques.index' icon='far w-10 text-center fa-money-check-alt fa-lg'
                                     text='Cheques' activeRoute="cheques.*" scope="Gastos" />
+                            @endcan
+                            @can('Ver Transacciones')
+                                <x-side-link routeName='finances.index' icon='far w-10 text-center fa-hand-holding-usd fa-lg'
+                                    text='Cuentas' activeRoute="finances.*" scope="Ingresos" />
                             @endcan
 
                         </x-dropitem>

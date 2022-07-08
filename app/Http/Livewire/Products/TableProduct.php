@@ -14,6 +14,7 @@ class TableProduct extends LivewireDatatable
 {
     use AuthorizesRequests;
     public $padding = 'px-2 ';
+    public $hideable='select';
     public function builder()
     {
         $products = auth()->user()->place->products()->orderBy('code')->whereNull('deleted_at');
@@ -24,7 +25,7 @@ class TableProduct extends LivewireDatatable
     {
         $products = $this->builder()->get()->toArray();
         return [
-            Column::callback(['id', 'uid'], function ($id) use ($products) {
+            Column::callback(['id', 'deleted_at'], function ($id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
                 return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $result['photo']]);
             })->label('Ver')->unsortable(),
@@ -32,7 +33,7 @@ class TableProduct extends LivewireDatatable
             Column::name('name')->label('Nombre')->searchable(),
             Column::callback(['type'], function ($type) {
                 return $type;
-            })->label('Tipo')->searchable(),
+            })->label('Tipo')->filterable(['Producto','Servicio'])->hide(),
             Column::callback(['created_at', 'id'], function ($created, $id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
                 $data = '';
@@ -44,7 +45,20 @@ class TableProduct extends LivewireDatatable
                     $data = 'N/D';
                 }
                 return $data;
+              
             })->label('Stock'),
+            Column::callback(['store_id', 'id'], function ($created, $id) use ($products) {
+                $result = arrayFind($products, 'id', $id);
+                $data = '';
+                if ($result['type'] == 'Producto') {
+                    foreach ($result['units'] as $unit) {
+                        $data .= $unit['symbol'] . ' => ' .'$'. formatNumber($unit['pivot']['price_menor']) . '<br>';
+                    }
+                } else {
+                    $data = 'N/D';
+                }
+                return $data;
+            })->label('Precios'),
             Column::callback(['id', 'code'], function ($id) {
                 if (auth()->user()->hasPermissionTo('Editar Productos')) {
                     return view('datatables::link', [

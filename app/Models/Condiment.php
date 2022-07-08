@@ -14,6 +14,17 @@ class Condiment extends Model
 
     protected $connection = "mysql";
 
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+           
+                $store = Store::find(env('STORE_ID'));
+                $num = $store->condiments()->withTrashed()->count() + 1;
+                $code = str_pad($num, 3, '0', STR_PAD_LEFT);
+                $model->code = $code;
+        });
+    }
     public function unit()
     {
         return $this->belongsTo(Unit::class);

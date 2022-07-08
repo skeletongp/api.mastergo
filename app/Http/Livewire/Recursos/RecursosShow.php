@@ -7,8 +7,12 @@ use Livewire\Component;
 
 class RecursosShow extends Component
 {
-    public $componentName="recursos.recurso-detail";
+    public $componentName="recursos.recursos-detail";
     public Recurso $recurso;
+
+    protected $queryString = [
+        'componentName'
+    ];
     public function render()
     {
         return view('livewire.recursos.recursos-show');

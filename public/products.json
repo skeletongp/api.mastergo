@@ -1,0 +1,442 @@
+[
+    {
+        "code": "001",
+        "name": "Chuleta Ahumada",
+        "price_mayor": "0",
+        "price_menor": "80",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "002",
+        "name": "Costilla Ahumada",
+        "price_mayor": "0",
+        "price_menor": "86",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "003",
+        "name": "Carnita Ahumada",
+        "price_mayor": "0",
+        "price_menor": "80",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "004",
+        "name": "Pollo Ahumado",
+        "price_mayor": "0",
+        "price_menor": "85",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "005",
+        "name": "Chuleta Ahumada S/H",
+        "price_mayor": "0",
+        "price_menor": "70",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "006",
+        "name": "Longaniza ",
+        "price_mayor": "0",
+        "price_menor": "55",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "007",
+        "name": "Longaniza Ranchera",
+        "price_mayor": "0",
+        "price_menor": "53",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "008",
+        "name": "Longaniza Fina Blanca Sup.",
+        "price_mayor": "0",
+        "price_menor": "65",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "009",
+        "name": "Jamón Picnic",
+        "price_mayor": "0",
+        "price_menor": "70",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "010",
+        "name": "Filete",
+        "price_mayor": "0",
+        "price_menor": "110",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "011",
+        "name": "Pulpa de Pollo",
+        "price_mayor": "0",
+        "price_menor": "35",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "012",
+        "name": "Masa de cerdo",
+        "price_mayor": "0",
+        "price_menor": "0",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "013",
+        "name": "Carnitas de Cuello Ahumada",
+        "price_mayor": "0",
+        "price_menor": "90",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "014",
+        "name": "Pierna",
+        "price_mayor": "0",
+        "price_menor": "75",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "015",
+        "name": "Paleta",
+        "price_mayor": "0",
+        "price_menor": "55",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "016",
+        "name": "Ground Meat",
+        "price_mayor": "0",
+        "price_menor": "0",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "017",
+        "name": "Salchicón",
+        "price_mayor": "0",
+        "price_menor": "0",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "018",
+        "name": "La Picante",
+        "price_mayor": "0",
+        "price_menor": "70",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "019",
+        "name": "MDM Pollo",
+        "price_mayor": "0",
+        "price_menor": "35",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "020",
+        "name": "Salami Extra Ahumado",
+        "price_mayor": "0",
+        "price_menor": "60",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "021",
+        "name": "Chuleta Importada ",
+        "price_mayor": "0",
+        "price_menor": "82",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "022",
+        "name": "Ranchera Fina Detalle",
+        "price_mayor": "0",
+        "price_menor": "0",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "023",
+        "name": "Chuleta en Malla",
+        "price_mayor": "0",
+        "price_menor": "100",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "024",
+        "name": "Filete Importado",
+        "price_mayor": "0",
+        "price_menor": "100",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "025",
+        "name": "Salami Cárnico",
+        "price_mayor": "0",
+        "price_menor": "85",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "026",
+        "name": "Salami Argentino",
+        "price_mayor": "0",
+        "price_menor": "70",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "027",
+        "name": "Salami La Cazadora ",
+        "price_mayor": "0",
+        "price_menor": "54",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "028",
+        "name": "Salami Embuchado",
+        "price_mayor": "0",
+        "price_menor": "68",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "029",
+        "name": "Salami Súper Especial",
+        "price_mayor": "0",
+        "price_menor": "75",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "030",
+        "name": "Salami de Pollo",
+        "price_mayor": "0",
+        "price_menor": "0",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "031",
+        "name": "Salami Ahumado",
+        "price_mayor": "0",
+        "price_menor": "47",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "032",
+        "name": "Salami Don Torito",
+        "price_mayor": "0",
+        "price_menor": "57",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "033",
+        "name": "Salami Genoa",
+        "price_mayor": "0",
+        "price_menor": "39",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "034",
+        "name": "Jamón Picnic Don Sandwich",
+        "price_mayor": "0",
+        "price_menor": "80",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "035",
+        "name": "Jamoneta Doña Vaquita",
+        "price_mayor": "0",
+        "price_menor": "66",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "036",
+        "name": "Jamón Bolo Feria",
+        "price_mayor": "0",
+        "price_menor": "56",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "037",
+        "name": "Jamón Picnic 4x4",
+        "price_mayor": "0",
+        "price_menor": "52",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "038",
+        "name": "Huesito Romito",
+        "price_mayor": "0",
+        "price_menor": "35",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "039",
+        "name": "Longaniza Ranchera Fina",
+        "price_mayor": "0",
+        "price_menor": "55",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "040",
+        "name": "Recorte de Pechuga",
+        "price_mayor": "0",
+        "price_menor": "83",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "041",
+        "name": "Recorde de Pechuga Mountaire",
+        "price_mayor": "0",
+        "price_menor": "80",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "042",
+        "name": "Súper Especial Induveca",
+        "price_mayor": "0",
+        "price_menor": "375",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "043",
+        "name": "Recrde de Pechuga 55047 Sanderson",
+        "price_mayor": "0",
+        "price_menor": "90",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "044",
+        "name": "Salchica Desayuno Su Carne",
+        "price_mayor": "0",
+        "price_menor": "105",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "045",
+        "name": "Súper Especial Su Carne",
+        "price_mayor": "0",
+        "price_menor": "90",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "046",
+        "name": "Cuerito Ahumado",
+        "price_mayor": "0",
+        "price_menor": "50",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "047",
+        "name": "Lomo Fresco Importado",
+        "price_mayor": "0",
+        "price_menor": "100",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "048",
+        "name": "Longaniza Casera Artesanal",
+        "price_mayor": "0",
+        "price_menor": "85",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "049",
+        "name": "Chorizo Cocido de la Casa",
+        "price_mayor": "0",
+        "price_menor": "95",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "050",
+        "name": "Jamoneta de Pollo Nueva Era",
+        "price_mayor": "0",
+        "price_menor": "80",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "051",
+        "name": "Chuleta Fresca Importada",
+        "price_mayor": "0",
+        "price_menor": "80",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "052",
+        "name": "Barrigada",
+        "price_mayor": "0",
+        "price_menor": "120",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "053",
+        "name": "Patica de Cerdo Importada",
+        "price_mayor": "0",
+        "price_menor": "35",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "054",
+        "name": "Patica Detalle / Marcada",
+        "price_mayor": "0",
+        "price_menor": "37",
+        "min": "80",
+        "cost": "0"
+    },
+    {
+        "code": "055",
+        "name": "Cabeza Importada Lynch 3 Pieza",
+        "price_mayor": "0",
+        "price_menor": "35",
+        "min": "80",
+        "cost": "0"
+    }
+]

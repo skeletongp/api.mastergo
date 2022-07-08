@@ -203,15 +203,11 @@
 
                 </tr>
             @empty
-            <tr>
-                <td colspan="5">
-                    <div
-                    style="width: 100%; text-align:center; font-size:medium; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
-                    Sin registros
-                </div>
-                </td>
-            </tr>
-                
+                <tr>
+                    <td colspan="5">
+                        
+                    </td>
+                </tr>
             @endforelse
 
             <tr>
@@ -244,25 +240,22 @@
 
                 </tr>
             @empty
-            <tr>
-                <td colspan="5">
-                    <div
-                    style="width: 100%; text-align:center; font-size:medium; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
-                    Sin registros
-                </div>
-                </td>
-            </tr>
+                <tr>
+                    <td colspan="5">
+                      
+                    </td>
+                </tr>
             @endforelse
 
         </tbody>
     </table>
     <hr>
     <script type="text/php">if ( isset($pdf) ) {
-                        $font = $fontMetrics->get_font("helvarialetica", "bold");
-                        $pdf->page_text(400, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
-                        $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
-                        $pdf->page_text(18, 740, "Reporte de cierre de caja diario", $font, 10, array(0,0,0));
-                    }</script>
+                            $font = $fontMetrics->get_font("helvarialetica", "bold");
+                            $pdf->page_text(400, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
+                            $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
+                            $pdf->page_text(18, 740, "Reporte de cierre de caja diario", $font, 10, array(0,0,0));
+                        }</script>
     @if ($payments->count() > (18 * $payments->count()) / 2 + 2)
         <div style="page-break-after: always"></div>
     @endif
@@ -275,21 +268,21 @@
                 ${{ formatNumber($cuadre->efectivo + $cuadre->transferencia + $cuadre->tarjeta) }}
             </td>
         </tr>
-        @foreach ($efectivos as $name=> $balance)
-        <tr style="">
-            <td colspan="2" style="padding-left: 15px">
-              {{str_replace('Efectivo en', '', $name)}}
-            </td>
-            <td colspan="2" style="font-size: small">
-                ${{ formatNumber($balance) }}
-            </td>
-        </tr>
+        @foreach ($efectivos as $name => $balance)
+            <tr style="">
+                <td colspan="4" style="padding-left: 15px">
+                    {{ str_replace('Efectivo en', '', $name) }}
+                </td>
+                <td colspan="2" style="font-size: small">
+                    ${{ formatNumber($balance) }}
+                </td>
+            </tr>
         @endforeach
-        
-       
+
+
 
         <tr style="">
-            <td colspan="2" style="font-weight: bold; padding-top:10px">
+            <td colspan="4" style="font-weight: bold; padding-top:10px">
                 - Devolución...
             </td>
             <td colspan="2" style="font-weight: bold; padding-top:10px">
@@ -297,7 +290,7 @@
             </td>
         </tr>
         <tr style="font-weight:bold">
-            <td colspan="2" style="padding-top:18px">
+            <td colspan="4" style="padding-top:18px">
                 - Egresos...
             </td>
             <td colspan="2" style="padding-top:18px">
@@ -305,7 +298,7 @@
             </td>
         </tr>
         <tr style="">
-            <td colspan="2" style="padding-left: 15px">
+            <td colspan="4" style="padding-left: 15px">
                 Efectivo...
             </td>
             <td colspan="2" style="font-size: small">
@@ -313,7 +306,7 @@
             </td>
         </tr>
         <tr style="">
-            <td colspan="2" style="padding-left: 15px">
+            <td colspan="4" style="padding-left: 15px">
                 Bancos...
             </td>
             <td colspan="2" style="font-size: small">
@@ -321,7 +314,7 @@
             </td>
         </tr>
         <tr style="">
-            <td colspan="2" style="padding-left: 15px">
+            <td colspan="4" style="padding-left: 15px">
                 Otros...
             </td>
             <td colspan="2" style="font-size: small">
@@ -329,12 +322,12 @@
             </td>
         </tr>
         <tr>
-            <td colspan="4">
+            <td colspan="6">
                 <hr>
             </td>
         </tr>
         <tr style="font-weight: bold">
-            <td colspan="2" style="padding-top:25px">
+            <td colspan="4" style="padding-top:25px">
                 SALDO INICIAL =>
             </td>
             <td colspan="2" style="padding-top:25px">
@@ -342,7 +335,7 @@
             </td>
         </tr>
         <tr style="font-weight: bold">
-            <td colspan="2" style="padding-top:10px">
+            <td colspan="4" style="padding-top:10px">
                 SALDO FINAL =>
             </td>
             <td colspan="2" style="padding-top:10px">
@@ -392,7 +385,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="4">
+            <td colspan="6">
                 <hr>
             </td>
         </tr>

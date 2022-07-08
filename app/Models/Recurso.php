@@ -30,9 +30,13 @@ class Recurso extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uid = (string) Uuid::uuid4();
+            $store=Store::find($model->store_id);
+            $num=$store->recursos()->count()+1;
+            $code=str_pad($num,3,'0', STR_PAD_LEFT);
+            $model->code=$code;
         });
     }
+   
 
     public function unit()
     {
@@ -53,6 +57,10 @@ class Recurso extends Model
     public function provisions()
     {
         return $this->morphMany(Provision::class, 'provisionable');
+    }
+    public function contable()
+    {
+        return $this->morphMany(Count::class, 'contable');
     }
     public function formulas()
     {

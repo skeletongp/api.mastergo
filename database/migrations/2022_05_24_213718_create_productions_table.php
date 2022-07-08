@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->decimal('setted', 14,4)->comment('Cantidad de prducto que se invierte');
+            $table->decimal('cost_recursos', 14,4)->comment('Costo de los recursos');
+            $table->decimal('cost_condiment', 14,4)->comment('Costo de los condimentos');
             $table->decimal('getted', 14,4)->comment('Cantidad de producto que se obtuvo')->default(0);
             $table->enum('status',['Creado','Iniciado','Completado']);
             $table->foreignId('proceso_id')->comment('Proceso vinculado')->constrained();

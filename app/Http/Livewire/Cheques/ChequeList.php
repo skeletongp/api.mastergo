@@ -2,13 +2,15 @@
 
 namespace App\Http\Livewire\Cheques;
 
+use Illuminate\Support\Facades\DB;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ChequeList extends LivewireDatatable
 {
-    public $padding = "px-2";
+    public $padding = "px-2 whitespace-nowrap";
     public $headTitle = "Lista de Cheques";
+    public $hideable = 'select';
     public function builder()
     {
         $place = auth()->user()->place;
@@ -19,6 +21,14 @@ class ChequeList extends LivewireDatatable
     public function columns()
     {
         $cheques = $this->builder()->get()->toArray();
+        $store = auth()->user()->store;
+        $banks = $store->banks()->selectRaw("CONCAT(bank_name,' - ',currency) as name, id")->pluck('name', 'id')->toArray();
+        foreach ($banks as $key => $value) {
+            $banks[$key] = [
+                'name' => $value,
+                'id' => $key
+            ];
+        }
         return [
             Column::name('reference')->label('Referencia'),
             Column::callback('amount', function ($amount) {
@@ -31,20 +41,20 @@ class ChequeList extends LivewireDatatable
                     return $result['user']['fullname'];
                 }
                 return $this->getChequetableName($result['chequeable']);
-            })->label('Emitido Por'),
+            })->label('Emisor'),
             Column::callback(['chequeable_id', 'id'], function ($cheque, $id) use ($cheques) {
                 $result = arrayFind($cheques, 'id', $id);
                 if ($result['type'] == 'Recibido') {
-                    return $result['user']['fullname'];
+                    return $result['bank']['bank_name'];
                 }
                 return $this->getChequetableName($result['chequeable']);
             })->label('Destino'),
-            
+
 
             Column::callback(['bank_id', 'id'], function ($bank_id, $id) use ($cheques) {
                 $result = arrayFind($cheques, 'id', $id);
-                return $result['bank']['bank_name'] . '<br>' . $result['bank']['bank_number'];
-            })->label('Banco'),
+                return ellipsis($result['bank']['bank_name'], 20);
+            })->label('Banco')->filterable($banks),
             Column::name('type')->label('Tipo')->filterable([
                 'Emitido', 'Recibido',
             ]),

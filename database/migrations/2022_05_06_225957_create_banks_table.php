@@ -18,7 +18,8 @@ return new class extends Migration
             $table->id();
             $table->string('bank_name')->comment('Banco en que está la cuenta');
             $table->string('bank_number')->comment('Número de la cuenta');
-            $table->foreignIdFor(User::class,'titular_id')->references('id')->on('users')->comment('Usuario titular de la cuenta')->constrained()->on('moso_master.users');
+            $table->string('titular')->nullable()->comment('Titular de la cuenta');
+            $table->enum('currency',['DOP','USD'])->default('DOP')->comment('Moneda en que se encuentra la cuenta');
             $table->foreignId('store_id')->constrained()->on('moso_master.stores');
             $table->softDeletes();
             $table->timestamps();

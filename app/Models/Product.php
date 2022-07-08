@@ -37,7 +37,6 @@ class Product extends Model implements Searchable
             $store=optional(auth()->user())->store;
             $num=$store->products()->count()+1;
             $code=str_pad($num,3,'0', STR_PAD_LEFT);
-            $model->uid = (string) Uuid::uuid4();
             $model->code=$code;
           }
         });
@@ -62,6 +61,10 @@ class Product extends Model implements Searchable
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+    public function contable()
+    {
+        return $this->morphMany(Count::class, 'contable');
     }
 
     public function units()

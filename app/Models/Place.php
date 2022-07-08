@@ -39,6 +39,13 @@ protected $connection="mysql";
     public function units()
     {
         return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price_menor','price_mayor','min','stock','cost','id', 'product_id');
+        
+    }
+    function getUnitsAttribute(){
+        if(!$this->units->count()){
+            return $this->store->units();
+        }
+        return $this->units;
     }
     public function contable()
     {

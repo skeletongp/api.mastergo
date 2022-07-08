@@ -7,6 +7,7 @@
             </div>
         </x-slot>
         <div>
+           
             <form action="" wire:submit.prevent="authorize('Autorizar acción', 'validateAuthorization','storeProduction','','Crear Producciones')">
                 <div class="flex space-x-4">
                     <div class="w-full">

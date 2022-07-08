@@ -78,7 +78,7 @@ return [
 
     'default_classes' => [
         'row' => [
-            'even' => 'divide-x divide-gray-100 text-sm text-gray-900 bg-gray-100',
+            'even' => ' divide-x divide-gray-100 text-sm text-gray-900 bg-gray-100',
             'odd' => 'divide-x divide-gray-100 text-sm text-gray-900 bg-gray-50',
             'selected' => 'divide-x divide-gray-100 text-sm text-gray-900 bg-yellow-100',
         ],

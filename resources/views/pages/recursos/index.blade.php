@@ -14,21 +14,21 @@
                 <livewire:recursos.create-recurso />
             @endcan
             @can('Crear Cuentas')
-            @livewire('contables.create-count', ['model' => 'App\Models\Recurso', 'codes' => ['104', '500']], key(uniqid()))
+                @livewire('contables.create-count', ['model' => 'App\Models\Recurso', 'codes' => ['104', '500']], key(uniqid()))
             @endcan
         </div>
     @endslot
 
     <div class=" mx-auto max-w-6l w-full">
 
-            <div class="flex space-x-4 px-4 items-start">
-                <div class="w-full">
-                    <livewire:recursos.table-recurso />
-                </div>
-                <div class="w-full">
-                    <livewire:condiments.table-condiment />
-                </div>
+        <div class="flex space-x-4 px-4 items-start">
+            <div class="w-full">
+                <livewire:recursos.table-recurso />
             </div>
+            <div class="w-full">
+                <livewire:condiments.table-condiment />
+            </div>
+        </div>
     </div>
 
 </x-app-layout>

@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uid');
             $table->string('name')->comment('Identificador en texto');
             $table->string('code')->comment('Código de inventario del producto');
             $table->text('description')->comment('Detalles opcionales del producto, para facilitar su búsqueda')->nullable();

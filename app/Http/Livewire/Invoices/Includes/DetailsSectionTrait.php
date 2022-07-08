@@ -115,13 +115,14 @@ trait DetailsSectionTrait
         $unit = auth()->user()->place->units()->wherePivot('id', $this->unit_id)->first();
         if ($unit) {
             $this->unit = $unit;
+            $this->price =$unit->pivot->price_menor;
             $this->stock = $unit->pivot->stock;
             if ($this->cant >= $unit->pivot->min) {
-                $this->price = formatNumber($unit->pivot->price_mayor);
+                $this->price = $unit->pivot->price_mayor;
 
                 $this->form['price_type'] = 'mayor';
             } else {
-                $this->price = formatNumber($unit->pivot->price_menor);
+                $this->price =$unit->pivot->price_menor;
                 $this->form['price_type'] = 'detalle';
             }
            

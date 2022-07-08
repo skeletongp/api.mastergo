@@ -35,7 +35,7 @@ protected $connection="mysql";
     }
     public function recursos()
     {
-        return $this->belongsToMany(Recurso::class, 'formulas', 'proceso_id','formulable_id')->where('formulable_type',Recurso::class)->withPivot('cant');
+        return $this->belongsToMany(Recurso::class, 'formulas', 'proceso_id','formulable_id')->where('formulable_type',Recurso::class)->withPivot('cant','brand_id');
     }
     public function condiments()
     {

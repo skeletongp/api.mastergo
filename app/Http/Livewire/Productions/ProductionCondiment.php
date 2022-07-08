@@ -39,8 +39,11 @@ class ProductionCondiment extends LivewireDatatable
     function edited($value, $key, $column, $rowId)
     {
         $cnd=CondimentProduction::where('id', $rowId)->first();
-        
-            $cnd->update([$column => $value]);
+        $cnd->update([$column => $value]);
+        $prod=$cnd->production;
+        $prod->update([
+            'cost_condiment'=>$prod->condiments()->sum('total'),
+        ]);
         $this->emit('fieldEdited', $rowId);
         $this->emit('refreshLivewireDatatable');
     }

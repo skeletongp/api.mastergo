@@ -163,8 +163,8 @@
         <thead>
             <tr>
                 <th style="text-align: left"></th>
-                <th style="text-align: left; padding-left:15px">ORIGEN</th>
-                <th style="text-align: left; padding-left:15px">TIPO</th>
+                <th style="text-align: left; padding-left:15px">CLASIFICACIÓN</th>
+                <th style="text-align: left; padding-left:15px">BAL.</th>
 
             </tr>
         </thead>
@@ -180,14 +180,15 @@
                 @forelse ($ctaControl->counts as $count)
                     <tr style=" border: 1px solid #dee2e6;
                     border-collapse: collapse;">
-                        <td style="text-align: left; width:60%; padding-top:8px; padding-left:15px">
-                            {{ $count->code }} - {{ $count->name }}
+                        <td style="text-align: left; width:55%; padding-top:8px; padding-left:15px">
+                            {{ $count->code }} - {{ ellipsis($count->name,40) }}
                         </td>
-                        <td style="text-align: left; width:15%; padding-top:8px; padding-left:15px">
-                            {{ App\Models\Count::ORIGINS[$count->origin] }}
+                        <td style="text-align: left; width:25%; padding-top:8px; padding-left:15px; text-transform:capitalize">
+                            {{ substr(App\Models\Count::ORIGINS[$count->origin],0,1) }} ||
+                            {{ App\Models\CountMain::CLASE[substr($count['code'], 0, 1)] }}  || {{ $count->type }}
                         </td>
                         <td style="text-align: left; text-transform:capitalize; padding-top:8px; padding-left:15px">
-                            {{ App\Models\CountMain::CLASE[substr($count['code'], 0, 1)] }} > {{ $count->type }}
+                            ${{ formatNumber($count->balance) }}
                         </td>
                     </tr>
                 @empty

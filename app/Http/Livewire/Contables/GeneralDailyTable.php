@@ -15,6 +15,7 @@ class GeneralDailyTable extends LivewireDatatable
 {
     public $perPage = 5;
     public $headTitle="Transacciones realizadas";
+    public $padding='px-2';
     public function builder()
     {
         $place = auth()->user()->place;
@@ -53,7 +54,7 @@ class GeneralDailyTable extends LivewireDatatable
             })->label('Descripción')->headerAlignCenter()->exportCallback(function ($debe, $haber, $concepto) {
                 return $debe . "\r " . $haber . "\r " . $concepto;
             })->searchable(),
-            Column::name('ref')->label('Referencia')->headerAlignCenter()->searchable()->editable(),
+            Column::name('ref')->label('Referencia')->headerAlignCenter()->searchable(),
             Column::name('income')->callback('income', function ($debe) {
                 return " 
                 <div class='leading'>

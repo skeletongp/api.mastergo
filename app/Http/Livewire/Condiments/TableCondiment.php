@@ -14,6 +14,10 @@ class TableCondiment extends LivewireDatatable
 
     public $headTitle = "Condimentos";
     public $padding="px-2";
+    public $pageName='condiments';
+    protected $queryString = [
+        'page' => ['except' => 1, 'as' => 'page_condiment'],
+    ];
     public function builder()
     {
         $condiments = auth()->user()->place->condiments()->select()->with('unit');
@@ -25,7 +29,7 @@ class TableCondiment extends LivewireDatatable
     {
         $condiments = $this->builder()->get()->toArray();
         return [
-           Column::index($this),
+           Column::name('code')->label('Cod.'),
             Column::name('name')->label('Nombre')->searchable()->editable(),
             Column::callback(['created_at', 'id'], function ($created, $id) use ($condiments) {
                 $result = arrayFind($condiments, 'id', $id);

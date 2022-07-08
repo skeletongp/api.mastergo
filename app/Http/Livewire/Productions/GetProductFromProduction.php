@@ -22,6 +22,7 @@ class GetProductFromProduction extends Component
         $recursos = auth()->user()->place->recursos()->orderBy('name')->with('brands')->get();
         $collect = collect($products);
         $collect2 = collect($recursos);
+
         $this->products = $collect->merge($collect2);
 
         return view('livewire.productions.get-product-from-production');
@@ -48,6 +49,7 @@ class GetProductFromProduction extends Component
     }
     public function updatedProductId()
     {
+
         $data = explode('|', $this->product_id);
         $this->productible_id = $data[0];
         $this->productible_type = $data[1];
@@ -61,10 +63,13 @@ class GetProductFromProduction extends Component
     }
     public function updatedUnitId()
     {
+
+
         $data = explode('|', $this->unit_id);
         $this->unitable_id = $data[0];
         $this->unitable_type = $data[1];
         if ($data[1] == Unit::class) {
+            
             $this->unit = $this->product->units()->where('units.id', $data[0])->first();
             $this->pivotId = $this->unit->pivot->id;
         } else {
@@ -87,23 +92,30 @@ class GetProductFromProduction extends Component
            $this->production->update([
                 'getted' => $newCant,
                 'eficiency' => $newCant/$this->production->setted* 100,
+                'status'=>'Iniciado'
            ]);
             $this->sumStock($item);
         }
         $this->emit('render');
-        $this->reset('productible_type', 'productible_id', 'unitable_type', 'unitable_id', 'cant', 'pivotId', 'selected');
+        $this->reset('productible_type', 'productible_id', 'unitable_type', 'unitable_id', 'cant', 'pivotId', 'selected', 'product');
         $this->emit('showAlert', 'Resultados registrados exitosamente', 'success');
     }
     public function sumStock($data)
     {
+        $place=auth()->user()->place;
         if ($data['productible_type'] == Product::class) {
             $user = auth()->user();
             $unit = $user->place->units()->wherePivot('id', $data['pivotId'])->first();
             $unit->pivot->stock = $unit->pivot->stock + $data['cant'];
+            $unit->pivot->cost=$this->production['costUnit'];
             $unit->pivot->save();
+            $debitable=$place->findCount('104-05');
+            $creditabe=$place->findCount('104-04');
+            setTransaction('Productos terminados',date('YmdH'),$data['cant']*$this->production['costUnit'],$debitable,$creditabe, 'Retirar Resultados');
         } else {
             $brand = Brand::whereId($data['pivotId'])->first();
             $brand->cant = $brand->cant + $data['cant'];
+            $brand->cost=$this->production['costUnit'];
             $brand->save();
         }
     }

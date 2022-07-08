@@ -9,7 +9,7 @@ use Livewire\Component;
 class CreateCount extends Component
 {
     public $names, $codes, $origins, $model, $counts, $chooseModel = false;
-    public $instances, $origin, $code, $name, $model_id;
+    public $instances=[], $origin, $code, $name, $model_id, $currency='DOP';
     public $clases = [];
     protected $rules = [
         'code' => 'required',
@@ -81,7 +81,9 @@ class CreateCount extends Component
         } else {
             $instance = $place;
         }
-        $name=$this->getNameFromInstance($instance);
+        if ($this->model_id) {
+            $name=$this->getNameFromInstance($instance);
+        }
         setContable($instance, $this->code, $this->origin, $name, $place->id, 1);
         $this->emit('showAlert', 'Cuenta creada existosamente', 'success');
         return redirect(route('contables.catalogue'));

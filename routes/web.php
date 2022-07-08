@@ -12,13 +12,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\ContableController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProvisionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
-use App\Models\Count;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -111,15 +111,19 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(CuadreController::class)->group(function () {
             Route::get('cuadres', 'index')->name('cuadres.index');
         });
-        Route::controller(ReportController::class)->group(function(){
-            Route::get('/incomes','incomes')->name('reports.incomes');
-            Route::get('/outcomes','outcomes')->name('reports.outcomes');
+        Route::controller(ReportController::class)->group(function () {
+            Route::get('/incomes', 'incomes')->name('reports.incomes');
+            Route::get('/outcomes', 'outcomes')->name('reports.outcomes');
         });
-        Route::controller(ProvisionController::class)->group(function(){
-            Route::get('/provisions','index')->name('provisions.index');
+        Route::controller(ProvisionController::class)->group(function () {
+            Route::get('/provisions', 'index')->name('provisions.index');
         });
-        Route::controller(ChequeController::class)->group(function(){
-            Route::get('/cheques','index')->name('cheques.index');
+        Route::controller(ChequeController::class)->group(function () {
+            Route::get('/cheques', 'index')->name('cheques.index');
+        });
+
+        Route::controller(FinanceController::class)->group(function () {
+            Route::get('/finances', 'index')->name('finances.index');
         });
     });
 });
@@ -127,5 +131,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
 
-   
+    
+    
 })->name('prueba');

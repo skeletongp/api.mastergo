@@ -23,4 +23,8 @@ class CondimentProduction extends Model
             $model->total = $model->cant * $model->cost;
         });
     }
+    function production()
+    {
+        return $this->belongsTo(Production::class);
+    }
 }

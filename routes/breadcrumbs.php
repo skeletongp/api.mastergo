@@ -61,7 +61,7 @@ Breadcrumbs::for('products.create', function ($trail) {
 });
 Breadcrumbs::for('products.show', function ($trail, $product) {
     $trail->parent('products');
-    $trail->push('Detalles -> '.$product->name, route('products.show', $product));
+    $trail->push($product->name, route('products.show', $product));
 });
 Breadcrumbs::for('products.sum', function ($trail) {
     $trail->parent('products');
@@ -79,7 +79,7 @@ Breadcrumbs::for('recursos', function ($trail) {
 });
 Breadcrumbs::for('recursos.show', function ($trail, $recurso) {
     $trail->parent('recursos');
-    $trail->push('Detalles -> '.$recurso->name, route('recursos.show', $recurso));
+    $trail->push($recurso->name, route('recursos.show', $recurso));
 });
 Breadcrumbs::for('recursos.sum', function ($trail) {
     $trail->parent('recursos');
@@ -100,7 +100,7 @@ Breadcrumbs::for('procesos.show', function ($trail, $proceso) {
     $trail->push($proceso->name, route('procesos.show', $proceso));
 });
 Breadcrumbs::for('procesos.formula', function ($trail, $proceso) {
-    $trail->parent('procesos');
+    $trail->parent('procesos.show', $proceso);
     $trail->push('Fórmula de '.$proceso->name, route('procesos.formula', $proceso), ['icon'=>'fas fa-flask']);
 });
 

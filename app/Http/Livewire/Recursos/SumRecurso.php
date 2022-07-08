@@ -22,6 +22,7 @@ class SumRecurso extends Component
     public $selected = [], $setCost = false, $total = 0, $hideButton = true;
 
     protected $rules = [
+        'recurso' => 'max:2555',
         'selected' => 'required|min:1',
         'provider_id' => 'required|min:1',
     ];
@@ -161,7 +162,7 @@ class SumRecurso extends Component
             $this->emit('printProvision', $provisions);
         }
 
-        $this->reset('brand_id', 'cant', 'selected');
+        $this->reset('brand_id', 'cant', 'selected', 'total','provider_id','count_code');
         $this->emit('showAlert', 'Stock actualizado con éxito', 'success');
     }
     public function removeRecurso($id)

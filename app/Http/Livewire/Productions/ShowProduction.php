@@ -17,6 +17,7 @@ class ShowProduction extends Component
     use Confirm;
     public function render()
     {
+
         return view('livewire.productions.show-production');
     }
     public function deleteProduct($data)

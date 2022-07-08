@@ -26,7 +26,7 @@ class TableProceso extends LivewireDatatable
                 return view('components.view', ['url'=>route('procesos.show', $id)] );
             })->label('Ver'),
             Column::name('code')->label('Código')->searchable(),
-            Column::name('name')->label('Nombre')->searchable(),
+            Column::name('name')->label('Nombre')->searchable()->editable(),
            
 
         ];

@@ -26,7 +26,6 @@ class CreateProduction extends Component
     }
     public function render()
     {
-       
         return view('livewire.productions.create-production', get_defined_vars());
     }
     public function storeProduction()
@@ -48,6 +47,7 @@ class CreateProduction extends Component
         foreach ($this->proceso->formulas as $formula) {
            $this->addRecursos($production, $formula);
         }
+
         $this->reset('form');
         $this->emit('refreshLivewireDatatable');
     }
@@ -59,21 +59,19 @@ class CreateProduction extends Component
                     return false;
                 }
             }
-        } else {
-            return true;
-        }
+        }  return true;
     }
     function validateRecursos(){
         if($this->proceso->recursos->count()){
             foreach($this->proceso->recursos as $recurso){
-                if ($recurso->pivot->cant*$this->form['setted']>$recurso->cant){
+                $brand=Brand::find($recurso->pivot->brand_id);
+                if ($recurso->pivot->cant*$this->form['setted']>$brand->cant){
                     $this->emit('showAlert','No hay suficiente cantidad de '.$recurso->name.' para la producción','warning', 5000);
                     return false;
                 }
             }
-        } else {
+        } 
             return true;
-        }
     }
     function addRecursos($production, $formula){
         if ($formula->formulable_type == 'App\Models\Recurso') {
@@ -83,23 +81,38 @@ class CreateProduction extends Component
                 'brand_id'=>$formula->brand_id,
                 
             ]);
-            $this->reduceBrand($formula->brand_id, $formula->cant*$production->setted);
+                $brand=Brand::find($formula->brand_id);
+                $production->update([
+                    'cost_recursos'=>$production->cost_recursos+($formula->cant*$production->setted*$brand->cost),
+                ]);
+            $this->reduceBrand($formula->brand_id, $formula->cant*$production->setted, $formula->formulable, $brand);
         } else {
+            $total=$formula->formulable->cost*$formula->cant*$production->setted;
             $production->condiments()->attach($formula->formulable_id,
             [
                 'cant'=>$formula->cant*$production->setted,
                 'unit_id'=>$formula->unit_id,
                 'cost'=>$formula->formulable->cost,
-                'total'=>$formula->formulable->cost*$formula->cant*$production->setted
+                'total'=>$total
             ]);
             $this->reduceFormulable($formula->formulable, $formula->cant*$production->setted);
+            $production->update([
+                'cost_condiment'=>$production->cost+$total
+            ]);
         }
         
     }
-    function reduceBrand($brand_id, $cant)
+    function reduceBrand($brand_id, $cant, $formulable, $brand)
     {
-        $brand=Brand::find($brand_id);
+        
         $brand->cant-=$cant;
+        $place=auth()->user()->place;
+        $creditable=$place->findCount('104-02');
+        if ($formulable->contable()->first()){
+            $creditable=$formulable->contable()->first();
+        }
+        $debitable=$place->findCount('104-04');
+        setTransaction('MP a Producto en Proceso',date('Ymdh'), $cant*$brand->cost, $debitable, $creditable, 'Crear Producciones');
         $brand->save();
     }
 

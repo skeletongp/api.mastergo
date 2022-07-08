@@ -11,6 +11,7 @@ class Production extends Model
     protected $connection = "mysql";
     protected $guarded = [];
 
+    protected $appends = ['costUnit'];
     public static function boot()
     {
         parent::boot();
@@ -44,5 +45,9 @@ class Production extends Model
     public function products()
     {
         return $this->hasMany(ProductProduction::class);
+    }
+    function getCostUnitAttribute(){
+        $getted=$this->getted?:0.0000000000000001;
+        return ($this->cost_recursos+$this->cost_condiment)/$getted;
     }
 }

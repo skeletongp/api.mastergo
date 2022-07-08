@@ -14,6 +14,7 @@ class RecursoBrand extends LivewireDatatable
     use AuthorizesRequests;
     public $headTitle="<span>Atributos del recurso</span>";
     public $padding="px-2";
+    public $hidePagination=true;
     public $recurso;
     public function builder()
     {
