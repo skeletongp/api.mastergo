@@ -62,7 +62,7 @@ class SumRecurso extends Component
             $this->recurso = Recurso::whereId($this->recurso_id)->with('brands')->first();
             if ($this->recurso) {
                 $this->brands = $this->recurso->brands()->pluck('name', 'id');
-                $this->brand_id = null;
+                $this->brand_id =optional($this->recurso->brands()->first())->id;
             }
         } else {
             $this->recurso = Condiment::whereId($this->recurso_id)->with('unit')->first();

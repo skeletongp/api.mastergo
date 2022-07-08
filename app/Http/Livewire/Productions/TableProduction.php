@@ -44,6 +44,9 @@ class TableProduction extends LivewireDatatable
             Column::callback('cost_condiment', function($cost){
                 return '$'.formatNumber($cost);
             })->label('C. COND'),
+            Column::callback('expected', function ($expected) {
+                return formatNumber($expected);
+            })->label('Esperado'),
             Column::callback('getted', function ($getted) {
                 return formatNumber($getted);
             })->label('Obtenido'),

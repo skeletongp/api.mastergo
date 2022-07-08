@@ -13,9 +13,8 @@
                         <span class="text-lg font-bold">{{ formatNumber($production->setted) }}</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <h1 class="text-right"></h1>
-                        <span
-                            class="text-xs font-bold">{{ formatNumber(($production->setted / $production->setted) * 100) }}%</span>
+                        <span>Cant. Esperada</span>
+                        <span class="text-lg font-bold">{{ formatNumber($production->expected) }}</span>
                     </div>
                 </div>
                 <div class=" h-full shadow-xl px-4 py-4 border border-blue-300 rounded-lg flex flex-col justify-center">
@@ -26,19 +25,18 @@
                     <div class="flex justify-between items-center">
                         <h1 class="text-right"></h1>
                         <span
-                            class="text-xs font-bold">{{ formatNumber(($production->getted / $production->setted) * 100) }}%</span>
+                            class="text-xs font-bold">{{ formatNumber(($production->getted / $production->expected) * 100) }}%</span>
                     </div>
                 </div>
                 <div class=" h-full shadow-xl px-4 py-4 border border-blue-300 rounded-lg flex flex-col justify-center">
                     <div class="flex justify-between items-center">
                         <span>Monto Invertido</span>
                         <span
-                            class="text-lg font-bold">${{ formatNumber($production->setted * $production->costUnit) }}</span>
+                            class="text-lg font-bold">${{ formatNumber($production->cost_recursos + $production->cost_condiment) }}</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <h1 class="text-right"></h1>
-                        <span
-                            class="text-xs font-bold">{{ formatNumber(($production->setted / $production->setted) * 100) }}%</span>
+                        <span>Monto Esperado</span>
+                        <span class="text-lg font-bold">${{ formatNumber($production->expected* $production->costUnit) }}</span>
                     </div>
                 </div>
                 <div class=" h-full shadow-xl px-4 py-4 border border-blue-300 rounded-lg flex flex-col justify-center">
@@ -50,7 +48,7 @@
                     <div class="flex justify-between items-center">
                         <h1 class="text-right"></h1>
                         <span
-                            class="text-xs font-bold">{{ formatNumber(($production->getted / $production->setted) * 100) }}%</span>
+                            class="text-xs font-bold">{{ formatNumber(($production->getted / $production->expected) * 100) }}%</span>
                     </div>
                 </div>
                 <div class=" h-full shadow-xl px-4 py-4 border border-blue-300 rounded-lg flex flex-col justify-center">
@@ -64,7 +62,7 @@
                     <div class="flex justify-between items-center">
                         <span>{{$production->eficiency>=100?'Ganancia':'Merma'}}</span>
                         <span
-                            class="text-lg font-bold">{{ formatNumber(abs($production->setted - $production->getted)) }}</span>
+                            class="text-lg font-bold">{{ formatNumber(abs($production->expected - $production->getted)) }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <h1 class="text-right"></h1>

@@ -12,7 +12,7 @@ use Livewire\Component;
 class GetProductFromProduction extends Component
 {
     public $production;
-    public $products, $units;
+    public $products, $units = [];
     public $product, $unit;
     public $product_id, $unit_id, $cant, $selected = [], $productible_type, $productible_id, $unitable_type, $unitable_id, $pivotId;
 
@@ -45,20 +45,22 @@ class GetProductFromProduction extends Component
             'pivotId' => $this->pivotId,
 
         ]);
-        $this->reset('productible_type', 'productible_id', 'unitable_type', 'unitable_id', 'cant', 'pivotId','product_id','unit_id');
+        $this->reset('productible_type', 'productible_id', 'unitable_type', 'unitable_id', 'cant', 'pivotId', 'product_id', 'unit_id');
     }
-    public function updatedProductId()
+    public function updatedProductId($value)
     {
 
-        $data = explode('|', $this->product_id);
-        $this->productible_id = $data[0];
-        $this->productible_type = $data[1];
-        if ($data[1] == Product::class) {
-            $this->product = Product::whereId($data[0])->with('units')->first();
-            $this->units = $this->product->units;
-        } else {
-            $this->product = Recurso::whereId($data[0])->with('brands')->first();
-            $this->units = $this->product->brands;
+        $data = explode('|', $value);
+        if (count($data) == 2) {
+            $this->productible_id = $data[0];
+            $this->productible_type = $data[1];
+            if ($data[1] == Product::class) {
+                $this->product = Product::whereId($data[0])->with('units')->first();
+                $this->units = $this->product->units;
+            } else {
+                $this->product = Recurso::whereId($data[0])->with('brands')->first();
+                $this->units = $this->product->brands;
+            }
         }
     }
     public function updatedUnitId()
@@ -69,7 +71,7 @@ class GetProductFromProduction extends Component
         $this->unitable_id = $data[0];
         $this->unitable_type = $data[1];
         if ($data[1] == Unit::class) {
-            
+
             $this->unit = $this->product->units()->where('units.id', $data[0])->first();
             $this->pivotId = $this->unit->pivot->id;
         } else {
@@ -88,12 +90,12 @@ class GetProductFromProduction extends Component
                 'unitable_id' => $item['unitable_id'],
                 'cant' => $item['cant'],
             ]);
-            $newCant=$this->production->getted + $item['cant'];
-           $this->production->update([
+            $newCant = $this->production->getted + $item['cant'];
+            $this->production->update([
                 'getted' => $newCant,
-                'eficiency' => $newCant/$this->production->setted* 100,
-                'status'=>'Iniciado'
-           ]);
+                'eficiency' => $newCant / $this->production->expected * 100,
+                'status' => 'Iniciado'
+            ]);
             $this->sumStock($item);
         }
         $this->emit('render');
@@ -102,26 +104,26 @@ class GetProductFromProduction extends Component
     }
     public function sumStock($data)
     {
-        $place=auth()->user()->place;
+        $place = auth()->user()->place;
         if ($data['productible_type'] == Product::class) {
             $user = auth()->user();
             $unit = $user->place->units()->wherePivot('id', $data['pivotId'])->first();
             $unit->pivot->stock = $unit->pivot->stock + $data['cant'];
-            $unit->pivot->cost=$this->production['costUnit'];
+            $unit->pivot->cost = $this->production['costUnit'];
             $unit->pivot->save();
-            $debitable=$place->findCount('104-05');
-            $creditabe=$place->findCount('104-04');
-            setTransaction('Productos terminados',date('YmdH'),$data['cant']*$this->production['costUnit'],$debitable,$creditabe, 'Retirar Resultados');
+            $debitable = $place->findCount('104-05');
+            $creditabe = $place->findCount('104-04');
+            setTransaction('Productos terminados', date('YmdH'), $data['cant'] * $this->production['costUnit'], $debitable, $creditabe, 'Retirar Resultados');
         } else {
             $brand = Brand::whereId($data['pivotId'])->first();
             $brand->cant = $brand->cant + $data['cant'];
-            $brand->cost=$this->production['costUnit'];
+            $brand->cost = $this->production['costUnit'];
             $brand->save();
         }
     }
     public function removeRecurso($id)
     {
         unset($this->selected[$id]);
-        $this->selected=array_values($this->selected);
+        $this->selected = array_values($this->selected);
     }
 }

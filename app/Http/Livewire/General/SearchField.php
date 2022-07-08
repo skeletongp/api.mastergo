@@ -5,6 +5,7 @@ namespace App\Http\Livewire\General;
 use App\Models\Client;
 use App\Models\Proceso;
 use App\Models\Product;
+use App\Models\Recurso;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,7 +27,8 @@ class SearchField extends Component
             'users'=>'Usuarios',
             'clients'=>'Clientes',
             'products'=>'Productos',
-            'procesos'=>'Procesos'
+            'procesos'=>'Procesos',
+            'recursos'=>'Recursos',
         ];
     }
     public function render()
@@ -65,6 +67,12 @@ class SearchField extends Component
           $modelSearchAspect
           ->addSearchableAttribute('name')
           ->whereIn('id', $procesos);
+        })
+        ->registerModel(Recurso::class, function(ModelSearchAspect $modelSearchAspect) use ($place){
+          $recursos=$place->recursos()->pluck('recursos.id')->toArray();
+          $modelSearchAspect
+          ->addSearchableAttribute('name')
+          ->whereIn('id', $recursos);
         })
         ->search($this->search);
       } else {

@@ -3,12 +3,23 @@
 namespace App\Http\Livewire\Invoices\Includes;
 
 use Illuminate\Support\Facades\DB;
-
 trait OrderContable
 {
+    public $gastoGeneral, $gastoTerminado;
+    public function getGastos($invoice){
+        $details=$invoice->details;
+        foreach ($details as $det) {
+            if ($det->product->origin=='Comprado') {
+                $this->gastoGeneral += $det->cost;
+            } else if ($det->product->origin=='Procesado' ) {
+                $this->gastoTerminado += $det->cost;
+            }
+        }
+    }
     public function setTransaction($invoice, $payment, $client)
     {
         $place = $invoice->place;
+        $this->getGastos($invoice);
         $creditable = $place->findCount('400-01');
         $ingresos_service = $place->findCount('400-02');
         $discount = $place->findCount('401-03');
@@ -65,8 +76,8 @@ trait OrderContable
 
         $itbisCount=$place->findCount('203-01');
         setTransaction('Reg. retención de ITBIS', $ref, $payment->tax,   $toTax, $itbisCount, 'Cobrar Facturas');
-        setTransaction('Reg. Costo Mercancía Vendida', $ref, $invoice->gasto, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
-
+        setTransaction('Reg. Costo Mercancía General Vendida', $ref, $this->gastoGeneral, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
+        setTransaction('Reg. Costo Producto Terminado Vendido', $ref, $this->gastoTerminado, $place->ventas(), $place->producto_terminado(), 'Cobrar Facturas');
      
         $client->update([
             'limit' => $client->limit - $invoice->payment->rest

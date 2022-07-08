@@ -124,5 +124,11 @@
         "name": "Salmuera",
         "brand_name": "General",
         "cost": "0"
+    },
+    {
+        "code": "022",
+        "name": "Agua",
+        "brand_name": "Tratada",
+        "cost": "0"
     }
 ]

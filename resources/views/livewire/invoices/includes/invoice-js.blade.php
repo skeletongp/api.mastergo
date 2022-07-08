@@ -23,13 +23,13 @@
         });
         var sumField = (obj, field) => obj
             .map(items => items[field])
-            .reduce((prev, curr) => parseFloat(prev) + parseFloat( curr), 0);
+            .reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
 
         Livewire.on('changeInvoice', function(invoice, letPrint = true) {
             obj = invoice;
             if (letPrint) {
                 for (let index = 0; index < obj.place.preference.copy_print; index++) {
-                print();
+                    print();
                 }
             }
         })
@@ -53,9 +53,11 @@
             conector.establecerEnfatizado(0);
             conector.establecerTamanioFuente(1, 1)
             conector.texto('RNC: ')
-            conector.texto(obj.store.rnc + "\n");
-            conector.texto(obj.store.phone + "\n");
-            conector.texto(obj.store.address + "\n");
+            if (obj.payment.ncf) {
+                conector.texto(obj.store.rnc + "\n");
+                conector.texto(obj.store.phone + "\n");
+                conector.texto(obj.store.address + "\n");
+            }
             align(conector, 'center');
             conector.texto('--------------------------------------');
             conector.feed(1);
@@ -117,7 +119,7 @@
             } else {
                 conector.texto(obj.client.rnc ? obj.client.rnc : '0000000000')
             }
-                
+
             conector.texto(' / ');
 
             conector.establecerEnfatizado(1);
@@ -159,7 +161,7 @@
                 align(conector, 'left');
                 conector.texto((toDecimal.format(det.cant)) + " ");
                 conector.texto(det.unit.symbol + " ");
-                conector.texto(det.product.code+" "+det.product.name + " ");
+                conector.texto(det.product.code + " " + det.product.name + " ");
                 conector.feed(1);
                 align(conector, 'right');
                 conector.texto("Pr. " + formatter.format(det.price) + " ");

@@ -18,7 +18,7 @@ class CreateProceso extends Component
     
     protected $rules=[
         'form'=>'required',
-        'form.name'=>'required|string|max:55|unique:procesos,name',
+        'form.name'=>'required|string|max:55|unique:procesos,name,NULL,id,deleted_at,NULL',
         'form.unit_id'=>'required|numeric|exists:units,id'
     ];
 

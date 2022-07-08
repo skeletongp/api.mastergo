@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Uuid;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Recurso extends Model
+
+class Recurso extends Model implements Searchable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, SearchableTrait;
     protected $connection = "mysql";
 
     protected $fillable = [
@@ -37,6 +39,16 @@ class Recurso extends Model
         });
     }
    
+    public function getSearchResult(): SearchResult
+    {
+       $url = route('recursos.show', $this->id);
+    
+        return new SearchResult(
+           $this,
+           $this->code.' '.$this->name,
+           $url
+        );
+    }
 
     public function unit()
     {

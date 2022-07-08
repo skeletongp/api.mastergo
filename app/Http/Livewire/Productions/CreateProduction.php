@@ -15,6 +15,7 @@ class CreateProduction extends Component
     protected $rules=[
         'form'=>'required',
         'form.setted'=>'required',
+        'form.expected'=>'required',
         'unit_id'=>'required|min:1',
         'form.start_at'=>'required',
     ];
@@ -97,7 +98,7 @@ class CreateProduction extends Component
             ]);
             $this->reduceFormulable($formula->formulable, $formula->cant*$production->setted);
             $production->update([
-                'cost_condiment'=>$production->cost+$total
+                'cost_condiment'=>$production->cost_condiment+$total
             ]);
         }
         

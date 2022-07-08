@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description')->comment('Detalles opcionales del producto, para facilitar su búsqueda')->nullable();
             $table->foreignId('store_id')->comment('Tienda a la que pertenece el producto')->constrained()->on('moso_master.stores');
             $table->enum('type',['Producto','Servicio']);
+            $table->enum('origin',['Procesado','Comprado'])->default('Procesado');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,10 +3,12 @@
         <div class="w-full max-w-5xl mx-auto">
             @can('Ver Producciones')
                 @can('Crear Producciones')
-                    <div class="flex justify-between items-center">
-                        <x-toggle id="status" wire:model='status' value='Completado' label='{{ $statusTitle }}'></x-toggle>
-                        @livewire('productions.create-production', ['proceso' => $proceso], key($proceso->id))
-                    </div>
+                @if ($proceso->formulas->count())
+                <div class="flex justify-between items-center">
+                    <x-toggle id="status" wire:model='status' value='Completado' label='{{ $statusTitle }}'></x-toggle>
+                    @livewire('productions.create-production', ['proceso' => $proceso], key($proceso->id))
+                </div>
+                @endif
                 @endcan
                 <div class="">
                     @if ($status)

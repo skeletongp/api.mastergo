@@ -108,6 +108,11 @@ protected $connection="mysql";
         return $this->morphOne(Count::class, 'contable')
         ->where('code','104-01')->first();
     }
+    public function producto_terminado()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','104-05')->first();
+    }
     public function ventas()
     {
         return $this->morphOne(Count::class, 'contable')

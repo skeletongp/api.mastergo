@@ -11,7 +11,8 @@ class CancelInvoice extends Component
     use Confirm;
     public $invoice_id, $rTax = 0;
     protected $listeners = ['cancelInvoice', 'validateAuthorization'];
-
+    public $gastoGeneral, $gastoTerminado;
+    
     public function render()
     {
         return view('livewire.invoices.cancel-invoice');
@@ -63,10 +64,20 @@ class CancelInvoice extends Component
         $unit->stock = $unit->stock + $cant;
         $unit->save();
     }
+    public function getGastos($invoice){
+        $details=$invoice->details;
+        foreach ($details as $det) {
+            if ($det->product->origin=='Comprado') {
+                $this->gastoGeneral += $det->cost;
+            } else if ($det->product->origin=='Procesado' ) {
+                $this->gastoTerminado += $det->cost;
+            }
+        }
+    }
     public function deletePayments($invoice)
     {
         $place = $invoice->place;
-
+        $this->getGastos($invoice);
         $payments = $invoice->payments;
         $payment = $invoice->payment;
         $ref = $invoice->comprobante ? $invoice->comprobante->ncf : $invoice->number;
@@ -81,7 +92,8 @@ class CancelInvoice extends Component
         setTransaction('Reg. Dev. ventas de productos', $ref, $payments->sum('payed') * (1 - $rTax), $devVentas, $caja, 'Borrar Facturas');
         setTransaction('Reg.  Dev. de productos a Crédito', $ref, $invoice->rest * (1 - $rTax),  $devVentas, $client->contable()->first(), 'Cobrar Facturas');
         setTransaction('Reg. reversión de ITBIS x Pagar', $ref,  $payment->tax, $devVentas, $itbisCount, 'Borrar Facturas');
-        setTransaction('Reg. reversión costo de ventas', $ref, $invoice->gasto, $place->inventario(), $place->ventas(), 'Cobrar Facturas');
+        setTransaction('Reg. reversión costo de inventario general', $ref, $this->gastoGeneral, $place->inventario(), $place->ventas(), 'Cobrar Facturas');
+        setTransaction('Reg. reversión costo de producto terminado', $ref, $this->gastoTerminado, $place->producto_terminado(), $place->ventas(), 'Cobrar Facturas');
         foreach ($payments as $pay) {
             $pay->delete();
         }

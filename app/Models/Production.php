@@ -47,7 +47,7 @@ class Production extends Model
         return $this->hasMany(ProductProduction::class);
     }
     function getCostUnitAttribute(){
-        $getted=$this->getted?:0.0000000000000001;
+        $getted=$this->getted>0?$this->getted:0.0000000000000001;
         return ($this->cost_recursos+$this->cost_condiment)/$getted;
     }
 }

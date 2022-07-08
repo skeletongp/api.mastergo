@@ -26,7 +26,15 @@ class FormulaTable extends LivewireDatatable
                 $result = arrayFind($formulas, 'id', $id);
                 return $result['formulable']['name'];
             })->label('Recurso'),
-            Column::name('cant')->label('Cant.')->editable(),
+            Column::name('cant')->label('Requerido')->editable(),
+            Column::callback(['created_At', 'id'], function ($formulable, $id) use ($formulas) {
+                $result = arrayFind($formulas, 'id', $id);
+                if ($result['formulable_type'] == 'App\Models\Recurso') {
+                    return formatNumber($result['brand']['cant']);
+                } else {
+                    return formatNumber($result['formulable']['cant']);
+                };
+            })->label('Disponible'),
             Column::callback(['unit_id', 'id'], function ($formulable, $id) use ($formulas) {
                 $result = arrayFind($formulas, 'id', $id);
                 if ($result['formulable_type'] == 'App\Models\Recurso') {

@@ -53,12 +53,13 @@ class EditProduction extends Component
             'getted' => $this->production['getted'],
             'status' => $this->status ? 'Completado' : 'Iniciado',
             'end_at' => $date,
-            'eficiency' => ($this->production['getted'] / $this->production['setted']) * 100
+            'eficiency' => ($this->production['getted'] / $this->production['expected']) * 100
         ]);
         $place=auth()->user()->place;
         $debitable=$place->findCount('500-03');
         $creditable=$place->findCount('104-04');
-        $merma=$production->cost_recursos-($production->getted*($production->cost_recursos/$production->setted));
+        $cost=($production->expected-$production->getted)*$production->costUnit;
+        $merma=$cost;
         setTransaction('Reg. Merma en producción',date('YmdH'),$merma, $debitable, $creditable, 'Terminar Procesos');
         $this->emit('showAlert', 'Registro actualizado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');

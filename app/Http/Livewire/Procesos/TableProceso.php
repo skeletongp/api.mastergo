@@ -10,6 +10,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class TableProceso extends LivewireDatatable
 {
 
+    public $padding="px-2";
 
     public function builder()
     {
@@ -22,11 +23,12 @@ class TableProceso extends LivewireDatatable
     {
         return 
         [
-            Column::callback('id', function($id){
+            Column::callback(['created_at','id'], function($created,$id){
                 return view('components.view', ['url'=>route('procesos.show', $id)] );
             })->label('Ver'),
             Column::name('code')->label('Código')->searchable(),
             Column::name('name')->label('Nombre')->searchable()->editable(),
+            Column::delete()->label('Eliminar'),
            
 
         ];

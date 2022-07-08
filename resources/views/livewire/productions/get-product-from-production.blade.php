@@ -9,15 +9,14 @@
         <form action="" class="py-8 space-y-4" wire:submit.prevent="addSelected">
             <div class="flex space-x-4">
                 <div class="w-full">
-                    <x-base-select label="Resultado" wire:model="product_id" id="product_id">
+                    <x-datalist label="Resultado" model="product_id" inputId="product_id" listName="productResultList">
                         <option value=""></option>
                         @foreach ($products->sortBy('name') as $prd)
-                            <option value="{{$prd->id}}|{{get_class($prd)}}">{{ $prd->name }}</option>
+                            <option value="{{ $prd->name }} "data-value="{{$prd->id}}|{{get_class($prd)}}"></option>
                         @endforeach
-                    </x-base-select>
+                    </x-datalist>
                     <x-input-error for="product_id">Requerido</x-input-error>
                 </div>
-                @if ($units)
                     <div class="w-full">
                         <x-base-select label="Detalle" wire:model="unit_id" id="unit_id">
                             <option value=""></option>
@@ -31,7 +30,6 @@
                         <x-base-input type="number" label="Cant." wire:model.defer="cant" id="cant" />
                         <x-input-error for="cant">Requerido</x-input-error>
                     </div>
-                @endif
             </div>
             <div class="flex justify-end">
                 <x-button>Añadir</x-button>

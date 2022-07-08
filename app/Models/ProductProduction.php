@@ -12,7 +12,7 @@ protected $connection="mysql";
     protected $guarded=[];
 
 
-    public static function boot()
+   /*  public static function boot()
     {
         parent::boot();
         static::created(function ($model) {
@@ -22,7 +22,7 @@ protected $connection="mysql";
             ]);
         });
     }
-
+ */
     public function productible()
     {
         return $this->morphTo();

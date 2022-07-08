@@ -19,7 +19,6 @@
                                 <div>
                                     @livewire('invoices.order-confirm', ['invoice' => $invoice->toArray()], key(uniqid()))
                                 </div>
-                                <x-button class="bg-gray-200 text-black">Imprimir ticket</x-button>
                             </div>
                         </div>
                     @endcan
@@ -45,5 +44,4 @@
     @include('includes.authorize')
     @include('livewire.invoices.includes.invoice-js')
     @include('livewire.invoices.includes.print-order')
-
 </div>

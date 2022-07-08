@@ -36,8 +36,8 @@
 
         <div class="py-3 border-b space-y-1 ">
             <div class="grid grid-cols-2 ">
-                <span class="col-span-2 uppercase text-sm">{{ $invoice->client->fullname }}</span>
-                <b>RNC/CÉD.: </b> <span class="">{{ $invoice->client->rnc }}</span>
+                <span class="col-span-2 uppercase text-sm">{{ellipsis($invoice->name,27)?:ellipsis($invoice->client->name,27) }}</span>
+                <b>RNC/CÉD.: </b> <span class="">{{$invoice->rnc?:$invoice->client->rnc }}</span>
                 <b>TELÉFONO: </b><span class="">{{ $invoice->client->phone }}</span>
                 <b>DIRECCIÓN: </b><span
                     class="overflow-hidden overflow-ellipsis whitespace-nowrap">{{ $invoice->client->address }}</span>

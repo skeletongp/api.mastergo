@@ -59,6 +59,7 @@ class TableProduct extends LivewireDatatable
                 }
                 return $data;
             })->label('Precios'),
+            Column::name('origin')->label('Inventario')->searchable(),
             Column::callback(['id', 'code'], function ($id) {
                 if (auth()->user()->hasPermissionTo('Editar Productos')) {
                     return view('datatables::link', [
