@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Invoices\ShowIncludes;
 
+use App\Jobs\CreatePDFJob;
 use App\Models\Bank;
 use App\Models\User;
 use Livewire\WithFileUploads;
@@ -89,7 +90,7 @@ trait ShowPayments
             'rest' => $invoice->rest - ($payment->payed - $payment->cambio)
         ]);
        
-        setPDFPath($invoice);
+        dispatch(new CreatePDFJob($invoice))->onConnection('database');
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
         $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'contable');
         $this->emit('printPayment', $payment);

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Invoices;
 
 use App\Http\Livewire\General\Authorize;
+use App\Jobs\CreatePDFJob;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
@@ -85,7 +86,7 @@ class EditDetail extends Component
         $this->updatePayment($invoice);
         $this->updateTransaction($invoice);
         $this->render();
-        setPDFPath($invoice);
+        dispatch(new CreatePDFJob($invoice))->onConnection('database');
         $this->setTaxes($invoice);
         $this->emit('showAlert', 'Detalle actualizado', 'success');
         $this->emitUp('reloadEdit');

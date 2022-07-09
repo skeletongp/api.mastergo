@@ -2,101 +2,112 @@
     {
         "code": "001",
         "name": "Chuleta Ahumada",
-        "price_mayor": "0",
-        "price_menor": "80",
-        "min": "80",
+        "price_mayor": "84",
+        "price_menor": "86",
+        "min": "50",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "002",
         "name": "Costilla Ahumada",
-        "price_mayor": "0",
-        "price_menor": "86",
-        "min": "80",
+        "price_mayor": "90",
+        "price_menor": "92",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "003",
         "name": "Carnita Ahumada",
-        "price_mayor": "0",
-        "price_menor": "80",
-        "min": "80",
+        "price_mayor": "80",
+        "price_menor": "85",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "004",
         "name": "Pollo Ahumado",
-        "price_mayor": "0",
+        "price_mayor": "80",
         "price_menor": "85",
-        "min": "80",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "005",
         "name": "Chuleta Ahumada S/H",
-        "price_mayor": "0",
-        "price_menor": "70",
-        "min": "80",
+        "price_mayor": "70",
+        "price_menor": "75",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "006",
-        "name": "Longaniza ",
-        "price_mayor": "0",
+        "name": "Longaniza Económica",
+        "price_mayor": "52",
         "price_menor": "55",
-        "min": "80",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "007",
         "name": "Longaniza Ranchera",
-        "price_mayor": "0",
-        "price_menor": "53",
-        "min": "80",
+        "price_mayor": "55",
+        "price_menor": "57",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "008",
         "name": "Longaniza Fina Blanca Sup.",
-        "price_mayor": "0",
-        "price_menor": "65",
-        "min": "80",
+        "price_mayor": "65",
+        "price_menor": "67",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "009",
         "name": "Jamón Picnic",
-        "price_mayor": "0",
-        "price_menor": "70",
-        "min": "80",
+        "price_mayor": "70",
+        "price_menor": "75",
+        "min": "10",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "010",
         "name": "Filete",
-        "price_mayor": "0",
-        "price_menor": "110",
-        "min": "80",
+        "price_mayor": "101",
+        "price_menor": "115",
+        "min": "15",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "011",
         "name": "Pulpa de Pollo",
-        "price_mayor": "0",
-        "price_menor": "35",
-        "min": "80",
-        "cost": "0",
-        "origin":"Procesado"
+        "price_mayor": "35",
+        "price_menor": "38",
+        "min": "400",
+        "cost": "31",
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "012",
@@ -105,7 +116,8 @@
         "price_menor": "0",
         "min": "80",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "013",
@@ -114,52 +126,58 @@
         "price_menor": "90",
         "min": "80",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "014",
-        "name": "Pierna",
-        "price_mayor": "0",
+        "name": "Pierna de cerdo",
+        "price_mayor": "70",
         "price_menor": "75",
-        "min": "80",
-        "cost": "0",
-        "origin":"Procesado"
+        "min": "50",
+        "cost": "64",
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "015",
         "name": "Paleta",
         "price_mayor": "0",
-        "price_menor": "55",
-        "min": "80",
+        "price_menor": "0",
+        "min": "0",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "016",
         "name": "Ground Meat",
         "price_mayor": "0",
         "price_menor": "0",
-        "min": "80",
+        "min": "0",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "017",
-        "name": "Salchicón",
-        "price_mayor": "0",
-        "price_menor": "0",
-        "min": "80",
+        "name": "Salchichón Artesanal de la Casa",
+        "price_mayor": "65",
+        "price_menor": "70",
+        "min": "6",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "018",
-        "name": "La Picante",
-        "price_mayor": "0",
-        "price_menor": "70",
-        "min": "80",
+        "name": "Salami Picante",
+        "price_mayor": "70",
+        "price_menor": "75",
+        "min": "5",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "2"
     },
     {
         "code": "019",
@@ -168,7 +186,8 @@
         "price_menor": "35",
         "min": "80",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "020",
@@ -177,7 +196,8 @@
         "price_menor": "60",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "021",
@@ -186,7 +206,8 @@
         "price_menor": "82",
         "min": "80",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "022",
@@ -195,15 +216,18 @@
         "price_menor": "0",
         "min": "80",
         "cost": "0",
-        "origin":"Procesado"
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "023",
         "name": "Chuleta en Malla",
         "price_mayor": "0",
         "price_menor": "100",
+        "origin":"Procesado",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "unit_id": "1"
     },
     {
         "code": "024",
@@ -211,7 +235,9 @@
         "price_mayor": "0",
         "price_menor": "100",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "origin":"Procesado",
+        "unit_id": "1"
     },
     {
         "code": "025",
@@ -220,7 +246,8 @@
         "price_menor": "85",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "026",
@@ -229,7 +256,8 @@
         "price_menor": "70",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "027",
@@ -238,7 +266,8 @@
         "price_menor": "54",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "028",
@@ -247,7 +276,8 @@
         "price_menor": "68",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "029",
@@ -256,7 +286,8 @@
         "price_menor": "75",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "030",
@@ -265,7 +296,8 @@
         "price_menor": "0",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "031",
@@ -274,7 +306,8 @@
         "price_menor": "47",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "032",
@@ -283,7 +316,8 @@
         "price_menor": "57",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "033",
@@ -292,7 +326,8 @@
         "price_menor": "39",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "034",
@@ -301,7 +336,8 @@
         "price_menor": "80",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "035",
@@ -310,7 +346,8 @@
         "price_menor": "66",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "036",
@@ -319,7 +356,8 @@
         "price_menor": "56",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "037",
@@ -328,7 +366,8 @@
         "price_menor": "52",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "038",
@@ -337,7 +376,8 @@
         "price_menor": "35",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "039",
@@ -346,7 +386,8 @@
         "price_menor": "55",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "040",
@@ -355,7 +396,8 @@
         "price_menor": "83",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "041",
@@ -364,7 +406,8 @@
         "price_menor": "80",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "042",
@@ -373,7 +416,8 @@
         "price_menor": "375",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "2"
     },
     {
         "code": "043",
@@ -382,7 +426,8 @@
         "price_menor": "90",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "044",
@@ -391,7 +436,8 @@
         "price_menor": "105",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "045",
@@ -400,7 +446,8 @@
         "price_menor": "90",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "046",
@@ -409,7 +456,8 @@
         "price_menor": "50",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "047",
@@ -418,7 +466,8 @@
         "price_menor": "100",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "048",
@@ -427,7 +476,8 @@
         "price_menor": "85",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "049",
@@ -436,7 +486,8 @@
         "price_menor": "95",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "050",
@@ -445,7 +496,8 @@
         "price_menor": "80",
         "min": "80",
         "cost": "0",
-        "origin":"Comprado"
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "051",
@@ -453,7 +505,9 @@
         "price_mayor": "0",
         "price_menor": "80",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "052",
@@ -461,7 +515,9 @@
         "price_mayor": "0",
         "price_menor": "120",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "053",
@@ -469,7 +525,9 @@
         "price_mayor": "0",
         "price_menor": "35",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "054",
@@ -477,7 +535,9 @@
         "price_mayor": "0",
         "price_menor": "37",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "origin":"Comprado",
+        "unit_id": "1"
     },
     {
         "code": "055",
@@ -485,6 +545,8 @@
         "price_mayor": "0",
         "price_menor": "35",
         "min": "80",
-        "cost": "0"
+        "cost": "0",
+        "origin":"Comprado",
+        "unit_id": "1"
     }
 ]

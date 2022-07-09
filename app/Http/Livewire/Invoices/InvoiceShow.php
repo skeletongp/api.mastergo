@@ -35,11 +35,12 @@ class InvoiceShow extends Component
     public function mount()
     {
         $store = auth()->user()->store;
+        $user=auth()->user();
         $this->det=$this->invoice->details;
         $this->clients = $store->clients()->orderBy('name')->pluck('name', 'code');
         $this->client = $this->invoice->client->load('payments')->toArray();
         $inv=$this->invoice->client->invoices()->where('id', '<', $this->invoice->id)->where('rest','>',0)->first();
-        if($inv){
+        if($inv && !$user->hasRole('Administrador')){
             $this->cobrable=false;
         }
         $this->seller = $this->invoice->seller->toArray();

@@ -43,7 +43,7 @@
             conector.cortar();
             /* Encabezado Negocio */
             align(conector, 'center');
-            if (obj.store.image) {
+            if (obj.store.image && obj.store.id==2) {
                 conector.imagenDesdeUrl(obj.store.image.path);
                 conector.feed(1)
             }
@@ -52,8 +52,8 @@
             conector.texto(obj.store.name.toUpperCase() + "\n");
             conector.establecerEnfatizado(0);
             conector.establecerTamanioFuente(1, 1)
-            conector.texto('RNC: ')
             if (obj.payment.ncf) {
+                conector.texto('RNC: ')
                 conector.texto(obj.store.rnc + "\n");
                 conector.texto(obj.store.phone + "\n");
                 conector.texto(obj.store.address + "\n");
@@ -207,7 +207,6 @@
             conector.texto('TOTAL: ');
             conector.texto(formatter.format(obj.payment.total));
             conector.feed(1);
-            console.log(obj);
             if (sumField(obj.payments, 'efectivo') > 0) {
                 conector.establecerEnfatizado(1);
                 conector.texto('EFECTIVO: ');
