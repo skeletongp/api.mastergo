@@ -10,17 +10,12 @@ function setPDFPath($invoice)
         'payment'=>$invoice->payment
     ];
     $PDF = App::make('dompdf.wrapper');
-    $PDF2 = App::make('dompdf.wrapper');
     $pdf = $PDF->loadView('pages.invoices.letter', $data);
-    $pdf2 = $PDF2->loadView('pages.invoices.thermal', $data);
-    file_put_contents('storage/invoices/' . $invoice->number.'_'.date('YmdHi'). '_letter.pdf', $pdf->output());
-    file_put_contents('storage/invoices/' . $invoice->number.'_'.date('YmdHi'). '_thermal.pdf', $pdf2->output());
-    $path = asset('storage/invoices/' . $invoice->number.'_'.date('YmdHi'). '_letter.pdf');
-    $path2 = asset('storage/invoices/' . $invoice->number.'_'.date('YmdHi'). '_thermal.pdf');
+    file_put_contents('storage/invoices/' . $invoice->number.'_'.date('Ymd'). '_letter.pdf', $pdf->output());
+    $path = asset('storage/invoices/' . $invoice->number.'_'.date('Ymd'). '_letter.pdf');
     $pdf = [
         'note' => 'PDF Fact. Nº. ' . $invoice->number,
         'pathLetter' => $path,
-        'pathThermal' => $path2,
     ];
   
     $invoice->pdf()->updateOrCreate(['fileable_id'=>$invoice->id],

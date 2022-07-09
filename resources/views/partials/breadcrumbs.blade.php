@@ -1,6 +1,6 @@
 @if (count($breadcrumbs))
     <nav class="flex" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-3 text-lg uppercase ">
+        <ol class="inline-flex items-center space-x-1 lg:space-x-3 text-lg uppercase ">
             @foreach ($breadcrumbs as $breadcrumb)
                 @if ($breadcrumb->url && !$loop->last)
                     <li class="breadcrumb-item flex items-center space-x-1 font-medium hover:text-blue-400">

@@ -7,7 +7,7 @@
                 <span class="w-8">
                     <x-input label="" class="text-center" type="number" wire:model.lazy="perPage"></x-input>
                 </span>
-                <span class="hidden md:block">de {{ $users->total() }}</span>
+                <span class="hidden lg:block">de {{ $users->total() }}</span>
             </div>
             <div class="max-w-xs w-full ml-4">
                 <x-input type="search" wire:model="search" id="searchUser" label="Buscar"></x-input>

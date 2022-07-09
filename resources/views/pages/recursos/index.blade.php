@@ -21,7 +21,7 @@
 
     <div class=" mx-auto max-w-6l w-full">
 
-        <div class="flex space-x-4 px-4 items-start">
+        <div class="flex flex-col space-y-4 justify-end items-start lg:flex-row lg:space-y-0 lg:space-x-4 lg:items-end lg:justify-start px-4 ">
             <div class="w-full">
                 <livewire:recursos.table-recurso />
             </div>

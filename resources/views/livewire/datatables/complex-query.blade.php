@@ -57,7 +57,7 @@
     @if(count($savedQueries ?? []))
         <div>
             <div class="mt-8 my-4 text-xl uppercase tracking-wide font-medium leading-none">Saved Queries</div>
-            <div class="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
+            <div class="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
                 @foreach($savedQueries as $saved)
                     <div class="flex" wire:key="{{ $saved['id'] }}">
                         <button wire:click="loadRules({{ json_encode($saved['rules']) }})" wire:loading.attr="disabled" class="p-2 flex-grow flex items-center space-x-2 px-3 border border-r-0 border-blue-400 rounded-md rounded-r-none bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">{{ $saved['name'] }}</button>

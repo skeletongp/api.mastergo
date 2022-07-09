@@ -23,6 +23,7 @@ class CreateProduct extends Component
     protected $rules = [
         'form.name' => 'required|string|max:35',
         'form.type' => 'required|string|max:35',
+        'form.origin' => 'required|string|max:35',
         'unitSelected' => 'required|min:1',
         'placeSelected' => 'required|min:1'
 
@@ -42,6 +43,8 @@ class CreateProduct extends Component
         $num=$store->products()->count()+1;
         $code=str_pad($num,3,'0', STR_PAD_LEFT);
         $this->form['code']=$code;
+        $this->form['type']='Producto';
+        $this->form['origin']='Comprado';
         array_push($this->placeSelected, auth()->user()->place->id);
     }
     public function render()
@@ -141,8 +144,7 @@ class CreateProduct extends Component
         $this->validate([
             'photo'=>'image|max:2048'
         ]);
-        $ext = pathinfo($this->photo->getFileName(), PATHINFO_EXTENSION);
-        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        $path = cloudinary()->upload($this->photo->getRealPath(),
         [
             'folder' => 'carnibores/avatars',
             'transformation' => [

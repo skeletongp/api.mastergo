@@ -11,6 +11,7 @@ class LastSales extends LivewireDatatable
 {
     public $perPage=5;
     public $headTitle="Últimas ventas";
+    public $padding="px-2";
     public function builder()
     {
         $invoices=auth()->user()->place->invoices()->where('created_at', '>=', Carbon::now()->subWeek())

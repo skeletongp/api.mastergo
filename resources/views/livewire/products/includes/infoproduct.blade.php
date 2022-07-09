@@ -14,9 +14,9 @@
             <div>
                 <div class="space-y-2 pt-7">
                     <label class="font-medium">Descripción del producto</label>
-                    <textarea rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
-                        placeholder="Breve descripción del producto" id="form.description"
-                        wire:model.defer="form.description"></textarea>
+                    <textarea rows="2"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
+                        placeholder="Breve descripción del producto" id="form.description" wire:model.defer="form.description"></textarea>
                 </div>
                 <x-input-error for="form.description"></x-input-error>
             </div>
@@ -45,33 +45,31 @@
             <hr>
         </div>
         <div class="flex space-x-4 col-span-3">
-            <div class="w-full">
-                <x-base-select wire:model.defer="form.type" label="Tipo de producto">
-                    <option value=""></option>
-                    <option  value="Producto" >Producto</option>
-                    <option value="Servicio" >Servicio</option>
-                </x-base-select>
-            <x-input-error for="form.type"></x-input-error>
+            <div class="flex space-x-4 w-full">
+                <div class="w-full">
+                    <x-base-select wire:model.defer="form.type" label="Tipo de producto">
+                        <option value="Producto">Producto</option>
+                        <option value="Servicio">Servicio</option>
+                    </x-base-select>
+                    <x-input-error for="form.type"></x-input-error>
+                </div>
+                <div class="w-full">
+                    <x-base-select wire:model.defer="form.origin" label="Origen del producto">
+                        <option value="Comprado">Comprado</option>
+                        <option value="Procesado">Procesado</option>
+                    </x-base-select>
+                </div>
             </div>
-            <div class="w-full">
-                <label for="photo" class="flex items-center space-x-4 pb-4 cursor-pointer">
+            <div class="h-full flex items-end ">
+                <label for="photo" class="flex items-center space-x-4  cursor-pointer ">
                     <span class="fas fa-image text-xl"></span>
-                    <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">Imagen</span>
-                    @if ($photo)
-                        <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
-                            {{ formatNumber($photo->getSize() / 1024) }} KB</span>
-                    @endif
+                    <span class="shadow-sm rounded-xl hover:bg-gray-100  px-4 py-2.5">{{$photo?$photo->getBaseName():'Imagen'}}</span>
                     <input wire:model="photo" type="file" class="hidden" name="photo" id="photo"
                         accept="image/png, image/gif, image/jpeg">
                 </label>
-                <hr>
                 <x-input-error for="photo" />
             </div>
-            @if ($photo)
-                <div class="w-12 h-12 rounded-full bg-cover bg-center"
-                    style="background-image: url({{ $photo->temporaryUrl() }})">
-                </div>
-            @endif
+          
             <div class="">
                 <x-button class="space-x-2 z-50 text-sm flex items-center" wire:target="photo" wire:loading>
                     <div class="animate-spin">
@@ -86,10 +84,12 @@
 </form>
 <div class=" bottom-0 absolute w-full">
     <div class="p-2 pr-0 flex justify-between w-full">
-        <x-button wire:click="$set('activeTab','infoproduct')" disabled="{{$activeTab=='infoproduct'}}" class="uppercase disabled:bg-gray-200 text-xs" >
+        <x-button wire:click="$set('activeTab','infoproduct')" disabled="{{ $activeTab == 'infoproduct' }}"
+            class="uppercase disabled:bg-gray-200 text-xs">
             Anterior
         </x-button>
-        <x-button wire:click="$set('activeTab','unitsproduct')" disabled="{{$activeTab=='cantproduct'}}" class="uppercase disabled:bg-gray-200 text-xs"  >
+        <x-button wire:click="$set('activeTab','unitsproduct')" disabled="{{ $activeTab == 'cantproduct' }}"
+            class="uppercase disabled:bg-gray-200 text-xs">
             Siguiente
         </x-button>
     </div>

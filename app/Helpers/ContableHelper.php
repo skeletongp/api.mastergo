@@ -55,17 +55,10 @@ function setContable($model, String $code, String $origin, $name = null, $place_
 }
 function setTransaction($concept, $ref, $amount, $debitable, $creditable, $otherPermission=null)
 {
-    //dd($concept, $ref, $amount, $debitable, $creditable, $otherPermission);
     $canCreate=auth()->user()->hasPermissionTo('Registrar Asientos');
     $income=$amount;
     $outcome=$amount;
-    if ($debitable && $debitable->currency && $debitable->currency != 'DOP') {
-        $outcome=$amount*Cache::get('currency');
-        $amount=$amount*Cache::get('currency');
-    } else if($creditable && $creditable->currency && $creditable->currency != 'DOP'){
-        $income=$amount*Cache::get('currency');
-        $amount=$amount*Cache::get('currency');
-    }
+   
     $canOther= $otherPermission?auth()->user()->hasPermissionTo($otherPermission):false;
     if ($amount > 0 && ($canCreate || $canOther)) {
         $trans = Transaction::create([

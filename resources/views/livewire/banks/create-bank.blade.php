@@ -1,7 +1,7 @@
 <div>
     <x-modal  :fitV="false"  title="Nueva Cuenta de Banco"  maxWidth="max-w-xl">
         <x-slot name="button">
-            Nueva Cuenta
+            Nuevo Banco
         </x-slot>
         <div class="w-full">
             <form action="" wire:submit.prevent="createBank">

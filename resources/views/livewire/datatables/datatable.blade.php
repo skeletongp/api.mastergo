@@ -1,17 +1,17 @@
-<div>
+<div class="max-w-lg md:max-w-7xl">
     @includeIf($beforeTableSlot)
     <div class="relative">
         <div class="flex items-center justify-between mb-1">
             @if ($this->searchableColumns()->count())
                 <div class="flex items-center h-10">
-                    <div class="flex rounded-lg  shadow-sm" style="width: 28rem">
+                    <div class="flex rounded-lg  shadow-sm w-48 lg:w-[24rem]" >
                         <div class="relative flex-grow focus-within:z-10">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <span class="fas fa-search text-xl text-gray-300"></span>
                             </div>
                             <input wire:model.debounce.500ms="search"
-                                class="block w-full py-3 pl-10 text-sm border-gray-300 leading-4 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none"
-                                placeholder="{{ __('Buscar por: ') }} {{ $this->searchableColumns()->map->label->join(', ') }}"
+                                class="block w-full py-3 px-10 text-sm border-gray-300 leading-4 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none"
+                                placeholder="{{ellipsis( $this->searchableColumns()->map->label->join(', '),30) }}"
                                 type="text" />
                             <div class="absolute inset-y-0 right-0 flex items-center pr-2">
                                 <button wire:click="$set('search', null)"
@@ -237,7 +237,7 @@
                     @if (count($this->results))
                         <div class="flex items-center my-2 sm:my-0">
                             <x-base-select name="perPage" label=""
-                                class="block w-full py-2 pl-3  mt-1 mr-2 text-base border-gray-300 form-select leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                                class="block w-full max-w-[6rem] py-2 pl-3  mt-1 mr-2 text-base border-gray-300 form-select leading-6 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
                                 wire:model="perPage">
                                 @foreach (config('livewire-datatables.per_page_options', [10, 25, 50, 100]) as $per_page_option)
                                     <option value="{{ $per_page_option }}">{{ $per_page_option }}</option>

@@ -7,46 +7,45 @@
         <div>
             <form
                 wire:submit.prevent="authorize('¿Autoriza crear esta transacción?', 'validateAuthorization','createTransaction',null,'Crear Transacciones')">
-
+                @php
+                    
+                    asort($countMains)
+                @endphp
                 <h1 class="text-lg font-bold uppercase my-2">Débito</h1>
                 <div class="flex space-x-4 items-start">
                     <div class="w-full">
-                        <x-base-select id="cMainDebit_id" wire:model="cMainDebit_id" label="Cuenta Principal">
-                            <option></option>
+                        <x-datalist inputId="cMainDebit_id" listName="cMainDebit_idList" model="cMainDebit_id" label="Cuenta Control">
                             @foreach ($countMains as $id => $cMain)
-                                <option value="{{ $id }}">{{ $cMain }}</option>
+                                <option data-value="{{ $id }}" value="{{ $cMain }}"></option>
                             @endforeach
-                        </x-base-select>
+                        </x-datalist>
                         <x-input-error for="cMainDebit_id"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-base-select id="cDetailDebit_id" wire:model="cDetailDebit_id" label="Cuenta Detalle">
-                            <option></option>
+                        <x-datalist inputId="cDetailDebit_id" model="cDetailDebit_id" listName="cDetailDebit_idList" label="Cuenta Detalle">
                             @foreach ($countsDebit as $idDebit => $cDebit)
-                                <option value="{{ $idDebit }}">{{ $cDebit }}</option>
+                                <option data-value="{{ $idDebit }}" value="{{ $cDebit }}"></option>
                             @endforeach
-                        </x-base-select>
+                        </x-datalist>
                         <x-input-error for="cDetailDebit_id"></x-input-error>
                     </div>
                 </div>
                 <h1 class="text-lg font-bold uppercase my-2 mt-4">Crédito</h1>
                 <div class="flex space-x-4 items-start">
                     <div class="w-full">
-                        <x-base-select id="cMainCredit_id" wire:model="cMainCredit_id" label="Cuenta Principal">
-                            <option></option>
+                        <x-datalist inputId="cMainCredit_id" listName="cMainCredit_idList" model="cMainCredit_id" label="Cuenta Control">
                             @foreach ($countMains as $id => $cMain)
-                                <option value="{{ $id }}">{{ $cMain }}</option>
+                                <option data-value="{{ $id }}" value="{{ $cMain }}"></option>
                             @endforeach
-                        </x-base-select>
+                        </x-datalist>
                         <x-input-error for="cMainCredit_id"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-base-select id="cDetailCredit_id" wire:model="cDetailCredit_id" label="Cuenta Detalle">
-                            <option></option>
+                        <x-datalist inputId="cDetailCredit_id" listName="cDetailCredit_idList" model="cDetailCredit_id" label="Cuenta Detalle">
                             @foreach ($countsCredit as $idCredit => $cCredit)
-                                <option value="{{ $idCredit }}">{{ $cCredit }}</option>
+                                <option data-value="{{ $idCredit }}" value="{{ $cCredit }}"></option>
                             @endforeach
-                        </x-base-select>
+                        </x-datalist>
                         <x-input-error for="cDetailCredit_id"></x-input-error>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('ref');
             $table->date('day');
             $table->decimal('income',14,4);
-            $table->decimal('currency_rate',14,4);
+            $table->decimal('currency_rate',14,4)->default(1);
             $table->foreignId('debitable_id')->references('id')->on('counts')->constrained();
             $table->decimal('outcome',14,4);
             $table->foreignId('creditable_id')->references('id')->on('counts')->constrained();

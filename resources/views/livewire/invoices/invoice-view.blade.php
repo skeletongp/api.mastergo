@@ -38,8 +38,9 @@
                             </button>
                         @endcan
                     </div>
-                    <div class=" mx-auto relative " style=" height:70vh; width:80mm">
-                        @include('livewire.invoices.includes.show')
+                    <div class=" mx-auto relative w-full" >
+                        <iframe src="{{ $invoice->pdf->pathLetter }}#view=FitH" width="700" height="700" type="application/pdf">
+                        </iframe>
                     </div>
                 </div>
             @else

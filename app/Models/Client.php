@@ -76,7 +76,7 @@ class Client extends Model implements Searchable
     }
     public function getNameAttribute()
     {
-        return  $this->attributes['name'] ?: $this->contact->fullname;
+        return  $this->attributes['name'] ?: ($this->contact->fullname ?? 'Si nombre');
     }
     public function contable()
     {

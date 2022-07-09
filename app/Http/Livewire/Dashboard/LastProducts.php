@@ -13,6 +13,7 @@ class LastProducts extends LivewireDatatable
 {
     public $headTitle = "Productos más vendidos";
     public $perPage=5;
+    public $padding="px-2";
     public function builder()
     {
         $details = auth()->user()->place->details()

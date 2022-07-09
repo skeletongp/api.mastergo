@@ -19,7 +19,7 @@ class Transaction extends Model
     public static function boot(){
         parent::boot();
         static::creating(function($model){
-            $model->currency_rate=Cache::get('currency');
+            $model->currency_rate=Cache::get('currency')?:1;
         });
     }
 

@@ -3,7 +3,7 @@
     <div x-cloak class=" z-50 mx-auto ">
 
         <div
-            class=" overflow-y-auto overflow-x-hidden  w-full z-50 justify-center items-center md:h-full md:inset-0  mx-auto ">
+            class=" overflow-y-auto overflow-x-hidden  w-full z-50 justify-center items-center lg:h-full lg:inset-0  mx-auto ">
             <div class="relative  rounded-lg min-w-full  dark:bg-gray-700 ">
                 <div class="flex justify-between items-center py-4 px-6 rounded-t border-b dark:border-gray-600">
                     <h3 class="text-base font-semibold text-gray-900 lg:text-xl dark:text-white">

@@ -1,0 +1,211 @@
+[
+    {
+        "code": "001",
+        "name": "Asesoría de Tesis/Monográficos",
+        "price_mayor": "17500",
+        "price_menor": "20000",
+        "min": "4",
+        "cost": "10000",
+        "type":"Producto",
+        "unit_id":"1",
+        "origin":"Comprado"
+    },
+    {
+        "code": "002",
+        "name": "Anteproyecto de Tesis/Monográficos",
+        "price_mayor": "1750",
+        "price_menor": "2500",
+        "min": "4",
+        "cost": "1000",
+        "type":"Producto",
+        "unit_id":"1",
+        "origin":"Comprado"
+    },
+    {
+        "code": "003",
+        "name": "Empastado Tapa Dura",
+        "price_mayor": "225",
+        "price_menor": "275",
+        "min": "6",
+        "cost": "175",
+        "type":"Producto",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "004",
+        "name": "Impresión Negro Bond",
+        "price_mayor": "3.5",
+        "price_menor": "5",
+        "min": "50",
+        "cost": "2.5",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "005",
+        "name": "Impresión Color Bond",
+        "price_mayor": "7.5",
+        "price_menor": "10",
+        "min": "35",
+        "cost": "5.5",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "006",
+        "name": "Impresión Mixta Bond",
+        "price_mayor": "6",
+        "price_menor": "8",
+        "min": "40",
+        "cost": "4",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "007",
+        "name": "Impresión Negro Hilo/Satinado/Cartonite 8.5*11",
+        "price_mayor": "10",
+        "price_menor": "15",
+        "min": "25",
+        "cost": "8",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "008",
+        "name": "Impresión Color Hilo/Satinado/Cartonite 8.5*11",
+        "price_mayor": "20",
+        "price_menor": "25",
+        "min": "20",
+        "cost": "10",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "009",
+        "name": "Impresión Negro 11*17 Normal",
+        "price_mayor": "8",
+        "price_menor": "12",
+        "min": "20",
+        "cost": "7.5",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "010",
+        "name": "Impresión Color 11*17 Normal",
+        "price_mayor": "15",
+        "price_menor": "20",
+        "min": "20",
+        "cost": "10",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "011",
+        "name": "Impresión Negro 11*17 Cartonite/Satinado",
+        "price_mayor": "15",
+        "price_menor": "20",
+        "min": "20",
+        "cost": "12",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "012",
+        "name": "Impresión Color 11*17 Cartonite/Satinado",
+        "price_mayor": "25",
+        "price_menor": "30",
+        "min": "20",
+        "cost": "17",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "013",
+        "name": "Encuadernación Espiral Continuo",
+        "price_mayor": "55",
+        "price_menor": "60",
+        "min": "5",
+        "cost": "40",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "014",
+        "name": "Encuadernación Espiral Normal",
+        "price_mayor": "50",
+        "price_menor": "55",
+        "min": "55",
+        "cost": "45",
+        "type":"Servicio",
+        "unit_id":"2",
+        "origin":"Comprado"
+    },
+    {
+        "code": "015",
+        "name": "Desarrollo de Página Web Informativa",
+        "price_mayor": "13500",
+        "price_menor": "15500",
+        "min": "10",
+        "cost": "0",
+        "type":"Servicio",
+        "unit_id":"3",
+        "origin":"Comprado"
+    },
+    {
+        "code": "016",
+        "name": "Desarrollo Sistema de Gestión",
+        "price_mayor": "22500",
+        "price_menor": "25000",
+        "min": "80",
+        "cost": "10",
+        "type":"Servicio",
+        "unit_id":"3",
+        "origin":"Comprado"
+    },
+    {
+        "code": "017",
+        "name": "Desarrollo de Página Web con Base de Datos",
+        "price_mayor": "15000",
+        "price_menor": "18000",
+        "min": "10",
+        "cost": "0",
+        "type":"Servicio",
+        "unit_id":"3",
+        "origin":"Comprado"
+    },
+    {
+        "code": "018",
+        "name": "Configuración de Correo Empresarial",
+        "price_mayor": "5000",
+        "price_menor": "6500",
+        "min": "3",
+        "cost": "0",
+        "type":"Servicio",
+        "unit_id":"3",
+        "origin":"Comprado"
+    },
+    {
+        "code": "019",
+        "name": "Instalación de Software de Terceros",
+        "price_mayor": "2500",
+        "price_menor": "3500",
+        "min": "4",
+        "cost": "0",
+        "type":"Servicios",
+        "unit_id":"2",
+        "origin":"Comprado"
+    }
+]

@@ -28,7 +28,7 @@ class CreateTransaction extends Component
         $this->countMains = CountMain::select(
             DB::raw('CONCAT(code," - ",name) AS name'),
             'id'
-        )->pluck('name', 'id');
+        )->orderBy('code')->pluck('name', 'id')->toArray();
     }
 
     public function render()

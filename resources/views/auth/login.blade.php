@@ -11,9 +11,9 @@
 
 <body>
     <div class="flex items-center min-h-screen bg-gray-50">
-        <div class="flex-1 h-full md:max-h-[30rem] max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
-            <div class="flex flex-col md:flex-row ">
-                <div class="h-full md:h-auto md:w-1/2 bg-teal-700 text-gray-100 grid grid-cols-2 gap-6 p-6">
+        <div class="flex-1 h-full lg:max-h-[30rem] max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
+            <div class="flex flex-col lg:flex-row ">
+                <div class="h-full lg:h-auto lg:w-1/2 bg-teal-700 text-gray-100 grid grid-cols-2 gap-6 p-6">
                     <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
                         <span class="fas fa-chart-bar text-7xl"></span>
                         Estadísticas
@@ -39,7 +39,7 @@
                         Inventario
                     </div>
                 </div>
-                <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <div class="flex items-center justify-center p-6 sm:p-12 lg:w-1/2">
                     <form class="w-full" action="{{ route('login.store') }}" method="POST">
                         @csrf
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CountMain extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $guarded=[];
 protected $connection="mysql";
     const CLASE=[
         '1'=>'Activo',

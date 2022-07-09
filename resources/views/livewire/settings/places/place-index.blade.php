@@ -34,7 +34,7 @@
                         </th>
                         <th scope="row"
                             class="px-6 py-2 font-medium text-gray-900 dark:text-white whitespace-normal   cursor-pointer">
-                            <div class="w-32 md:w-60 overflow-hidden overflow-ellipsis whitespace-nowrap">
+                            <div class="w-32 lg:w-60 overflow-hidden overflow-ellipsis whitespace-nowrap">
                                 {{ optional($place->user)->fullname?:'No Asignado' }}
                             </div>
                         </th>

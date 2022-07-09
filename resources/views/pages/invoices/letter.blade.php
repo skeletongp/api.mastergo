@@ -218,7 +218,7 @@
                         <tr>
                             <td colspan="2" style="border-right: .3px solid #ccc; border-bottom: .3px solid #ccc; ">
                                 <div>
-                                    {!! $invoice->ncf ? '<b>NCF:' . $payment->ncf . '</b> <br />' : '' !!}
+                                    {!! $payment->ncf ? '<b>NCF: ' . $payment->ncf . '</b> <br />' : '' !!}
                                     <b>Fact. Nº. </b>{{ $invoice->number }}<br />
                                     <b>Fecha:</b> {{ date_format(date_create($invoice->day), 'd/m/Y') }}<br />
                                     <b>Vence:</b>
@@ -231,8 +231,8 @@
                             <td colspan="2" style="border-bottom: .3px solid #ccc; ">
                                 <div style="text-align:right; ">
                                     <b>{{ 'DIRIGIDA A:' }}</b> <br>
-                                    {{ $invoice->client->fullname }}<br />
-                                    {!! $invoice->client->RNC ? '<b>RNC /CED:</b> ' . $invoice->client->RNC . '<br />' : '' !!}
+                                    {{ $invoice->name?:($invoice->client->name?:$invoice->client->contact->fullname) }}<br />
+                                    {!! $invoice->rnc?:($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
                                     <b>TEL:</b> {{ $invoice->client->phone }} <br>
                                     {{ $invoice->client->address ?: 'Dirección N/D' }}
                                 </div>
@@ -332,18 +332,16 @@
                 </td>
             </tr>
             @if ($invoice->comprobante)
-                @foreach ($invoice->taxes as $tax)
                     <tr class="total" style="line-height: 14px">
                         <td colspan="2" style="padding-top:-10px"></td>
                         <td style="text-align: right; padding-top:-10px">
-                            {{ $tax->name }}
+                            {{ __('ITBIS') }}
 
                         </td>
                         <td style="text-align: right; padding-top:-10px">
-                            ${{ \formatNumber($tax->pivot->amount) }}
+                            ${{ \formatNumber($payment->tax) }}
                         </td>
                     </tr>
-                @endforeach
 
 
             @endif

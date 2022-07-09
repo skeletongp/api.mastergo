@@ -66,10 +66,7 @@ class CreateInvoice extends Component
         $this->setProduct($this->product_code);
         $this->invoice=null;
     }
-    public function updated()
-    {
-        $this->freshUnitId();
-    }
+    
    
    
     public function refresh()

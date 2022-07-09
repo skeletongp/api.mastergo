@@ -1,5 +1,19 @@
 <div class="w-full flex  items-start">
-
+    @slot('rightButton')
+        <div class="flex space-x-4 items-center">
+            @livewire('cheques.create-cheque')
+            @livewire('banks.create-bank')
+            @livewire(
+                'contables.create-count',
+                [
+                    'model' => null,
+                    'chooseModel' => true,
+                    'codes' => App\Models\CountMain::get()->pluck('code')->toArray(),
+                ],
+                key(uniqid()),
+            )
+        </div>
+    @endslot
     <div class="  sticky top-24 pt-8 " style="width: 34rem; max-width: 34rem">
         <div
             class="w-full text-lg font-medium text-gray-900  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white ">
@@ -22,6 +36,12 @@
                 <span class=" text-lg">Cheques</span>
                 <hr>
             </div>
+            <div wire:click="changeView('finances.por-cobrar')" id="divBank"
+                class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.por-cobrar' ? 'bg-blue-100' : '' }}">
+                <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
+                <span class=" text-lg">Ctas. Por Cobrar</span>
+                <hr>
+            </div>
             <div wire:click="changeView('finances.por-pagar')" id="divBank"
                 class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.por-pagar' ? 'bg-blue-100' : '' }}">
                 <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
@@ -41,30 +61,31 @@
 
         @switch($componentName)
             @case('banks.bank-list')
-                @slot('rightButton')
-                    @livewire('banks.create-bank')
-                @endslot
                 <div class="max-w-xl mx-auto">
                     @livewire($componentName)
                 </div>
             @break
+
             @case('cheques.cheque-list')
-                @slot('rightButton')
-                    @livewire('cheques.create-cheque')
-                @endslot
                 <div class=" mx-auto">
                     @livewire($componentName)
                 </div>
             @break
+
+            @case('finances.por-cobrar')
+                <div class=" mx-auto">
+                    @livewire($componentName)
+                </div>
+            @break
+
             @case('finances.por-pagar')
-           
-            <div class=" mx-auto">
-                @livewire($componentName)
-            </div>
-        @break
-           
+                <div class=" mx-auto">
+                    @livewire($componentName)
+                </div>
+            @break
+
             @default
         @endswitch
     </div>
-   
+
 </div>

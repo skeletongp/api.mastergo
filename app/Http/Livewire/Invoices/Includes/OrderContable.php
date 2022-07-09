@@ -45,7 +45,7 @@ trait OrderContable
                 $toTax =  $place->check();
                 break;
             case 2:
-                setTransaction('Reg. venta de productos Ref. Nº. ' . $ref, $this->reference, ($moneys[$max] - $payment->tax * $rp), $this->bank->contable()->first(), $creditable, 'Cobrar Facturas');
+                setTransaction('Reg. venta de productos Ref. Nº. ' . $ref, $this->reference, ($moneys[$max] - $payment->tax )* $rp, $this->bank->contable()->first(), $creditable, 'Cobrar Facturas');
                 setTransaction('Reg. venta de servicios Ref. Nº. ' . $ref, $this->reference, ($moneys[$max] - $payment->tax) * $rs, $this->bank->contable()->first(), $ingresos_service, 'Cobrar Facturas');
                 $toTax =  $this->bank->contable()->first();
                 break;

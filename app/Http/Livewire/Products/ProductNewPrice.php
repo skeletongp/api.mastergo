@@ -34,7 +34,8 @@ class ProductNewPrice extends Component
         $this->validate($this->rules);
        foreach ($this->form as $key => $data) {
         $data['place_id'] = auth()->user()->place->id;
-        $data['margin'] = $data['price_menor']/$data['cost']-1;
+        $cost=$data['cost']?:0.0001;
+        $data['margin'] = $data['price_menor']/$cost-1;
         $data['stock']=0;
         $this->product->units()->attach(
             $key,

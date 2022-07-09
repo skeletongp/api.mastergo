@@ -5,7 +5,7 @@
             class="block text-base  font-medium text-gray-900 dark:text-gray-300">{{ $label }}</label>
     @endif
     <x-base-input label="" type="text" id="{{ $inputId }}" list="{{ $listName }}" onfocus="this.value=''"
-        {{ $attributes}} />
+        {{ $attributes }} />
     <datalist id="{{ $listName }}">
         {{ $slot }}
     </datalist>
@@ -17,6 +17,17 @@
             });
             id = '{{ $inputId }}';
             input = $('#' + id);
+                Livewire.hook('element.updated', (el, component) => {
+                    id = '{{ $inputId }}';
+                    input = $('#' + id);
+                    list = '{{ $listName }}';
+                    model = '{{ $model }}';
+                    if (model && model!='product_name') {
+                        setValue = $('#' + list + ' [data-value="' + @this.get(model) + '"]').val();
+                        input.val(setValue);
+                        return;
+                    }
+                })
             input.on('change', function() {
                 value = $(this).val();
                 list = '{{ $listName }}';

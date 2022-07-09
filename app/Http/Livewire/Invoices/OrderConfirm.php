@@ -22,12 +22,16 @@ class OrderConfirm extends Component
     public function mount($invoice)
     {
         $store = auth()->user()->store;
+        $user=auth()->user();
         $this->form = $invoice;
         $this->banks=$store->banks()->pluck('bank_name','id');
         unset($invoice['payment']['id']);
         $this->form = array_merge($this->form, $invoice['payment']);
         if ($invoice['client']['debt']>0 || $invoice['condition']!='De Contado') {
            $this->cobrable=false;
+        }
+        if ($user->hasRole('Administrador')) {
+            $this->cobrable=true;
         }
         if ($invoice['condition'] == 'De Contado' && $this->cobrable) {
             $this->form['efectivo'] = $this->form['rest'];

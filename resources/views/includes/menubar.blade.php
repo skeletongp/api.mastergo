@@ -1,10 +1,13 @@
-<aside class=" h-full   hidden md:block " aria-label="Sidebar">
-    <div class="h-full py-4 px-3 pl-4 bg-gray-50 rounded dark:bg-gray-800">
-        <ul class=" h-full space-y-0 flex justify-between space-x-4">
+<aside class=" h-full    " aria-label="Sidebar">
+    <div class="h-full max-w-7xl relative py-4 px-3 pl-4 bg-gray-50 rounded dark:bg-gray-800">
+        <div class="absolute lg:hidden top-2 right-2">
+            <x-button id="btnToggleMenu">
+                <span id="spanToggleMenu" class="fas fa-bars"></span>
+            </x-button>
+        </div>
+        <ul class=" h-full  space-y-0 flex justify-between space-x-4">
             <div>
                 <li>
-
-
                     <x-dropdown alignmentClasses="left">
                         <x-slot name="trigger">
                             <div
@@ -24,8 +27,8 @@
                                     <livewire:general.toggle-place />
                                 </div>
                             @endif
-                            {{-- <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
-                                activeRoute="prueba.*" scope="" /> --}}
+                            <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
+                                activeRoute="prueba.*" scope="" />
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
@@ -39,7 +42,7 @@
 
             </div>
 
-            <ul class="flex space-x-4">
+            <ul class=" lg:space-x-4 flex-col lg:flex-row bg-white lg:bg-transparent px-2 py-1 lg:px-0 lg:py-0 absolute lg:relative right-2 top-16 hidden lg:flex lg:top-0"  id="ulToggleMenu">
                 @scopeanny(['Usuarios', 'Clientes', 'Proveedores'])
                     @canany(['Ver Usuarios', 'Ver Clientes', 'Ver Proveedores'])
                         <x-dropitem text="Contactos" icon="far fa-users" :routes="['users.*', 'clients.*', 'providers.*']">
@@ -164,4 +167,14 @@
             </ul>
         </ul>
     </div>
+    @push('js')
+        <script>
+            $(document).ready(function () {
+                $('#btnToggleMenu').click(function(){
+                   $('#ulToggleMenu').toggle('translate-x-96');
+                   $('#spanToggleMenu').toggleClass('fa-times fa-bars');
+                });
+            });
+        </script>
+    @endpush
 </aside>

@@ -1,152 +1,170 @@
 [
     {
-     "code": "100",
-     "name": "EFECTIVO EN CAJA Y BANCO",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "100",
+        "name": "EFECTIVO EN CAJA Y BANCO",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "101",
-     "name": "CUENTAS POR COBRAR CLIENTES",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "101",
+        "name": "CUENTAS POR COBRAR CLIENTES",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "102",
-     "name": "CUENTAS POR COBRAR EMPLEADOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "102",
+        "name": "CUENTAS POR COBRAR EMPLEADOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "103",
-     "name": "IMPUESTOS POR COBRAR",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "103",
+        "name": "IMPUESTOS POR COBRAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "104",
-     "name": "INVENTARIOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "104",
+        "name": "INVENTARIOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "110",
-     "name": "FIANZAS Y DEPÓSITOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "105",
+        "name": "PRÉSTAMOS POR COBRAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "111",
-     "name": "GASTOS ANTICIPADOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "106",
+        "name": "OTRAS CUENTAS POR COBRAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "120",
-     "name": "PROPIEDADES",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "110",
+        "name": "FIANZAS Y DEPÓSITOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "121",
-     "name": "DEPRECIACIÓN ACUMULADA",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "111",
+        "name": "GASTOS ANTICIPADOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "200",
-     "name": "CUENTAS POR PAGAR PROVEEDORES",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "120",
+        "name": "PROPIEDADES",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "201",
-     "name": "CUENTAS POR PAGAR EMPLEADOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "121",
+        "name": "DEPRECIACIÓN ACUMULADA",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
+    },
+    {
+        "code": "200",
+        "name": "CUENTAS POR PAGAR PROVEEDORES",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
+    },
+    {
+        "code": "201",
+        "name": "CUENTAS POR PAGAR EMPLEADOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
         "code": "202",
         "name": "PRÉSTAMOS POR PAGAR",
         "created_at": "2022-21-04 17:18:16",
         "updated_at": "2022-21-04 17:18:16"
-       },
-    {
-     "code": "203",
-     "name": "IMPUESTOS POR PAGAR",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "204",
-     "name": "RETENCIONES POR PAGAR",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "203",
+        "name": "IMPUESTOS POR PAGAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "210",
-     "name": "DOCUMENTOS POR PAGAR",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "204",
+        "name": "RETENCIONES POR PAGAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "211",
-     "name": "PRÉSTAMOS HIPOTECARIOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "205",
+        "name": "OTRAS CUENTAS POR PAGAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "300",
-     "name": "CAPITAL SOCIAL",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "210",
+        "name": "DOCUMENTOS POR PAGAR",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "400",
-     "name": "INGRESOS POR VENTAS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "211",
+        "name": "PRÉSTAMOS HIPOTECARIOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "401",
-     "name": "DESC. Y DEV. EN VENTAS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "300",
+        "name": "CAPITAL SOCIAL",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "402",
-     "name": "OTROS INGRESOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "400",
+        "name": "INGRESOS POR VENTAS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "500",
-     "name": "COSTOS DE OPERACIÓN",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "401",
+        "name": "DESC. Y DEV. EN VENTAS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "501",
-     "name": "DESC. Y DEV. EN COMPRAS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "402",
+        "name": "OTROS INGRESOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "600",
-     "name": "GASTOS ADMINISTRATIVOS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "500",
+        "name": "COSTOS DE OPERACIÓN",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "601",
-     "name": "GASTOS DE VENTAS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "501",
+        "name": "DESC. Y DEV. EN COMPRAS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     },
     {
-     "code": "602",
-     "name": "GASTOS FINANCIEROS",
-     "created_at": "2022-21-04 17:18:16",
-     "updated_at": "2022-21-04 17:18:16"
+        "code": "600",
+        "name": "GASTOS ADMINISTRATIVOS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
+    },
+    {
+        "code": "601",
+        "name": "GASTOS DE VENTAS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
+    },
+    {
+        "code": "602",
+        "name": "GASTOS FINANCIEROS",
+        "created_at": "2022-21-04 17:18:16",
+        "updated_at": "2022-21-04 17:18:16"
     }
-   ]
+]

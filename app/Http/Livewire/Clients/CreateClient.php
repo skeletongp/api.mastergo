@@ -71,7 +71,7 @@ class CreateClient extends Component
         if (array_key_exists('rnc', $this->form)) {
             $rnc=str_replace('-', '', $this->form['rnc']);
             $client = getApi('contribuyentes/' . $rnc);
-            if (array_key_exists('model', $client)) {
+            if ($client && array_key_exists('model', $client)) {
                 $client = $client['model'];
                 if (strlen($rnc) == 9){
                     $this->form['name'] = $client['name'];

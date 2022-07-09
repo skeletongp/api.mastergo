@@ -1,5 +1,5 @@
-<section class="py-4 md:px-2 border text-xs bg-white md:font-bold w-[80mm] mx-auto" translate="no">
-    <div id="div" class="0 px-1 md:px-3 relative bg-white">
+<section class="py-4 lg:px-2 border text-xs bg-white lg:font-bold w-[80mm] mx-auto" translate="no">
+    <div id="div" class="0 px-1 lg:px-3 relative bg-white">
         <div class="h-3 w-full bg-gray-500 mb-2 "></div>
 
         <div class="p-4 border-b text-center flex flex-col">

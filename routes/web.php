@@ -18,7 +18,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
-
+use App\Models\CountMain;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -130,7 +131,29 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('prueba', function () {
+    $place = auth()->user()->place;
+    $invoices = $place->invoices;
+    $invoice = $invoices->find(3);
+    $data = [
+        'invoice' => $invoice->load('details', 'payments', 'client', 'seller', 'contable'),
+        'payment' => $invoice->payment
+    ];
+    $PDF = App::make('dompdf.wrapper');
+    $pdf = $PDF->loadView('pages.invoices.letter', $data);
+    file_put_contents('storage/invoices/' . $invoice->number . '_' . date('YmdH') . '_letter.pdf', $pdf->output());
+    $path = asset('storage/invoices/' . $invoice->number . '_' . date('YmdH') . '_letter.pdf');
+    $pdf = [
+        'note' => 'PDF Fact. Nº. ' . $invoice->number,
+        'pathLetter' => $path,
+    ];
 
-    
-    
+    $invoice->pdf()->updateOrCreate(
+        ['fileable_id' => $invoice->id],
+        $pdf
+    );
+    $payment = $invoice->payments()->orderBy('id', 'desc')->first();
+    $payment->pdf()->updateOrcreate(
+        ['fileable_id' => $payment->id],
+        $pdf
+    );
 })->name('prueba');

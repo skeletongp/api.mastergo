@@ -92,7 +92,7 @@ class CreateCount extends Component
         $class=get_class($instance);
         switch ($class) {
             case 'App\Models\Client':
-                return $instance->contact->fullname.' - '.$instance->name;
+                return $instance->contact->name.' - '.$instance->name;
             case 'App\Models\Bank':
                 return $instance->bank_name;
             case 'App\Models\Product':

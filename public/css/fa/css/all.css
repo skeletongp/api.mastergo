@@ -6636,7 +6636,7 @@ readers do not read off random characters that represent icons */
 .fa-user-lock:before {
   content: "\f502"; }
 
-.fa-user-md:before {
+.fa-user-lg:before {
   content: "\f0f0"; }
 
 .fa-user-md-chat:before {
@@ -12414,7 +12414,7 @@ readers do not read off random characters that represent icons */
 .fad.fa-user-lock:after {
   content: "\10f502"; }
 
-.fad.fa-user-md:after {
+.fad.fa-user-lg:after {
   content: "\10f0f0"; }
 
 .fad.fa-user-md-chat:after {

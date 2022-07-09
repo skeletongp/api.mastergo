@@ -37,7 +37,7 @@
 <body class=" antialised ">
     <div class="flex relative max-w-7xl mx-auto ">
 
-        <div class="w-full min-h-[50rem] ">
+        <div class="w-full  min-h-[25rem] lg:min-h-[50rem] ">
             <div class="sticky left-0 top-0  z-50 px-2" style="z-index: 80">
                 @include('includes.menubar')
             </div>
@@ -70,7 +70,10 @@
             </footer>
         </div>
     </div>
-
+  {{--   <div class="landscape:hidden">
+        <h1>Por favor, gire su pantalla para ustilizar el sistema</h1>
+    </div>
+ --}}
     {{-- <div class="flex justify-center items-center sm:hidden w-screen h-screen">
         <h1 class=" font-bold text-3xl uppercase text-center max-w-lg leading-12">Este tamaño de pantalla no es
             compatible. Utilice un monitor más

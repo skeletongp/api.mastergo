@@ -82,7 +82,7 @@
                     <x-input-error for="bank">Seleccione un Banco</x-input-error>
                 </div>
                 <div>
-                    <x-base-input class="text-sm py-4" type="text" wire:model.lazy="reference" label="No. Referencia"
+                    <x-base-input class="text-sm py-3" type="text" wire:model.lazy="reference" label="No. Referencia"
                         id="f{{ $form['id'] }}.reference" placeholder="Nº. Ref."></x-base-input>
                     <x-input-error for="reference">Requerido</x-input-error>
                 </div>

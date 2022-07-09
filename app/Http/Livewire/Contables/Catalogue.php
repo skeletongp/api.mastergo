@@ -14,7 +14,7 @@ class Catalogue extends LivewireDatatable
     public function builder()
     {
         $this->headTitle="Catálogo de Cuentas";
-        $controls=CountMain::with('counts');
+        $controls=CountMain::with('counts')->orderBy('code');
         return $controls;
     }
 

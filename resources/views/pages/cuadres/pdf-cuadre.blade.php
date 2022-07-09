@@ -191,7 +191,7 @@
                         {{ $payment->payer->rnc ?: '000-00000-0' }}
                     </td>
                     <td>
-                        {{ $payment->payable->name ?: $payment->payer->fullname }}
+                        {{ ellipsis($payment->payer->name,20) ?: ellipsis( $payment->payer->fullname,20) }}
                     </td>
                     <td style="width: 12%; text-align: left">
                         {{ ucfirst($payment->forma) }}
@@ -261,7 +261,7 @@
     @endif
     <table style="width: 40%; margin-top:35px;float: left; line-height:10px">
         <tr style="font-weight:bold">
-            <td colspan="2">
+            <td colspan="4">
                 + Disponible...
             </td>
             <td colspan="2">
@@ -271,7 +271,7 @@
         @foreach ($efectivos as $name => $balance)
             <tr style="">
                 <td colspan="4" style="padding-left: 15px">
-                    {{ str_replace('Efectivo en', '', $name) }}
+                    {{ ellipsis(str_replace('Efectivo en', '', $name),20) }}
                 </td>
                 <td colspan="2" style="font-size: small">
                     ${{ formatNumber($balance) }}

@@ -14,7 +14,7 @@ class PorPagar extends LivewireDatatable
         $place=auth()->user()->place;
         $porPagar=$place->counts()
         ->where('code','like','2%')
-        
+        ->where('balance','>',0)
         ;
         return $porPagar;
     }

@@ -41,10 +41,8 @@ class GeneralMayorTable extends LivewireDatatable
             })->label('Crédito')->enableSummary()->contentAlignRight(),
             Column::callback(['balance'], function($balance){
                 return "<span class='font-bold'>".'$'.formatNumber($balance)."</span>";
-            })->label('Balance (RD$)')->contentAlignRight(),
-            Column::callback(['balance_real'], function($balance_real){
-                return "<i class='font-bold'>".'$'.formatNumber($balance_real)."</i>";
-            })->label('Balance Real')->contentAlignRight(),
+            })->label('Balance ')->contentAlignRight(),
+          
         ];
     }
     public function summarize($column)

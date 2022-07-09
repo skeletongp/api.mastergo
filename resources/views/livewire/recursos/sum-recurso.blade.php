@@ -1,4 +1,4 @@
-    <div class="p-4 shadow-xl max-w-6xl w-full flex space-x-6 mx-auto">
+    <div class="p-4 shadow-xl max-w-6xl w-full flex flex-col space-y-4 justify-end items-start lg:flex-row lg:space-y-0 lg:space-x-4 lg:items-end lg:justify-start px-4 mx-auto">
         <div class="w-1/2">
             <form action="" wire:submit.prevent="addSelected">
                 <h1 class="my-4 font-bold text-xl text-center uppercase">Sumar stock de los recursos y condimentos</h1>

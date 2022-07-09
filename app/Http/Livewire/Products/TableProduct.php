@@ -14,7 +14,7 @@ class TableProduct extends LivewireDatatable
 {
     use AuthorizesRequests;
     public $padding = 'px-2 ';
-    public $hideable='select';
+    public $hideable = 'select';
     public function builder()
     {
         $products = auth()->user()->place->products()->orderBy('code')->whereNull('deleted_at');
@@ -33,7 +33,7 @@ class TableProduct extends LivewireDatatable
             Column::name('name')->label('Nombre')->searchable(),
             Column::callback(['type'], function ($type) {
                 return $type;
-            })->label('Tipo')->filterable(['Producto','Servicio'])->hide(),
+            })->label('Tipo')->filterable(['Producto', 'Servicio'])->hide(),
             Column::callback(['created_at', 'id'], function ($created, $id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
                 $data = '';
@@ -45,17 +45,13 @@ class TableProduct extends LivewireDatatable
                     $data = 'N/D';
                 }
                 return $data;
-              
             })->label('Stock'),
             Column::callback(['store_id', 'id'], function ($created, $id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
                 $data = '';
-                if ($result['type'] == 'Producto') {
-                    foreach ($result['units'] as $unit) {
-                        $data .= $unit['symbol'] . ' => ' .'$'. formatNumber($unit['pivot']['price_menor']) . '<br>';
-                    }
-                } else {
-                    $data = 'N/D';
+
+                foreach ($result['units'] as $unit) {
+                    $data .= $unit['symbol'] . ' => ' . '$' . formatNumber($unit['pivot']['price_menor']) . '<br>';
                 }
                 return $data;
             })->label('Precios'),
