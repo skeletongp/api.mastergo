@@ -36,17 +36,20 @@
 
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-[3.5rem]">
-                        <x-base-input placeholder="Cód." class=" border-none" type="number" 
-                            wire:model.lazy="product_code" id="code" label="" wire:keydown.enter="$emit('focusCant')">
+                        <x-base-input placeholder="Cód." class=" border-none" type="number"
+                            wire:model.lazy="product_code" id="code" label=""
+                            wire:keydown.enter="$emit('focusCant')">
                         </x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border  max-w-[12rem]">
                     <div class="w-48 max-w-[12rem] px-1">
-                        <x-datalist value="{{$product_name}}" class="border-none h-full" :inputId="'pr_name'"  model="product_name" type="text" placeholder="Producto"
-                            listName="pr_code_name" wire:keydown.enter.debounce.50ms="$emit('focusCant')">
+                        <x-datalist value="{{ $product_name }}" class="border-none h-full" :inputId="'pr_name'"
+                            model="product_name" type="text" placeholder="Producto" listName="pr_code_name"
+                            wire:keydown.enter.debounce.50ms="$emit('focusCant')">
                             @foreach ($products as $index => $prod)
-                                <option class="bg-gray-200 " value="{{  $index }} {{  $prod }}" data-value="{{$index}}">
+                                <option class="bg-gray-200 " value="{{ $index }} {{ $prod }}"
+                                    data-value="{{ $index }}">
                                 </option>
                             @endforeach
                         </x-datalist>
@@ -54,10 +57,9 @@
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
-                        <x-tooltip id="ttStock">Disp.: {{ formatNumber($this->stock) }}</x-tooltip>
+
                         <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
-                            placeholder="Cant." wire:model.lazy="cant" wire:keydown.enter="tryAddItems" id="cant"
-                            data-tooltip-target="ttStock" label=""></x-base-input>
+                            placeholder="Cant." wire:model.lazy="cant" label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">
@@ -80,7 +82,7 @@
                     <div class="w-24">
                         <x-base-input class="uppercase border-none text-center bg-transparent" type="number"
                             status="{{ auth()->user()->hasPermissionTo('Asignar Precios')? '': 'disabled' }}"
-                            placeholder="Precio" wire:model.lazy="price" id="pr_price" label="">
+                            placeholder="Precio" wire:model.lazy="price" id="pr_price" wire:keydown.enter="tryAddItems"  label="">
                         </x-base-input>
                     </div>
                 </td>
@@ -152,7 +154,7 @@
                             <div class="w-10  flex items-center space-x-2 justify-center">
                                 <span wire:click="removeItem({{ $det['id'] }})"
                                     class=" text-sm fas fa-trash text-red-600"></span>
-                                    <span wire:click="editItem({{ $det['id'] }})"
+                                <span wire:click="editItem({{ $det['id'] }})"
                                     class=" text-sm fas fa-pen text-green-600"></span>
                             </div>
                         </td>
@@ -186,6 +188,11 @@
                 </tr>
             @endif
     </table>
+    <div class="p-2 flex justify-end">
+        @if ($product)
+            <small>Disp.: {{ formatNumber($this->stock) }}</small>
+        @endif
+    </div>
     @push('js')
         <script>
             Livewire.on('focusCode', function() {

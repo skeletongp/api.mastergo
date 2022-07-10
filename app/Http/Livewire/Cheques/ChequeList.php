@@ -14,7 +14,7 @@ class ChequeList extends LivewireDatatable
     public function builder()
     {
         $place = auth()->user()->place;
-        $cheques = $place->cheques()->with('user', 'bank', 'chequeable');
+        $cheques = $place->cheques()->with('user', 'bank', 'chequeable')->orderBY('created_at', 'desc');
         return $cheques;
     }
 
@@ -59,8 +59,12 @@ class ChequeList extends LivewireDatatable
                 'Emitido', 'Recibido',
             ]),
             Column::callback('status', function ($status) {
-                return $status == 'Pago' ? '<span class="text-green-400">Pagado</span>' : '<span class=" text-red-400">Pendiente</span>';
-            })->label('Estado')->filterable(['Pendiente', 'Pago', 'Cancelado']),
+                return $status == 'Pago' ? '<span class="text-green-500 font-semibold uppercase">Pagado</span>' : ($status=='Pendiente' ? '<span class="text-orange-500 font-semibold uppercase">Pendiente</span>' : '<span class="text-red-500 font-semibold uppercase">Anulado</span>');
+            })->label('Estado')->filterable(['Pendiente', 'Pago', 'Anulado']),
+            Column::callback(['status','id'], function ($status, $id) use ($cheques) {
+                $cheque=arrayFind($cheques, 'id', $id);
+                return view('pages.cheques.actions', compact('cheque'));
+            })->label('Acción')->contentAlignCenter(),
         ];
     }
     function getChequetableName(array $result)

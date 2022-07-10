@@ -813,6 +813,12 @@ input:checked + .toggle-bg {
 .top-full {
   top: 100%;
 }
+.top-2 {
+  top: 0.5rem;
+}
+.top-16 {
+  top: 4rem;
+}
 .top-\[4\.5rem\] {
   top: 4.5rem;
 }
@@ -833,18 +839,6 @@ input:checked + .toggle-bg {
 }
 .top-1 {
   top: 0.25rem;
-}
-.top-2 {
-  top: 0.5rem;
-}
-.top-4 {
-  top: 1rem;
-}
-.top-8 {
-  top: 2rem;
-}
-.top-16 {
-  top: 4rem;
 }
 .z-50 {
   z-index: 50;
@@ -991,6 +985,9 @@ input:checked + .toggle-bg {
 .ml-auto {
   margin-left: auto;
 }
+.mr-3 {
+  margin-right: 0.75rem;
+}
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -1005,9 +1002,6 @@ input:checked + .toggle-bg {
 }
 .-mt-px {
   margin-top: -1px;
-}
-.mr-3 {
-  margin-right: 0.75rem;
 }
 .mr-8 {
   margin-right: 2rem;
@@ -1170,8 +1164,8 @@ input:checked + .toggle-bg {
 .min-h-\[85vh\] {
   min-height: 85vh;
 }
-.min-h-\[50rem\] {
-  min-height: 50rem;
+.min-h-\[25rem\] {
+  min-height: 25rem;
 }
 .min-h-\[65vh\] {
   min-height: 65vh;
@@ -1189,9 +1183,6 @@ input:checked + .toggle-bg {
   min-height: -webkit-max-content;
   min-height: -moz-max-content;
   min-height: max-content;
-}
-.min-h-\[25rem\] {
-  min-height: 25rem;
 }
 .w-28 {
   width: 7rem;
@@ -1342,17 +1333,14 @@ input:checked + .toggle-bg {
 .max-w-3xl {
   max-width: 48rem;
 }
+.max-w-\[6rem\] {
+  max-width: 6rem;
+}
 .max-w-5xl {
   max-width: 64rem;
 }
 .max-w-\[12rem\] {
   max-width: 12rem;
-}
-.max-w-\[6\] {
-  max-width: 6;
-}
-.max-w-\[6rem\] {
-  max-width: 6rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -1393,16 +1381,16 @@ input:checked + .toggle-bg {
   --tw-translate-y: -1.75rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+.translate-x-96 {
+  --tw-translate-x: 24rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
 .translate-y-4 {
   --tw-translate-y: 1rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .translate-y-0 {
   --tw-translate-y: 0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-.translate-x-96 {
-  --tw-translate-x: 24rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .rotate-180 {
@@ -1594,15 +1582,15 @@ input:checked + .toggle-bg {
   margin-right: calc(2rem * var(--tw-space-x-reverse));
   margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
-.space-x-6 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+.space-x-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
@@ -1992,18 +1980,6 @@ input:checked + .toggle-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
-.bg-red-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 128 128 / var(--tw-bg-opacity));
-}
-.bg-blue-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(118 169 250 / var(--tw-bg-opacity));
-}
-.bg-red-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(251 213 213 / var(--tw-bg-opacity));
-}
 .bg-opacity-20 {
   --tw-bg-opacity: 0.2;
 }
@@ -2126,6 +2102,10 @@ input:checked + .toggle-bg {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -2149,10 +2129,6 @@ input:checked + .toggle-bg {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-}
-.px-10 {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
 }
 .pb-2 {
   padding-bottom: 0.5rem;
@@ -2183,9 +2159,6 @@ input:checked + .toggle-bg {
 }
 .pl-3 {
   padding-left: 0.75rem;
-}
-.pl-10 {
-  padding-left: 2.5rem;
 }
 .pt-5 {
   padding-top: 1.25rem;
@@ -2427,6 +2400,14 @@ input:checked + .toggle-bg {
   --tw-text-opacity: 1;
   color: rgb(26 86 219 / var(--tw-text-opacity));
 }
+.text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgb(14 159 110 / var(--tw-text-opacity));
+}
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(249 128 128 / var(--tw-text-opacity));
+}
 .text-green-600 {
   --tw-text-opacity: 1;
   color: rgb(5 122 85 / var(--tw-text-opacity));
@@ -2447,17 +2428,9 @@ input:checked + .toggle-bg {
   --tw-text-opacity: 1;
   color: rgb(251 213 213 / var(--tw-text-opacity));
 }
-.text-green-500 {
-  --tw-text-opacity: 1;
-  color: rgb(14 159 110 / var(--tw-text-opacity));
-}
 .text-blue-400 {
   --tw-text-opacity: 1;
   color: rgb(118 169 250 / var(--tw-text-opacity));
-}
-.text-red-400 {
-  --tw-text-opacity: 1;
-  color: rgb(249 128 128 / var(--tw-text-opacity));
 }
 .text-blue-300 {
   --tw-text-opacity: 1;
@@ -3146,10 +3119,6 @@ input:checked + .toggle-bg {
 }
 @media (min-width: 640px) {
 
-  .sm\:absolute {
-    position: absolute;
-  }
-
   .sm\:inset-0 {
     top: 0px;
     right: 0px;
@@ -3353,25 +3322,12 @@ input:checked + .toggle-bg {
     width: 50%;
   }
 
-  .lg\:w-60 {
-    width: 15rem;
-  }
-
-  .lg\:w-\[28rem\] {
-    width: 28rem;
-  }
-
   .lg\:w-\[24rem\] {
     width: 24rem;
   }
 
-  .lg\:max-w-7xl {
-    max-width: 80rem;
-  }
-
-  .lg\:translate-x-0 {
-    --tw-translate-x: 0px;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  .lg\:w-60 {
+    width: 15rem;
   }
 
   .lg\:grid-cols-3 {
@@ -3394,12 +3350,14 @@ input:checked + .toggle-bg {
     justify-content: flex-start;
   }
 
-  .lg\:justify-center {
-    justify-content: center;
-  }
-
   .lg\:gap-4 {
     gap: 1rem;
+  }
+
+  .lg\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1rem * var(--tw-space-x-reverse));
+    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .lg\:space-x-3 > :not([hidden]) ~ :not([hidden]) {
@@ -3414,12 +3372,6 @@ input:checked + .toggle-bg {
     margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  .lg\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(1rem * var(--tw-space-x-reverse));
-    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-  }
-
   .lg\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
@@ -3430,23 +3382,9 @@ input:checked + .toggle-bg {
     background-color: transparent;
   }
 
-  .lg\:p-0 {
-    padding: 0px;
-  }
-
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .lg\:px-2 {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
-  .lg\:px-3 {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
   }
 
   .lg\:px-0 {
@@ -3457,6 +3395,16 @@ input:checked + .toggle-bg {
   .lg\:py-0 {
     padding-top: 0px;
     padding-bottom: 0px;
+  }
+
+  .lg\:px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .lg\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 
   .lg\:text-xl {
@@ -3483,12 +3431,6 @@ input:checked + .toggle-bg {
 
   .\32xl\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-@media (orientation: portrait) {
-
-  .portrait\:hidden {
-    display: none;
   }
 }
 @media (orientation: landscape) {

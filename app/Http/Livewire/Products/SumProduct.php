@@ -74,6 +74,7 @@ class SumProduct extends Component
         ]);
         if (!$exist) {
             $this->form['id'] = count($this->productAdded);
+            $this->form['unit_name'] = $this->units[$this->form['unit']];
             array_push($this->productAdded, $this->form);
             $this->total+=($this->form['cant']*$this->form['cost']);
         } else {

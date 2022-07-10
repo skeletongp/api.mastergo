@@ -116,10 +116,7 @@
                                 <x-side-link routeName='reports.outcomes' icon='far w-10 text-center fa-chart-line-down fa-lg'
                                     text='Gastos' activeRoute="reports.*" scope="Gastos" />
                             @endcan
-                            @can('Ver Transacciones')
-                                <x-side-link routeName='cheques.index' icon='far w-10 text-center fa-money-check-alt fa-lg'
-                                    text='Cheques' activeRoute="cheques.*" scope="Gastos" />
-                            @endcan
+                          
                             @can('Ver Transacciones')
                                 <x-side-link routeName='finances.index' icon='far w-10 text-center fa-hand-holding-usd fa-lg'
                                     text='Cuentas' activeRoute="finances.*" scope="Ingresos" />

@@ -48,7 +48,7 @@
                 <x-input-error for="efectivo">Campo requerido</x-input-error>
             </div>
             <div class="w-full">
-                <x-base-input type="number" id="outTransferencia" label="Transferencia"
+                <x-base-input type="number" id="outTransferencia" label="Transferencia/Cheque"
                     placeholder="Transferencia realizada" wire:model.lazy="transferencia"></x-base-input>
                 <x-input-error for="transferencia">Campo requerido</x-input-error>
             </div>

@@ -160,8 +160,3 @@ Breadcrumbs::for('provisions', function($trial){
     $trial->push('Compras y Provisiones',route('provisions.index',['icon'=>'']));
 });
 
-/* Cheques */
-Breadcrumbs::for('cheques', function($trial){
-    $trial->parent('home');
-    $trial->push('Cheques',route('cheques.index',['icon'=>'far fa-money-check-alt']));
-});

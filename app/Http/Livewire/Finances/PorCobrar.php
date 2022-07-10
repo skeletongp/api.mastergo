@@ -15,11 +15,10 @@ class PorCobrar extends LivewireDatatable
         $porCobrar = $place->counts()
             ->where('balance', '>', 0)
             ->where(function ($porCobrar) {
-                return $porCobrar->where('code', 'like', '101%')
-                    ->orWhere('code', 'like', '102%')
-                    ->orWhere('code', 'like', '103%')
-                    ->orWhere('code', 'like', '105%')
-                    ->orWhere('code', 'like', '106%');
+                return $porCobrar->where('code', 'like', '10%')
+                    ->where('code', 'not like', '100%')
+                    ->Where('code', 'not like', '104%')
+                    ;
             });
         return $porCobrar;
     }

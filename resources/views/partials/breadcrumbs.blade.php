@@ -7,7 +7,7 @@
                         @isset($breadcrumb->icon)
                             <span class="{{ $breadcrumb->icon }}"></span>
                         @endisset
-                        <a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
+                        <a class="load" href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
                     </li>
                     <span class="fas fa-angle-right"></span>
                 @else
@@ -15,7 +15,7 @@
                         @isset($breadcrumb->icon)
                             <span class="{{ $breadcrumb->icon }}"></span>
                         @endisset
-                        <a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
+                        <a href="{{ $breadcrumb->url }}" class="load">{{ $breadcrumb->title }}</a>
 
                     </li>
                 @endif

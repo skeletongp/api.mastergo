@@ -18,10 +18,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
-use App\Jobs\CreatePDFJob;
-use App\Models\CountMain;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Artisan;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -121,9 +118,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ProvisionController::class)->group(function () {
             Route::get('/provisions', 'index')->name('provisions.index');
         });
-        Route::controller(ChequeController::class)->group(function () {
-            Route::get('/cheques', 'index')->name('cheques.index');
-        });
+        
 
         Route::controller(FinanceController::class)->group(function () {
             Route::get('/finances', 'index')->name('finances.index');

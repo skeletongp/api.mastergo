@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\General;
 
 use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\Proceso;
 use App\Models\Product;
 use App\Models\Recurso;
@@ -29,6 +30,7 @@ class SearchField extends Component
             'products'=>'Productos',
             'procesos'=>'Procesos',
             'recursos'=>'Recursos',
+            'invoices'=>'Facturas',
         ];
     }
     public function render()
@@ -73,6 +75,12 @@ class SearchField extends Component
           $modelSearchAspect
           ->addSearchableAttribute('name')
           ->whereIn('id', $recursos);
+        })
+        ->registerModel(Invoice::class, function(ModelSearchAspect $modelSearchAspect) use ($place){
+          $invoices=$place->invoices()->pluck('invoices.id')->toArray();
+          $modelSearchAspect
+          ->addSearchableAttribute('number')
+          ->whereIn('id', $invoices);
         })
         ->search($this->search);
       } else {

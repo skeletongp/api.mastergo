@@ -122,7 +122,6 @@
 
             function print(payment) {
                 obj = payment;
-                console.log(obj)
                 if (!obj.place.preference.printer) {
                     Livewire.emit('showAlert', 'No hay ninguna impresora añadida', 'warning');
                     return false;
@@ -191,7 +190,7 @@
                 conector.establecerEnfatizado(1);
                 conector.texto('CLIENTE: ')
                 conector.establecerEnfatizado(0);
-                conector.texto(obj.payable.name ? obj.payable.name.toUpperCase() : obj.payer.fullname.toUpperCase());
+                conector.texto(obj.payable.name ? obj.payable.name.toUpperCase() : (obj.payer.name? obj.payer.name.toUpperCase() : obj.payer.fullname.toUpperCase()));
                 conector.feed(1);
 
                 conector.establecerEnfatizado(1);

@@ -31,11 +31,11 @@ class CreateProduct extends Component
 
     protected $rules2 = [
         'unit_id' => 'required',
-        'unit_price_mayor' => 'required',
-        'unit_price_menor' => 'required',
-        'unit_cost' => 'required',
-        'unit_min' => 'required',
-        'unit_margin' => 'required',
+        'unit_price_mayor' => 'required|numeric',
+        'unit_price_menor' => 'required|numeric',
+        'unit_cost' => 'required|numeric',
+        'unit_min' => 'required|numeric',
+        'unit_margin' => 'required|numeric',
     ];
     public function mount()
     {

@@ -4,12 +4,12 @@
             <form action="" wire:submit.prevent="addProduct">
                 <div class="flex space-x-2 items-start pt-12 relative">
                     <div class="w-full max-w-[12rem] ">
-                        <x-base-select label="Nombre de producto" wire:model="form.product_id" id="producto_id">
+                        <x-datalist label="Nombre de producto" model="form.product_id" inputId="producto_id" listName="productIdList">
                             <option value=""></option>
                             @foreach ($products as $id => $product)
-                                <option value="{{ $id }}">{{ $product }}</option>
+                                <option data-value="{{ $id }}" value="{{ $product }}"></option>
                             @endforeach
-                        </x-base-select>
+                        </x-datalist>
                         <x-input-error for="form.product_id"></x-input-error>
                     </div>
                     @if (array_key_exists('product_id', $form))
@@ -76,7 +76,7 @@
                                                 {{ $added['product_name'] }}
                                             </th>
                                             <td class="px-4 py-2  cursor-pointer">
-                                                {{ $units[$added['unit']] }}
+                                                {{ $added['unit_name']}}
                                             </td>
                                             <td class="px-4 py-2  cursor-pointer">
                                                 {{ formatNumber($added['cost']) }}

@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Invoice extends Model
+class Invoice extends Model implements Searchable
 {
     use HasFactory, SoftDeletes;
 protected $connection="mysql";
@@ -25,6 +27,16 @@ protected $connection="mysql";
             }
             
         });
+    }
+    public function getSearchResult(): SearchResult
+    {
+       $url = route('invoices.show', $this->id);
+    
+        return new SearchResult(
+           $this,
+           $this->number.' '.$this->rnc,
+           $url
+        );
     }
     const TYPES = [
         'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',

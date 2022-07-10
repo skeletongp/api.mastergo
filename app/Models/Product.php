@@ -10,7 +10,6 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Ramsey\Uuid\Uuid;
-
 class Product extends Model implements Searchable
 {
     use HasFactory, SoftDeletes, SearchableTrait;
