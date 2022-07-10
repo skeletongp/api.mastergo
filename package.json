@@ -25,6 +25,7 @@
         "flowbite": "^1.4.1",
         "jquery": "^3.4.0",
         "npm": "^8.8.0",
+        "puppeteer": "^15.3.2",
         "sweetalert2": "^11.4.8",
         "toastr": "^2.1.4"
     }

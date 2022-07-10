@@ -24,12 +24,12 @@
                     <th scope="col" class="px-6 py-3">
                         Total.
                     </th>
-                    @if (\Carbon\Carbon::parse($invoice->created_at)->diffInDays(now()) < 30 &&
+                 {{--    @if (\Carbon\Carbon::parse($invoice->created_at)->diffInDays(now()) < 30 &&
                         auth()->user()->hasPermissionTo('Editar Facturas'))
                         <th scope="col" class="px-6 py-3">
                             <span class="sr-only">Edit</span>
                         </th>
-                    @endif
+                    @endif --}}
 
                 </tr>
             </thead>
@@ -57,12 +57,12 @@
                         <td class="px-6 py-1">
                             ${{ formatNumber($det->total) }}
                         </td>
-                        @if (\Carbon\Carbon::parse($invoice->created_at)->diffInDays(now()) < 30 &&
+                       {{--  @if (\Carbon\Carbon::parse($invoice->created_at)->diffInDays(now()) < 30 &&
                             auth()->user()->hasPermissionTo('Editar Facturas'))
                             <td class="px-6 py-1 text-right">
                                 @livewire('invoices.edit-detail', ['detail' => $det], key(uniqid()))
                             </td>
-                        @endif
+                        @endif --}}
                     </tr>
                 @endforeach
 

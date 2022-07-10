@@ -36,11 +36,11 @@ class EditDetail extends Component
     {
         $this->product = $this->detail->product->load('units');
         $this->products = auth()->user()->place->products()->pluck('name', 'code');
-        $this->units = $this->product->units()->pluck('name', 'pivot.id');
+        $this->units = $this->product->units()->pluck('name', 'product_place_units.id');
         $this->unit = $this->detail->unit;
         $this->prevCant = $this->detail->cant;
         $prevUnit = $this->product->units()->where('units.id', $this->detail->unit_id)->first();
-        $this->prevTaxes = $this->product->taxes()->pluck('id')->toArray();
+        $this->prevTaxes = $this->product->taxes()->pluck('taxes.id')->toArray();
         $this->prevUnitId = $prevUnit->pivot->id;
         $this->prevInvTax = $this->detail->detailable->payment->tax;
         $this->unit = $prevUnit;
@@ -65,7 +65,7 @@ class EditDetail extends Component
     {
         $code = str_pad($code, 3, '0', STR_PAD_LEFT);
         $product = Product::whereCode($code)->first();
-        $this->units = $product->units()->pluck('name', 'pivot.id');
+        $this->units = $product->units()->pluck('name', 'product_place_units.id');
         if ($product) {
             $this->product = $product;
         }
@@ -111,7 +111,7 @@ class EditDetail extends Component
         $this->detail->total = $total;
         $this->detail->save();
         $this->detail->taxes()->detach($this->prevTaxes);
-        $this->detail->taxes()->attach($this->product->taxes()->pluck('id')->toArray());
+        $this->detail->taxes()->attach($this->product->taxes()->pluck('taxes.id')->toArray());
     }
     public function updateUnit()
     {
