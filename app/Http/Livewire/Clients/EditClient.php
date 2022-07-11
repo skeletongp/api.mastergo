@@ -31,7 +31,7 @@ class EditClient extends Component
         $this->validate();
         $client=Client::find($this->client['id']);
         if ($this->photo_path) {
-            $client->image()->updateOrCreate([
+            $client->image()->updateOrCreate(['imageable_id'=>$client->id],[
                 'path' => $this->photo_path
             ]);
         }
@@ -48,7 +48,6 @@ class EditClient extends Component
             'folder' => 'carnibores/avatars',
             'transformation' => [
                       'width' => 250,
-                      'height' => 250
              ]
         ])->getSecurePath();
         $this->photo_path = $path;

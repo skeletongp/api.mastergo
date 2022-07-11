@@ -131,13 +131,16 @@
         }
     </style>
 </head>
+@php
+
+@endphp
 <header style="position: fixed;top: 0px;left: 0px;right: 0px;height: 50px;">
     <table style="width:100%">
         <thead style="display: table-header-group;">
             <tr class="item">
                 <td class="title">
-                    <img src="{{ auth()->user()->store->logo }}" alt="Company logo"
-                        style=" max-width: 250px; max-height: 165px" />
+                    <img src="{{auth()->user()->store->logo}}" alt="Company logo"
+                        style=" max-width: 100px; max-height: 100px" />
                 </td>
                 <td colspan="2" style="text-align:right; line-height: 20px ">
                     <b style="text-transform: uppercase; font-size:x-large"> {!! auth()->user()->store->name !!}</b><br />
@@ -157,8 +160,8 @@
     </h3>
 </header>
 
-<body >
-    
+<body>
+
     <table>
         <thead>
             <tr>
@@ -170,22 +173,28 @@
         </thead>
         <tbody class="cuerpo" style="width: 100%">
             @foreach ($ctaControls as $ctaControl)
-                <tr style="background-color: #dee2e6; text-transform:uppercase; color:#000000; border: 1px solid white;
+                <tr
+                    style="background-color: #dee2e6; text-transform:uppercase; color:#000000; border: 1px solid white;
                 border-collapse: collapse; ">
                     <th style="font-size:medium; text-align:left; padding-top:10px; padding-bottom:10px; padding-left:15px cell-s"
-                        id="par" colspan="3" scope="colgroup">
+                        id="par" colspan="2" scope="colgroup">
                         {{ $ctaControl->code }} - {{ $ctaControl->name }}
+                    </th>
+                    <th
+                        style="font-size:medium; text-align:left; padding-top:10px; padding-bottom:10px; padding-left:15px cell-s">
+                        ${{ formatNumber($ctaControl->counts->sum('balance')) }}
                     </th>
                 </tr>
                 @forelse ($ctaControl->counts as $count)
                     <tr style=" border: 1px solid #dee2e6;
                     border-collapse: collapse;">
                         <td style="text-align: left; width:55%; padding-top:8px; padding-left:15px">
-                            {{ $count->code }} - {{ ellipsis($count->name,40) }}
+                            {{ $count->code }} - {{ ellipsis($count->name, 40) }}
                         </td>
-                        <td style="text-align: left; width:25%; padding-top:8px; padding-left:15px; text-transform:capitalize">
-                            {{ substr(App\Models\Count::ORIGINS[$count->origin],0,1) }} ||
-                            {{ App\Models\CountMain::CLASE[substr($count['code'], 0, 1)] }}  || {{ $count->type }}
+                        <td
+                            style="text-align: left; width:25%; padding-top:8px; padding-left:15px; text-transform:capitalize">
+                            {{ substr(App\Models\Count::ORIGINS[$count->origin], 0, 1) }} ||
+                            {{ App\Models\CountMain::CLASE[substr($count['code'], 0, 1)] }} || {{ $count->type }}
                         </td>
                         <td style="text-align: left; text-transform:capitalize; padding-top:8px; padding-left:15px">
                             ${{ formatNumber($count->balance) }}
@@ -204,11 +213,11 @@
     </table>
     <hr>
     <script type="text/php">if ( isset($pdf) ) {
-                                                    $font = $fontMetrics->get_font("helvarialetica", "bold");
-                                                    $pdf->page_text(18, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
-                                                    $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
-                                                    $pdf->page_text(18, 740, "Catálogo de cuentas actualizado", $font, 10, array(0,0,0));
-                                                }</script>
+    $font = $fontMetrics->get_font("helvarialetica", "bold");
+     $pdf->page_text(18, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
+     $pdf->page_text(532, 18, date('d/m/Y'), $font, 10, array(0,0,0));
+     $pdf->page_text(18, 740, "Catálogo de cuentas actualizado", $font, 10, array(0,0,0));
+      }</script>
     @if ($ctaControls->count() > (18 * $ctaControls->count()) / 2 + 2)
         <div style="page-break-after: always"></div>
     @endif

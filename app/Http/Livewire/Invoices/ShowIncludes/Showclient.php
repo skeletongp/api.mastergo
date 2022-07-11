@@ -14,7 +14,7 @@ trait Showclient
         $client = Client::where('code', $code)->first();
         if ($client) {
             $this->client = [
-                'fullname' => $client->fullname,
+                'name' => $client->name,
                 'address' => $client->address,
                 'phone' => $client->phone,
                 'email' => $client->email,
@@ -23,9 +23,10 @@ trait Showclient
                 'balance' => '$' . formatNumber($client->limit),
                 'gasto' => '$' . formatNumber($client->payments()->sum('payed')),
                 'limit' => $client->limit,
+                'contact'=>$client->contact,
             ];
         }
-        $this->client_code = $code;
+        
     }
     public function updatedClientCode()
     {

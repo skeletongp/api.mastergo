@@ -8,6 +8,8 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ProviderTable extends LivewireDatatable
 {
+    public $padding="px-2 ";
+    public $headTitle="Lista de Suplidores";
     public function builder()
     {
         $store=auth()->user()->store;

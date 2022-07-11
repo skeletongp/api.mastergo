@@ -43,7 +43,7 @@
             conector.cortar();
             /* Encabezado Negocio */
             align(conector, 'center');
-            if (obj.store.image && obj.store.id==2) {
+            if (obj.store.image /* && obj.store.id==2 */) {
                 conector.imagenDesdeUrl(obj.store.image.path);
                 conector.feed(1)
             }

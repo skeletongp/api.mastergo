@@ -6,11 +6,11 @@
     @slot('rightButton')
         <div class="flex space-x-4 items-cen">
             <a href="{{ route('contables.view_catalogue') }}"
-                class=" right-2  rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
+                class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
                 <span class="fas fa-file-pdf text-xl"></span>
                 <span>Ver PDF</span>
             </a>
-            @can('Crear Productos')
+            @can('Crear Cuentas')
                 @livewire(
                     'contables.create-count',
                     [

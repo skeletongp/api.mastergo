@@ -1,16 +1,14 @@
 <div class="w-full max-w-xl mx-auto pt-8 space-y-4">
     <div class="flex space-x-4 items-end">
-        <div class="flex space-x-2 relative ">
-            <x-base-input class="text-sm uppercase" inputClass="py-1" wire:model.lazy="client_code" id="client_code"
-                label="Cód. Cliente" type="number"
-                status="{{ auth()->user()->hasPermissionTo('Editar Facturas')? '': 'disabled' }}"></x-base-input>
-            <div class="absolute top-0 h-full right-0 ">
-                <span wire:click="changeClient" class="fas fa-search cursor-pointer text-cyan-600"></span>
-            </div>
+        <div class="w-full">
+            <x-datalist value="" listName="cltList" model="client_code" inputId="cltCodeId" label="Camabiar cliente" placeholder="Seleccione nuevo cliente">
+                @foreach ($clients as $code => $name)
+                    <option value="{{$code.' - '. $name }}" data-value="{{$code}}"></option>
+                @endforeach
+            </x-datalist>
         </div>
         <div class="w-full">
-            <x-select-search :data="$clients" wire:model="client_code" :placeholder="'Nombre completo'" :wire:key="uniqid()" />
-
+            <x-base-input disabled label="Cliente Actual" value="{{$client['name']?:$client['contact']['fullname']}}"></x-base-input>
         </div>
     </div>
     <div class="w-full flex space-x-2">

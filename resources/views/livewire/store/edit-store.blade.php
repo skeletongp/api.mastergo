@@ -8,7 +8,7 @@
             <div class="m-4">
                 <x-upload-progress>
                     <input wire:model="logo" type="file" class="hidden" name="logo" id="logoSet"
-                        accept="image/png, image/gif, image/jpeg">
+                        accept="image/jpeg">
                 </x-upload-progress>
                 <div class="flex flex-col space-y-6 items-center">
                     {{-- Foto anterior --}}

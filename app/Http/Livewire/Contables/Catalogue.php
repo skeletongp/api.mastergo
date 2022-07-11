@@ -54,4 +54,6 @@ class Catalogue extends LivewireDatatable
         return
             'whitespace-nowrap overflow-hidden overflow-ellipsis  px-0';
     }
+  
+    
 }
