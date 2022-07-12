@@ -5,7 +5,8 @@
                 wire:loading>
                 <x-loading></x-loading>
             </button>
-            <h1 class="text-sm lg:text-xl uppercase font-bold  m-4 ">Detalles de la factura <span class="fas fa-angle-right"></span>
+            <h1 class="text-sm lg:text-xl uppercase font-bold  m-4 ">Detalles de la factura <span
+                    class="fas fa-angle-right"></span>
                 <span class="text-green-600 font-bold"> {{ $includeTitle }}</span>
             </h1>
             <div class="p-4 ">
@@ -23,6 +24,7 @@
                         <span class="lg:text-lg">Productos</span>
                     </div>
                 </x-button>
+
                 <x-button wire:click="setIncludeElement('showseller','Vendedor')"
                     class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
@@ -51,6 +53,15 @@
                         <span class="lg:text-lg">Adjunto</span>
                     </div>
                 </x-button>
+                @if ($invoice->payment->ncf)
+                    <x-button wire:click="setIncludeElement('showcredit','Nota de Crédito')"
+                        class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                        <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
+                            <span class="w-6 text-left far fa-user"></span>
+                            <span class="lg:text-lg">Nota de Crédito</span>
+                        </div>
+                    </x-button>
+                @endif
                 <x-button wire:click="setIncludeElement('showhistory','Historial')"
                     class="w-full text-xl bg-gray-100 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
@@ -83,6 +94,10 @@
                 @break
 
                 @case('showattach')
+                    @include('livewire.invoices.showincludes.' . $includeName)
+                @break
+
+                @case('showcredit')
                     @include('livewire.invoices.showincludes.' . $includeName)
                 @break
 

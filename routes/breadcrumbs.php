@@ -160,3 +160,10 @@ Breadcrumbs::for('provisions', function($trial){
     $trial->push('Compras y Provisiones',route('provisions.index',['icon'=>'']));
 });
 
+/* Recurrentes */
+Breadcrumbs::for('recurrents', function($trial){
+    $trial->parent('home');
+    $trial->push('Obligaciones',route('recurrents.index',['icon'=>'far fa-donate fa-lg']));
+});
+
+

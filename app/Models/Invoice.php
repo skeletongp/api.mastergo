@@ -44,6 +44,7 @@ protected $connection="mysql";
         'COMPROBANTE DE RÉGIMEN ESPECIAL' => 'B14',
         'COMPROBANTE GUBERNAMENTAL' => 'B15',
         'DOCUMENTO DE CONDUCE' => 'B00',
+        'NOTA DE CRÉDITO' => 'B04',
     ];
 
     public function details()
@@ -112,6 +113,10 @@ protected $connection="mysql";
         return new Attribute(
             get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
         );
+    }
+    public function creditnote()
+    {
+        return $this->hasOne(Creditnote::class);
     }
    
 }

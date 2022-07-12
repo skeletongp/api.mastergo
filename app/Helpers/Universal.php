@@ -95,3 +95,32 @@ function ellipsis($string, $maxLength)
     }
     return $string;
 }
+function getNextDate(string $recurrency, $date){
+    $date=Carbon::parse($date);
+    switch ($recurrency) {
+        case 'Quincenal':
+            $date->addDays(15);
+            break;
+        case 'Mensual':
+            $date->addMonth();
+            break;
+        case 'Bimestral':
+            $date->addMonth(2);
+            break;
+        case 'Trimestral':
+            $date->addMonth(3);
+            break;
+        case 'Cuatrimestral':
+            $date->addMonth(4);
+            break;
+        case 'Semestral':
+            $date->addMonth(6);
+            break;
+        case 'Anual':
+            $date->addYear();
+            break;
+        default:
+            break;
+    }
+    return $date;
+}

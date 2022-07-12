@@ -13,7 +13,7 @@
                             <div class="w-full max-w-sm">
                                 <x-base-select label="Tipo de Comprobante" wire:model="preference.comprobante_type"
                                     id="comprobante_type">
-                                    @foreach (\App\Models\Invoice::TYPES as $id => $type)
+                                    @foreach (array_slice(App\Models\Invoice::TYPES, 0, 5) as $id => $type)
                                         <option value="{{ $type }}">{{ $type }} - {{ $id }}
                                         </option>
                                     @endforeach

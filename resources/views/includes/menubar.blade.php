@@ -116,7 +116,10 @@
                                 <x-side-link routeName='reports.outcomes' icon='far w-10 text-center fa-chart-line-down fa-lg'
                                     text='Gastos' activeRoute="reports.*" scope="Gastos" />
                             @endcan
-                          
+                            @can('Ver Obligaciones')
+                            <x-side-link routeName='recurrents.index' icon='far w-10 text-center fa-donate fa-lg'
+                            text='Obligaciones' activeRoute="recurrents.*" scope="Gastos" />
+                            @endcan
                             @can('Ver Transacciones')
                                 <x-side-link routeName='finances.index' icon='far w-10 text-center fa-hand-holding-usd fa-lg'
                                     text='Cuentas' activeRoute="finances.*" scope="Ingresos" />

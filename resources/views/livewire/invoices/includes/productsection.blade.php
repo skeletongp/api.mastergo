@@ -38,7 +38,7 @@
                     <div class="w-[3.5rem]">
                         <x-base-input placeholder="Cód." class=" border-none" type="number"
                             wire:model.lazy="product_code" id="code" label=""
-                            wire:keydown.enter="$emit('focusCant')">
+                            wire:keydown.enter="tryAddItems">
                         </x-base-input>
                     </div>
                 </td>
@@ -59,7 +59,7 @@
                     <div class="w-16">
 
                         <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
-                            placeholder="Cant." wire:model.lazy="cant" label=""></x-base-input>
+                            placeholder="Cant." wire:keydown.enter="tryAddItems" wire:model.lazy="cant" label=""></x-base-input>
                     </div>
                 </td>
                 <td class=" pt-0 border-gray-200 border">

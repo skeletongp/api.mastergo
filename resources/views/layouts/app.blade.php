@@ -118,10 +118,13 @@
         $("input[type=number]").bind({
             keydown: function(e) {
                 if (e.shiftKey === true) {
-                    if (e.which == 9) {
+                    if (e.which == 9 || e.which == 13) {
                         return true;
                     }
                     return false;
+                }
+                if (e.which == 13 ) {
+                    return true;
                 }
                 if (e.which == 110 || e.which==190) {
                     return true;

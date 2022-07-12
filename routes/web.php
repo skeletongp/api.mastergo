@@ -14,6 +14,7 @@ use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\ContableController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProvisionController;
+use App\Http\Controllers\RecurrentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
@@ -122,6 +123,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(FinanceController::class)->group(function () {
             Route::get('/finances', 'index')->name('finances.index');
+        });
+
+        Route::controller(RecurrentController::class)->group(function () {
+            Route::get('/recurrents', 'index')->name('recurrents.index');
         });
     });
 });

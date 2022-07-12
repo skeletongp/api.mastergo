@@ -149,5 +149,9 @@ protected $connection="mysql";
     {
         return $this->hasMany(Cheque::class);
     }
+    function recurrents()
+    {
+        return $this->hasMany(Recurrent::class);
+    }
     
 }

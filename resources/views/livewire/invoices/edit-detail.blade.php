@@ -8,13 +8,13 @@
             <div class="space-y-4 text-left">
                 <div class="flex space-x-2">
                     <div class="w-1/5">
-                        <x-base-input type="number" id="Dcode{{ $detail->id }}" inputClass="" label="Cód."
+                        <x-base-input type="number" disabled id="Dcode{{ $detail->id }}" inputClass="" label="Cód."
                             wire:model.lazy="product.code">
 
                         </x-base-input>
                     </div>
                     <div class="w-full">
-                        <x-base-select id="Dname{{ $detail->id }}" class=" w-full " label="Producto"
+                        <x-base-select disabled id="Dname{{ $detail->id }}" class=" w-full " label="Producto"
                             wire:model="product.code">
                             @foreach ($products as $id => $prod)
                                 <option value="{{ $id }}">{{ $prod }}</option>
@@ -24,9 +24,15 @@
                 </div>
                 @if ($units)
                     <div class="flex space-x-2">
-                        <div class="w-2/5">
-                            <x-base-input type="number" id="Dcant{{ $detail->id }}" inputClass="" label="Cant."
+                        <div class="w-full">
+                            <x-base-input type="number" maz="999" id="Dcant{{ $detail->id }}" inputClass="" label="Cant."
                                 wire:model.lazy="detail.cant">
+
+                            </x-base-input>
+                        </div>
+                        <div class="w-full">
+                            <x-base-input type="number" id="Dprice{{ $detail->id }}" inputClass="" label="Precio"
+                                wire:model.lazy="detail.price">
 
                             </x-base-input>
                         </div>

@@ -10,9 +10,9 @@ trait OrderContable
         $details=$invoice->details;
         foreach ($details as $det) {
             if ($det->product->origin=='Comprado') {
-                $this->gastoGeneral += $det->cost;
+                $this->gastoGeneral += $det->cost*$det->cant;
             } else if ($det->product->origin=='Procesado' ) {
-                $this->gastoTerminado += $det->cost;
+                $this->gastoTerminado += $det->cost*$det->cant;
             }
         }
     }

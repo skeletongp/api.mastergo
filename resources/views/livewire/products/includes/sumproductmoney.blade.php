@@ -82,7 +82,7 @@
     @if ($setCost && !isset($hideTax))
         <div class="flex space-x-4 items-start">
             <div class="w-40 py-4">
-                <x-base-input type="text" id="outTax" label="Impuestos pagado" placeholder="Impuestos facturados"
+                <x-base-input type="text" id="outTax" label="Impuestos pagados" placeholder="Impuestos facturados"
                     wire:model.defer="tax"></x-base-input>
                 <x-input-error for="tax">Campo requerido</x-input-error>
             </div>

@@ -58,7 +58,9 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
     $canCreate=auth()->user()->hasPermissionTo('Registrar Asientos');
     $income=$amount;
     $outcome=$amount;
-   
+    if ($debitable==$creditable) {
+        return;
+    }
     $canOther= $otherPermission?auth()->user()->hasPermissionTo($otherPermission):false;
     if ($amount > 0 && ($canCreate || $canOther)) {
         $trans = Transaction::create([

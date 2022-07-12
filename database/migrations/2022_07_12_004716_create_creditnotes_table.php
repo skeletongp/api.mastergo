@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recurrents', function (Blueprint $table) {
+        Schema::create('creditnotes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('amount', 14, 4);
-            $table->enum('recurrency',['Semanal','Quincenal','Mensual','Anual']);
-            $table->enum('status',['Pendiente','Pagado','Vencido']);
+            $table->string('comment');
+            $table->date('modified_at');
+            $table->string('modified_ncf');
+            $table->foreignId('user_id')->constrained()->on('moso_master.users');
+            $table->foreignId('invoice_id')->constrained();
             $table->foreignId('place_id')->constrained();
-            $table->foreignId('count_id')->constrained();
-            $table->date('expires_at');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recurrents');
+        Schema::dropIfExists('creditnotes');
     }
 };

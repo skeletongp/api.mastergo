@@ -13,15 +13,16 @@ class EditDetail extends Component
 {
 
     use Authorize;
-
+    public $place;
     public $detail, $product, $unit;
-    public $prevUnitId, $prevCant, $prevTaxes, $prevRest, $prevInvTax;
+    public $prevUnitId, $prevCant, $prevTaxes, $prevRest, $prevInvTax, $prevPrice;
     public $products, $units;
     public $action = 'updateDetail';
 
     protected $rules = [
         'detail' => 'required',
         'detail.cant' => 'required',
+        'detail.price' => 'required',
         'unit' => 'required',
         'product' => 'required',
         'product.id' => 'required',
@@ -34,11 +35,13 @@ class EditDetail extends Component
     protected $listeners = ['updateDetail'];
     public function mount()
     {
+        $this->place=auth()->user()->place;
         $this->product = $this->detail->product->load('units');
-        $this->products = auth()->user()->place->products()->pluck('name', 'code');
+        $this->products = $this->place->products()->pluck('name', 'code');
         $this->units = $this->product->units()->pluck('name', 'product_place_units.id');
         $this->unit = $this->detail->unit;
         $this->prevCant = $this->detail->cant;
+        $this->prevPrice = $this->detail->price;
         $prevUnit = $this->product->units()->where('units.id', $this->detail->unit_id)->first();
         $this->prevTaxes = $this->product->taxes()->pluck('taxes.id')->toArray();
         $this->prevUnitId = $prevUnit->pivot->id;
@@ -56,7 +59,7 @@ class EditDetail extends Component
     }
     public function updatedUnitPivotId()
     {
-        $unit = auth()->user()->place->units()->where('product_place_units.id', $this->unit->pivot['id'])->first();
+        $unit = $this->place->units()->where('product_place_units.id', $this->unit->pivot['id'])->first();
         if ($unit) {
             $this->unit = $unit;
         }
@@ -93,19 +96,12 @@ class EditDetail extends Component
     }
     public function updatePrice()
     {
-        $unit = auth()->user()->place->units()->wherePivot('id', $this->unit->pivot['id'])->first();
-        if ($this->detail->cant < $unit->pivot->min) {
-            $price = $unit->pivot->price_menor;
-            $this->detail->price_type = 'detalle';
-        } else {
-            $price = $unit->pivot->price_mayor;
-            $this->detail->price_type = 'mayor';
-        }
+        $unit = $this->place->units()->wherePivot('id', $this->unit->pivot['id'])->first();
+        $price=$this->detail->price;
         $subtotal = $price * $this->detail->cant;
         $taxTotal = $subtotal * $this->product->taxes->sum('rate');
         $total = $subtotal + $taxTotal;
         $this->detail->unit_id = $unit->id;
-        $this->detail->price = $price;
         $this->detail->subtotal = $subtotal;
         $this->detail->taxtotal = $taxTotal;
         $this->detail->total = $total;
@@ -115,10 +111,10 @@ class EditDetail extends Component
     }
     public function updateUnit()
     {
-        $prevUnit = auth()->user()->place->units()->wherePivot('id', $this->prevUnitId)->first();
+        $prevUnit = $this->place->units()->wherePivot('id', $this->prevUnitId)->first();
         $prevUnit->pivot->stock = $prevUnit->pivot->stock + $this->prevCant;
         $prevUnit->pivot->save();
-        $unit = auth()->user()->place->units()->wherePivot('id', $this->unit->pivot['id'])->first();
+        $unit = $this->place->units()->wherePivot('id', $this->unit->pivot['id'])->first();
         $unit->pivot->stock = $unit->pivot->stock - $this->detail->cant;
         $unit->pivot->save();
         return $unit;
@@ -148,14 +144,19 @@ class EditDetail extends Component
         $tax = $invoice->payment->tax;
         $diffRest = $rest-$this->prevRest;
         $diffTax =  $tax-$this->prevInvTax;
-        $creditable = auth()->user()->place->counts()->where('code', '400-01')->first();
+        
+        if ($this->prevPrice != $this->detail->price) {
+            $desc_dev_ventas = $this->place->findCount('401-03');
+        } else {
+            $desc_dev_ventas = $this->place->findCount('401-01');
+        }
         if ($invoice->payment->payed >= $diffTax) {
-            $creditable2 = auth()->user()->place->cash();
+            $creditable2 = $this->place->cash();
         } else {
             $creditable2 = $invoice->client->contable()->first();
         }
 
-        $debitable2 = auth()->user()->place->counts()->where('code', '202-01')->first();
+        $debitable2 = $this->place->findCount('202-01');
           /* Ajuste Impuesto */
           if ($diffTax < 0) {
             setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2, $creditable2);
@@ -164,9 +165,9 @@ class EditDetail extends Component
         }
         /* Ajuste Detalle */
         if ($diffRest > 0) {
-            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffRest, $invoice->client->contable()->first(), $creditable);
+            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffRest, $invoice->client->contable()->first(), $desc_dev_ventas);
         } else {
-            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $creditable, $invoice->client->contable()->first());
+            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $desc_dev_ventas, $invoice->client->contable()->first());
         }
       
     }

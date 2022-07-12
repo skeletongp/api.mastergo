@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Invoices;
 
 use App\Http\Livewire\General\Authorize;
 use App\Http\Livewire\Invoices\ShowIncludes\Showclient;
+use App\Http\Livewire\Invoices\ShowIncludes\ShowCredit;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowPayments;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowProducts;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowUsers;
@@ -14,7 +15,7 @@ use Livewire\WithFileUploads;
 
 class InvoiceShow extends Component
 {
-    use Showclient, Authorize, ShowProducts, ShowUsers, ShowPayments, WithFileUploads;
+    use Showclient, Authorize, ShowProducts, ShowUsers, ShowPayments, WithFileUploads, ShowCredit;
 
     public Invoice $invoice;
     public $includeName = "showclient";
@@ -53,6 +54,7 @@ class InvoiceShow extends Component
         $this->payment['tarjeta']=0;
         $this->payment['transferencia']=0;
         $this->lastPayment=$this->invoice->payments()->orderBY('id','desc')->first();
+        $this->initCreditnote();
     }
     public function render()
     {
@@ -64,4 +66,5 @@ class InvoiceShow extends Component
         $this->includeTitle = $title;
         $this->render();
     }
+    
 }
