@@ -91,7 +91,7 @@
             }
             Livewire.on('printPayment', function(payment) {
 
-                print(payment);
+                printP(payment);
             })
 
             function align(conector, dir) {
@@ -120,7 +120,7 @@
                 .reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
 
 
-            function print(payment) {
+            function printP(payment) {
                 obj = payment;
                 if (!obj.place.preference.printer) {
                     Livewire.emit('showAlert', 'No hay ninguna impresora añadida', 'warning');

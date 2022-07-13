@@ -13,6 +13,7 @@ class SettingPreference extends Component
         'preference.unit_id'=>'required',
         'preference.tax_id'=>'required',
         'preference.printer'=>'required',
+        'preference.min_comprobante'=>'required',
         'preference.print_order'=>'required',
         'preference.copy_print'=>'required|numeric|min:1|max:3',
     ];

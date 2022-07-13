@@ -23,8 +23,8 @@
                     list = '{{ $listName }}';
                     model = '{{ $model }}';
                     if (model && model!='product_name') {
-                        setValue = $('#' + list + ' [data-value="' + @this.get(model) + '"]').val();
-                        input.val(setValue);
+                      
+                        input.val(input.val());
                         return;
                     }
                 })

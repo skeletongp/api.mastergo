@@ -75,7 +75,7 @@
                                     <option value="yes">Sí</option>
                                     <option value="no">No</option>
                                 </x-base-select>
-                                <x-input-error for="preference.min_comprobante"></x-input-error>
+                                <x-input-error for="preference.print_order"></x-input-error>
                             </div>
                         </div>
                         {{-- Botón --}}

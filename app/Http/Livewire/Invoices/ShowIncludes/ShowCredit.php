@@ -9,6 +9,10 @@ trait ShowCredit
     public $modified_ncf, $modified_at, $comment, $creditComprobantes, $comprobanteCredit;
 
     public function createCreditnote(){
+        if($this->invoice->creditnote){
+            $this->emit('showAlert','La factura ya tiene una nota de crédito','error');
+            return;
+        }
         $this->validate([
             'modified_ncf' => 'required',
             'modified_at' => 'required',

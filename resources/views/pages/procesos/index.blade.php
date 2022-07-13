@@ -13,7 +13,7 @@
 
     @can('Ver Procesos')
         <div class=" w-full relative">
-            <div class=" mx-auto py-2 w-max min-h-max h-full  sm:px-6 lg:px-8">
+            <div class=" py-2  min-h-max h-full  sm:px-6 lg:px-8">
                 <livewire:procesos.table-proceso />
             </div>
         </div>

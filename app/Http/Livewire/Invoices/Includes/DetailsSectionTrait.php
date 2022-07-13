@@ -49,6 +49,7 @@ trait DetailsSectionTrait
     }
     public function confirmedAddItems()
     {
+        $this->updatingPrice($this->price);
         $this->price = str_replace(',', '', $this->price);
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
@@ -136,7 +137,7 @@ trait DetailsSectionTrait
             $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ($discount / 100))));
             if ($this->product) {
                 $this->form['cost'] = $unit->pivot->cost;
-                $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
+                $this->taxTotal =$sub * $this->producto->taxes->sum('rate');
                 $this->checkStock();
             }
             $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
@@ -163,11 +164,12 @@ trait DetailsSectionTrait
         $pr = str_replace(',', '', $newPrice);
         $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ( $this->discount / 100))));
         if ($this->product) {
-            $this->taxTotal = str_replace(',', '', formatNumber(($sub * $this->producto->taxes->sum('rate'))));
+           
+            $this->taxTotal = $sub * $this->producto->taxes->sum('rate');
             $this->checkStock();
         }
         $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
-        
+        $this->freshUnitId();
     }
   
     public function updatingDiscount($desc)

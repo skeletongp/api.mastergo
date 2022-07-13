@@ -81,8 +81,9 @@ trait SumProductTrait
     }
     public function setTransaction($payment, $code)
     {
+        $tot=$this->total?:0.00000000000001;
         $place = auth()->user()->place;
-        $rTax = $this->tax / $this->total;
+        $rTax = $this->tax / $tot;
         $rNonTax = 1 - $rTax;
         $debitable = $place->findCount($this->count_code);
         $itbisCount = $place->findCount('103-01');

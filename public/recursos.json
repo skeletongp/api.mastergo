@@ -9,7 +9,7 @@
         "code": "002",
         "name": "Pollo Fresco",
         "brand_name": "General",
-        "cost": "0"
+        "cost": "72"
     },
     {
         "code": "003",
@@ -21,13 +21,13 @@
         "code": "004",
         "name": "BM de Res",
         "brand_name": "General",
-        "cost": "0"
+        "cost": "50"
     },
     {
         "code": "005",
         "name": "Grasa de Cerdo",
         "brand_name": "General",
-        "cost": "0"
+        "cost": "35"
     },
     {
         "code": "006",
@@ -51,13 +51,13 @@
         "code": "009",
         "name": "Tripas",
         "brand_name": "Kplus 70",
-        "cost": "0"
+        "cost": "9.95"
     },
     {
         "code": "010",
         "name": "Tripas",
-        "brand_name": "85 FR (Salami)",
-        "cost": "0"
+        "brand_name": "65 FR (Salami)",
+        "cost": "23.69"
     },
     {
         "code": "011",
@@ -93,13 +93,13 @@
         "code": "016",
         "name": "Tripas",
         "brand_name": "90FR 6G",
-        "cost": "0"
+        "cost": "29.03"
     },
     {
         "code": "017",
         "name": "Tripas",
         "brand_name": "Natural de Cerdo",
-        "cost": "0"
+        "cost": "2858.95"
     },
     {
         "code": "018",
@@ -117,18 +117,24 @@
         "code": "020",
         "name": "Grasa de Pollo",
         "brand_name": "General",
-        "cost": "0"
+        "cost": "17"
     },
     {
         "code": "021",
-        "name": "Salmuera",
-        "brand_name": "General",
+        "name": "Tripas",
+        "brand_name": "VE-165 Hanzelnet",
         "cost": "0"
     },
     {
         "code": "022",
-        "name": "Agua",
-        "brand_name": "Tratada",
+        "name": "MDM Trip",
+        "brand_name": "General",
+        "cost": "0"
+    },
+    {
+        "code": "023",
+        "name": "Lomo de cerdo",
+        "brand_name": "General",
         "cost": "0"
     }
 ]

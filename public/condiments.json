@@ -2,61 +2,187 @@
     {
         "code": "001",
         "name": "Glutamato",
-        "cost": "0",
+        "cost": "57.06",
         "cant": "0"
     },
     {
         "code": "002",
         "name": "Erithorbato",
-        "cost": "0",
+        "cost": "152.01",
         "cant": "0"
     },
     {
         "code": "003",
         "name": "Azúcar",
-        "cost": "0",
+        "cost": "22.8",
         "cant": "0"
     },
     {
         "code": "004",
         "name": "Sal de Cura",
-        "cost": "0",
+        "cost": "14.77",
         "cant": "0"
     },
     {
         "code": "005",
-        "name": "Soya 70 Divsa",
-        "cost": "0",
+        "name": "Soya 70",
+        "cost": "103",
         "cant": "0"
     },
     {
         "code": "006",
         "name": "Hielo",
-        "cost": "0",
+        "cost": "18",
         "cant": "0"
     },
     {
         "code": "007",
         "name": "Sal molida",
-        "cost": "0",
+        "cost": "3.6",
         "cant": "0"
     },
     {
         "code": "008",
-        "name": "Pimienta",
-        "cost": "0",
+        "name": "Pimienta roja",
+        "cost": "231.85",
         "cant": "0"
     },
     {
         "code": "009",
         "name": "Ajo",
-        "cost": "0",
+        "cost": "75",
         "cant": "0"
     },
     {
         "code": "010",
         "name": "Orégano",
-        "cost": "0",
+        "cost": "65",
+        "cant": "0"
+    },
+    {
+        "code": "011",
+        "name": "Pimienta Negra",
+        "cost": "190",
+        "cant": "0"
+    },
+    {
+        "code": "012",
+        "name": "Pimienta blanca    ",
+        "cost": "480",
+        "cant": "0"
+    },
+    {
+        "code": "013",
+        "name": "Fecula de maiz      ",
+        "cost": "26.13",
+        "cant": "0"
+    },
+    {
+        "code": "014",
+        "name": "Vinagre Ambar Ranch. 4/1          ",
+        "cost": "473.15",
+        "cant": "0"
+    },
+    {
+        "code": "015",
+        "name": "Colorante rojo no.40    ",
+        "cost": "1000",
+        "cant": "0"
+    },
+    {
+        "code": "016",
+        "name": "Proteina text. Response 4400      ",
+        "cost": "118.9",
+        "cant": "0"
+    },
+    {
+        "code": "017",
+        "name": "Cebolla en polvo           ",
+        "cost": "111.2",
+        "cant": "0"
+    },
+    {
+        "code": "018",
+        "name": "Fécula de papa      36.14",
+        "cost": "36.14",
+        "cant": "0"
+    },
+    {
+        "code": "019",
+        "name": "Vegamine pvh m   88.96",
+        "cost": "88.96",
+        "cant": "0"
+    },
+    {
+        "code": "020",
+        "name": "Humo liquido(gl)         279.91",
+        "cost": "278.91",
+        "cant": "0"
+    },
+    {
+        "code": "021",
+        "name": "Carragenina",
+        "cost": "193",
+        "cant": "0"
+    },
+    {
+        "code": "022",
+        "name": "Textured vegetable protein (440925)          ",
+        "cost": "0.96",
+        "cant": "0"
+    },
+    {
+        "code": "023",
+        "name": "Ajies",
+        "cost": "20",
+        "cant": "0"
+    },
+    {
+        "code": "024",
+        "name": "Coriander          ",
+        "cost": "98",
+        "cant": "0"
+    },
+    {
+        "code": "025",
+        "name": "Coya 90",
+        "cost": "138.5",
+        "cant": "0"
+    },
+    {
+        "code": "026",
+        "name": "Condimento salami 19128",
+        "cost": "98",
+        "cant": "0"
+    },
+    {
+        "code": "027",
+        "name": "Condimento jamon  6088  ",
+        "cost": "71.72",
+        "cant": "0"
+    },
+    {
+        "code": "028",
+        "name": "Condimento sabor pollo",
+        "cost": "44.48",
+        "cant": "0"
+    },
+    {
+        "code": "029",
+        "name": "Benzoato  de sodio                             ",
+        "cost": "77.84",
+        "cant": "0"
+    },
+    {
+        "code": "030",
+        "name": "Tripolifosfato Americano",
+        "cost": "94.52",
+        "cant": "0"
+    },
+    {
+        "code": "031",
+        "name": "Tripolifosfato Chino",
+        "cost": "113.72",
         "cant": "0"
     }
 ]
