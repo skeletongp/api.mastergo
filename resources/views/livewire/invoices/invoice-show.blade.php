@@ -58,7 +58,7 @@
                         <x-button wire:click="setIncludeElement('showcredit','Nota de Crédito')"
                             class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                             <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
-                                <span class="w-6 text-left far fa-user"></span>
+                                <span class="w-6 text-left far fa-coins"></span>
                                 <span class="lg:text-lg">Nota de Crédito</span>
                             </div>
                         </x-button>
@@ -73,6 +73,7 @@
                 </x-button>
             </div>
         </div>
+        @include('livewire.invoices.includes.invoice-js')
         <div class="col-span-5 flex flex-col justify-center">
             @switch($includeName)
                 @case('showclient')

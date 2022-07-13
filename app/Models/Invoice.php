@@ -45,6 +45,7 @@ protected $connection="mysql";
         'COMPROBANTE GUBERNAMENTAL' => 'B15',
         'DOCUMENTO DE CONDUCE' => 'B00',
         'NOTA DE CRÉDITO' => 'B04',
+        'NOTA DE DÉBITO' => 'B03',
     ];
 
     public function details()

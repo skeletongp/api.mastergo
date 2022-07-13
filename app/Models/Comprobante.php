@@ -53,4 +53,8 @@ protected $connection="mysql";
     {
         return $this->belongsTo(User::class);
     }
+    public function creditnote()
+    {
+        return $this->hasOne(Creditnote::class);
+    }
 }

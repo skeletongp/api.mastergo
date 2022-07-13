@@ -19,9 +19,8 @@ class GeneralMayorTable extends LivewireDatatable
         $counts=auth()->user()->place->counts()->orderBy('code')->orderBy('origin')->orderBy('balance','desc')
         ->with('haber','debe')
         ->select(DB::raw(('name, code, id, balance,balance_real' )))
-        ->groupBy(DB::raw("SUBSTRING_INDEX(code, '-', 1)"));
+       
         ;
-        dd($counts->get());
         return $counts;
     }
    

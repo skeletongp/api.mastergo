@@ -4,7 +4,7 @@
         @forelse ($counts as $count)
             <tr class=" border-b  ">
                 <td scope="row" class="py-1 whitespace-nowrap px-2">
-                    {{ $count['code'] }} {{ $count['name'] }}
+                    {{ $count['code'] }} {{ ellipsis($count['name'],30) }}
                 </td>
             </tr>
             @empty

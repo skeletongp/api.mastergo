@@ -25,16 +25,16 @@
             .map(items => items[field])
             .reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
 
-        Livewire.on('changeInvoice', function(invoice, letPrint = true) {
+        Livewire.on('changeInvoice', function(invoice, letPrint = true, creditNote = false) {
             obj = invoice;
             if (letPrint) {
                 for (let index = 0; index < obj.place.preference.copy_print; index++) {
-                    print();
+                    print(creditNote);
                 }
             }
         })
 
-        function print() {
+        function print(creditNote) {
             if (!obj.place.preference.printer) {
                 Livewire.emit('showAlert', 'No hay ninguna impresora añadida', 'warning');
                 return false;
@@ -43,7 +43,7 @@
             conector.cortar();
             /* Encabezado Negocio */
             align(conector, 'center');
-            if (obj.store.image /* && obj.store.id==2 */) {
+            if (obj.store.image /* && obj.store.id==2 */ ) {
                 conector.imagenDesdeUrl(obj.store.image.path);
                 conector.feed(1)
             }
@@ -73,8 +73,20 @@
             conector.texto(obj.condition.toUpperCase())
             conector.feed(1);
 
+            if (creditNote) {
+                conector.establecerEnfatizado(1);
+                conector.texto('NCF: ')
+                conector.establecerEnfatizado(0);
+                conector.texto(obj.creditnote.modified_ncf);
+                conector.feed(1);
+            }
+
             conector.establecerEnfatizado(1);
-            conector.texto('NCF: ')
+            if (creditNote) {
+                conector.texto('NCF MODIFICADO: ')
+            } else {
+                conector.texto('NCF: ')
+            }
             conector.establecerEnfatizado(0);
             conector.texto(obj.comprobante ? obj.comprobante.ncf : " 0000000000");
             conector.feed(1);
@@ -84,7 +96,13 @@
             conector.establecerEnfatizado(0);
             conector.texto(obj.day);
             conector.feed(1);
-
+            if (creditNote) {
+                conector.establecerEnfatizado(1);
+                conector.texto('MODIFICADA : ')
+                conector.establecerEnfatizado(0);
+                conector.texto(obj.creditnote.modified_at);
+                conector.feed(1);
+            }
             conector.establecerEnfatizado(1);
             conector.texto('VENCE: ')
             conector.establecerEnfatizado(0);
@@ -144,7 +162,11 @@
             conector.establecerEnfatizado(1);
             conector.establecerTamanioFuente(1.2, 1.5)
             align(conector, 'center');
-            conector.texto(obj.comprobante ? obj.comprobante.type : 'DOCUMENTO CONDUCE')
+            if (creditNote) {
+                conector.texto('NOTA DE CRÉDITO')
+            } else {
+                conector.texto(obj.comprobante ? obj.comprobante.type : 'DOCUMENTO CONDUCE')
+            }
             conector.establecerTamanioFuente(1, 1)
             conector.feed(2);
             /* Fin Tipo */
@@ -267,12 +289,22 @@
             conector.texto('CAJERO: ');
             conector.establecerEnfatizado(0);
             conector.texto(obj.contable.fullname);
-            conector.feed(1);
+            conector.feed(2);
 
             /* Fin sección */
 
 
             /* Sección notas */
+            align(conector, 'center')
+            if (creditNote) {
+                conector.establecerEnfatizado(1);
+                conector.establecerEnfatizado(0);
+                conector.texto(obj.creditnote.comment);
+                conector.feed(1);
+            } else {
+                conector.feed(1);
+            }
+
             align(conector, 'center')
             if (obj.note) {
                 conector.establecerEnfatizado(1);

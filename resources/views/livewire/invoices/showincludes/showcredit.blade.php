@@ -8,22 +8,24 @@
                         id="modified_at" type="text" disabled label="NCF Nota de Crédito"></x-base-input>
                 </div>
                 <div class="w-full">
-                    <x-base-input status="{{$invoice->creditnote?'disabled':''}}" class="text-base uppercase" inputClass="py-2" wire:model.defer="modified_at"
-                        id="modified_at" label="Fecha" type="date"></x-base-input>
+                    <x-base-input status="{{ $invoice->creditnote ? 'disabled' : '' }}" class="text-base uppercase"
+                        inputClass="py-2" wire:model.defer="modified_at" id="modified_at" label="Fecha" type="date">
+                    </x-base-input>
                 </div>
                 <div class="w-full">
-                    <x-base-input disabled class="text-base uppercase" inputClass="py-2" value="{{$invoice->creditnote?$invoice->creditnote->user->fullname:auth()->user()->fullname}}"
+                    <x-base-input disabled class="text-base uppercase" inputClass="py-2"
+                        value="{{ $invoice->creditnote ? $invoice->creditnote->user->fullname : auth()->user()->fullname }}"
                         id="userResp" label="Elaborada por" type="text"></x-base-input>
                 </div>
             </div>
             <div class="flex space-x-4 items-end">
                 <div class="w-full ">
-                    <x-base-input status="{{$invoice->creditnote?'disabled':''}}" type="text" class="text-sm " wire:model.lazy="comment" id="comment"
-                        label="Comentario">
+                    <x-base-input status="{{ $invoice->creditnote ? 'disabled' : '' }}" type="text" class="text-sm "
+                        wire:model.lazy="comment" id="comment" label="Comentario">
                     </x-base-input>
                 </div>
             </div>
-            @if (!$invoice->creditNote)
+            @if (!$invoice->creditnote)
                 <div class="flex justify-end">
                     <x-button>Crear</x-button>
                 </div>
@@ -43,5 +45,10 @@
         </div>
 
     </form>
+    @if ($invoice->creditnote)
+        <div class="flex justify-end max-w-xl py-4">
+            <x-button wire:click="printCreditNote">Imprimir</x-button>
+        </div>
+    @endif
 
 </div>

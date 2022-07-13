@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 trait ShowCredit
 {
-    public $modified_ncf, $modified_at, $comment, $creditComprobantes;
+    public $modified_ncf, $modified_at, $comment, $creditComprobantes, $comprobanteCredit;
 
     public function createCreditnote(){
         $this->validate([
@@ -14,16 +14,33 @@ trait ShowCredit
             'modified_at' => 'required',
             'comment' => 'required',
         ]);
+        $this->closeComprobante();
+
         $this->invoice->creditnote()->create([
             'modified_ncf' => $this->modified_ncf,
             'modified_at' => $this->modified_at,
             'comment' => $this->comment,
             'place_id' => auth()->user()->place->id,
             'user_id' => auth()->user()->id,
+            'comprobante_id'=>$this->comprobanteCredit->id,
         ]);
         $this->emit('showAlert','Nota de crédito creada con éxito','success');
         $this->render();
 
+    }
+    public function closeComprobante(){
+        $store = auth()->user()->store;
+        $this->comprobanteCredit=$store->comprobantes()->where('ncf',$this->modified_ncf)
+        ->where('status','disponible')->orderBy('number')
+        ->first();
+        $this->comprobanteCredit->update([
+            'status'=>'usado',
+            'period'=>Carbon::now()->format('Ym'),
+            'user_id'=>auth()->user()->id,
+            'client_id'=>$this->invoice->client_id,
+            'place_id'=>auth()->user()->place->id,
+            
+        ]);
     }
 
     public function initCreditnote(){
@@ -38,6 +55,10 @@ trait ShowCredit
             $this->modified_at=Carbon::parse($this->invoice->creditnote->modified_at)->format('Y-m-d');
             $this->comment=$this->invoice->creditnote->comment;
         }
+    }
+    public function printCreditNote(){
+        $invoice=$this->invoice;
+        $this->emit('changeInvoice', $invoice, true, true);
     }
 
 }

@@ -89,8 +89,8 @@ class EditDetail extends Component
         $this->updatePayment($invoice);
         $this->updateTransaction($invoice);
         $this->render();
-        dispatch(new CreatePDFJob($invoice))->onConnection('database');
         $this->setTaxes($invoice);
+        dispatch(new CreatePDFJob($invoice))->onConnection('database');
         $this->emit('showAlert', 'Detalle actualizado', 'success');
         $this->emitUp('reloadEdit');
     }
@@ -156,7 +156,7 @@ class EditDetail extends Component
             $creditable2 = $invoice->client->contable()->first();
         }
 
-        $debitable2 = $this->place->findCount('202-01');
+        $debitable2 = $this->place->findCount('203-01');
           /* Ajuste Impuesto */
           if ($diffTax < 0) {
             setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2, $creditable2);
