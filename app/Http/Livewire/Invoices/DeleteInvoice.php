@@ -31,9 +31,11 @@ class DeleteInvoice extends Component
     }
     public function restoreComprobante($comprobante)
     {
-        $comprobante->update([
-            'status' => 'disponible'
-        ]);
+        if ($comprobante) {
+            $comprobante->update([
+                'status' => 'disponible'
+            ]);
+        }
     }
     public function deleteTaxes($invoice)
     {

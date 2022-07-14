@@ -90,6 +90,7 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
         }
         $debitable->touch();
         $creditable->touch();
+        return $trans;
     }
 }
 function setOutcome($amount, $concepto, $ref, $outcomeable = null, $ncf = null)

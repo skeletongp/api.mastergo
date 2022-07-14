@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Contables;
 
 use App\Http\Helper\Universal;
 use App\Models\Count;
+use App\Models\Transaction;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Mediconesystems\LivewireDatatables\Action;
 use Mediconesystems\LivewireDatatables\Column;
@@ -13,6 +15,7 @@ use Mediconesystems\LivewireDatatables\TimeColumn;
 
 class GeneralDailyTable extends LivewireDatatable
 {
+    use AuthorizesRequests;
     public $perPage = 5;
     public $headTitle="Transacciones realizadas";
     public $padding='px-2';
@@ -77,6 +80,7 @@ class GeneralDailyTable extends LivewireDatatable
             })->label('Haber')->headerAlignCenter()->exportCallback(function ($haber) {
                 return  "$" . formatNumber($haber);;
             }),
+            Column::delete(),
         ];
     }
     public function buildActions()
@@ -109,5 +113,36 @@ class GeneralDailyTable extends LivewireDatatable
             'A' => 55,
             'B' => 45,
         ];
+    }
+    public function delete($id)
+    {
+        $this->authorize('Borrar Transacciones');
+        $transaction = Transaction::find($id)->load('debe', 'haber');
+        if (!$transaction->deleteable) {
+            $this->emit('showAlert','No se puede eliminar la transacción','error');
+            return;
+        }
+        $debe=$transaction->debe;
+        $haber=$transaction->haber;
+        if($debe->origin=='debit'){
+            $debe->update([
+                'balance'=>$debe->balance-$transaction->income,
+            ]);
+        } else{
+            $debe->update([
+                'balance'=>$debe->balance+$transaction->income,
+            ]);
+        }
+        if ($haber->origin=='credit') {
+            $haber->update([
+                'balance'=>$haber->balance-$transaction->outcome,
+            ]);
+        } else{
+            $haber->update([
+                'balance'=>$haber->balance+$transaction->outcome,
+            ]);
+        }
+       $transaction->delete();
+        $this->emit('refreshLivewireDatatable');
     }
 }

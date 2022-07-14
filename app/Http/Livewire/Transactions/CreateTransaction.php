@@ -60,7 +60,8 @@ class CreateTransaction extends Component
         $this->validate();
         $debitable = Count::whereId($this->cDetailDebit_id)->first();
         $creditable = Count::whereId($this->cDetailCredit_id)->first();
-        setTransaction($this->concept, $this->ref, $this->amount, $debitable, $creditable);
+        $trans=setTransaction($this->concept, $this->ref, $this->amount, $debitable, $creditable);
+        $trans->update(['deleteable'=>"1"]);
         $this->reset();
         $this->mount();
         $this->emit('showAlert', 'Transacción registrada exitosamente', 'success');
