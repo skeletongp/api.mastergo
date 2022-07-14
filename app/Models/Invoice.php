@@ -32,12 +32,14 @@ protected $connection="mysql";
     {
        $url = route('invoices.show', $this->id);
     
+       $client=$this->client->name?:$this->client->contact->fullname;
         return new SearchResult(
            $this,
-           $this->number.' '.$this->rnc,
+           str_replace('0','',$this->number).' '.$client,
            $url
         );
     }
+   
     const TYPES = [
         'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',
         'COMPROBANTE DE CONSUMIDOR FINAL' => 'B02',

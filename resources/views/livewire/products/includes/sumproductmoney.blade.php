@@ -10,12 +10,11 @@
             <x-input-error for="provider_id">Campo requerido</x-input-error>
         </div>
         <div class="w-full">
-            <x-base-select id="outCountCode" label="Cuenta afectada" wire:model.defer="count_code">
-                <option class="text-gray-300"> Elija una cuenta</option>
+            <x-datalist inputId="outCountCode" label="Cuenta afectada" listName="countList" wire:model.defer="count_code">
                 @foreach ($counts as $code => $count)
-                    <option value="{{ $code }}">{{ $count }}</option>
+                    <option value="{{ $code }}">{{ ellipsis($count,27) }}</option>
                 @endforeach
-            </x-base-select>
+            </x-datalist>
             <x-input-error for="count_code">Campo requerido</x-input-error>
         </div>
         <div class="w-full">

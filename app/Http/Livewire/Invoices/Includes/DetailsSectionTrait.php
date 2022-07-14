@@ -92,7 +92,7 @@ trait DetailsSectionTrait
         $this->product_name = $this->form['product_name'];
         $this->cant = $this->form['cant'];
         $this->price = $this->form['price'];
-        $this->discount = $this->form['discount'];
+        $this->discount = ($this->form['discount']/($this->form['cant']*$this->form['price']))*100;
         $this->total = $this->form['total'];
         $this->taxTotal = $this->form['taxTotal'];
         $this->unit_id = $this->form['unit_pivot_id'];
@@ -121,7 +121,6 @@ trait DetailsSectionTrait
             $this->stock = $unit->pivot->stock;
             if ($this->cant >= $unit->pivot->min) {
                 $this->price = $unit->pivot->price_mayor;
-
                 $this->form['price_type'] = 'mayor';
             } else {
                 $this->price =$unit->pivot->price_menor;
@@ -157,8 +156,10 @@ trait DetailsSectionTrait
     public function updatingPrice($newPrice)
     {
         $oldPrice = floatVal($this->price)?:0.0001;
+        $this->freshUnitId();
+
         if ($oldPrice > $newPrice) {
-            $discount = formatNumber(1 - (floatVal($newPrice) / $oldPrice));
+            $discount = 1 - (floatVal($newPrice) / $oldPrice);
             $this->discount = $discount * 100;
         } 
         $pr = str_replace(',', '', $newPrice);
@@ -169,7 +170,7 @@ trait DetailsSectionTrait
             $this->checkStock();
         }
         $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
-        $this->freshUnitId();
+        $this->price=$newPrice;
     }
   
     public function updatingDiscount($desc)

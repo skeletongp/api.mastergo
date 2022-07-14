@@ -297,12 +297,22 @@
             </tr>
             <tr class="row-second">
                 <th>
-                   Costos de Ventas
+                   Costos de Productos
                 </th>
                 <td>
                 </td>
                 <td>
                     ${{ formatNumber($data['costos_ventas']) }}
+                </td>
+            </tr>
+            <tr class="row-second">
+                <th>
+                   Costos de Servicios
+                </th>
+                <td>
+                </td>
+                <td>
+                    ${{ formatNumber($data['costos_servicios']) }}
                 </td>
             </tr>
             <tr class="row-second">
@@ -325,16 +335,7 @@
                 <td>
                 </td>
             </tr>
-            <tr class="row-second">
-                <th>
-                   Costos de Fletes
-                </th>
-                <td>
-                </td>
-                <td>
-                    ${{ formatNumber($data['costos_flete']) }}
-                </td>
-            </tr>
+            
             <tr class="row-second">
                 <th>
                     Otros Costos

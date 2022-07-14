@@ -187,10 +187,10 @@
                 conector.feed(1);
                 align(conector, 'right');
                 conector.texto("Pr. " + formatter.format(det.price) + " ");
-                if (det.discount_rate > 0 && obj.type !== 'B00' && obj.type !== 'B14') {
+                if (det.discount_rate > 0 ) {
                     conector.texto("Desc. " + toDecimal.format(det.discount_rate * 100) + "% ");
                 }
-                if (det.taxtotal > 0 && obj.type !== 'B14') {
+                if (det.taxtotal > 0 && obj.type !== 'B00' && obj.type !== 'B14' ) {
                     conector.texto("Imp. " + formatter.format(det.taxtotal) + " ");
                 }
                 conector.texto("Subt. " + formatter.format(det.total));

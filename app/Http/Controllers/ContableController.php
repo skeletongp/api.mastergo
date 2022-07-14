@@ -58,11 +58,11 @@ class ContableController extends Controller
         $devolucionCompras=$place->findCount('501-01')->balance;
         $descuentosCompras=$place->findCount('501-02')->balance;
         $costos_ventas = $place->findCount('500-01')->balance;
-        $costos_flete = $place->counts()->whereCode('500-02')->sum('balance');
+        $costos_servicios = $place->counts()->whereCode('500-02')->sum('balance');
         $costos_totales = $place->counts()->where('code', 'like', '500%')->sum('balance')-$devolucionCompras-$descuentosCompras;
-        $otros_costos = $costos_totales-$costos_ventas-$costos_flete+$devolucionCompras+$descuentosCompras;
+        $otros_costos = $costos_totales-$costos_ventas-$costos_servicios+$devolucionCompras+$descuentosCompras;
         
-        $utilidad = $ingresos - $costos_ventas - $costos_flete - $otros_costos+$devolucionCompras+$descuentosCompras;
+        $utilidad = $ingresos - $costos_ventas - $costos_servicios - $otros_costos+$devolucionCompras+$descuentosCompras;
 
         $gastos_admin = $place->counts()->where('code', 'like', '600%')->sum('balance');
         $gastos_ventas = $place->counts()->where('code', 'like', '601%')->sum('balance');
