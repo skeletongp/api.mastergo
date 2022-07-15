@@ -129,7 +129,7 @@ class User extends Authenticatable implements Searchable
         if (!is_null($store)) {
             return $store;
         }
-        $store = $this->stores()->where('stores.id', $this->store_id)
+        $store = $this->stores()->where('stores.id', env('STORE_ID'))
             ->with(
                 'clients',
                 'products',
