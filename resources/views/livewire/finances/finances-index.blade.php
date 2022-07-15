@@ -38,16 +38,22 @@
             </div>
             <div wire:click="changeView('finances.por-cobrar')" id="divBank"
                 class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.por-cobrar' ? 'bg-blue-100' : '' }}">
-                <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
+                <span class="far  fa-hand-holding-usd text-xl w-8 text-center"></span>
                 <span class=" text-lg">Ctas. Por Cobrar</span>
                 <hr>
             </div>
             <div wire:click="changeView('finances.por-pagar')" id="divBank"
                 class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.por-pagar' ? 'bg-blue-100' : '' }}">
-                <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
+                <span class="far  fa-hand-holding-usd transform fa-flip-horizontal text-xl w-8 text-center"></span>
                 <span class=" text-lg">Ctas. Por Pagar</span>
                 <hr>
             </div>
+            <div wire:click="changeView('finances.cuadres-hist')" id="divBank"
+            class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.cuadres-hist' ? 'bg-blue-100' : '' }}">
+            <span class="far  fa-history text-xl w-8 text-center"></span>
+            <span class=" text-lg">Hist. Cuadres</span>
+            <hr>
+        </div>
         </div>
     </div>
     <div class="w-full h-full relative  p-4" x-data="{ open: true }">
@@ -83,7 +89,11 @@
                     @livewire($componentName)
                 </div>
             @break
-
+            @case('finances.cuadres-hist')
+            <div class=" mx-auto">
+                @livewire($componentName)
+            </div>
+        @break
             @default
         @endswitch
     </div>

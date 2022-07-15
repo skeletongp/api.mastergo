@@ -86,7 +86,7 @@ class CuadreController extends Controller
             'retirado'=>$cuadre->retirado+$retirado,
             'final'=>$total
         ]);
-        $this->openNewCuadre($cuadre->final);
+        $this->openNewCuadre($total);
         return $cuadre;
     }
     public function openNewCuadre($inicial)
