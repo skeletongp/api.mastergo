@@ -108,7 +108,12 @@
 
                     </div>
                 @endif
+                <div class="flex justify-end py-4 bottom-0 right-2">
+                    <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
+                        wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
+                </div>
             </div>
+            
         </div>
         @if (count($productAdded))
             <div class="w-full">

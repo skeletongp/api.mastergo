@@ -16,7 +16,7 @@ function formatNumber($number)
 }
 function removeComma($number)
 {
-   $withoutComma=preg_replace("/[^0-9.]/", "", $number );
+   $withoutComma=preg_replace("/[^0-9.-]/", "", $number );
    if (is_numeric($withoutComma)) {
        return $withoutComma;
    }
