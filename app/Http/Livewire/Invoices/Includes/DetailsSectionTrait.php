@@ -46,6 +46,7 @@ trait DetailsSectionTrait
         } else {
             $this->confirmedAddItems();
         }
+        $this->emit('focusCode');
     }
     public function confirmedAddItems()
     {

@@ -20,11 +20,11 @@
         </div>
         <hr>
         <div
-        class="relative select-none flex justify-between items-center w-full px-4 py-2 text-xl font-medium uppercase border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-        <span>Subtotal</span>
-        <span class="font-bold">
-            ${{ formatNumber(array_sum(array_column($details, 'subtotal'))-array_sum(array_column($details, 'discount'))) }}</span>
-    </div>
+            class="relative select-none flex justify-between items-center w-full px-4 py-2 text-xl font-medium uppercase border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
+            <span>Subtotal</span>
+            <span class="font-bold">
+                ${{ formatNumber(array_sum(array_column($details, 'subtotal')) - array_sum(array_column($details, 'discount'))) }}</span>
+        </div>
         <div
             class="relative select-none flex justify-between items-center w-full px-4 py-2 text-xl font-medium uppercase border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
             <span>Impuestos</span>
@@ -40,5 +40,10 @@
     </div>
     @if (count($details))
         @include('livewire.invoices.includes.buttons')
+    @endif
+    @if ($producto)
+        <div class="p-4 flex items-center justify-center ">
+            <img class="w-48" src="{{ $producto->photo }}" alt="image">
+        </div>
     @endif
 </div>

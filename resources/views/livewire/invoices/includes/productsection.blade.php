@@ -37,8 +37,8 @@
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-[3.5rem]">
                         <x-base-input placeholder="Cód." class=" border-none" type="number"
-                            wire:model.lazy="product_code" id="code" label=""
-                            wire:keydown.enter="tryAddItems">
+                            wire:model.lazy="product_code" id="codeInput" label=""
+                            wire:keydown.enter="$emit('focusCant')">
                         </x-base-input>
                     </div>
                 </td>
@@ -58,7 +58,7 @@
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
 
-                        <x-base-input class="uppercase border-none text-center bg-transparent " type="number"
+                        <x-base-input id="cant" class="uppercase border-none text-center bg-transparent " type="number"
                             placeholder="Cant." wire:keydown.enter="tryAddItems" wire:model.lazy="cant" label=""></x-base-input>
                     </div>
                 </td>
@@ -196,7 +196,7 @@
     @push('js')
         <script>
             Livewire.on('focusCode', function() {
-                $('#code').focus();
+                $('#codeInput').focus();
             })
             Livewire.on('focusCant', function() {
                 $('#cant').focus();
@@ -204,7 +204,6 @@
             $(document).ready(function() {
                 // Enable Keyboard Input
                 document.addEventListener("keydown", key, false);
-                $('#code').focus();
 
                 function key(e) {
                     code = e.key || e.which;

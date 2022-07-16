@@ -124,7 +124,9 @@ trait GenerateInvoiceTrait
         event(new NewInvoice($invoice));
         $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name', 'name');
         $this->invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
-        $this->emit('printOrder', $this->invoice);
+        if (auth()->user()->place->preference->print_order=='yes') {
+            $this->emit('printOrder', $this->invoice);
+        }
         $this->mount();
     }
     public function createPayment($invoice)

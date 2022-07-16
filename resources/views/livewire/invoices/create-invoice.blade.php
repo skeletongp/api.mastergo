@@ -1,5 +1,6 @@
 <div>
     <div class="flex space-x-8 divide-x divide-red-100">
+        
         <div class="w-max flex flex-col max-w-6xl space-y-4">
             <div class="flex space-x-8 items-start">
                 {{-- Client Section --}}
