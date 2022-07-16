@@ -39,7 +39,7 @@ class PayRecurrent extends Component
         $this->validate();
     }
 
-    public function updateBankId(){
+    public function updatedBankId(){
         $this->bank=Bank::find($this->bank_id);
     }
 
@@ -51,7 +51,7 @@ class PayRecurrent extends Component
         setTransaction('Reg. pago en efectivo '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->efectivo,$debitable, $place->cash());
         setTransaction('Reg. pago en otros '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->tarjeta,$debitable, $place->other());
         if ($this->transferencia > 0) {
-            setTransaction('Reg. pago en transferencia/tarjeta '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->transferencia,$debitable, $this->bank);
+            setTransaction('Reg. pago en transferencia/tarjeta '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->transferencia,$debitable, $this->bank->contable);
         }
         setTransaction('Reg. ITBIS pagado'.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->tax,$debitable, $place->findCount('103-01'));
        $recurrent=Recurrent::find($this->recurrent['id']);

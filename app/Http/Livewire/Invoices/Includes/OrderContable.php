@@ -15,7 +15,6 @@ trait OrderContable
                 $this->gastoTerminado += $det->cost*$det->cant;
             }
         }
-        dd($this->gastoGeneral, $this->gastoTerminado);
     }
     public function setTransaction($invoice, $payment, $client)
     {
