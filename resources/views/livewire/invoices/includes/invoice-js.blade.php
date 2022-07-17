@@ -276,7 +276,7 @@
             conector.feed(1);
             /* Fin Sección */
             /*  Código QR */
-            conector.qr(obj.pdf.pathLetter)
+            //conector.qr(obj.pdf.pathLetter)
             /* Fin de código */
 
             /* Sección personas */
@@ -322,6 +322,7 @@
 
             conector.feed(3);
             conector.cortar();
+            conector.abrirCajon();
             conector.imprimirEn(obj.place.preference.printer)
                 .then(respuestaAlImprimir => {
                     if (respuestaAlImprimir === true) {
