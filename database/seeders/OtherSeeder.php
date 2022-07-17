@@ -69,12 +69,12 @@ class OtherSeeder extends Seeder
         $popular=$store->banks()->create([
             'bank_name'=>'Banco Popular',
             'bank_number'=>'803579804',
-            'titular_id'=>1,
+            'titular'=>'Ismael Contreras',
         ]);
         $reservas=$store->banks()->create([
             'bank_name'=>'BanReservas',
             'bank_number'=>'3604789684',
-            'titular_id'=>1,
+            'titular'=>'Ismael Contreras',
         ]);
 
         setContable($popular,'100','debit', $popular->bank_name, $place->id,true);
