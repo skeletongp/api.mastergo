@@ -32,7 +32,7 @@ class ClientInvoice extends LivewireDatatable
                 }
             })->label(''),
             DateColumn::name('created_at')->label('Hora')->format('h:i A'),
-            Column::name('condition')->label('Condición'),
+            Column::name('condition')->label('Condición')->filterable(['De Contado','1 A 15 Días', '16 A 30 Días']),
             Column::callback(['uid', 'id'], function ($total, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 return '$' . formatNumber($result['payment']['total']);

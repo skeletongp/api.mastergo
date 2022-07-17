@@ -150,11 +150,9 @@ class EditDetail extends Component
         } else {
             $desc_dev_ventas = $this->place->findCount('401-01');
         }
-        if ($invoice->payment->payed >= $diffTax) {
+        
             $creditable2 = $this->place->cash();
-        } else {
-            $creditable2 = $invoice->client->contable()->first();
-        }
+        
 
         $debitable2 = $this->place->findCount('203-01');
           /* Ajuste Impuesto */

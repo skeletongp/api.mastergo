@@ -48,9 +48,14 @@ trait DetailsSectionTrait
         }
         $this->emit('focusCode');
     }
+    public function updatedCant(){
+        if($this->unit){
+           // dd($this->unit);
+        }
+    }
     public function confirmedAddItems()
     {
-        $this->updatingPrice($this->price);
+       // $this->updatingPrice($this->price);
         $this->price = str_replace(',', '', $this->price);
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
@@ -159,10 +164,7 @@ trait DetailsSectionTrait
         $oldPrice = floatVal($this->price)?:0.0001;
         $this->freshUnitId();
 
-        if ($oldPrice > $newPrice) {
-            $discount = 1 - (floatVal($newPrice) / $oldPrice);
-            $this->discount = $discount * 100;
-        } 
+        
         $pr = str_replace(',', '', $newPrice);
         $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ( $this->discount / 100))));
         if ($this->product) {

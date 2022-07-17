@@ -69,7 +69,7 @@ class GeneralDailyTable extends LivewireDatatable
                 ";
             })->label('Debe')->headerAlignCenter()->exportCallback(function ($debe) {
                 return  "$" . formatNumber($debe);
-            }),
+            })->searchable(),
             Column::name('outcome')->callback(['outcome'], function ($haber) {
                 return " 
                 <div class='leading'>

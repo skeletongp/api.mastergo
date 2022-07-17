@@ -4,12 +4,14 @@ namespace App\Http\Livewire\Invoices;
 
 use App\Models\Invoice;
 use Mediconesystems\LivewireDatatables\Column;
+use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class InvoiceList extends LivewireDatatable
 {
 
     public $hideResults = true;
+    public $hideable="select";
     public $headTitle = "Facturas";
     public $padding = "px-2";
     public $perPage = 15;
@@ -25,6 +27,7 @@ class InvoiceList extends LivewireDatatable
         $invoices = $this->builder()->get()->toArray();
         return [
             Column::name('number')->label('Orden')->searchable()->sortable(),
+            DateColumn::name('created_at')->label('hora')->format('d/m/Y H:i')->hide(),
             Column::callback(['id', 'client_id'], function ($id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 if ($result['name']) {

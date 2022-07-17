@@ -18,6 +18,7 @@ class OrderView extends LivewireDatatable
     public $hideable="select";
     public $headTitle="Pedidos Pendientes";
     public $perPage=5;
+    public $padding='px-2';
 
     public function builder()
     {
@@ -35,7 +36,7 @@ class OrderView extends LivewireDatatable
         return [
             Column::name('number')->label("Nro."),
             TimeColumn::name('created_at')->label("Hora")->hide(),
-            Column::name('client.name')->callback(['client_id', 'id'], function ($clt, $uid) use ($invoices) {
+            Column::callback(['client_id', 'id'], function ($clt, $uid) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $uid);
                 return ellipsis($result['name']?:$result['client']['name'], 16);
 

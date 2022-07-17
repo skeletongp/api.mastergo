@@ -16,7 +16,7 @@
                                 @foreach ($modelSearchResults as $ind => $searchResult)
                                     @if ($ind < 5)
                                         <li class="p-1 hover:bg-gray-100 hover:text-blue-600">
-                                            <a href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>
+                                            <a class="load" href="{{ $searchResult->url }}">{{ $searchResult->title }}</a>
                                         </li>
                                     @endif
                                 @endforeach
