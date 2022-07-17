@@ -69,17 +69,7 @@ class DatabaseSeeder extends Seeder
             'limit' => 0,
         ]);
        
-       /*  $user = $store->users()->create([
-            'name' => 'Ismael',
-            'lastname' => 'Contreras ',
-            'email' => 'contrerasismael0@gmail.com',
-            'username' => 'mastergo',
-            'password' => 'mastergo',
-            'phone' => '(829) 804-1907)',
-            'loggeable' => 'yes',
-            'place_id' => $store->places()->first()->id,
-            'store_id' => $store->id,
-        ]); */
+       
         $user=User::find(1);
         $store->users()->attach($user);
         $store->users()->attach([2,5]);

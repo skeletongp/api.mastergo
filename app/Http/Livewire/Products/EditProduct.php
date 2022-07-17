@@ -110,9 +110,17 @@ class EditProduct extends Component
         $this->validate([
             'photo'=>'image|max:2048'
         ]);
-        $ext = pathinfo($this->photo->getFileName(), PATHINFO_EXTENSION);
-        $photo = $this->photo->storeAs('/productos', date('Y_m_d_H_i_s') . '.' . $ext);
-        $this->photo_path = asset("storage/{$photo}");
+        $this->validate([
+            'avatar'=>'image|max:2048'
+        ]);
+        $path = cloudinary()->upload($this->avatar->getRealPath(),
+        [
+            'folder' => 'carnibores/products',
+            'transformation' => [
+                      'height' => 250
+             ]
+        ])->getSecurePath();
+        $this->photo_path = $path;
     }
     public function reloadEditProduct()
     {
