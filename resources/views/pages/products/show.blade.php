@@ -61,8 +61,6 @@
                     window.livewire.emit('productPhotoChange', reader.result);
                 }
                 reader.readAsDataURL(file);
-
-
             });
         </script>
     @endpush
