@@ -11,7 +11,7 @@ class ProductShow extends Component
     use WithFileUploads;
     public Product $product;
 
-    public $componentName = 'products.product-detail';
+    public $componentName = 'products.product-price';
 
     protected $queryString = ['componentName'];
 
@@ -29,10 +29,11 @@ class ProductShow extends Component
     }
     public function productPhotoChange($photo)
     {
-        if(strpos($photo, 'data:image/jpeg;base64') == false &&  strpos($photo, 'data:image/png;base64') == false){
+        if(!strpos($photo, 'image/jpeg')&&  !strpos($photo, 'image/png')){
          $this->emit('showAlert','La imagen debe ser en formato jpg o png','error');  
          return;
         }
+
         $path = cloudinary()->upload($photo,
         [
             'folder' => 'carnibores/products',
@@ -46,5 +47,7 @@ class ProductShow extends Component
             ]);
            
         }
+        return redirect()->route('products.show',$this->product->id);
+
     }
 }

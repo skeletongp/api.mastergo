@@ -24,6 +24,8 @@ class TableProduct extends LivewireDatatable
     public function columns()
     {
         $products = $this->builder()->get()->toArray();
+        $user = auth()->user();
+
         return [
             Column::callback(['id', 'deleted_at'], function ($id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
@@ -46,6 +48,7 @@ class TableProduct extends LivewireDatatable
                 }
                 return $data;
             })->label('Stock'),
+            $user->hasPermissionTo('Ver Utilidad')?$this->getCosto($products):null,
             Column::callback(['store_id', 'id'], function ($created, $id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
                 $data = '';
@@ -68,6 +71,16 @@ class TableProduct extends LivewireDatatable
             })->label('Editar'),
             Column::delete()->label('Eliminar')
         ];
+    }
+    public function getCosto($products){
+        return Column::callback(['description','id'], function ($desc, $id) use ($products) {
+            $result = arrayFind($products, 'id', $id);
+            $data = '';
+            foreach ($result['units'] as $unit) {
+                $data .= $unit['symbol'] . ' => ' . '$' . formatNumber($unit['pivot']['cost']) . '<br>';
+            }
+            return $data;
+        })->label('Costo');
     }
     public function delete($id)
     {
