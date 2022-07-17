@@ -43,10 +43,11 @@
             conector.cortar();
             /* Encabezado Negocio */
             align(conector, 'center');
-            if (obj.store.image /* && obj.store.id==2 */ ) {
+           /* if (obj.store.image  && obj.store.id==2 ) {
                 conector.imagenDesdeUrl(obj.store.image.path);
                 conector.feed(1)
             }
+            */
             conector.establecerEnfatizado(1);
             conector.establecerTamanioFuente(1.3, 2)
             conector.texto(obj.store.name.toUpperCase() + "\n");
