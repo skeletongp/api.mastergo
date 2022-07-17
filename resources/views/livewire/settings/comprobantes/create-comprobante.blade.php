@@ -1,7 +1,6 @@
 <div class="px-4">
     <form action="" wire:submit.prevent="createComprobante">
 
-        <h1 class="font-semibold text-left uppercase mb-6">Registrar nuevos comprobantes</h1>
         <div class="flex space-x-4 items-start py-4">
             <div class="w-full">
                 <x-base-select wire:model.defer="form.type" id="comprobante.type" label="Tipo">
@@ -24,14 +23,15 @@
                 </x-base-input>
                 <x-input-error for="form.final">Requerido</x-input-error>
             </div>
-            <div class="">
+            <div class="pt-8">
                 <x-button class="bg-gray-800 font-bold text-white uppercase disabled:bg-gray-200 text-xs"
                     wire:loading.attr='disabled'>
                     <div class="animate-spin mr-2" wire:loading wire:target="createComprobante">
                         <span class="fa fa-spinner ">
                         </span>
                     </div>
-                    <span>Guardar</span>
+                    <span  wire:loading.attr='hidden'>Guardar</span>
+                    <span  wire:loading>Guardando</span>
                 </x-button>
             </div>
         </div>

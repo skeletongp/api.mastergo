@@ -16,6 +16,18 @@ class ProductPlaceUnit extends Pivot
             get:fn($value)=>$value
         );
     }
+    public function price_menor() : Attribute
+    {
+        return new Attribute(
+            get:fn($value)=>$value
+        );
+    }
+    public function cost() : Attribute
+    {
+        return new Attribute(
+            get:fn($value)=>$value
+        );
+    }
     public function product()
     {
         return $this->belongsTo(Product::class);

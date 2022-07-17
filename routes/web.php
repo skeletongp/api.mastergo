@@ -19,7 +19,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
-
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(ProductController::class)->group(function () {
             Route::get('/products', 'index')->name('products.index');
+            Route::get('/report', 'report')->name('products.report');
             Route::get('/products/create', 'create')->name('products.create');
             Route::get('/products/sum', 'sum')->name('products.sum');
             Route::get('/products/edit/{product}', 'edit')->name('products.edit');
@@ -134,5 +136,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
  
-  return redirect()->route('home');
+
 })->name('prueba');

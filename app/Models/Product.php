@@ -110,7 +110,7 @@ class Product extends Model implements Searchable
     }
     public function stock():Attribute
     {
-        $places=$this->units()->where('place_id', auth()->user()->place->id)->get()->pluck('stock','name','places.name');
+        $places=$this->units()->where('place_id', auth()->user()->place->id)->get()->pluck('stock','name');
         return new Attribute(
             get:fn()=>$places
         );

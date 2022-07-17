@@ -23,7 +23,6 @@
                         <div draggable="true" id="drop-zone"
                             class="w-48 h-48 rounded-full dragable  bg-center bg-cover border-4 border-gray-300 bg-no-repeat"
                             style="background-image: url({{ $product->photo }})">
-
                         </div>
                     </div>
                     <input type="file" id="myfile" hidden>

@@ -56,9 +56,9 @@ trait DetailsSectionTrait
         $this->form['cant'] = $this->cant;
         $this->form['price'] = str_replace(',', '', $this->price);
         $this->validate();
-        $this->form['subtotal'] =  $this->cant * $this->price;
+        $this->form['subtotal'] =  operate($this->cant, '*', $this->price);
         $this->form['discount_rate'] =  ($this->discount / 100);
-        $this->form['discount'] = ($this->form['subtotal'] * ($this->discount / 100));
+        $this->form['discount'] = (operate($this->form['subtotal'], '*', ($this->discount / 100)));
         $this->form['taxTotal'] = $this->taxTotal;
         $this->form['total'] = ($this->form['subtotal'] - $this->form['discount']) + $this->taxTotal;
         $this->form['utility'] = ($this->form['cant'] * $this->form['price']) - ($this->form['cant'] * $this->form['cost']);

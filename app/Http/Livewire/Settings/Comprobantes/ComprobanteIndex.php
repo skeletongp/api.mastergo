@@ -11,10 +11,9 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ComprobanteIndex extends LivewireDatatable
 {
-    public $exportable=true;
     public $name="Tabla de Comprobantes";
     public  $hideable="select";
-    public $perPage=7;
+    public $padding="px-2 ";
 
     public function builder()
     {
@@ -26,11 +25,16 @@ class ComprobanteIndex extends LivewireDatatable
         return [
             NumberColumn::name('id')->defaultSort('asc'),
             Column::name('type')->label('Tipo')->searchable(),
-            Column::raw("CONCAT(comprobantes.prefix,comprobantes.number) AS Serie")->searchable()->filterable(),
+            Column::raw("CONCAT(comprobantes.prefix,comprobantes.number) AS Serie")->searchable()->filterable([
+                'B01' => 'Cr. Fiscal',
+                'B02' => 'De Consumo',
+                'B14' => 'Reg. Especial',
+                'B15' => 'Gubernamental',
+                'B03' => 'Nota de Débito',
+                'B04' => 'Nota de Crédito',
+            ]),
             Column::name('status')->label('Estado')->searchable(),
-            Column::callback(['id'], function($id) {
-                return view('livewire.settings.comprobantes.actions', ['comprobante'=>Comprobante::where('id', $id)->first()]);
-            })->label('Acciones')->unsortable()->excludeFromExport(),
+            Column::delete()->label('Eliminar'),
         ];
     }
 }

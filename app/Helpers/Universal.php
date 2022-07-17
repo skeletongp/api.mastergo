@@ -124,3 +124,20 @@ function getNextDate(string $recurrency, $date){
     }
     return $date;
 }
+function operate( $a, $op, $b)
+{
+    $a=floatval(str_replace(',', '', $a));
+    $b=floatval(str_replace(',', '', $b));
+    switch ($op) {
+        case '+':
+            return $a + $b;
+        case '-':
+            return $a - $b;
+        case '*':
+            return $a * $b;
+        case '/':
+            return $a / $b;
+        default:
+            return null;
+    }
+}

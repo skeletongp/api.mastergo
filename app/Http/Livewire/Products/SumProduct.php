@@ -136,6 +136,8 @@ class SumProduct extends Component
         $prod = Product::find($this->form['product_id']);
         if ($prod) {
             $this->units = $prod->units()->distinct('name')->pluck('name', 'units.id');
+            $this->form['unit'] = array_key_first($this->units->toArray());
+            $this->updatedFormUnit(array_key_first($this->units->toArray()));
             $this->render();
         }
     }

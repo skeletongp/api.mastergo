@@ -43,7 +43,10 @@
     @endif
     @if ($producto)
         <div class="p-4 flex items-center justify-center ">
-            <img class="w-48" src="{{ $producto->photo }}" alt="image">
+            <div draggable="true" 
+                class="w-48 h-48 rounded-full dragable  bg-center bg-cover border-4 border-gray-300 bg-no-repeat"
+                style="background-image: url({{ $producto->photo }})">
+            </div>
         </div>
     @endif
 </div>
