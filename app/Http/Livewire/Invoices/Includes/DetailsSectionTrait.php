@@ -38,7 +38,7 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
-        $this->validate(['product'=>'required']);
+        $this->validate(['product' => 'required']);
 
         if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar') && $this->product['type'] != 'Servicio') {
             $this->action = 'confirmedAddItems';
@@ -48,14 +48,19 @@ trait DetailsSectionTrait
         }
         $this->emit('focusCode');
     }
-    public function updatedCant(){
-        if($this->unit){
-           // dd($this->unit);
+    public function updatedCant()
+    {
+        if ($this->producto) {
+            $unt = $this->producto->units()->where('units.id', $this->unit->id)->first()->pivot;
+            $min = $unt->min;
+            if($this->cant >= $min){
+                $this->price = $unt->price_mayor;
+            }
         }
     }
     public function confirmedAddItems()
     {
-       // $this->updatingPrice($this->price);
+        // $this->updatingPrice($this->price);
         $this->price = str_replace(',', '', $this->price);
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;
@@ -82,6 +87,7 @@ trait DetailsSectionTrait
     }
     public function removeItem($id)
     {
+        //dd($id, $this->details);
         $this->form['product_id'] = $this->details[$id]['product_id'];
         unset($this->details[$id]);
         $this->details = array_values($this->details);
@@ -98,7 +104,7 @@ trait DetailsSectionTrait
         $this->product_name = $this->form['product_name'];
         $this->cant = $this->form['cant'];
         $this->price = $this->form['price'];
-        $this->discount = ($this->form['discount']/($this->form['cant']*$this->form['price']))*100;
+        $this->discount = ($this->form['discount'] / ($this->form['cant'] * $this->form['price'])) * 100;
         $this->total = $this->form['total'];
         $this->taxTotal = $this->form['taxTotal'];
         $this->unit_id = $this->form['unit_pivot_id'];
@@ -106,6 +112,7 @@ trait DetailsSectionTrait
         $this->removeItem($id);
         $this->emit('focusCode');
     }
+
     public function checkStock()
     {
         $exist = array_keys(array_column($this->details, 'product_id'), $this->form['product_id']);
@@ -123,16 +130,16 @@ trait DetailsSectionTrait
         $unit = auth()->user()->place->units()->wherePivot('id', $this->unit_id)->first();
         if ($unit) {
             $this->unit = $unit;
-            $this->price =$unit->pivot->price_menor;
+            $this->price = $unit->pivot->price_menor;
             $this->stock = $unit->pivot->stock;
             if ($this->cant >= $unit->pivot->min) {
                 $this->price = $unit->pivot->price_mayor;
                 $this->form['price_type'] = 'mayor';
             } else {
-                $this->price =$unit->pivot->price_menor;
+                $this->price = $unit->pivot->price_menor;
                 $this->form['price_type'] = 'detalle';
             }
-             
+
             $this->form['unit_name'] = $unit->symbol;
             $discount = 0;
             if ($this->discount) {
@@ -142,7 +149,7 @@ trait DetailsSectionTrait
             $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ($discount / 100))));
             if ($this->product) {
                 $this->form['cost'] = $unit->pivot->cost;
-                $this->taxTotal =$sub * $this->producto->taxes->sum('rate');
+                $this->taxTotal = $sub * $this->producto->taxes->sum('rate');
                 $this->checkStock();
             }
             $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
@@ -161,21 +168,21 @@ trait DetailsSectionTrait
     }
     public function updatingPrice($newPrice)
     {
-        $oldPrice = floatVal($this->price)?:0.0001;
+        $oldPrice = floatVal($this->price) ?: 0.0001;
         $this->freshUnitId();
 
-        
+
         $pr = str_replace(',', '', $newPrice);
-        $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ( $this->discount / 100))));
+        $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
         if ($this->product) {
-           
+
             $this->taxTotal = $sub * $this->producto->taxes->sum('rate');
             $this->checkStock();
         }
         $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
-        $this->price=$newPrice;
+        $this->price = $newPrice;
     }
-  
+
     public function updatingDiscount($desc)
     {
         $this->discount = $desc * 100;

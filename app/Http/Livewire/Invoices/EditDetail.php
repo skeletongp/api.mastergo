@@ -82,15 +82,19 @@ class EditDetail extends Component
     public function updateDetail()
     {
 
+        $invoice = $this->detail->detailable->load('details', 'payment', 'client');
+        if($invoice->payments()->count()>1){
+           $this->emit('showAlert', 'No se puede editar el detalle, ya que la factura tiene pagos realizados','error',3000);
+        }
         $this->updateUnit();
         $this->detail->product_id = $this->product->id;
-        $this->updatePrice();
-        $invoice = $this->detail->detailable->load('details', 'payment', 'client');
-        $this->updatePayment($invoice);
+        $details=$this->updatePrice();
+        $this->updatePayment($invoice, $details);
         $this->updateTransaction($invoice);
         $this->render();
         $this->setTaxes($invoice);
         dispatch(new CreatePDFJob($invoice))->onConnection('database');
+
         $this->emit('showAlert', 'Detalle actualizado', 'success');
         $this->emitUp('reloadEdit');
     }
@@ -105,9 +109,11 @@ class EditDetail extends Component
         $this->detail->subtotal = $subtotal;
         $this->detail->taxtotal = $taxTotal;
         $this->detail->total = $total;
+        $this->detail->utility = $this->detail->subtotal-($this->detail->cost+$this->detail->cost_service);
         $this->detail->save();
         $this->detail->taxes()->detach($this->prevTaxes);
         $this->detail->taxes()->attach($this->product->taxes()->pluck('taxes.id')->toArray());
+        return $this->detail->detailable->details()->get();
     }
     public function updateUnit()
     {
@@ -119,16 +125,18 @@ class EditDetail extends Component
         $unit->pivot->save();
         return $unit;
     }
-    public function updatePayment($invoice)
+    public function updatePayment($invoice, $details)
     {
         $payment = $invoice->payment;
+       
         $this->prevRest = $payment->rest;
-        $payment->amount = $invoice->details->sum('subtotal');
-        $payment->discount = $invoice->details->sum('discount');
-        $payment->tax = $invoice->details->sum('taxtotal');
-        $payment->total = $invoice->details->sum('total');
+        $payment->amount = $details->sum('subtotal');
+        $payment->discount = $details->sum('discount');
+        $payment->tax = $details->sum('taxtotal');
+        $payment->total = $details->sum('total');
         $payment->rest = $payment->total - $payment->payed;
         $payment->save();
+        $invoice->update(['rest' => $payment->rest]);
         $this->updateClientLimit($this->prevRest, $invoice->client, $payment);
     }
     public function updateClientLimit($prevRest, $client, $payment)
@@ -150,7 +158,6 @@ class EditDetail extends Component
         } else {
             $desc_dev_ventas = $this->place->findCount('401-01');
         }
-        
             $creditable2 = $this->place->cash();
         
 
@@ -162,10 +169,14 @@ class EditDetail extends Component
             setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTax, $creditable2, $debitable2);
         }
         /* Ajuste Detalle */
+        $credi=$this->place->cash();
+        if($this->prevRest>0){
+            $credi=$invoice->client->contable;
+        }
         if ($diffRest > 0) {
-            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffRest, $invoice->client->contable()->first(), $desc_dev_ventas);
+            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffRest, $credi, $desc_dev_ventas);
         } else {
-            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $desc_dev_ventas, $invoice->client->contable()->first());
+            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $desc_dev_ventas, $credi);
         }
       
     }

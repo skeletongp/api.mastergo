@@ -27,7 +27,7 @@ protected $connection="mysql";
     public function symbol() : Attribute
     {
         return new Attribute(
-            set: fn($value)=>strtoupper($value)
+            set: fn($value)=>strtoupper(str_replace('.','',$value))
         );
     }
     public function name() : Attribute

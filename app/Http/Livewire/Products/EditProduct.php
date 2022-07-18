@@ -28,7 +28,7 @@ class EditProduct extends Component
             };
         }
         foreach ($this->units as  $un) {
-            $this->unit[$un->symbol] = [
+            $this->unit[$un->id] = [
                 'price_menor' => floatval($un->plainPriceMenor),
                 'price_mayor' => floatval($un->plainPriceMayor),
                 'cost' => floatval($un->cost),
@@ -51,7 +51,7 @@ class EditProduct extends Component
         'unit' => 'required',
         'unit.*.price_menor' => 'required|numeric|min:1',
         'unit.*.price_mayor' => 'required|numeric|min:1',
-        'unit.*.cost' => 'required|numeric|min:1',
+        'unit.*.cost' => 'required|numeric|min:0',
         'unit.*.min' => 'required|numeric|min:1',
     ];
     public function updateProduct()
@@ -73,12 +73,13 @@ class EditProduct extends Component
     {
         $this->validate($this->rules2);
         foreach ($this->unit as $key => $value) {
-            $unit = $this->product->units()->where('symbol', $key)->first();
+            $cost=$value['cost']?:0.00000000001;
+            $unit = $this->product->units()->where('units.id', $key)->first();
             $unit->pivot->price_menor = $value['price_menor'];
             $unit->pivot->price_mayor = $value['price_mayor'];
             $unit->pivot->cost = $value['cost'];
             $unit->pivot->min = $value['min'];
-            $unit->pivot->margin = ($value['price_menor'] / $value['cost']) - 1;
+            $unit->pivot->margin = ($value['price_menor'] / $cost) - 1;
             $unit->pivot->save();
             
         }

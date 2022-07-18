@@ -5,19 +5,19 @@
                 <livewire:invoices.invoice-list />
             </div>
         </div>
-       
+
         <div class="w-3/5 h-full  pl-0" x-data="{ open: true }">
             @if ($invoices->count())
                 <div class="mx-auto ">
                     <div
                         class="flex justify-end relative items-center pb-2 pt-1 space-x-4 bg-gray-100 pr-4 rounded-tr-lg">
-                        <div class="absolute left-2 overflow-hidden overflow-ellipsis whitespace-nowrap  w-72 ">
-                            <span class="font-bold uppercase text-xl "> {{ $currentInvoice->client->fullname }}</span>
+                        <div class="absolute left-2 overflow-hidden overflow-ellipsis whitespace-nowrap  w-[22rem] ">
+                            <span class="font-bold uppercase text-xl "> {{ ellipsis($currentInvoice->name?:($currentInvoice->client->name?:$currentInvoice->client->contact->fullname),17) }} →{{$currentInvoice->number}} → ${{formatNumber($currentInvoice->payment->total)}}</span>
                         </div>
 
                         <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
-                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300" href="{{ route('orders') }}"
-                            data-tooltip-target="seeOrders">
+                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                            href="{{ route('orders') }}" data-tooltip-target="seeOrders">
                             <span class="far fa-copy"></span>
                         </a>
                         <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
@@ -38,8 +38,12 @@
                             </button>
                         @endcan
                     </div>
-                    <div class=" mx-auto relative w-full" >
-                       
+                    <div class=" mx-auto relative w-full">
+                        @if ($invoice->pdf)
+                            <iframe src="{{ $invoice->pdf->pathLetter }}#view=FitH" width="700" height="700"
+                                type="application/pdf">
+                            </iframe>
+                        @endif
                     </div>
                 </div>
             @else

@@ -46,7 +46,7 @@
                     <div class="w-48 max-w-[12rem] px-1">
                         <x-datalist value="{{ $product_name }}" class="border-none h-full" :inputId="'pr_name'"
                             model="product_name" type="text" placeholder="Producto" listName="pr_code_name"
-                            wire:keydown.enter.debounce.50ms="$emit('focusCant')">
+                            wire:keydown.enter.prevent="$emit('focusCant')">
                             @foreach ($products as $index => $prod)
                                 <option class="bg-gray-200 " value="{{ $index }} {{ $prod }}"
                                     data-value="{{ $index }}">

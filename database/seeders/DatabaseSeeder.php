@@ -42,6 +42,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Libra',
             'symbol' => 'LB.'
         ]);
+        $unit2 = $store->units()->create([
+            'name' => 'Unidad',
+            'symbol' => 'UND'
+        ]);
         
         $tax = $store->taxes()->create([
             'name' => 'ITBIS',
@@ -90,6 +94,7 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 ScopeSeeder::class,
                 CountMainSeeder::class,
+                ProductSeeder::class,
               
             ]
         );

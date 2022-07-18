@@ -136,5 +136,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
  
-
+    return view('prueba');
 })->name('prueba');

@@ -7,7 +7,13 @@
                 <span wire:click="changeClient" class="fas fa-search cursor-pointer text-cyan-600"></span>
             </div>
         </div>
-        <x-select-search :data="$clients" wire:model="client_code" :placeholder="'Seleccione un cliente'" :wire:key="uniqid()" />
+        <div>
+            <x-datalist class="py-1" listName="clientListInvoice" inputId="clientInvoiceID" wire:model="clientNameCode">
+                @foreach ($clients as $index=> $clte)
+                    <option value="{{$index.' - '.$clte}}" ></option>
+                @endforeach
+            </x-datalist>
+        </div>
 
     </div>
    

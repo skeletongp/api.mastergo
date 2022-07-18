@@ -65,24 +65,24 @@
                             </div>
                             <div class="max-w-xs w-1/4">
                                 <x-input label="Costo" type="number" id="cost{{ $unt->id }}"
-                                    x-value="{{ $unt->id }}" wire:model.defer="unit.{{ $unt->symbol }}.cost">
+                                    x-value="{{ $unt->id }}" wire:model.defer="unit.{{ $unt->id }}.cost">
                                 </x-input>
-                                <x-input-error for="unit.{{ $unt->symbol }}.cost"> Min. 1</x-input-error>
+                                <x-input-error for="unit.{{ $unt->id }}.cost"> Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
                                 <x-input label="Detalle" type="number" id="price{{ $unt->id }}.menor"
-                                    wire:model.defer="unit.{{ $unt->symbol }}.price_menor"></x-input>
-                                <x-input-error for="unit.{{ $unt->symbol }}.price_menor">Min. 1</x-input-error>
+                                    wire:model.defer="unit.{{ $unt->id }}.price_menor"></x-input>
+                                <x-input-error for="unit.{{ $unt->id }}.price_menor">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
                                 <x-input label="Mayor" type="number" id="price{{ $unt->id }}.mayor"
-                                    wire:model.defer="unit.{{ $unt->symbol }}.price_mayor"></x-input>
-                                <x-input-error for="unit.{{ $unt->symbol }}.price_mayor">Min. 1</x-input-error>
+                                    wire:model.defer="unit.{{ $unt->id }}.price_mayor"></x-input>
+                                <x-input-error for="unit.{{ $unt->id }}.price_mayor">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
                                 <x-input label="Mínimo" type="number" id="price{{ $unt->id }}.min"
-                                    wire:model.defer="unit.{{ $unt->symbol }}.min"></x-input>
-                                <x-input-error for="unit.{{ $unt->symbol }}.min">Min. 1</x-input-error>
+                                    wire:model.defer="unit.{{ $unt->id }}.min"></x-input>
+                                <x-input-error for="unit.{{ $unt->id }}.min">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
                                 <x-button>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="max-w-xs">
                                 <x-button type="button" class="bg-gray-200"
-                                    wire:click.prevent="deleteUnit('{{ $unt->symbol }}')">
+                                    wire:click.prevent="deleteUnit('{{ $unt->id }}')">
                                     <span class="fas fa-trash-alt text-red-600"></span>
                                 </x-button>
                             </div>

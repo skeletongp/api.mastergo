@@ -11,13 +11,15 @@ class InvoiceList extends LivewireDatatable
 {
 
     public $hideResults = true;
-    public $hideable="select";
+    public $hideable = "select";
     public $headTitle = "Facturas";
     public $padding = "px-2";
     public $perPage = 15;
     public function builder()
     {
-        $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
+        $invoices = auth()->user()->place->invoices()->orderBy('invoices.updated_at', 'desc')
+            ->join('clients', 'clients.id', '=', 'invoices.client_id')
+            ->select('invoices.*', 'clients.name as client_name')
             ->where('status', 'cerrada')->with('pdf', 'payment', 'payments', 'client');
         return $invoices;
     }
@@ -28,15 +30,10 @@ class InvoiceList extends LivewireDatatable
         return [
             Column::name('number')->label('Orden')->searchable()->sortable(),
             DateColumn::name('created_at')->label('hora')->format('d/m/Y H:i')->hide(),
-            Column::callback(['id', 'client_id'], function ($id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                if ($result['name']) {
-                    return ellipsis($result['name'],20);
-                } else {
-                    return ellipsis($result['client']['name'],20);
-                }
-            })->label('Cliente'),
-            Column::name('uid')->callback(['uid', 'id'], function ($total, $id) use ($invoices) {
+            Column::callback(['clients.name','name'], function($cltname, $name){
+                return ellipsis($name?:$cltname, 16);
+            })->label('Cliente')->searchable(),
+            Column::callback(['uid', 'id'], function ($total, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 $debe = " <span class='fas fa-times text-red-400'></span>";
                 $pagado = " <span class='fas fa-check text-green-400'></span>";
@@ -44,7 +41,6 @@ class InvoiceList extends LivewireDatatable
                 if ($result['rest'] > 0) {
                     $mark = $debe;
                 }
-
                 return '$' . formatNumber($result['payment']['total']) . $mark;
             })->label('Monto'),
             Column::callback('id', function ($id) use ($invoices) {

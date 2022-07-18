@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 trait ClientSectionTrait
 {
 
-    public $client, $client_code, $clients, $name, $rnc;
+    public $client, $client_code, $clientNameCode, $clients, $name, $rnc;
 
     public function changeClient()
     {
@@ -28,6 +28,14 @@ trait ClientSectionTrait
             ];
             $this->emit('focusCode');
             $this->client_code = $code;
+            $this->clientNameCode = $code.' - '.$client->name;
+        }
+    }
+    public function updatingClientNameCode($value){
+        $data=explode('-',$value);
+        if(count($data) ==2){
+            $this->client_code=trim($data[0]);
+            $this->clientNameCode=$data[1];
         }
     }
     public function realoadClients()

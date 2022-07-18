@@ -18,7 +18,7 @@ class OtherSeeder extends Seeder
     public function run()
     {
         $place=Place::first();
-        $store=Store::find(2);
+        $store=Store::find(env('STORE_ID'));
         $this->createBanks($place, $store);
         $this->createdProducts($place, $store);
         $this->createComprobantes($store);

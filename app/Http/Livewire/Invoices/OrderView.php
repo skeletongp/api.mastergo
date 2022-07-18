@@ -17,12 +17,17 @@ class OrderView extends LivewireDatatable
     use AuthorizesRequests;
     public $hideable="select";
     public $headTitle="Pedidos Pendientes";
-    public $perPage=5;
+    public $perPage=10;
+    public $hidePagination=true;
     public $padding='px-2';
 
     public function builder()
     {
-        $invoices = auth()->user()->place->invoices()->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')
+        $this->perPage=10;
+        $invoices = auth()->user()->place->invoices()
+        ->join('clients', 'clients.id', '=', 'invoices.client_id')
+            ->select('invoices.*', 'clients.name as client_name')
+        ->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')
             ->orderBy('invoices.id', 'desc')->where('status', 'waiting');
         
         return $invoices;
@@ -34,13 +39,11 @@ class OrderView extends LivewireDatatable
         $store = auth()->user()->store;
         $banks = $store->banks()->pluck('bank_name', 'id');
         return [
-            Column::name('number')->label("Nro."),
-            TimeColumn::name('created_at')->label("Hora")->hide(),
-            Column::callback(['client_id', 'id'], function ($clt, $uid) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $uid);
-                return ellipsis($result['name']?:$result['client']['name'], 16);
-
-            })->label('Cliente'),
+            Column::name('number')->label("Nro.")->searchable(),
+            TimeColumn::name('created_at')->label("Hora"),
+            Column::callback(['clients.name','name'], function($cltname, $name){
+                return ellipsis($name?:$cltname, 16);
+            })->label('Cliente')->searchable(),
             Column::callback(['deleted_at','id'], function ($amount, $id) use ($invoices)  {
                 $result = arrayFind($invoices, 'id', $id);
                 

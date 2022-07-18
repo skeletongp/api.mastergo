@@ -36,4 +36,13 @@
             <span class="text-red-400">Tipo de comprobante no disponible</span>
         @endif
     </div>
+    <div class="space-y-2 col-span-2">
+       
+        <div>
+            <x-base-input id="ncf" type="text" wire:model="ncf" disabled
+                class="text-left text-base uppercase py-0" label="NCF">
+            </x-base-input>
+        </div>
+
+    </div>
 </div>

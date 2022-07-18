@@ -8,7 +8,7 @@ use Carbon\Carbon;
 trait InvoiceData
 {
 
-    public $number, $condition = "DE CONTADO", $type, $vence, $seller, $compAvail = true, $comprobante_id;
+    public $number, $ncf, $condition = "DE CONTADO", $type, $vence, $seller, $compAvail = true, $comprobante_id;
 
     public function checkComprobante($type): bool
     {
@@ -18,11 +18,14 @@ trait InvoiceData
         if ($comprobante) {
             $this->comprobante_id = $comprobante->id;
             $this->type = $type;
+            $this->ncf=$comprobante->ncf;
             return true;
         } else {
             $this->type = 'B00';
+            $this->ncf='B0000000000';
             return false;
         };
+        
     }
     public function updatedType()
     {
