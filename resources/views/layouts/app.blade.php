@@ -208,23 +208,25 @@
             z-index: 2000;
         }
     </style>
-    <div class="flex p-4 justify-between w-screen fixed bottom-0">
+    <div class="flex p-4 justify-between fixed bottom-0">
         <x-button type="button" onclick="history.back();" id="hBack">
             <small class="flex items-center space-x-1">
                 <span class="fas fa-angle-left text-xl"></span>
                 <span id="sVolver" class="hidden font-bold text-base">Volver</span>
             </small>
         </x-button>
-        @can('Cobrar Facturas')
-        <x-button type="button"  id="hOpenCajon">
-            <small class="flex items-center space-x-1">
-                <span class="fas fa-cash-register text-xl"></span>
-            </small>
-        </x-button>
-        @endcan
+        <div class="flex p-4 justify-between fixed right-0 bottom-0">
+            @can('Cobrar Facturas')
+                <x-button type="button" id="hOpenCajon">
+                    <small class="flex items-center space-x-1">
+                        <span class="fas fa-cash-register text-xl"></span>
+                    </small>
+                </x-button>
+            @endcan
+        </div>
     </div>
     @php
-        $preference=auth()->user()->place->preference;
+        $preference = auth()->user()->place->preference;
     @endphp
     <script>
         $('#hBack').mouseenter(function() {
@@ -238,9 +240,9 @@
         } else {
 
         }
-        preference={!!$preference!!};
-        $('#hOpenCajon').on('click', function () {
-            conn=new ConectorPlugin();
+        preference = {!! $preference !!};
+        $('#hOpenCajon').on('click', function() {
+            conn = new ConectorPlugin();
             conn.abrirCajon();
 
             conn.imprimirEn(preference.printer)

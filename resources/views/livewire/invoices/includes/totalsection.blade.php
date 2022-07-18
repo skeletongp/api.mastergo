@@ -1,4 +1,9 @@
 <div class="w-full">
+    <div class="flex py-4 justify-end">
+        <x-button id="saveLocalDetails" status="{{count($details)?:'disabled'}}">
+            <span class="fas fa-save"></span>
+        </x-button>
+</div>
     <div
         class="w-full text-gray-900 bg-white border border-gray-200 space-y-2 rounded-xl dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <div

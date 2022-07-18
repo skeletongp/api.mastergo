@@ -150,12 +150,12 @@
                         <td class="px-2  text-base border border-gray-200 font-bold text-right ">
                             {{ '$' . formatNumber($det['total']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right ">
-                            <div class="w-10  flex items-center space-x-2 justify-center">
+                        <td class="px-2  text-base border border-gray-200  ">
+                            <div class=" flex items-center space-x-4  p-2 bg-gray-200" >
                                 <span wire:click="removeItem({{ $det['id'] }})"
-                                    class=" text-sm fas fa-trash text-red-600"></span>
+                                    class=" text-base fas fa-trash cursor-pointer text-red-600"></span>
                                 <span wire:click="editItem({{ $det['id'] }})"
-                                    class=" text-sm fas fa-pen text-green-600"></span>
+                                    class=" text-base fas fa-pen cursor-pointer text-green-600"></span>
                             </div>
                         </td>
                     </tr>
