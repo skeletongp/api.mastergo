@@ -23,6 +23,7 @@ class CreateBank extends Component
         $store=auth()->user()->store;
         $this->users=$store->users()->pluck('fullname');
         $this->banks=array_column($banks,'0');
+        $this->form['currency']='DOP';
     }
     public function render()
     {

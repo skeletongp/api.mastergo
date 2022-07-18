@@ -119,6 +119,11 @@
                                 wire:model.defer="cellphone" />
                             <x-input-error for="cellphone" />
                         </div>
+                        <div class="w-full overflow-hidden">
+                            <x-base-input type="text" label="Cédula Personal" id="contact_cedula"
+                                wire:model.defer="cedula" />
+                            <x-input-error for="cedula" />
+                        </div>
 
                     </div>
                 </div>
@@ -139,6 +144,9 @@
             format: '###-#####-#'
         })
         $('#client_Cedula').formatPhoneNumber({
+            format: '###-#######-#'
+        })
+        $('#contact_cedula').formatPhoneNumber({
             format: '###-#######-#'
         })
     </script>

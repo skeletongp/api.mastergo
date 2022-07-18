@@ -83,10 +83,10 @@ class CuadreController extends Controller
         $total=$cuadre->efectivo+$cuadre->tarjeta+$cuadre->transferencia;
         $cuadre->update([
             'total'=>$total,
-            'retirado'=>$cuadre->retirado+$retirado,
-            'final'=>$total
+            'retirado'=>$total-$ctaCajaGeneral,
+            'final'=>$ctaCajaGeneral
         ]);
-        $this->openNewCuadre($total);
+        $this->openNewCuadre($ctaCajaGeneral);
         return $cuadre;
     }
     public function openNewCuadre($inicial)

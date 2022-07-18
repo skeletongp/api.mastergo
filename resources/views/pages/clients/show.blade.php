@@ -9,48 +9,55 @@
                 <!-- Profile tab -->
                 <!-- About Section -->
                 <div class="bg-white p-3 shadow-sm rounded-sm">
-                    <div class="flex items-center space-x-2 font-semibold  leading-8">
-                        <span clas="text-green-500">
-                            
-                        </span>
-                        <span class="tracking-wide">Contacto y Detalles</span>
+                    <div class="flex items-center space-x-2 font-bold uppercase
+                      leading-8">
+                        
+                        <span class="tracking-wide text-lg">Contacto y Detalles</span>
                     </div>
                     <div class="">
                         <div class="grid grid-cols-2 text-sm">
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Nombre</div>
-                                <div class="px-4 py-2">{{$client->contact->name}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                ">Nombre</div>
+                                <div class="py-2 col-span-2">{{$client->contact->name}}</div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Apellidos</div>
-                                <div class="px-4 py-2">{{$client->contact->lastname}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                ">Apellidos</div>
+                                <div class="py-2 col-span-2">{{$client->contact->lastname}}</div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">RNC/Cédula</div>
-                                <div class="px-4 py-2">{{$client->rnc}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                ">RNC/Cédula</div>
+                                <div class="py-2 col-span-2">{{$client->rnc}}</div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Tel. Ppal.</div>
-                                <div class="px-4 py-2">{{$client->phone}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                ">Tel. Ppal.</div>
+                                <div class="py-2 col-span-2">{{$client->phone}}</div>
                             </div>
-                            <div class="grid grid-cols-4 col-span-2">
-                                <div class="px-4 py-2 font-semibold col-span-1">Dirección</div>
-                                <div class="px-4 py-2 col-span-3">{{$client->address}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                 col-span-1">Dirección</div>
+                                <div class="py-2 col-span-2" title="{{$client->address}}">{{ellipsis($client->address,28)}}</div>
                             </div>
                             
-                            <div class="grid grid-cols-4 col-span-2">
-                                <div class="px-4 py-2 font-semibold col-span-1">Correo</div>
-                                <div class="px-4 py-2 col-span-3 text-blue-600">
-                                    {{$client->email}}
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                 col-span-1">Correo</div>
+                                <div class="py-2 col-span-2 text-blue-600">
+                                    {{ellipsis($client->email,28)}}
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Balance</div>
-                                <div class="px-4 py-2">${{formatNumber($client->balance)}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                ">Balance</div>
+                                <div class="py-2 col-span-2">${{formatNumber($client->balance)}}</div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Deuda</div>
-                                <div class="px-4 py-2">${{formatNumber($client->debt)}}</div>
+                            <div class="grid grid-cols-3">
+                                <div class="py-2 font-bold uppercase
+                                ">Deuda</div>
+                                <div class="py-2 col-span-2">${{formatNumber($client->debt)}}</div>
                             </div>
                         </div>
                     </div>
@@ -73,13 +80,17 @@
             <!-- Right Side -->
             <div class="w-full ">
                 <!-- Profile Card -->
-                <div class="bg-white p-3 border-t-4 border-green-400">
+                <div class="ebg-white p-3 border-t-4 border-green-400">
                     <div class="image overflow-hidden">
                         <img class="h-auto w-1/3 mx-auto" src="{{ $client->avatar }}" alt="">
                     </div>
                     <h1 class=" font-bold text-xl leading-8 my-2 uppercase">
                         {{ $client->name ?: $client->contact->fullname }}</h1>
-                    <h3 class=" text-lg text-bold leading-6">{{ $client->name ? $client->contact->fullname : '' }}</h3>
+                    <div class="flex flex-row space-x-4 items-center">
+                        <h3 class=" text-base font-bold leading-6 uppercase">{{ $client->name ? $client->contact->fullname : '' }}</h3>
+                        <h3 class=" text-base font-boldsemibold leading-6">{{ $client->contact->cellphone }}</h3>
+                        <h3 class=" text-base font-boldsemibold leading-6">{{ $client->contact->cedula }}</h3>
+                    </div>
                     <ul class="bg-gray-100  hover: hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                             @livewire('clients.client-transactions', ['client' => $client], key(uniqid()))
                     </ul>

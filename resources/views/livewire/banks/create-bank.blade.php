@@ -34,6 +34,7 @@
                         </div>
                         <div class="w-full">
                             <x-base-select label="Moneda/Divisa" wire:model.defer="form.currency" id="bank_currency" >
+                                
                                 <option value="DOP">Peso Dominicano</option>
                                 <option value="USD">Dólar Americano</option>
                             </x-base-select>

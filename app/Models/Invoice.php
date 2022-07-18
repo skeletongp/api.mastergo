@@ -117,6 +117,12 @@ protected $connection="mysql";
             get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
         );
     }
+    public function name(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => $this->attributes['name'] = ucwords($value, ' '),
+        );
+    }
     public function creditnote()
     {
         return $this->hasOne(Creditnote::class);

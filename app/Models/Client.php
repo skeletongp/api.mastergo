@@ -76,7 +76,19 @@ class Client extends Model implements Searchable
     }
     public function getNameAttribute()
     {
-        return  $this->attributes['name'] ?: ($this->contact->fullname ?? 'Si nombre');
+        return  $this->attributes['name'] ?: ($this->contact->fullname ?? 'Sin nombre');
+    }
+    public function name(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => $this->attributes['name'] = ucwords($value, ' '),
+        );
+    }
+    public function address(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => $this->attributes['name'] = ucwords($value, ' '),
+        );
     }
     public function contable()
     {
