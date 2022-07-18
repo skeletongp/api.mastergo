@@ -36,6 +36,7 @@ trait ClientSectionTrait
         if(count($data) ==2){
             $this->client_code=trim($data[0]);
             $this->clientNameCode=$data[1];
+            $this->updatedClientCode();
         }
     }
     public function realoadClients()

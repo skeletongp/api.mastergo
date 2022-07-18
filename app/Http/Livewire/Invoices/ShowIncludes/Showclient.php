@@ -47,10 +47,13 @@ trait Showclient
         $invoice = $this->invoice;
         $client = Client::whereId($this->client['id'])->first();
 
-        if ($client->id !== $invoice->client_id) {
+        if ($client && $client->id !== $invoice->client_id) {
             $invoice->client->limit = $invoice->client->limit + $this->invoice->payment->rest;
             $invoice->client->save();
-            setTransaction('Cambio de cliente Fact. No. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $invoice->payment->rest, $client->contable()->first(), $invoice->client->contable()->first());
+            if(!$client->contable){
+                setContable($client,'101','debit',$client->fullname,null, true);
+            }
+            setTransaction('Cambio de cliente Fact. No. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $invoice->payment->rest, $client->contable, $invoice->client->contable);
             $client->limit = $client->limit - $invoice->payment->rest;
             $client->save();
             $invoice->update(['client_id' => $client->id]);

@@ -81,8 +81,12 @@ class EditDetail extends Component
 
     public function updateDetail()
     {
-
         $invoice = $this->detail->detailable->load('details', 'payment', 'client');
+        if ($this->detail['cant']==$this->prevCant && $this->detail['price']==$this->prevPrice) {
+          $this->emit('showAlert', 'No se ha realizado ningun cambio','warning');
+          dispatch(new CreatePDFJob($invoice))->onConnection('sync');
+          return;
+        }
         if($invoice->payments()->count()>1){
            $this->emit('showAlert', 'No se puede editar el detalle, ya que la factura tiene pagos realizados','error',3000);
         }
@@ -93,7 +97,7 @@ class EditDetail extends Component
         $this->updateTransaction($invoice);
         $this->render();
         $this->setTaxes($invoice);
-        dispatch(new CreatePDFJob($invoice))->onConnection('database');
+        dispatch(new CreatePDFJob($invoice))->onConnection('sync');
 
         $this->emit('showAlert', 'Detalle actualizado', 'success');
         $this->emitUp('reloadEdit');

@@ -72,10 +72,9 @@
             </footer>
         </div>
     </div>
-  {{--   <div class="landscape:hidden">
+    {{-- <div class="landscape:hidden">
         <h1>Por favor, gire su pantalla para ustilizar el sistema</h1>
-    </div>
- --}}
+    </div> --}}
     {{-- <div class="flex justify-center items-center sm:hidden w-screen h-screen">
         <h1 class=" font-bold text-3xl uppercase text-center max-w-lg leading-12">Este tamaño de pantalla no es
             compatible. Utilice un monitor más
@@ -125,13 +124,13 @@
                     }
                     return false;
                 }
-                if (e.which == 13 ) {
+                if (e.which == 13) {
                     return true;
                 }
-                if (e.which == 110 || e.which==190) {
+                if (e.which == 110 || e.which == 190) {
                     return true;
                 }
-                if (e.which > 95 && e.which<106) {
+                if (e.which > 95 && e.which < 106) {
                     return true;
                 }
                 if (e.which > 57) {
@@ -144,7 +143,7 @@
             }
         });
 
-        Livewire.on('showAlert', (alert, type, timer=2000) => {
+        Livewire.on('showAlert', (alert, type, timer = 2000) => {
             icons = ['success', 'error', 'info', 'warning'];
 
             if (!icons.includes(type)) {
@@ -193,6 +192,9 @@
             Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
 
         });
+        window.onbeforeunload = function() {
+            alert('hola')
+        }
         $(document).ready(function() {
             $('input[type=tel]').each(function() {
                 $(this).formatPhoneNumber({
@@ -206,14 +208,24 @@
             z-index: 2000;
         }
     </style>
-    <div class="flex p-4 fixed bottom-0">
+    <div class="flex p-4 justify-between w-screen fixed bottom-0">
         <x-button type="button" onclick="history.back();" id="hBack">
             <small class="flex items-center space-x-1">
                 <span class="fas fa-angle-left text-xl"></span>
                 <span id="sVolver" class="hidden font-bold text-base">Volver</span>
             </small>
         </x-button>
+        @can('Cobrar Facturas')
+        <x-button type="button"  id="hOpenCajon">
+            <small class="flex items-center space-x-1">
+                <span class="fas fa-cash-register text-xl"></span>
+            </small>
+        </x-button>
+        @endcan
     </div>
+    @php
+        $preference=auth()->user()->place->preference;
+    @endphp
     <script>
         $('#hBack').mouseenter(function() {
             $('#sVolver').toggle('', false);
@@ -226,6 +238,20 @@
         } else {
 
         }
+        preference={!!$preference!!};
+        $('#hOpenCajon').on('click', function () {
+            conn=new ConectorPlugin();
+            conn.abrirCajon();
+
+            conn.imprimirEn(preference.printer)
+                .then(respuestaAlImprimir => {
+                    if (respuestaAlImprimir === true) {
+                        console.log("Impreso correctamente");
+                    } else {
+                        console.log("Error. La respuesta es: " + respuestaAlImprimir);
+                    }
+                });
+        })
     </script>
 </body>
 

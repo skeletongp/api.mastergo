@@ -32,10 +32,10 @@ protected $connection="mysql";
     {
        $url = route('invoices.show', $this->id);
     
-       $client=$this->client->name?:$this->client->contact->fullname;
+       $client=$this->name?:($this->client->name?:$this->client->contact->fullname);
         return new SearchResult(
            $this,
-           str_replace('0','',$this->number).' '.$client,
+           $this->number.' '.ellipsis($client,20),
            $url
         );
     }

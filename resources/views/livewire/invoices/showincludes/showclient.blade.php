@@ -8,7 +8,7 @@
             </x-datalist>
         </div>
         <div class="w-full">
-            <x-base-input disabled label="Cliente Actual" value="{{$client['name']?:$client['contact']['fullname']}}"></x-base-input>
+            <x-base-input disabled label="Cliente Actual" value="{{$invoice['name']?:($client['name']?:$client['contact']['fullname'])}}"></x-base-input>
         </div>
     </div>
     <div class="w-full flex space-x-2">

@@ -42,6 +42,9 @@ class PaymentsFromInvoice extends LivewireDatatable
             Column::callback(['rest'], function ($rest) {
                 return  "<span class='text-red-400 font-bold'>$". formatNumber($rest)."</span>";
             })->label('Resta'),
+            Column::callback(['cambio'], function ($cambio) {
+                return  "<span class='text-blue-600 font-bold'>$". formatNumber($cambio)."</span>";
+            })->label('Cambio'),
             Column::callback(['payer_id', 'id'], function ($payer, $id)  {
                 return  "<span class='far fa-print cursor-pointer' wire:click='print($id)'> </span>";
             })->label('Print')->contentAlignCenter(),

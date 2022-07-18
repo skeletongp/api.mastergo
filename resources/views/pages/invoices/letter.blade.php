@@ -203,7 +203,7 @@
                     <table>
                         <tr>
                             <td class="title" style="padding-top:10px">
-                                <img src="{{ $invoice->store->logo }}" alt="Company logo"
+                                <img src="{{ $invoice->store->logo }}" alt=" "
                                     style=" max-width: 300px; max-height: 100px" />
                             </td>
 

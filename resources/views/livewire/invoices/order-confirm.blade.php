@@ -48,20 +48,20 @@
 
             {{-- Campos de cobro --}}
             <div>
-                <x-base-input class="text-xl font-bold" type="number" status="{{ !$cobrable ? 'disabled' : '' }}"
+                <x-base-input class="text-xl font-bold" type="number" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}}
                     wire:model.debounce.300ms="form.efectivo" label="Efectivo" id="form{{ $form['id'] }}.efectivo">
                 </x-base-input>
                 <x-input-error for="form.efectivo"></x-input-error>
             </div>
             <div>
-                <x-base-input class="text-xl font-bold" type="number" status="{{ !$cobrable ? 'disabled' : '' }}"
+                <x-base-input class="text-xl font-bold" type="number" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}}
                     wire:model.debounce.300ms="form.tarjeta" label="Tarjeta" id="form{{ $form['id'] }}.tarjeta">
                 </x-base-input>
                 <x-input-error for="form.tarjeta"></x-input-error>
             </div>
             @if ($banks->count())
                 <div class="col-span-2">
-                    <x-base-input class="text-xl font-bold" status="{{ !$cobrable ? 'disabled' : '' }}"
+                    <x-base-input class="text-xl font-bold" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}}
                         type="number" wire:model.debounce.300ms="form.transferencia" label="Transferencia/Cheque"
                         id="form{{ $form['id'] }}.transferencia"></x-base-input>
                     <x-input-error for="form.transferencia"></x-input-error>

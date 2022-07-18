@@ -26,7 +26,7 @@ class ProductDetails extends LivewireDatatable
         return [
             Column::callback('cant', function($cant){
                 return formatNumber($cant);
-            })->label('Cant.'),
+            })->label('Cant.')->enableSummary(),
             Column::callback(['discount_rate'], function($discount_rate){
                 return formatNumber($discount_rate*100).'%';
             })->label('Desc.'),

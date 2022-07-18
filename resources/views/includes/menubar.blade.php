@@ -27,8 +27,10 @@
                                     <livewire:general.toggle-place />
                                 </div>
                             @endif
-                            <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
-                                activeRoute="prueba.*" scope="" />
+                            @can('Crear Permisos')
+                                <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
+                                    activeRoute="prueba.*" scope="" />
+                            @endcan
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
@@ -42,7 +44,8 @@
 
             </div>
 
-            <ul class=" lg:space-x-4 flex-col lg:flex-row bg-white lg:bg-transparent px-2 py-1 lg:px-0 lg:py-0 absolute lg:relative right-2 top-16 hidden lg:flex lg:top-0"  id="ulToggleMenu">
+            <ul class=" lg:space-x-4 flex-col lg:flex-row bg-white lg:bg-transparent px-2 py-1 lg:px-0 lg:py-0 absolute lg:relative right-2 top-16 hidden lg:flex lg:top-0"
+                id="ulToggleMenu">
                 @scopeanny(['Usuarios', 'Clientes', 'Proveedores'])
                     @canany(['Ver Usuarios', 'Ver Clientes', 'Ver Proveedores'])
                         <x-dropitem text="Contactos" icon="far fa-users" :routes="['users.*', 'clients.*', 'providers.*']">
@@ -117,8 +120,8 @@
                                     text='Gastos' activeRoute="reports.*" scope="Gastos" />
                             @endcan
                             @can('Ver Obligaciones')
-                            <x-side-link routeName='recurrents.index' icon='far w-10 text-center fa-donate fa-lg'
-                            text='Obligaciones' activeRoute="recurrents.*" scope="Gastos" />
+                                <x-side-link routeName='recurrents.index' icon='far w-10 text-center fa-donate fa-lg'
+                                    text='Obligaciones' activeRoute="recurrents.*" scope="Gastos" />
                             @endcan
                             @can('Ver Transacciones')
                                 <x-side-link routeName='finances.index' icon='far w-10 text-center fa-hand-holding-usd fa-lg'
@@ -169,10 +172,10 @@
     </div>
     @push('js')
         <script>
-            $(document).ready(function () {
-                $('#btnToggleMenu').click(function(){
-                   $('#ulToggleMenu').toggle('translate-x-96');
-                   $('#spanToggleMenu').toggleClass('fa-times fa-bars');
+            $(document).ready(function() {
+                $('#btnToggleMenu').click(function() {
+                    $('#ulToggleMenu').toggle('translate-x-96');
+                    $('#spanToggleMenu').toggleClass('fa-times fa-bars');
                 });
             });
         </script>

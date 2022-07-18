@@ -30,7 +30,7 @@ class ProductProvisions extends LivewireDatatable
                 Column::callback(['cant','id'], function($cant, $id) use ($provisions){
                     $result=arrayFind($provisions, 'id',$id);
                     return formatNumber($result['cant']);
-                })->label('Cant.'),
+                })->label('Cant.')->enableSummary(),
                 Column::callback(['cost'], function($cost){
                     return '$'.formatNumber($cost);
                 })->label('Costo.'),

@@ -19,6 +19,9 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Jobs\CreatePDFJob;
+use App\Models\Payment;
+use App\Models\Store;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -121,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ProvisionController::class)->group(function () {
             Route::get('/provisions', 'index')->name('provisions.index');
         });
-        
+
 
         Route::controller(FinanceController::class)->group(function () {
             Route::get('/finances', 'index')->name('finances.index');
@@ -135,6 +138,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('prueba', function () {
- 
-    return view('prueba');
+    /* $payments=Payment::where('day',date('Y-m-d'))->orderBy('cambio','desc')->get();
+    $place=auth()->user()->place;
+    $creditable = $place->findCount('400-01');
+    setTransaction('Reg. vuelto de cambio', 'MANUAL', $payments->sum('cambio'), $creditable, $place->cash()); */
 })->name('prueba');

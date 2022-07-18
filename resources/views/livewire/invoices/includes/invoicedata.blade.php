@@ -27,7 +27,7 @@
 
     </div>
     <div class="col-span-2 py-2 ">
-        <x-base-select id="type" status="{{count($details)?'disabled':''}}" wire:model="type" class="text-sm uppercase pt-1 pb-0" label="Tipo de NCF">
+        <x-base-select id="type" {{-- status="{{count($details)?'disabled':''}}" --}} wire:model="type" class="text-sm uppercase pt-1 pb-0" label="Tipo de NCF">
             @foreach (array_slice(App\Models\Invoice::TYPES, 0, 5) as $ind => $type)
                 <option value="{{ $type }}">{{ $ind }}</option>
             @endforeach

@@ -8,7 +8,7 @@
             </div>
         </div>
         <div>
-            <x-datalist class="py-1" listName="clientListInvoice" inputId="clientInvoiceID" wire:model="clientNameCode">
+            <x-datalist class="py-1" listName="clientListInvoice" inputId="clientInvoiceID" wire:model.lazy="clientNameCode" wire:keydown.enter.prevent="$emit('focusCodde')">
                 @foreach ($clients as $index=> $clte)
                     <option value="{{$index.' - '.$clte}}" ></option>
                 @endforeach

@@ -90,6 +90,12 @@ class Client extends Model implements Searchable
             set: fn ($value) => $this->attributes['name'] = ucwords($value, ' '),
         );
     }
+    public function email(): Attribute
+    {
+        return new Attribute(
+            set: fn ($value) => $this->attributes['name'] = strtolower($value),
+        );
+    }
     public function contable()
     {
         $place_id = 1;

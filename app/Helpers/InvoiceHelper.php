@@ -10,7 +10,11 @@ function setPDFPath($invoice)
         'payment'=>$invoice->payment
     ];
     $PDF = App::make('dompdf.wrapper');
-    $pdf = $PDF->loadView('pages.invoices.letter', $data);
+    $pdf = $PDF->setOptions([
+        'logOutputFile' => null,
+        'isHtml5ParserEnabled'=> true,
+        'isRemoteEnabled'=> true
+    ])->loadView('pages.invoices.letter', $data);
     file_put_contents('storage/invoices/' . $invoice->number.'_'.date('Ymd'). '_letter.pdf', $pdf->output());
     $path = asset('storage/invoices/' . $invoice->number.'_'.date('Ymd'). '_letter.pdf');
     $pdf = [

@@ -90,7 +90,7 @@ trait ShowPayments
             'rest' => $invoice->rest - ($payment->payed - $payment->cambio)
         ]);
        
-        dispatch(new CreatePDFJob($invoice))->onConnection('database');
+        dispatch(new CreatePDFJob($invoice))->onConnection('sync');
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
         $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'contable');
         $this->emit('printPayment', $payment);

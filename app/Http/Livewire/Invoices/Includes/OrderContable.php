@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Invoices\Includes;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 trait OrderContable
 {
     public $gastoGeneral, $gastoTerminado;
@@ -59,12 +61,13 @@ trait OrderContable
 
 
         setTransaction('Reg. venta de productos en Efectivo', $ref,  $moneys[0]*$rp, $place->cash(), $creditable, 'Cobrar Facturas');
-        setTransaction('Reg. vuelto de cambio por productos', $ref,  $payment->cambio*$rp, $creditable, $place->cash());
+        setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash(), 'Cobrar Facturas');
+        Log::info($payment->cambio);
         setTransaction('Reg. venta de productos por Cheque', $ref,  $moneys[1]*$rp, $place->check(), $creditable, 'Cobrar Facturas');
         setTransaction('Reg. venta de productos por Transferencia', $ref . ' | ' . $this->reference,  $moneys[2]*$rp, optional($this->bank)->contable, $creditable, 'Cobrar Facturas');
 
         setTransaction('Reg. venta de servicios en Efectivo', $ref,  $moneys[0]*$rs, $place->cash(), $ingresos_service, 'Cobrar Facturas');
-        setTransaction('Reg. vuelto de cambio por servicios', $ref,  $payment->cambio*$rs, $ingresos_service, $place->cash());
+        
         setTransaction('Reg. venta de servicios por Cheque', $ref,  $moneys[1]*$rs, $place->check(), $ingresos_service, 'Cobrar Facturas');
         setTransaction('Reg. venta de servicios por Transferencia', $ref . ' | ' . $this->reference,  $moneys[2]*$rs, optional($this->bank)->contable, $ingresos_service, 'Cobrar Facturas');
 
