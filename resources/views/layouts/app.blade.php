@@ -50,7 +50,9 @@
                     @endif
                     <div class="z-50">
                         @if (isset($rightButton))
-                            {{ $rightButton }}
+                            <div class="">
+                                {{ $rightButton }}
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -182,7 +184,7 @@
                 return false;
             }
         })
-        $('.load').on('click', function() {
+        $('a').on('click', function() {
             $('#generalLoad').removeClass('hidden');
         })
         id = {{ auth()->user()->place->id }}

@@ -7,7 +7,7 @@
             @can('Sumar Productos')
                 <div class="flex justify-end pb-2">
                     <a href="{{ route('products.sum') }}"
-                        class=" right-2  rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
+                        class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
                         <span class="fas fa-plus text-xl"></span>
                         <span>Sumar</span>
                     </a>
