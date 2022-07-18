@@ -336,6 +336,14 @@
         </tr>
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:10px">
+                RETIRADO =>
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($cuadre->retirado) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px">
                 SALDO FINAL =>
             </td>
             <td colspan="2" style="padding-top:10px">
@@ -346,7 +354,7 @@
     <table style="width: 50%; margin-top:35px;float: right; line-height:10px">
         <tr style="">
             <td colspan="2">
-                Venta de Contado...
+                Ventas Cobradas...
             </td>
             <td colspan="2">
                 ${{ formatNumber($cuadre->contado) }}
@@ -354,7 +362,7 @@
         </tr>
         <tr style="">
             <td colspan="2">
-                Venta a Crédito...
+                Ventas a Crédito...
             </td>
             <td colspan="2">
                 ${{ formatNumber($cuadre->credito) }}
