@@ -69,12 +69,17 @@ class CuadreController extends Controller
         $ctaCajaGeneral=$place->findCount('100-01')->balance;
         $ctaOtros=$place->counts()->whereIn('code',['100-03','100-04'])->sum('balance');
         $ctaBancos=$todosEfectivos-$ctaEfectivo-$ctaOtros;
-
+        $devIds=$place->counts()->where('code','like','401%')->pluck('counts.id')->toArray();
+        $devAmountDebit=$place->transactions()->whereIn('debitable_id',$devIds)->where('day',date('Y-m-d'))->sum('income');
+        $devAmountCredit=$place->transactions()->whereIn('creditable_id',$devIds)->where('day',date('Y-m-d'))->sum('outcome');
+      $debAmount=$devAmountDebit-$devAmountCredit;
+      //dd($debAmount, $devAmountDebit, $devAmountCredit);
         $cuadre=$place->cuadres()->updateOrCreate(['day'=>date('Y-m-d')],[
             'efectivo'=>$ctaEfectivo,
             'tarjeta'=>$ctaOtros,
             'transferencia'=> $ctaBancos,
             'contado'=>$contado,
+            'devolucion'=>$debAmount,
             'credito'=>$credito,
             'cobro'=>$cobro->sum(DB::raw('efectivo + tarjeta + transferencia-cambio')),
             'egreso'=>$outcomes->sum('payed'),
@@ -83,7 +88,7 @@ class CuadreController extends Controller
         $total=$cuadre->efectivo+$cuadre->tarjeta+$cuadre->transferencia;
         $cuadre->update([
             'total'=>$total,
-            'retirado'=>$total-$ctaCajaGeneral,
+            'retirado'=>$cuadre->inicial-$ctaCajaGeneral,
             'final'=>$ctaCajaGeneral
         ]);
         $this->openNewCuadre($ctaCajaGeneral);

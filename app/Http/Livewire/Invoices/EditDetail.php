@@ -135,6 +135,7 @@ class EditDetail extends Component
         $payment->tax = $details->sum('taxtotal');
         $payment->total = $details->sum('total');
         $payment->rest = $payment->total - $payment->payed;
+        $payment->rest = $payment->payed - $payment->total;
         $payment->save();
         $invoice->update(['rest' => $payment->rest]);
         $this->updateClientLimit($this->prevRest, $invoice->client, $payment);
