@@ -164,7 +164,7 @@
                 conector.establecerEnfatizado(1);
                 conector.texto('NCF: ')
                 conector.establecerEnfatizado(0);
-                conector.texto(obj.payable.comprobante ? obj.payable.comprobante.ncf : " 0000000000");
+                conector.texto(oobj.payable.payment.ncf ?: " 0000000000");
                 conector.feed(1);
 
                 conector.establecerEnfatizado(1);

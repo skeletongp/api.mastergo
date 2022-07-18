@@ -1,5 +1,6 @@
 <div class="">
-    @include('includes.authorize')
+        @include('includes.authorize')
+   
     <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl">
         <x-slot name="button">
             <span>
@@ -59,10 +60,11 @@
                 </x-base-input>
                 <x-input-error for="form.tarjeta"></x-input-error>
             </div>
+
             @if ($banks->count())
                 <div class="col-span-2">
-                    <x-base-input class="text-xl font-bold" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}}
-                        type="number" wire:model.debounce.300ms="form.transferencia" label="Transferencia/Cheque"
+                    <x-base-input class="text-xl font-bold" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}} type="number"
+                        wire:model.debounce.300ms="form.transferencia" label="Transferencia/Cheque"
                         id="form{{ $form['id'] }}.transferencia"></x-base-input>
                     <x-input-error for="form.transferencia"></x-input-error>
                 </div>

@@ -1,4 +1,7 @@
 <div>
+    @php
+        $authorizeIncluded=true;
+    @endphp
     <x-modal zindex="2000"  hideButton="true">
         <x-slot name="button">
             <div id="openAuthorize"></div>
@@ -32,6 +35,7 @@
     @push('js')
         <script>
             Livewire.on('openAuthorize', function(msg){
+                console.log(msg)
                 $('#msgAuth').text(msg)
                 $('#openAuthorize').first().click();
             })
