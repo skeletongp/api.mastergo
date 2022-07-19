@@ -10,8 +10,9 @@
             <span class="fas w-6 text-center fa-user-plus mr-2"></span>
             <span> Cliente</span>
         </x-slot>
-        <div class="relative pt-8">
-            <div class="absolute right-2 top-0 font-bold text-lg">
+        <div class="relative pt-12">
+            <div class="absolute right-2 flex justify-between items-center left-2 top-0 font-bold text-lg">
+                <x-toggle label="Especial" value="1" id="cltSpecial" wire:model="special"></x-toggle>
                 <span>Cód.: {{ $form['code'] }}</span>
             </div>
             <form wire:submit.prevent="createClient">

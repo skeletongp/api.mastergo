@@ -53,7 +53,9 @@ trait DetailsSectionTrait
         if ($this->producto) {
             $unt = $this->producto->units()->where('units.id', $this->unit->id)->first()->pivot;
             $min = $unt->min;
-            if($this->cant >= $min){
+            if ($this->client && $this->client['special']) {
+                $this->price = $unt->price_special;
+            } elseif ($this->cant >= $min) {
                 $this->price = $unt->price_mayor;
             }
         }
@@ -132,13 +134,17 @@ trait DetailsSectionTrait
             $this->unit = $unit;
             $this->price = $unit->pivot->price_menor;
             $this->stock = $unit->pivot->stock;
-            if ($this->cant >= $unit->pivot->min) {
+            if ($this->client && $this->client['special']) {
+                $this->price = $unit->pivot->price_special;
+                $this->form['price_type'] = 'detalle';
+            } else if ($this->cant >= $unit->pivot->min) {
                 $this->price = $unit->pivot->price_mayor;
                 $this->form['price_type'] = 'mayor';
             } else {
                 $this->price = $unit->pivot->price_menor;
                 $this->form['price_type'] = 'detalle';
             }
+            
 
             $this->form['unit_name'] = $unit->symbol;
             $discount = 0;

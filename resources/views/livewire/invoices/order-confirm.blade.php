@@ -10,9 +10,12 @@
         <x-slot name="title">
             Cobrar Pedido Nº. {{ $form['number'] }}
         </x-slot>
-
-        <form wire:submit.prevent="tryPayInvoice" class="grid grid-cols-5 gap-4 p-3 max-w-3xl mx-auto text-left">
+        
+        <form wire:submit.prevent="tryPayInvoice" class="grid grid-cols-5 gap-4 p-3 max-w-3xl mx-auto text-left relative pt-16">
             {{-- Vendedor --}}
+            {{-- <div class="absolute top-0 right-2">
+                <x-base-input type="number" class="w-12 text-right" placeholder="Copias" label="" wire:model="copyCant"></x-base-input>
+            </div> --}}
             <div class="col-span-2">
                 <x-base-input class="text-xl font-bold" label="Vendedor" id="form{{ $form['id'] }}.seller" disabled
                     value="{{ $form['seller']['fullname'] }}">

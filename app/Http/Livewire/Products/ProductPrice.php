@@ -21,13 +21,15 @@ class ProductPrice extends Component
         $mins=$this->product->units()->pluck('min','name');
         $price=$this->product->units()->pluck('price_menor','name');
         $price2=$this->product->units()->pluck('price_mayor','name');
+        $price3=$this->product->units()->pluck('price_special','name');
         $taxes=$this->product->taxes()->pluck('rate','name');
         foreach($price as $in=> $priz){
             $wTax=[];
             $wTax2=[];
             $price[$in]=
             '<div class="flex justify-between items-center "><b>PRECIO DETALLE </b> $'.formatNumber($priz).'</div>' .
-            '<div class="flex justify-between items-center "><b>PRECIO x Mayor </b> $'.formatNumber($price2[$in]).'</div>'.
+            '<div class="flex justify-between items-center "><b>PRECIO x MAYOR </b> $'.formatNumber($price2[$in]).'</div>'.
+            '<div class="flex justify-between items-center "><b>PRECIO ESPECIAL </b> $'.formatNumber($price3[$in]).'</div>'.
             '<div class="flex justify-between items-center border-b-2 border-gray-500 "><b> MIN x MAYOR </b>'.formatNumber($mins[$in]).'</div>' 
 
             ;

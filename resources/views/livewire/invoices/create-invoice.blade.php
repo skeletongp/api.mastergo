@@ -38,7 +38,22 @@
             @endif
         </div>
         <div class=" w-full px-2">
-           
+            <div class="flex py-4 space-x-2 justify-between">
+                <div class="w-full">
+                    <x-base-select label="" id="detailKey" wire:model="localDetail">
+                        <option value="">Guardados</option>
+                        @foreach ($localKeys as $item)
+                            <option>{{$item}}</option>
+                        @endforeach
+                    </x-base-select>
+                </div>
+                @if (count($details))
+                    <x-button id="saveLocalDetails" wire:click="storageDetails" status="{{ count($details) ?: 'disabled' }}">
+                        <span class="fas fa-save"></span>
+                    </x-button>
+                @endif
+            </div>
+
             @include('livewire.invoices.includes.totalsection')
         </div>
 
@@ -47,12 +62,10 @@
     @include('livewire.invoices.includes.invoice-js')
     @include('livewire.invoices.includes.print-order')
 
-    @push('script')
+    @push('js')
         <script>
-            $('#saveLocalDetails').on('click', function(){
-                console.log('alert')
-                details={!!json_encode($details)!!}
-                console.log(typeof(details))
+            $(document).ready(function() {
+             
             })
         </script>
     @endpush

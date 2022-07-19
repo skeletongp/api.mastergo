@@ -1,3 +1,4 @@
+
 @push('js')
     <script>
         function align(conector, dir) {
@@ -24,11 +25,18 @@
         var sumField = (obj, field) => obj
             .map(items => items[field])
             .reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
-
+        cant=1;
+        Livewire.on('changeCant', function (cant) {
+            cant = cant;
+        });
         Livewire.on('changeInvoice', function(invoice, letPrint = true, creditNote = false) {
             obj = invoice;
             if (letPrint) {
-                for (let index = 0; index < obj.place.preference.copy_print; index++) {
+               
+                console.log(cant);
+              
+                for (let index = 0; index < cant; index++) {
+                    console.log(cant)
                     print(creditNote);
                 }
             }
@@ -39,15 +47,16 @@
                 Livewire.emit('showAlert', 'No hay ninguna impresora añadida', 'warning');
                 return false;
             }
+
             const conector = new ConectorPlugin();
             conector.cortar();
             /* Encabezado Negocio */
             align(conector, 'center');
-           /* if (obj.store.image  && obj.store.id==2 ) {
-                conector.imagenDesdeUrl(obj.store.image.path);
-                conector.feed(1)
-            }
-            */
+            /* if (obj.store.image  && obj.store.id==2 ) {
+                 conector.imagenDesdeUrl(obj.store.image.path);
+                 conector.feed(1)
+             }
+             */
             conector.establecerEnfatizado(1);
             conector.establecerTamanioFuente(1.3, 2)
             conector.texto(obj.store.name.toUpperCase() + "\n");
@@ -188,10 +197,10 @@
                 conector.feed(1);
                 align(conector, 'right');
                 conector.texto("Pr. " + formatter.format(det.price) + " ");
-                if (det.discount_rate > 0 ) {
+                if (det.discount_rate > 0) {
                     conector.texto("Desc. " + toDecimal.format(det.discount_rate * 100) + "% ");
                 }
-                if (det.taxtotal > 0 && obj.type !== 'B00' && obj.type !== 'B14' ) {
+                if (det.taxtotal > 0 && obj.type !== 'B00' && obj.type !== 'B14') {
                     conector.texto("Imp. " + formatter.format(det.taxtotal) + " ");
                 }
                 conector.texto("Subt. " + formatter.format(det.total));

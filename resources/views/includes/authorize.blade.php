@@ -38,6 +38,7 @@
                 console.log(msg)
                 $('#msgAuth').text(msg)
                 $('#openAuthorize').first().click();
+                return ;
             })
         </script>
     @endpush

@@ -4,9 +4,9 @@
             Nuevo gasto
         </x-slot>
         <div>
-            <div class="flex justify-end">
+           {{--  <div class="flex justify-end">
                 <x-toggle label="ITBIS" value="1" wire:model="tax" id="taxToggle"></x-toggle>
-            </div>
+            </div> --}}
             <div class="flex space-x-4 items-start -mb-8">
                 
                 <div class="w-1/3">

@@ -69,7 +69,8 @@ trait GenerateInvoiceTrait
 
     public function trySendInvoice()
     {
-        $condition = $this->condition != 'DE CONTADO' && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
+        $condition = $this->condition != 'De Contado' && $this->condition != 'Contra Entrega'
+         && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
 
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
             $this->action = 'sendInvoice';
@@ -127,6 +128,11 @@ trait GenerateInvoiceTrait
         if (auth()->user()->place->preference->print_order=='yes') {
             $this->emit('printOrder', $this->invoice);
         }
+        $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
+        $data = json_decode($dataFile, true) ?: [];
+        $name=$invoice->name?:$invoice->client->name;
+        unset($data[$invoice->client->code.' '.$name]);
+        file_put_contents(storage_path('app/public/local/details.json'), json_encode($data));
         $this->mount();
     }
     public function createPayment($invoice)
@@ -138,7 +144,7 @@ trait GenerateInvoiceTrait
             $tax = array_sum(array_column($this->details, 'taxTotal'));
         }
         $total = $subtotal - $discount + $tax;
-        if ($invoice->condition == "DE CONTADO") {
+        if ($invoice->condition == "De Contado" || $invoice->condition=='Contra Entrega') {
             $forma = 'contado';
         } else {
             $forma = 'credito';

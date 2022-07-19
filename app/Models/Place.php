@@ -38,7 +38,7 @@ protected $connection="mysql";
     }
     public function units()
     {
-        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price_menor','price_mayor','min','stock','cost','id', 'product_id');
+        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('price_menor','price_mayor','price_special','min','stock','cost','id', 'product_id');
         
     }
     function getUnitsAttribute(){

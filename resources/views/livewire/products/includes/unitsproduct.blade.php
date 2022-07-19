@@ -35,9 +35,9 @@
                 <x-input-error for="unit_price_menor">Verifique el precio</x-input-error>
             </div>
             <div class="pt-4 w-1/4">
-                <x-base-input type="number" label="Margin (%)" type="number" step="any" min="0" id="unit_margin" name="unit_margin"
-                    wire:model.lazy="unit_margin"></x-base-input>
-                <x-input-error for="unit_margin">Verifique el margen</x-input-error>
+                <x-base-input type="number" label="Especial" type="number" step="any" min="0" id="unit_price_special" name="unit_price_special"
+                    wire:model.lazy="unit_price_special"></x-base-input>
+                <x-input-error for="unit_price_special">Verifique el margen</x-input-error>
             </div>
         </div>
         <div class="p-2 pr-0 flex justify-end">

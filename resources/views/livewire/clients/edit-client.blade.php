@@ -9,7 +9,10 @@
             class="far fa-pen text-green-600"></span>
             <x-tooltip id="editId{{$client['id']}}">Editar registro</x-tooltip>
         </x-slot>
-        <form wire:submit.prevent="updateClient" class="space-y-8">
+        <form wire:submit.prevent="updateClient" class="space-y-8 pt-8 relative">
+            <div class="absolute top-0 right-2">
+                <x-toggle label="Especial" value="1" id="clt{{$client['id']}}Special" wire:model="client.special"></x-toggle>
+            </div>
             <div class="   flex items-end space-x-3">
                 <div class="w-full">
                     <x-input label="Nombre" id="client.{{$client['id']}}name" wire:model.defer="client.name" />

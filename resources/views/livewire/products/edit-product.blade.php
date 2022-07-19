@@ -4,7 +4,7 @@
         <form wire:submit.prevent="updateProduct" class="space-y-4 max-w-xl w-full ">
             <h1 class="text-center pb-4 uppercase font-bold text-xl">Información del producto</h1>
             <div class="w-full">
-                <x-input label="Nombre del producto" wire:model.defer="product.name" id="product.name"></x-input>
+                <x-base-input label="Nombre del producto" wire:model.defer="product.name" id="product.name"></x-base-input>
             </div>
             <div class="pt-4 pb-2">
                 <div class="space-y-2">
@@ -60,28 +60,33 @@
                     @foreach ($units as $unt)
                         <div class="flex space-x-4 items-start pt-4">
                             <div>
-                                <x-input class="font-bold uppercase" readonly value="{{ $unt->name }}" label="Medida"
-                                    id="medida{{ $unt->id }}"></x-input>
+                                <x-base-input class="font-bold uppercase" readonly value="{{ $unt->name }}" label="Medida"
+                                    id="medida{{ $unt->id }}"></x-base-input>
                             </div>
                             <div class="max-w-xs w-1/4">
-                                <x-input label="Costo" type="number" id="cost{{ $unt->id }}"
+                                <x-base-input label="Costo" type="number" id="cost{{ $unt->id }}"
                                     x-value="{{ $unt->id }}" wire:model.defer="unit.{{ $unt->id }}.cost">
-                                </x-input>
-                                <x-input-error for="unit.{{ $unt->id }}.cost"> Min. 1</x-input-error>
+                                </x-base-input>
+                                <x-input-error for="unit.{{ $unt->id }}.cost">Requerido</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
-                                <x-input label="Detalle" type="number" id="price{{ $unt->id }}.menor"
-                                    wire:model.defer="unit.{{ $unt->id }}.price_menor"></x-input>
+                                <x-base-input label="Detalle" type="number" id="price{{ $unt->id }}.menor"
+                                    wire:model.defer="unit.{{ $unt->id }}.price_menor"></x-base-input>
                                 <x-input-error for="unit.{{ $unt->id }}.price_menor">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
-                                <x-input label="Mayor" type="number" id="price{{ $unt->id }}.mayor"
-                                    wire:model.defer="unit.{{ $unt->id }}.price_mayor"></x-input>
+                                <x-base-input label="Mayor" type="number" id="price{{ $unt->id }}.mayor"
+                                    wire:model.defer="unit.{{ $unt->id }}.price_mayor"></x-base-input>
                                 <x-input-error for="unit.{{ $unt->id }}.price_mayor">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
-                                <x-input label="Mínimo" type="number" id="price{{ $unt->id }}.min"
-                                    wire:model.defer="unit.{{ $unt->id }}.min"></x-input>
+                                <x-base-input label="Especial" type="number" id="price{{ $unt->id }}.special"
+                                    wire:model.defer="unit.{{ $unt->id }}.price_special"></x-base-input>
+                                <x-input-error for="unit.{{ $unt->id }}.price_special">Requerido</x-input-error>
+                            </div>
+                            <div class="max-w-xs w-1/4">
+                                <x-base-input label="Mínimo" type="number" id="price{{ $unt->id }}.min"
+                                    wire:model.defer="unit.{{ $unt->id }}.min"></x-base-input>
                                 <x-input-error for="unit.{{ $unt->id }}.min">Min. 1</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">

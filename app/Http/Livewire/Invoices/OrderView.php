@@ -49,8 +49,8 @@ class OrderView extends LivewireDatatable
                 
                 return '$' . formatNumber($result['payment']['total']);
             })->label("Monto"),
-            Column::name('seller.name')->callback(['uid', 'day'], function ($uid) use ($invoices) {
-                $result = arrayFind($invoices, 'uid', $uid);
+            Column::name('seller.name')->callback(['day', 'id'], function ($day,$id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
                 return ellipsis($result['seller']['fullname'], 16);
             })->label('Vendedor'),
            
@@ -59,8 +59,8 @@ class OrderView extends LivewireDatatable
                 $result = arrayFind($invoices, 'id', $id);
                 return view('pages.invoices.order-page', ['invoice' => $result, 'banks'=>$banks]);
             })->label('Acción'),
-            Column::callback(['uid','id'], function ($uid) use ($invoices) {
-                $result = arrayFind($invoices, 'uid', $uid);
+            Column::callback(['uid','id'], function ($uid, $id) use ($invoices) {
+                $result = arrayFind($invoices, 'id', $id);
                 return view('pages.invoices.delete-invoice-page', ['invoice' => $result]);
             })->label('Anular')->alignCenter()
             

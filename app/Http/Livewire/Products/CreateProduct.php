@@ -14,7 +14,7 @@ class CreateProduct extends Component
 
     public $form=[], $units, $taxes, $places;
     public  $unitSelected = [], $taxSelected = [], $placeSelected = [];
-    public $unit_id, $unit_price_mayor, $unit_price_menor, $unit_min, $unit_cost, $unit_margin;
+    public $unit_id, $unit_price_mayor, $unit_price_menor, $unit_price_special, $unit_min, $unit_cost, $unit_margin;
     public $photo, $photo_path;
     public $activeTab="infoproduct";
 
@@ -33,6 +33,7 @@ class CreateProduct extends Component
         'unit_id' => 'required',
         'unit_price_mayor' => 'required|numeric',
         'unit_price_menor' => 'required|numeric',
+        'unit_price_special' => 'required|numeric',
         'unit_cost' => 'required|numeric',
         'unit_min' => 'required|numeric',
         'unit_margin' => 'required|numeric',
@@ -111,6 +112,7 @@ class CreateProduct extends Component
                 'id' => count($this->unitSelected),
                 'price_mayor' => $this->unit_price_mayor,
                 'price_menor' => $this->unit_price_menor,
+                'price_special' => $this->unit_price_special,
                 'min' => $this->unit_min,
                 'cost' => $this->unit_cost,
                 'margin' => $this->unit_margin / 100,

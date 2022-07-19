@@ -14,7 +14,7 @@ use Livewire\WithFileUploads;
 class OrderConfirm extends Component
 {
     use OrderContable, OrderConfirmTrait, WithFileUploads, Authorize;
-    public  $form, $compAvail = true, $cobrable=true;
+    public  $form, $compAvail = true, $cobrable=true, $copyCant=1;
     public $banks, $bank, $bank_id, $reference;
 
     protected $listeners=['payInvoice', 'reload'=>'render'];
@@ -38,6 +38,10 @@ class OrderConfirm extends Component
         }
         $this->form['contable_id'] = auth()->user()->id;
         $this->updatedForm($this->form['efectivo'], 'efectivo');
+    }
+    public function updatedCopyCant()
+    {
+        $this->emit('changeCant', $this->copyCant);
     }
     public function render()
     {

@@ -38,7 +38,7 @@ protected $connection="mysql";
     }
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_place_units')->withPivot('price_menor','price_mayor','min','stock','cost','id');
+        return $this->belongsToMany(Product::class, 'product_place_units')->withPivot('price_menor','price_mayor', 'price_special','min','stock','cost','id');
     }
     
 
@@ -58,6 +58,12 @@ protected $connection="mysql";
     {
         return new Attribute(
             get:fn()=> $this->pivot->price_mayor
+        );
+    }
+    public function plainPriceSpecial() : Attribute
+    {
+        return new Attribute(
+            get:fn()=> $this->pivot->price_special
         );
     }
     public function cost() : Attribute

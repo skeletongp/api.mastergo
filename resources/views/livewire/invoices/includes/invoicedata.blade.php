@@ -6,7 +6,8 @@
         </div>
         <div>
             <x-base-select status="{{auth()->user()->hasPermissionTo('Fiar Facturas')?'':'disabled'}}" id="condition" wire:model="condition" class="text-base uppercase py-0" label="Condición">
-                <option value="DE CONTADO">DE CONTADO</option>
+                <option value="De Contado">DE CONTADO</option>
+                <option value="Contra Entrega">CONTRA ENTREGA</option>
                 <option value="1 A 15 DÍAS">1 A 15 DÍAS</option>
                 <option value="16 A 30 DÍAS">16 A 30 DÍAS</option>
                 <option value="31 A 45 DÍAS">31 A 45 DÍAS</option>

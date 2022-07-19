@@ -8,9 +8,16 @@ use Livewire\WithFileUploads;
 
 class EditClient extends Component
 {
-    public  $client;
+    public  $client, $special=0;
     public  $avatar, $photo_path;
     use WithFileUploads;
+
+
+    public function mount()
+    {
+        $this->client['special']==0?$this->client['special']=null:$this->client['special']=1;
+    }
+
     public function render()
     {
         return view('livewire.clients.edit-client');
@@ -35,6 +42,7 @@ class EditClient extends Component
                 'path' => $this->photo_path
             ]);
         }
+        $this->client->special=$this->special;
         $client->update($this->client);
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert', 'Cliente Actualizado Exitosamente', 'success');

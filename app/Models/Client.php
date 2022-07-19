@@ -25,6 +25,7 @@ class Client extends Model implements Searchable
         'lastname',
         'email',
         'fullname',
+        'special',
         'address',
         'rnc',
         'phone',
@@ -104,7 +105,8 @@ class Client extends Model implements Searchable
         }
         return $this->morphOne(Count::class, 'contable')->where('place_id', $place_id);
     }
-    function counts(){
+    function counts()
+    {
         $place_id = 1;
         if (auth()->user()) {
             $place_id = auth()->user()->place->id;
@@ -133,12 +135,12 @@ class Client extends Model implements Searchable
     }
     function transactions()
     {
-        $counts=$this->counts()->pluck('id');
+        $counts = $this->counts()->pluck('id');
         $place_id = 1;
         if (auth()->user()) {
             $place_id = auth()->user()->place->id;
         }
-        $place=Place::find($place_id);
-        return $place->transactions()->whereIn('creditable_id',$counts)->orWhereIn('debitable_id',$counts)->orderBy('created_at', 'desc');
+        $place = Place::find($place_id);
+        return $place->transactions()->whereIn('creditable_id', $counts)->orWhereIn('debitable_id', $counts)->orderBy('created_at', 'desc');
     }
 }

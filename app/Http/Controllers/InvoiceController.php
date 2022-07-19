@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class InvoiceController extends Controller
 {
@@ -21,6 +22,7 @@ class InvoiceController extends Controller
     }
     public function create()
     {
+        request()->session()->put('details', []);
         return view('pages.invoices.create');
     }
     public function orders()

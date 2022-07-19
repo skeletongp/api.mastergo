@@ -27,7 +27,7 @@ class DeleteInvoice extends Component
         $this->deletePayments($invoice);
         $invoice->delete();
         $this->emit('showAlert', 'Factura anulada existosamente', 'success');
-        $this->emit('refreshLivewireDatatable');
+        $this->emitUp('refreshLivewireDatatable');
     }
     public function restoreComprobante($comprobante)
     {
