@@ -4,14 +4,14 @@
         <div class="flex items-center justify-between mb-1">
             @if ($this->searchableColumns()->count())
                 <div class="flex items-center h-10">
-                    <div class="flex rounded-lg  shadow-sm w-48 lg:w-[24rem]" >
+                    <div class="flex rounded-lg  shadow-sm w-48 lg:w-[24rem]">
                         <div class="relative flex-grow focus-within:z-10">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <span class="fas fa-search text-xl text-gray-300"></span>
                             </div>
                             <input wire:model.debounce.500ms="search"
                                 class="block w-full py-3 px-10 text-sm border-gray-300 leading-4 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none"
-                                placeholder="{{ellipsis( $this->searchableColumns()->map->label->join(', '),30) }}"
+                                placeholder="{{ ellipsis($this->searchableColumns()->map->label->join(', '), 30) }}"
                                 type="text" />
                             <div class="absolute inset-y-0 right-0 flex items-center pr-2">
                                 <button wire:click="$set('search', null)"
@@ -110,10 +110,17 @@
         <div wire:loading.class="opacity-50"
             class="rounded-lg mt-4 @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg bg-white max-w-screen overflow-x-scroll border-2 @if ($this->activeFilters) border-blue-500 @else border-transparent @endif @if ($complex) border-b-0 @endif">
             <div>
-                <div class="p-4 uppercase text-left w-full font-bold text-xl select-none">
+                <div
+                    class="p-4 uppercase text-left flex justify-between items-center w-full font-bold text-xl select-none">
                     @isset($headTitle)
                         {!! $headTitle !!}
+                    @else
+                        <div>
+
+                        </div>
                     @endisset
+                    <span wire:click="$emit('refreshLivewireDatatable')"
+                        class="fas fa-sync-alt hover:text-blue-500 cursor-pointer"></span>
                 </div>
                 <div class="table min-w-full align-middle">
                     @unless($this->hideHeader)
@@ -127,7 +134,7 @@
                                 @elseif($column['type'] === 'checkbox')
                                     @unless($column['hidden'])
                                         <div
-                                            class="justify-center table-cell w-32 h-12  {{isset($padding)?$padding:'py-4 px-6 '}}  overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-middle border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
+                                            class="justify-center table-cell w-32 h-12  {{ isset($padding) ? $padding : 'py-4 px-6 ' }}  overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-middle border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
                                             <div
                                                 class="px-3 py-1 rounded @if (count($selected)) bg-orange-400 @else bg-gray-200 @endif text-white text-center">
                                                 {{ count($selected) }}
@@ -168,10 +175,12 @@
                                             </div>
                                         @else
                                             <div wire:key="{{ $index }}">
-                                                @include('datatables::filters.' . ($column['filterView'] ?? $column['type']), [
-                                                    'index' => $index,
-                                                    'name' => $column['label'],
-                                                ])
+                                                @include('datatables::filters.' .
+                                                        ($column['filterView'] ?? $column['type']),
+                                                    [
+                                                        'index' => $index,
+                                                        'name' => $column['label'],
+                                                    ])
                                             </div>
                                         @endif
                                     @endisset
@@ -196,7 +205,7 @@
                                     @include('datatables::label')
                                 @else
                                     <div
-                                        class="table-cell {{isset($padding)?$padding:'py-4 px-6 '}} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
+                                        class="table-cell {{ isset($padding) ? $padding : 'py-4 px-6 ' }} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
                                         {!! $row->{$column['name']} !!}
                                     </div>
                                 @endif
@@ -210,7 +219,7 @@
                                 @unless($column['hidden'])
                                     @if ($column['summary'])
                                         <div
-                                            class="table-cell {{isset($padding)?$padding:'py-2 px-6 '}} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
+                                            class="table-cell {{ isset($padding) ? $padding : 'py-2 px-6 ' }} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
                                             {!! $this->summarize($column['name']) !!}
                                         </div>
                                     @else
@@ -223,7 +232,8 @@
                 </div>
             </div>
             @if ($this->results->isEmpty())
-                <p class="p-3 text-lg text-center font-bold uppercase  overflow-hidden overflow-ellipsis whitespace-nowrap">
+                <p
+                    class="p-3 text-lg text-center font-bold uppercase  overflow-hidden overflow-ellipsis whitespace-nowrap">
                     {{ __('No hay ningún resultado para mostrar') }}
                 </p>
             @endif
@@ -242,7 +252,7 @@
                                 @foreach (config('livewire-datatables.per_page_options', [10, 25, 50, 100]) as $per_page_option)
                                     <option value="{{ $per_page_option }}">{{ $per_page_option }}</option>
                                 @endforeach
-                                <option value="99999999">{{ __('1000') }}</option>
+                                <option value="1000">{{ __('1000') }}</option>
                             </x-base-select>
                         </div>
 
@@ -259,7 +269,7 @@
 
                         @if (!isset($hideResults))
                             <div class="flex justify-end text-gray-600">
-                                 {{ $this->results->firstItem() }} -
+                                {{ $this->results->firstItem() }} -
                                 {{ $this->results->lastItem() }} {{ __('de') }}
                                 {{ $this->results->total() }}
                             </div>

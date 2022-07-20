@@ -15,7 +15,7 @@ class PaymentsFromInvoice extends LivewireDatatable
     public function builder()
     {
        
-        return $this->invoice->payments()->with('payable.store', 'payer', 'payer', 'place.preference', 'contable')->orderBy('id','desc');
+        return $this->invoice->payments()->with('payable.store', 'payable.payment', 'payer', 'payer', 'place.preference', 'contable')->orderBy('id','desc');
     }
 
     public function columns()

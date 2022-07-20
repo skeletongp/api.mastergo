@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Models\Invoice;
+use App\Models\Outcome;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -17,20 +19,21 @@ class StatWeek extends Component
     public function balanceWeek()
     {
         $place = auth()->user()->place;
-        $incomes = $place->incomes()->where('created_at', '>=', Carbon::now()->subWeek())
-            ->groupBy('date')
-            ->orderBy('date', 'DESC')
+    
+        $incomes = $place->payments()->where('payable_type',Invoice::class)->whereDate('created_at', '>=', Carbon::now()->subWeek())
+            ->groupBy('day')
+            ->orderBy('day', 'DESC')
             ->get(array(
-                DB::raw('Date(created_at) as date'),
-                DB::raw('sum(amount) as "amount"')
+                DB::raw('Date(day) as date'),
+                DB::raw('sum(payed-cambio) as "amount"')
             ))->pluck('amount', 'date')->toArray();
-        $outcomes = $place->outcomes()->where('created_at', '>=', Carbon::now()->subWeek())
-            ->groupBy('date')
-            ->orderBy('date', 'DESC')
-            ->get(array(
-                DB::raw('Date(created_at) as date'),
-                DB::raw('sum(amount) as "amount"')
-            ))->pluck('amount', 'date')->toArray();
+        $outcomes =  $place->payments()->where('payable_type',Outcome::class)->whereDate('created_at', '>=', Carbon::now()->subWeek())
+        ->groupBy('day')
+        ->orderBy('day', 'DESC')
+        ->get(array(
+            DB::raw('Date(day) as date'),
+            DB::raw('sum(payed-cambio) as "amount"')
+        ))->pluck('amount', 'date')->toArray();
         $this->setData($incomes, $outcomes);
        
     }

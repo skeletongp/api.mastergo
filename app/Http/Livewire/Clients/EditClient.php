@@ -8,16 +8,9 @@ use Livewire\WithFileUploads;
 
 class EditClient extends Component
 {
-    public  $client, $special=0;
+    public  $client;
     public  $avatar, $photo_path;
     use WithFileUploads;
-
-
-    public function mount()
-    {
-        $this->client['special']==0?$this->client['special']=null:$this->client['special']=1;
-    }
-
     public function render()
     {
         return view('livewire.clients.edit-client');
@@ -29,6 +22,7 @@ class EditClient extends Component
             'client.address' => 'required|string|max:100',
             'client.email' => 'required|string|max:100|unique:clients,email,' . $this->client['id'],
             'client.limit' => 'required|numeric',
+            'client.special' => 'required|numeric',
             'client.phone' => 'required|string|max:25',
             'client.store_id' => 'required|numeric|exists:moso_master.stores,id',
         ];
@@ -42,7 +36,6 @@ class EditClient extends Component
                 'path' => $this->photo_path
             ]);
         }
-        $this->client->special=$this->special;
         $client->update($this->client);
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert', 'Cliente Actualizado Exitosamente', 'success');

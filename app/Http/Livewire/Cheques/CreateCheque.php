@@ -20,36 +20,37 @@ class CreateCheque extends Component
         'form.type' => 'required',
         'form.chequeable_id' => 'required',
         'form.chequeable_type' => 'required',
-        'person'=>'required'
+        'person' => 'required'
     ];
     function mount()
     {
-        $store=auth()->user()->store;
-        $place=auth()->user()->place;
-        $clients=$store->clients()->select(DB::raw("name, CONCAT(id,'|','App\\\Models\\\Client') AS id"))->pluck('name','id');
-        $providers=$store->providers()->select(DB::raw("fullname as name,CONCAT(id,'|','App\\\Models\\\Provider') AS id"))->pluck('name','id');
-        $users=$store->users()->select(DB::raw("fullname as name, CONCAT(users.id,'|','App\\\Models\\\User') AS id"))->pluck('name','id');
-        $this->persons=$clients->merge($providers)->merge($users);
+        $store = auth()->user()->store;
+        $place = auth()->user()->place;
+        $clients = $store->clients()->select(DB::raw("name, CONCAT(id,'|','App\\\Models\\\Client') AS id"))->pluck('name', 'id');
+        $providers = $store->providers()->select(DB::raw("fullname as name,CONCAT(id,'|','App\\\Models\\\Provider') AS id"))->pluck('name', 'id');
+        $users = $store->users()->select(DB::raw("fullname as name, CONCAT(users.id,'|','App\\\Models\\\User') AS id"))->pluck('name', 'id');
+        $this->persons = $clients->merge($providers)->merge($users);
         $this->banks = $store->banks()->select(DB::raw("CONCAT(bank_name,' - ',currency) AS bank, id"))->pluck('bank', 'id');
     }
 
     public function updatedPerson()
     {
-        
-        $person = explode('|', $this->person);
-        $this->form['chequeable_id'] = $person[0];
-        $this->form['chequeable_type'] = $person[1];
 
+        $person = explode('|', $this->person);
+        if (count($person) == 2) {
+            $this->form['chequeable_id'] = $person[0];
+            $this->form['chequeable_type'] = $person[1];
+        }
     }
     function createCheque()
     {
         $this->validate();
-        $this->form['user_id']=auth()->user()->id;
-        $this->form['store_id']=auth()->user()->store->id;
-        $this->form['status']='Pendiente';
-        $place=auth()->user()->place;
+        $this->form['user_id'] = auth()->user()->id;
+        $this->form['store_id'] = auth()->user()->store->id;
+        $this->form['status'] = 'Pendiente';
+        $place = auth()->user()->place;
         $place->cheques()->create($this->form);
-        $this->reset('form','person');
+        $this->reset('form', 'person');
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert', 'Cheque registrado correctamente', 'success');
     }

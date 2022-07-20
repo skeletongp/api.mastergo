@@ -106,7 +106,9 @@
             bottom: 0;
         }
 
-
+        .cuerpo tr:nth-child(2n) {
+            background: #DDD
+        }
 
         @media only screen and (max-width: 600px) {
             .invoice-box table tr.top table td {
@@ -164,98 +166,71 @@
     <table>
         <thead>
             <tr>
-                <th style="text-align: left">Doc.</th>
-                <th style="text-align: left">ID/RNC</th>
-                <th style="text-align: left">Responsable</th>
+                <th style="text-align: left">Nro.</th>
                 <th style="text-align: left">Tipo</th>
-                <th style="text-align: right">Monto</th>
+                <th style="text-align: left">Cliente</th>
+                <th style="text-align: left">Efectivo</th>
+                <th style="text-align: left">Transf.</th>
+                <th style="text-align: left">Tarjeta</th>
+                <th style="text-align: left">Pagado</th>
 
             </tr>
         </thead>
         <tbody class="cuerpo">
             <tr>
-                <td colspan="5">
+                <td colspan="7">
                     <hr>
                     <div
                         style="width: 100%; text-align:center; font-size:large; font-weight:bold; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
-                        Ventas
+                        INGRESOS POR VENTAS Y PENDIENTES COBRADOS
                     </div>
                 </td>
             </tr>
-            @forelse ($payments as $payment)
-                <tr>
-                    <td style="width: 15%; text-align: left">
-                        {{ $payment->payable->number ?: $payment->payable->ref }}
+            @forelse ($payments as $ind=>  $payment)
+                <tr
+                    style="font-size: small; {{ fmod($ind, 2) == 0 ? 'background-color:#EEE' : '' }} {{ $payment->payed > 0 ? '' : 'color:red' }}">
+                    <td style="width:10%;  text-align: left">
+                        {{ $payment->payable->number ? ltrim(substr($payment->payable->number, strpos($payment->payable->number, '-') + 1), '0') : $payment->payable->ref }}
                     </td>
-                    <td style="width: 17%; text-align: left">
-                        {{ $payment->payer->rnc ?: '000-00000-0' }}
+                    <td style="width:7%;  text-align: left">
+                        {{ $payment->forma == 'cobro' ? 'Cob.' : 'Fact.' }}
                     </td>
-                    <td>
-                        {{ ellipsis($payment->payer->name,20) ?: ellipsis( $payment->payer->fullname,20) }}
-                    </td>
-                    <td style="width: 12%; text-align: left">
-                        {{ ucfirst($payment->forma) }}
-                    </td>
-                    <td style="width: 23%; text-align:right">
-                        ${{ formatNumber($payment->total) }}
-
+                    <td style="width:25%;  text-align: left">
+                        {{ ucwords(strtolower(ellipsis($payment->payable->name, 15) ?: (ellipsis($payment->payer->name, 15) ?: ellipsis($payment->payer->fullname, 15))), ' ') }}
                     </td>
 
+                    <td style="width:19.5%; text-align: left">
+                        ${{ formatNumber($payment->efectivo) }}
+                    </td>
+                    <td style="width:19.5%; text-align: left">
+                        ${{ formatNumber($payment->transferencia) }}
+                    </td>
+                    <td style="width:17.5%; text-align: left">
+                        ${{ formatNumber($payment->tarjeta) }}
+                    </td>
+
+                    <td style="width:17.5%; text-align:left; font-weight:bold">
+                        ${{ formatNumber($payment->payed) }}
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5">
-                        
+                    <td colspan="7">
+
                     </td>
                 </tr>
             @endforelse
 
-            <tr>
-                <td colspan="5">
-                    <hr>
-                    <div
-                        style="width: 100%; text-align:center; font-size:large; font-weight:bold; text-transform:uppercase; padding-top:10px; padding-bottom:10px">
-                        Gastos
-                    </div>
-                </td>
-            </tr>
-            @forelse ($gastos->get() as $gasto)
-                <tr>
-                    <td style="width: 15%; text-align: left">
-                        {{ $gasto->payable->ref }}
-                    </td>
-                    <td style="width: 17%; text-align: left">
-                        {{ $gasto->payer->rnc ?: '000-00000-0' }}
-                    </td>
-                    <td>
-                        {{ $gasto->payable->name ?: $gasto->payer->fullname }}
-                    </td>
-                    <td style="width: 12%; text-align: left">
-                        {{ ucfirst($gasto->forma) }}
-                    </td>
-                    <td style="width: 23%; text-align:right">
-                        ${{ formatNumber($gasto->total) }}
-
-                    </td>
-
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5">
-                      
-                    </td>
-                </tr>
-            @endforelse
 
         </tbody>
     </table>
     <hr>
     <script type="text/php">if ( isset($pdf) ) {
-                            $font = $fontMetrics->get_font("helvarialetica", "bold");
-                            $pdf->page_text(400, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
-                            $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
-                            $pdf->page_text(18, 740, "Reporte de cierre de caja diario", $font, 10, array(0,0,0));
-                        }</script>
+                                        $font = $fontMetrics->get_font("helvarialetica", "bold");
+                                        $pdf->page_text(400, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 10, array(0,0,0));
+                                        $pdf->page_text(532, 32, date('d/m/Y'), $font, 10, array(0,0,0));
+                                        $pdf->page_text(18, 740, "Reporte de cierre de caja diario", $font, 10, array(0,0,0));
+                                    }</script>
     @if ($payments->count() > (18 * $payments->count()) / 2 + 2)
         <div style="page-break-after: always"></div>
     @endif
@@ -265,13 +240,13 @@
                 + Disponible...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->efectivo + $cuadre->transferencia + $cuadre->tarjeta) }}
+                ${{ formatNumber($efectivos->sum()) }}
             </td>
         </tr>
         @foreach ($efectivos as $name => $balance)
             <tr style="">
                 <td colspan="4" style="padding-left: 15px">
-                    {{ ellipsis(str_replace('Efectivo en', '', $name),20) }}
+                    {{ ellipsis(str_replace('Efectivo en', '', $name), 20) }}
                 </td>
                 <td colspan="2" style="font-size: small">
                     ${{ formatNumber($balance) }}
@@ -281,51 +256,7 @@
 
 
 
-        <tr style="">
-            <td colspan="4" style="font-weight: bold; padding-top:10px">
-                - Devolución...
-            </td>
-            <td colspan="2" style="font-weight: bold; padding-top:10px">
-                (${{ formatNumber($cuadre->devolucion) }})
-            </td>
-        </tr>
-        <tr style="font-weight:bold">
-            <td colspan="4" style="padding-top:18px">
-                - Egresos...
-            </td>
-            <td colspan="2" style="padding-top:18px">
-                (${{ formatNumber($cuadre->egreso) }})
-            </td>
-        </tr>
-        <tr style="">
-            <td colspan="4" style="padding-left: 15px">
-                Efectivo...
-            </td>
-            <td colspan="2" style="font-size: small">
-                ${{ formatNumber($gastos->sum('efectivo')) }}
-            </td>
-        </tr>
-        <tr style="">
-            <td colspan="4" style="padding-left: 15px">
-                Bancos...
-            </td>
-            <td colspan="2" style="font-size: small">
-                ${{ formatNumber($gastos->sum('transferencia')) }}
-            </td>
-        </tr>
-        <tr style="">
-            <td colspan="4" style="padding-left: 15px">
-                Otros...
-            </td>
-            <td colspan="2" style="font-size: small">
-                ${{ formatNumber($gastos->sum('tarjeta')) }}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6">
-                <hr>
-            </td>
-        </tr>
+      
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:25px">
                 SALDO INICIAL =>
@@ -339,7 +270,7 @@
                 RETIRADO =>
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($cuadre->retirado) }}
+               ${{ formatNumber(($payments->sum('efectivo') - $payments->sum('cambio')+$cuadre->inicial)-$cuadre->final) }} 
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -354,44 +285,55 @@
     <table style="width: 50%; margin-top:35px;float: right; line-height:10px">
         <tr style="">
             <td colspan="2">
-                Ventas Cobradas...
+                Efectivo...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->contado) }}
+                ${{ formatNumber($payments->sum('efectivo') - $payments->sum('cambio')) }}
             </td>
         </tr>
         <tr style="">
             <td colspan="2">
-                Ventas a Crédito...
+                Transferencias...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->credito) }}
+                ${{ formatNumber($payments->sum('transferencia')) }}
             </td>
         </tr>
         <tr style="">
             <td colspan="2">
-                Venta a Cobros...
+                Tarjetas/Cheques...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->cobro) }}
+                ${{ formatNumber($payments->sum('tarjeta')) }}
             </td>
         </tr>
         <tr style="">
-            <td colspan="2">
-                Recibos de ingresos...
+            <td colspan="2" style="text-transform: uppercase; font-weight:bold">
+                Cobrado...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->recibo_ingreso) }}
+                ${{ formatNumber($payments->sum('efectivo') - $payments->sum('cambio') + $payments->sum('transferencia') + $payments->sum('tarjeta')) }}
             </td>
         </tr>
+        <hr>
         <tr style="">
             <td colspan="2">
-                Recibos de egresos...
+                Crédito...
             </td>
             <td colspan="2">
-                ${{ formatNumber($cuadre->recibo_egreso) }}
+                ${{ formatNumber($invoices->sum('rest'))}}
             </td>
         </tr>
+        <hr>
+        <tr style="">
+            <td colspan="2" style="text-transform: uppercase; font-weight:bold">
+                Total...
+            </td>
+            <td colspan="2">
+                ${{ formatNumber($payments->sum('efectivo') - $payments->sum('cambio') + $payments->sum('transferencia') + $payments->sum('tarjeta')+$invoices->sum('rest')) }}
+            </td>
+        </tr>
+       
         <tr>
             <td colspan="6">
                 <hr>

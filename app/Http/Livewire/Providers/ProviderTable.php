@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Providers;
 
 use App\Models\Provider;
+use Carbon\Carbon;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -14,6 +15,7 @@ class ProviderTable extends LivewireDatatable
     {
         $store=auth()->user()->store;
         $providers=$store->providers()->with('store','provisions');
+        
         return $providers;
     }
 
@@ -39,12 +41,20 @@ class ProviderTable extends LivewireDatatable
                 $provider=arrayFind($providers, 'id', $id);
                 return view('pages.providers.actions', compact('provider'));
             })->label('Editar')->headerAlignCenter();
-        } 
+        } else{
+            return Column::callback('address', function($address){
+                return ellipsis($address, 20);
+            })->label('Dirección');
+        }
     }
     public function deleteColumn()
     {
         if (auth()->user()->hasPermissionTo('Borrar Clientes')) {
             return Column::delete('id')->label("Borrar");
+        }else{
+            return Column::callback('created_at', function($created){
+                return Carbon::parse($created)->format('d/m/Y');
+            })->label('Registro')->hide();
         }
     }
     public function delete($id)

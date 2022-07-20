@@ -21,6 +21,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Jobs\CreatePDFJob;
 use App\Models\Payment;
+use App\Models\ProductPlaceUnit;
 use App\Models\Store;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -116,6 +117,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(CuadreController::class)->group(function () {
             Route::get('cuadres', 'index')->name('cuadres.index');
+            Route::get('cuadres/{cuadre}', 'show')->name('cuadres.show');
         });
         Route::controller(ReportController::class)->group(function () {
             Route::get('/incomes', 'incomes')->name('reports.incomes');
@@ -138,8 +140,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('prueba', function () {
-    /* $payments=Payment::where('day',date('Y-m-d'))->orderBy('cambio','desc')->get();
-    $place=auth()->user()->place;
-    $creditable = $place->findCount('400-01');
-    setTransaction('Reg. vuelto de cambio', 'MANUAL', $payments->sum('cambio'), $creditable, $place->cash()); */
+   /*  $cuadreController=new CuadreController();
+    $cuadreController->index('2022-07-18');
+    dd('Lo lograste'); */
+    
 })->name('prueba');

@@ -144,23 +144,7 @@ class User extends Authenticatable implements Searchable
                 'places'
             )
             ->first();
-        if (is_null($store)) {
-            $store = $this->stores()->where('stores.id', env('STORE_ID'))
-                ->with(
-                    'clients',
-                    'products',
-                    'roles',
-                    'invoices',
-                    'providers',
-                    'incomes',
-                    'banks',
-                    'recursos',
-                    'comprobantes',
-                    'units',
-                    'places'
-                )
-                ->first();
-        }
+     
         Cache::put('store_' . $this->id, $store);
         return $store;
     }

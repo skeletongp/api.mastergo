@@ -6,7 +6,7 @@
 
         <div>
             <form
-                wire:submit.prevent="authorize('¿Autoriza crear esta transacción?', 'validateAuthorization','createTransaction',null,'Crear Transacciones')">
+                wire:submit.prevent="createTransaction">
                 @php
                     
                     asort($countMains)

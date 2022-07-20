@@ -32,7 +32,6 @@ class CreateCountForPlaceJob implements ShouldQueue
     public function handle()
     {
         $counts=$this->store->counts()->get()->unique('code');
-        Log::info($counts->count());
         
         foreach ($counts as $count) {
             $cuenta=Arr::except($count->toArray(),'id','balance');

@@ -11,8 +11,13 @@
             <span> Cliente</span>
         </x-slot>
         <div class="relative pt-12">
-            <div class="absolute right-2 flex justify-between items-center left-2 top-0 font-bold text-lg">
-                <x-toggle label="Especial" value="1" id="cltSpecial" wire:model="special"></x-toggle>
+            <div class="absolute right-2 flex justify-end space-x-4 items-center left-2 top-0 font-bold text-lg">
+               <div class="w 40">
+                <x-base-select label="" id="cltSpecial" wire:model="form.special">
+                    <option value="0">Normal</option>
+                    <option value="1">Especial</option>
+                </x-base-select>
+               </div>
                 <span>Cód.: {{ $form['code'] }}</span>
             </div>
             <form wire:submit.prevent="createClient">

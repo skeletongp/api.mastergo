@@ -92,7 +92,7 @@ trait ShowPayments
        
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
-        $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'contable');
+        $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'payable.payment', 'contable');
         $this->emit('printPayment', $payment);
         $this->emit('refreshLivewireDatatable');
         $this->reset('payment', 'bank_id');

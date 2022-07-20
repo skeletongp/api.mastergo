@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuadre;
 use App\Models\Invoice;
 use App\Models\Outcome;
 use Carbon\Carbon;
@@ -16,98 +17,96 @@ class CuadreController extends Controller
         $this->middleware(['permission:Ver Cuadre'])->only(['index']);
         $this->middleware(['permission:Abrir Cuadre'])->only(['createCuadre']);
     }
-    public function index (Request $request){
-        $place=auth()->user()->place;
-        $payments=$place->payments()->with('payable','payer')->where('payable_type', Invoice::class)->where('day',date('Y-m-d'));
-        $gastos=$place->payments()->with('payable','payer')->where('payable_type', Outcome::class)->where('day',date('Y-m-d'));
-      
-        $retirado=0;
-        if ($request->has('retirado')) {
-            $retirado=$request->retirado;
+    public function index( $day=null)
+    {
+        if($day==null){
+            $day = Carbon::parse($day)->format('Y-m-d');
         }
-        $pagos=$payments->get();
-        $movimientos=$pagos->merge($gastos->get());
-        $cuadre=$this->createCuadre($payments, $retirado);
-        $ctaCajaGeneral=$place->findCount('100-01')->balance;
-        $efectivos=$place->counts()->where('code','like','100%')->pluck('balance','name');
+        $date=Carbon::parse($day)->format('Ymd');
+        $place = auth()->user()->place;
+        $payments = $place->payments()->where('payable_type', Invoice::class)
+            ->where('payments.day', $day)
+            ->join('invoices', 'invoices.id', '=', 'payments.payable_id')
+            ->join('clients', 'clients.id', '=', 'payments.payer_id')
+            ->join('moso_master.users', 'users.id', '=', 'payments.contable_id')
+            ->orderBy('payments.created_at', 'desc')
+            ->select('payments.*', 'invoices.name as name', 'invoices.number', 'clients.name as client_name')
+            ->with('payer', 'payable')->get();
+       
+        $gastos = $place->payments()->where('payable_type', Outcome::class)
+            ->join('invoices', 'invoices.id', '=', 'payments.payable_id')
+            ->join('clients', 'clients.id', '=', 'payments.payer_id')
+            ->join('moso_master.users', 'users.id', '=', 'payments.contable_id')
+            ->orderBy('payments.created_at', 'desc')
+            ->select('payments.*', 'invoices.name as name', 'invoices.number', 'clients.name as client_name')
+            ->with('payer', 'payable')->get();
+        $invoices = $place->invoices()->where('invoices.day', Carbon::now()->format('Y-m-d'))->get();
+        $cuadre = $this->createCuadre($invoices, $payments, $day);
+        $ctaCajaGeneral = $place->findCount('100-01')->balance;
+        $efectivos = $place->counts()->where('code', 'like', '100%')->pluck('balance', 'name');
         $PDF = App::make('dompdf.wrapper');
         $data = [
-            'payments'=>$pagos,
-            'gastos'=>$gastos,
-            'cuadre'=>$cuadre,
-            'ctaCajaGeneral'=>$ctaCajaGeneral,
-            'pdf'=>$PDF,
-            'efectivos'=>$efectivos,
+            'payments' => $payments,
+            'invoices' => $invoices,
+            'gastos' => $gastos,
+            'cuadre' => $cuadre,
+            'ctaCajaGeneral' => $ctaCajaGeneral,
+            'pdf' => $PDF,
+            'efectivos' => $efectivos,
         ];
         $pdf = $PDF->loadView('pages.cuadres.pdf-cuadre', $data);
-        file_put_contents('storage/cuadres/' . 'cuadre_diario_'.date('Ymd').$place->id.'.pdf', $pdf->output());
-        $path = asset('storage/cuadres/' . 'cuadre_diario_'.date('Ymd').$place->id.'.pdf');
-        $cuadre->pdf()->updateOrCreate(['fileable_id'=>$cuadre->id],[
-            'note' => 'Cuadre del ' . date('d/m/Y'),
+        file_put_contents('storage/cuadres/' . 'cuadre_diario_' . $date . $place->id . '.pdf', $pdf->output());
+        $path = asset('storage/cuadres/' . 'cuadre_diario_' . $date . $place->id . '.pdf');
+        $cuadre->pdf()->updateOrCreate(['fileable_id' => $cuadre->id], [
+            'note' => 'Cuadre del ' . $date,
             'pathLetter' => $path,
             'pathThermal' => ' ',
         ]);
         return view('pages.cuadres.index', compact('cuadre'));
-
     }
-    public function createCuadre($payments, $retirado)
+    public function createCuadre($invoices, $payments, $day)
     {
-        $place=auth()->user()->place;
-        $contado=$place->payments()->where('payable_type',Invoice::class)->with('payable','payer')->where('day',date('Y-m-d'))
-        ->where('forma','!=','cobro')
-        ->sum(DB::raw('efectivo + tarjeta + transferencia-cambio'));
-        $credito=$place->payments()->with('payable','payer')->where('day',date('Y-m-d'))->get()->sum( function($pay){
-            return $pay->payable->rest;
-        });
-        $cobro=$place->payments()->with('payable','payer')->where('day',date('Y-m-d'))->whereForma('cobro');
-        $place=auth()->user()->place;
-        $outcomes=$place->payments()->with('payable','payer')->where('payable_type', Outcome::class)->where('day',date('Y-m-d'));
-
-        $todosEfectivos=$place->counts()->where('code','like','100%')->sum('balance');
-        $ctaEfectivo=$place->counts()->whereIn('code',['100-01','100-02'])->sum('balance');
-       
-        $ctaCajaGeneral=$place->findCount('100-01')->balance;
-        $ctaOtros=$place->counts()->whereIn('code',['100-03','100-04'])->sum('balance');
-        $ctaBancos=$todosEfectivos-$ctaEfectivo-$ctaOtros;
-        $devIds=$place->counts()->where('code','like','401%')->pluck('counts.id')->toArray();
-        $devAmountDebit=$place->transactions()->whereIn('debitable_id',$devIds)->where('day',date('Y-m-d'))->sum('income');
-        $devAmountCredit=$place->transactions()->whereIn('creditable_id',$devIds)->where('day',date('Y-m-d'))->sum('outcome');
-      $debAmount=$devAmountDebit-$devAmountCredit;
-      //dd($debAmount, $devAmountDebit, $devAmountCredit);
-        $cuadre=$place->cuadres()->updateOrCreate(['day'=>date('Y-m-d')],[
-            'efectivo'=>$ctaEfectivo,
-            'tarjeta'=>$ctaOtros,
-            'transferencia'=> $ctaBancos,
-            'contado'=>$contado,
-            'devolucion'=>$debAmount,
-            'credito'=>$credito,
-            'cobro'=>$cobro->sum(DB::raw('efectivo + tarjeta + transferencia-cambio')),
-            'egreso'=>$outcomes->sum('payed'),
-            'day'=>date('Y-m-d'),
+        $place = auth()->user()->place;
+        $ctaCajaGeneral=$place->cash()->balance;
+        $cuadre = $place->cuadres()->updateOrCreate(['day' => $day], [
+            'efectivo' =>$payments->sum('efectivo')-$payments->sum('cambio'),
+            'tarjeta' =>$payments->sum('tarjeta'),
+            'transferencia' => $payments->sum('trasferencia'),
+            'contado' =>$payments->sum('efectivo') - $payments->sum('cambio') + $payments->sum('transferencia') + $payments->sum('tarjeta'),
+            'devolucion' => 0,
+            'credito' => $invoices->sum('rest'),
+            'cobro' => 0,
+            'egreso' => 0,
+            'day' => $day,
         ]);
-        $total=$cuadre->efectivo+$cuadre->tarjeta+$cuadre->transferencia;
+        $total = $cuadre->efectivo + $cuadre->tarjeta + $cuadre->transferencia;
         $cuadre->update([
-            'total'=>$total,
-            'retirado'=>$cuadre->inicial-$ctaCajaGeneral,
-            'final'=>$ctaCajaGeneral
+            'total' => $total,
+            'retirado' => ($payments->sum('efectivo') - $payments->sum('cambio')+$cuadre->inicial)-$cuadre->final,
+            'final' => $ctaCajaGeneral
         ]);
-        $this->openNewCuadre($ctaCajaGeneral);
+        $this->openNewCuadre($ctaCajaGeneral, $day);
         return $cuadre;
     }
-    public function openNewCuadre($inicial)
+    public function openNewCuadre($inicial, $dateToday)
     {
-        $place=auth()->user()->place;
-        $day=Carbon::now()->addDay()->format('Y-m-d');
-        $cuadre=$place->cuadres()->updateOrCreate(['day'=>$day],[
-            'efectivo'=>0,
-            'tarjeta'=>0,
-            'transferencia'=>0,
-            'contado'=>0,
-            'credito'=>0,
-            'cobro'=>0,
-            'egreso'=>0,
-            'inicial'=>$inicial,
-            'day'=>$day,
+        $place = auth()->user()->place;
+        $day = Carbon::parse($dateToday)->addDay()->format('Y-m-d');
+        $cuadre = $place->cuadres()->updateOrCreate(['day' => $day], [
+            'efectivo' => 0,
+            'tarjeta' => 0,
+            'transferencia' => 0,
+            'contado' => 0,
+            'credito' => 0,
+            'cobro' => 0,
+            'egreso' => 0,
+            'inicial' => $inicial,
+            'day' => $day,
         ]);
+    }
+    public function show(Cuadre $cuadre)
+    {
+        $cuadre = $cuadre->load('pdf');
+        return view('pages.cuadres.show', compact('cuadre'));
     }
 }

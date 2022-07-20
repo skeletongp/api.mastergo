@@ -6,7 +6,7 @@
 
                 <div class="py-4  flex space-x-4 items-start">
                     <div>
-                        <x-base-input status="{{ $cobrable ? '' : 'disabled' }}" onfocus="clrInput(event)"
+                        <x-base-input {{-- s --}} onfocus="clrInput(event)"
                             onblur="restoreInput(event)" class="text-xl font-bold" type="number"
                             wire:model.lazy="payment.efectivo" label="Efectivo" id="payment.efectivo">
                         </x-base-input>
@@ -29,7 +29,7 @@
                         </div>
                     @endif
                     <div class=" pt-10 bottom-0">
-                        <x-button class="flex space-x-4" disabled="{{ !$cobrable }}">
+                        <x-button class="flex space-x-4" {{-- disabled="{{ !$cobrable }}" --}}>
                             <span>
                                 Cobrar
                             </span>
@@ -161,10 +161,11 @@
                 conector.texto(obj.payable.condition.toUpperCase())
                 conector.feed(1);
 
+                console.log(obj.payable)
                 conector.establecerEnfatizado(1);
                 conector.texto('NCF: ')
                 conector.establecerEnfatizado(0);
-                conector.texto(oobj.payable.payment.ncf ?: " 0000000000");
+                conector.texto(obj.payable.payment.ncf ?obj.payable.payment.ncf: " 0000000000");
                 conector.feed(1);
 
                 conector.establecerEnfatizado(1);

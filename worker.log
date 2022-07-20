@@ -1,0 +1,2254 @@
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕ });
+  ➜ 138▕ $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ErrorException 
+
+  Undefined variable $trail
+
+  at routes/breadcrumbs.php:138
+    134▕ /* Finanzas */
+    135▕ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    136▕     $trail->parent('home');
+    137▕     $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+  ➜ 138▕ });
+    139▕ 
+    140▕ 
+    141▕ /* Contables */
+    142▕ Breadcrumbs::for('general-daily', function ($trail) {
+
+  1   routes/breadcrumbs.php:138
+      Illuminate\Foundation\Bootstrap\HandleExceptions::Illuminate\Foundation\Bootstrap\{closure}("Undefined variable $trail", "/home/moso/carnibores/routes/breadcrumbs.php")
+
+      [2m+14 vendor frames [22m
+  16  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/local/apps/php81/bin/php' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=3'" exceeded the timeout of 60 seconds.
+
+  at /home/moso/carnibores/vendor/symfony/process/Process.php:1152
+    1148▕ 
+    1149▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1150▕             $this->stop(0);
+    1151▕ 
+  ➜ 1152▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1153▕         }
+    1154▕ 
+    1155▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1156▕             $this->stop(0);
+
+      [2m+18 vendor frames [22m
+  19  /home/moso/carnibores/artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))

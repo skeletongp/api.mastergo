@@ -10,9 +10,10 @@
             <x-input-error for="provider_id">Campo requerido</x-input-error>
         </div>
         <div class="w-full">
-            <x-datalist inputId="outCountCode" label="Cuenta afectada" listName="countList" wire:model.defer="count_code">
+            <x-datalist inputId="outCountCode" label="Cuenta afectada" listName="countList"
+                wire:model.defer="count_code">
                 @foreach ($counts as $code => $count)
-                    <option value="{{ $code }}">{{ ellipsis($count,27) }}</option>
+                    <option value="{{ $code }}">{{ ellipsis($count, 27) }}</option>
                 @endforeach
             </x-datalist>
             <x-input-error for="count_code">Campo requerido</x-input-error>
@@ -43,7 +44,7 @@
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">
                 <x-base-input type="number" id="outEfectivo" label="Efectivo" placeholder="Efectivo pagado"
-                    wire:model.defer="efectivo"></x-base-input>
+                    wire:model="efectivo"></x-base-input>
                 <x-input-error for="efectivo">Campo requerido</x-input-error>
             </div>
             <div class="w-full">
@@ -78,20 +79,26 @@
 
         </div>
     @endif
+    @if (isset($efectivoCode) && $this->efectivo > 0)
+        <div class="flex space-x-4 items-start mt-8">
+            <div class="w-full">
+                <x-base-select label="Caja a Reducir" wire:model="efectivoCode" id="efectivoCode">
+                    <option value="100-01">Caja General</option>
+                    <option value="100-02">Caja Chica</option>
+                </x-base-select>
+                <x-input-error for="bank_id">Campo requerido</x-input-error>
+            </div>
+            <div class="w-full"></div>
+        </div>
+    @endif
     @if ($setCost && !isset($hideTax))
         <div class="flex space-x-4 items-start">
-            <div class="w-40 py-4">
-                <x-base-input type="text" id="outTax" label="Impuestos pagados" placeholder="Impuestos facturados"
-                    wire:model.defer="tax"></x-base-input>
-                <x-input-error for="tax">Campo requerido</x-input-error>
-            </div>
+
             <div class="w-40 py-4">
                 <x-base-input type="text" id="outDiscount" label="Descuento aplicado"
                     placeholder="Descuentos aplicados" wire:model.lazy="discount"></x-base-input>
                 <x-input-error for="discount">Campo requerido</x-input-error>
             </div>
         </div>
-
-      
     @endif
 </div>

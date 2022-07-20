@@ -49,7 +49,7 @@ class Client extends Model implements Searchable
         $url = route('clients.show', $this->id);
         return new SearchResult(
             $this,
-            $this->fullname,
+            $this->name,
             $url
         );
     }

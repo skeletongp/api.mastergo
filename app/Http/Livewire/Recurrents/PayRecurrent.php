@@ -48,7 +48,7 @@ class PayRecurrent extends Component
         $this->reValidate();
         $debitable=Count::find($this->recurrent['count_id']);
         $place=auth()->user()->place;
-        setTransaction('Reg. pago en efectivo '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->efectivo,$debitable, $place->cash());
+        setTransaction('Reg. pago en efectivo '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->efectivo,$debitable, $place->chica());
         setTransaction('Reg. pago en otros '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->tarjeta,$debitable, $place->other());
         if ($this->transferencia > 0) {
             setTransaction('Reg. pago en transferencia/tarjeta '.$this->recurrent['name'],$this->rnc?:($this->ref_bank?:date('y-m-d')),$this->transferencia,$debitable, $this->bank->contable);

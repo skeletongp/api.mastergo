@@ -17,6 +17,7 @@ class GeneralDailyTable extends LivewireDatatable
 {
     use AuthorizesRequests;
     public $perPage = 5;
+    public $uniqueDate=true;
     public $headTitle="Transacciones realizadas";
     public $padding='px-2';
     public function builder()
@@ -34,7 +35,7 @@ class GeneralDailyTable extends LivewireDatatable
     {
         return [
             Column::index($this),
-            DateColumn::name('created_at')->label('Fecha')->format("d-m-y \r\n H:i A")->searchable(),
+            DateColumn::name('created_at')->label('Fecha')->format("d-m-y h:i A")->filterable(),
             Column::name('deberes.code')->callback(['deberes.code', 'haberes.code',], function ($cta1, $cta2) {
                 return "
                 <div class='leading-4'>

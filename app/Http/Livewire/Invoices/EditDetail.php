@@ -143,7 +143,7 @@ class EditDetail extends Component
         } else {
             $payment->rest = $payment->total - $payment->payed;
         }
-        $this->diffPayment =$payment->payed - $payment->total;
+        $this->diffPayment =($payment->payed-$payment->cambio) - $payment->total;
         $payment->save();
         $invoice->update(['rest' => $payment->rest]);
         $this->updateClientLimit($this->prevRest, $invoice->client, $payment);

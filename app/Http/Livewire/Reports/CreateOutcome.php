@@ -13,6 +13,7 @@ class CreateOutcome extends Component
 {
 
     public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount = 0, $providers;
+    public $efectivoCode = '100-02';
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0;
     public $setCost = true, $hideTax = true, $prov_name, $prov_rnc;
     public function mount()
@@ -21,9 +22,7 @@ class CreateOutcome extends Component
         $store = auth()->user()->store;
         $this->providers = $store->providers()->pluck('fullname', 'id');
         $this->counts = $place->counts()
-            ->where('code', 'like', '6%')
-            ->orWhere('code', 'like', '2%')
-            ->orWhere('code', 'like', '120%')
+
             ->select(DB::raw(' name, code'))
             ->orderBy('code')
             ->pluck('name', 'code');
@@ -55,11 +54,14 @@ class CreateOutcome extends Component
             $this->rules = array_merge($this->rules, ['ref_bank' => 'required']);
         }
         $this->validate();
+
         $code = Provision::LETTER[rand(0, 25)] . date('His');
-        $code=$this->ref?:$code;
+        $code = $this->ref ?: $code;
         $provider = Provider::whereId($this->provider_id)->first();
         $outcome = setOutcome($this->amount, $this->concept, $this->ref);
-        $provider->outcomes()->save($outcome);
+        if ($provider) {
+            $provider->outcomes()->save($outcome);
+        }
         $this->createPayment($outcome, $code);
         $this->emit('refreshLivewireDatatable');
         $this->reset('amount', 'efectivo', 'tarjeta', 'transferencia', 'count_code', 'bank_id', 'ref_bank', 'tax', 'ref');
@@ -105,17 +107,24 @@ class CreateOutcome extends Component
             $real = 0.82;
         }
         /* Registro de asiento sin impuestos */
-        setTransaction('Gasto en efectivo', $code, $payment->efectivo * $real, $debitable, $place->cash(), 'Sumar Productos');
-        setTransaction('Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Sumar Productos');
+        if ($this->efectivoCode == '100-01') {
+            $efectivo = $place->cash();
+        } else {
+            $efectivo = $place->chica();
+        }
+        setTransaction($this->concept . ' - efectivo', $code, $payment->efectivo * $real, $debitable, $efectivo, 'Sumar Productos');
+        setTransaction($this->concept . ' Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Sumar Productos');
         if ($this->bank_id) {
             $bank = Bank::whereId($this->bank_id)->first();
-            setTransaction('Gasto por banco', $code, $payment->transferencia * $real, $debitable, $bank->contable, 'Sumar Productos');
+            setTransaction($this->concept . ' Gasto por banco', $code, $payment->transferencia * $real, $debitable, $bank->contable, 'Sumar Productos');
         }
         $provider = Provider::whereId($this->provider_id)->first();
-        setTransaction('Gasto a crédito', $code, $payment->rest * $real, $debitable, $provider->contable, 'Sumar Productos');
+        if ($provider) {
+            setTransaction($this->concept . ' Gasto a crédito', $code, $payment->rest * $real, $debitable, $provider->contable, 'Sumar Productos');
+        }
 
         /* Registro de impuestos */
-        setTransaction('ITBIS en efectivo', $code, $payment->efectivo * $tax, $itbis, $place->cash(), 'Sumar Productos');
+        setTransaction('ITBIS en efectivo', $code, $payment->efectivo * $tax, $itbis, $efectivo, 'Sumar Productos');
         setTransaction('ITBIS otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Sumar Productos');
         if ($this->bank_id) {
             $bank = Bank::whereId($this->bank_id)->first();

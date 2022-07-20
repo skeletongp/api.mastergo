@@ -97,7 +97,11 @@ protected $connection="mysql";
         return $this->morphOne(Count::class, 'contable')
         ->where('code','100-01')->first();
     }
-  
+    public function chica()
+    {
+        return $this->morphOne(Count::class, 'contable')
+        ->where('code','100-02')->first();
+    }
     public function check()
     {
         return $this->morphOne(Count::class, 'contable')

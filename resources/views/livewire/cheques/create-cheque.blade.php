@@ -40,12 +40,12 @@
                     </div>
                     <div class="flex space-x-4">
                         <div class="w-1/2">
-                            <x-base-select label="Titular del Cheque" wire:model="person" id="chkprs">
+                            <x-datalist label="Titular del Cheque" model="person" inputId="chkprs" listName="chkprsList">
                                 <option value=""></option>
                               @foreach ($persons as $idi => $prsn)
-                                    <option value="{{ $idi }}">{{ $prsn }}</option>
+                                    <option data-value="{{ $idi }}" value="{{ $prsn }}"></option>
                                 @endforeach
-                            </x-base-select>
+                            </x-datalist>
                             <x-input-error for="person"></x-input-error>
                         </div>
                     </div>

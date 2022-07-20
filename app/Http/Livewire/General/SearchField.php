@@ -60,8 +60,7 @@ class SearchField extends Component
           $clients=$store->clients()->pluck('clients.id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('clients.name')
-          ->join('contacts', 'clients.id', '=', 'contacts.client_id')
-          ->addSearchableAttribute('contacts.fullname')
+          
           ->whereIn('clients.id', $clients);
         })
         ->registerModel(Proceso::class, function(ModelSearchAspect $modelSearchAspect) use ($place){

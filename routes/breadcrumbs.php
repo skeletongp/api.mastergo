@@ -2,6 +2,7 @@
 
 // Home
 
+use Carbon\Carbon;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 Breadcrumbs::for('home', function ($trail) {
@@ -125,6 +126,17 @@ Breadcrumbs::for('cuadres', function ($trail) {
     $trail->parent('home');
     $trail->push('Cuadre Diario', route('cuadres.index'),['icon'=>'far fa-receipt']);
 });
+Breadcrumbs::for('cuadres.show', function ($trail, $cuadre) {
+    $trail->parent('finances', 'finances.cuadres-hist');
+    $trail->push('Cuadre Diario '.Carbon::parse($cuadre->day)->format('d/m/Y'), route('cuadres.show', $cuadre),['icon'=>'fas fa-receipt']);
+});
+
+/* Finanzas */
+Breadcrumbs::for('finances', function ($trail, $componentName=null) {
+    $trail->parent('home');
+    $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
+});
+
 
 /* Contables */
 Breadcrumbs::for('general-daily', function ($trail) {

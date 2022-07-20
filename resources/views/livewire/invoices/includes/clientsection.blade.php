@@ -17,10 +17,8 @@
 
     </div>
    
-    <div class="{{auth()->user()->store->generic->code==$client_code?'':'hidden'}}">
         <x-base-input wire:keydown.enter.prevent='rncEnter' wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre/RNC" id="clt.inv.name">
         </x-base-input>
-    </div>
     <div class="w-full  ">
         <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.address"
             id="clt.address" label="Dirección"></x-base-input>
@@ -36,7 +34,7 @@
         </div>
         <div class="w-2/5">
             <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.balance"
-                id="clt.balance" label="Balance"></x-base-input>
+                id="clt.balance" label="Deuda"></x-base-input>
         </div>
     </div>
 

@@ -9,12 +9,15 @@ use Livewire\WithFileUploads;
 
 class CreateClient extends Component
 {
-    public $form, $avatar, $photo_path, $store_id, $special, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
+    public $form, $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
     use WithFileUploads;
+
+    public function mount(){
+        $this->form['special']=0;
+    }
 
     public function render()
     {
-
         $store = auth()->user()->store;
         $num = $store->clients()->count() + 1;
         $code = str_pad($num, 3, '0', STR_PAD_LEFT);
@@ -28,6 +31,7 @@ class CreateClient extends Component
         'form.limit' => 'required|numeric|min:0',
         'form.phone' => 'required|string|max:25',
         'form.rnc' => 'required|string|max:25',
+        'form.special' => 'required',
         'name' => 'required|string|max:50',
         'lastname' => 'required|string|max:75',
         'cellphone' => 'required|string|max:25',
@@ -38,7 +42,6 @@ class CreateClient extends Component
         if (empty($this->form['limit'])) {
             $this->form['limit'] = 0.00;
         }
-        $this->form['special'] = $this->special;
         $store = auth()->user()->store;
         $this->validate();
         $client = $store->clients()->create($this->form);

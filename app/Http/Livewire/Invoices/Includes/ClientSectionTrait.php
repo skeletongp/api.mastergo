@@ -15,6 +15,8 @@ trait ClientSectionTrait
        
         $code = str_pad($this->client_code, 4, '0', STR_PAD_LEFT);
         $client = Client::where('code', $code)->with('contact')->first();
+        
+
         if ($client) {
             $this->client = [
                 'fullname' => $client->fullname,
@@ -24,13 +26,15 @@ trait ClientSectionTrait
                 'email' => $client->email,
                 'rnc' => $client->rnc,
                 'id' => $client->id,
-                'balance' => '$' . formatNumber($client->limit),
+                'balance' => '$' . formatNumber($client->debt),
                 'limit' => $client->limit,
                 'name' => $client->name,
                 'code' => $client->code,
             ];
             $this->emit('focusCode');
-           
+            if($client->id!==1){
+                $this->name=$client->name;
+            }
             $this->client_code = $code;
             $this->clientNameCode = $code.' - '.$client->name;
         }

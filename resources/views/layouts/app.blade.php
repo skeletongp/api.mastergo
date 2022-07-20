@@ -186,14 +186,17 @@
         $('a').on('click', function() {
             $('#generalLoad').removeClass('hidden');
         })
-        id = {{ auth()->user()->place->id }}
+        id = parseInt({{ auth()->user()->place_id }});
         var channel = Echo.private(`invoices.${id}`);
         channel.listen("NewInvoice", function(data) {
-            Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
+            store_id = parseInt({{ optional(auth()->user()->store)->id }});
+            if (data.invoice.store_id == store_id) {
+                Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
+            }
 
         });
         window.onbeforeunload = function() {
-            alert('hola')
+            $('#generalLoad').removeClass('hidden');
         }
         $(document).ready(function() {
             $('input[type=tel]').each(function() {

@@ -62,7 +62,6 @@ trait OrderContable
 
         setTransaction('Reg. venta de productos en Efectivo', $ref,  $moneys[0]*$rp, $place->cash(), $creditable, 'Cobrar Facturas');
         setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash(), 'Cobrar Facturas');
-        Log::info($payment->cambio);
         setTransaction('Reg. venta de productos por Cheque', $ref,  $moneys[1]*$rp, $place->check(), $creditable, 'Cobrar Facturas');
         setTransaction('Reg. venta de productos por Transferencia', $ref . ' | ' . $this->reference,  $moneys[2]*$rp, optional($this->bank)->contable, $creditable, 'Cobrar Facturas');
 

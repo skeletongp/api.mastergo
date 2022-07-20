@@ -82,6 +82,8 @@ trait GenerateInvoiceTrait
 
     public function sendInvoice()
     {
+        $store=auth()->user()->store;
+        $this->checkCompAmount($store);
         if (!count($this->details)) {
             return;
         }

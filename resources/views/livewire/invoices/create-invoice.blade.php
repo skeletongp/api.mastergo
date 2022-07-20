@@ -38,19 +38,20 @@
             @endif
         </div>
         <div class=" w-full px-2">
-            <div class="flex py-4 space-x-2 justify-between">
+            <div class="flex py-4 space-x-2 items-center justify-between">
                 <div class="w-full">
-                    <x-base-select label="" id="detailKey" wire:model="localDetail">
+                    <x-base-select label="" class="py-0.5" id="detailKey" wire:model="localDetail">
                         <option value="">Guardados</option>
                         @foreach ($localKeys as $item)
-                            <option>{{$item}}</option>
+                            <option>{{ $item }}</option>
                         @endforeach
                     </x-base-select>
                 </div>
                 @if (count($details))
-                    <x-button id="saveLocalDetails" wire:click="storageDetails" status="{{ count($details) ?: 'disabled' }}">
-                        <span class="fas fa-save"></span>
-                    </x-button>
+                    <span id="saveLocalDetails" wire:click="storageDetails" class="fas fa-save"></span>
+                @endif
+                @if ($localDetail)
+                    <span id="deleteLocalDetails" wire:click="deleteLocal" class="fas fa-times text-red-400"></span>
                 @endif
             </div>
 
@@ -65,7 +66,7 @@
     @push('js')
         <script>
             $(document).ready(function() {
-             
+
             })
         </script>
     @endpush

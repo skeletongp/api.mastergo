@@ -59,7 +59,7 @@
             </div>
             <div>
                 <x-base-input class="text-xl font-bold" type="number" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}}
-                    wire:model.debounce.300ms="form.tarjeta" label="Tarjeta" id="form{{ $form['id'] }}.tarjeta">
+                    wire:model.debounce.300ms="form.tarjeta" label="Tarjeta/Cheque" id="form{{ $form['id'] }}.tarjeta">
                 </x-base-input>
                 <x-input-error for="form.tarjeta"></x-input-error>
             </div>
@@ -67,7 +67,7 @@
             @if ($banks->count())
                 <div class="col-span-2">
                     <x-base-input class="text-xl font-bold" {{-- status="{{ !$cobrable ? 'disabled' : '' }}" --}} type="number"
-                        wire:model.debounce.300ms="form.transferencia" label="Transferencia/Cheque"
+                        wire:model.debounce.300ms="form.transferencia" label="Transferencia"
                         id="form{{ $form['id'] }}.transferencia"></x-base-input>
                     <x-input-error for="form.transferencia"></x-input-error>
                 </div>

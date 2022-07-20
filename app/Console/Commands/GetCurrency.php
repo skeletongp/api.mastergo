@@ -35,7 +35,7 @@ class GetCurrency extends Command
             "apikey"=>"ik49ck79RwOhpMmfZHQtqnSMyN7hIlvs"
         ])->get("https://api.apilayer.com/exchangerates_data/convert?to=DOP&from=USD&amount=1");
         Cache::put('currency', $res->json()['result']);
-        Log::info($res->json()['result']);
+        Log::info($res->json()['result'].' Desde getCurrency');
         return 0;
     }
 }

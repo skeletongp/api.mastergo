@@ -7,6 +7,9 @@
     <title>{{ env('APP_NAME') }} | LOGIN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fa/css/all.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
 </head>
 
 <body>
@@ -40,7 +43,7 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-center p-6 sm:p-12 lg:w-1/2">
-                    <form class="w-full" action="{{ route('login.store') }}" method="POST">
+                    <form class="w-full" id="formLogin" action="{{ route('login.store') }}" method="POST">
                         @csrf
 
                         <div class="flex justify-center">
@@ -84,7 +87,9 @@
                         </div>
 
 
-
+                        <div class="hidden" id="generalLoad">
+                            <x-loading></x-loading>
+                        </div>
 
                     </form>
                 </div>
@@ -95,6 +100,12 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
+         $('button').on('click', function() {
+            $('#generalLoad').removeClass('hidden');
+        })
+         $('#formLogin').on('submit', function() {
+            $('#generalLoad').removeClass('hidden');
+        })
         $('#username').on('change',function(){
             val=$(this).val();
             localStorage.setItem('username',val);
