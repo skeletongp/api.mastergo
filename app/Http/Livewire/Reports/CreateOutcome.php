@@ -54,6 +54,10 @@ class CreateOutcome extends Component
             $this->rules = array_merge($this->rules, ['bank_id' => 'required']);
             $this->rules = array_merge($this->rules, ['ref_bank' => 'required']);
         }
+        if ($this->efectivo > 0) {
+            $this->rules = array_merge($this->rules, ['efectivoCode' => 'required']);
+           
+        }
         $this->validate();
 
         $code = Provision::LETTER[rand(0, 25)] . date('His');
@@ -108,11 +112,7 @@ class CreateOutcome extends Component
             $real = 0.82;
         }
         /* Registro de asiento sin impuestos */
-        if ($this->efectivoCode == '100-01') {
-            $efectivo = $place->cash();
-        } else {
-            $efectivo = $place->chica();
-        }
+            $efectivo = $place->findCount($this->efectivoCode);
         setTransaction($this->concept . ' - efectivo', $code, $payment->efectivo * $real, $debitable, $efectivo, 'Sumar Productos');
         setTransaction($this->concept . ' Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Sumar Productos');
         if ($this->bank_id) {

@@ -83,8 +83,9 @@
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">
                 <x-base-select label="Caja a Reducir" wire:model="efectivoCode" id="efectivoCode">
-                    <option value="100-01">Caja General</option>
-                    <option value="100-02">Caja Chica</option>
+                    @foreach ($efectivos as $efectivo)
+                        <option value="{{$code}}">{{$efectivo}}</option>
+                    @endforeach
                 </x-base-select>
                 <x-input-error for="bank_id">Campo requerido</x-input-error>
             </div>

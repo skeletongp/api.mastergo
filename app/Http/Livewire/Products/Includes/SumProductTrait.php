@@ -88,10 +88,11 @@ trait SumProductTrait
         $debitable = $place->findCount($this->count_code);
         $itbisCount = $place->findCount('103-01');
         $discountable = $place->findCount('501-02');
+        $efectivo=$place->findCount($this->efectivoCode);
         /* Compra en efectivo */
-        setTransaction('Reg. Compra de mercancía en efectivo', $code, $payment->efectivo * $rNonTax, $debitable, $place->chica(), 'Sumar Productos');
+        setTransaction('Reg. Compra de mercancía en efectivo', $code, $payment->efectivo * $rNonTax, $debitable, $efectivo, 'Sumar Productos');
         /* Impuestos */
-        setTransaction('Reg. ITBIS gravado a compra', $code, $payment->efectivo * $rTax, $itbisCount, $place->chica(), 'Sumar Productos');
+        setTransaction('Reg. ITBIS gravado a compra', $code, $payment->efectivo * $rTax, $itbisCount,  $debitable, $efectivo, 'Sumar Productos');
 
         /* Compras con tarjeta */
         setTransaction('Reg. Compra de mercancía otros', $code, $payment->tarjeta * $rNonTax, $debitable, $place->other(), 'Sumar Productos');

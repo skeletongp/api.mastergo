@@ -20,6 +20,7 @@ class SumRecurso extends Component
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0, $discount = 0;
     public $recurso, $cant, $brand_id, $recurso_id, $recurso_type;
     public $selected = [], $setCost = false, $total = 0, $hideButton = true;
+    public $efectivoCode = '100-02', $efectivos=[];
 
     protected $rules = [
         'recurso' => 'max:2555',
@@ -32,6 +33,7 @@ class SumRecurso extends Component
     {
         $place = auth()->user()->place;
         $store = auth()->user()->store;
+        $this->efectivos=$place->counts()->where('code','like','100%')->pluck('name','id');
         $recursos = $place->recursos()->select(DB::raw('name, CONCAT(id,"|" ,"App\\\Models\\\Recurso") as id'))->pluck('name', 'id');
         $condiments = $place->condiments()->select(DB::raw('name, CONCAT(id,"|" ,"App\\\Models\\\Condiment") as id'))->pluck('name', 'id');
         $this->recursos = $recursos->merge($condiments);
@@ -126,6 +128,10 @@ class SumRecurso extends Component
         if ($this->transferencia > 0) {
             $this->rules = array_merge($this->rules, ['bank_id' => 'required']);
             $this->rules = array_merge($this->rules, ['ref_bank' => 'required']);
+        }
+        if ($this->efectivo > 0) {
+            $this->rules = array_merge($this->rules, ['efectivoCode' => 'required']);
+           
         }
         $this->validate();
     }

@@ -15,6 +15,7 @@ use Livewire\Component;
 class SumProduct extends Component
 {
     use SumProductTrait;
+    public $efectivoCode = '100-02', $efectivos=[];
     public $products, $providers, $units, $form=[], $productAdded = [], $provider_id, $counts, $count_code, $ref='N/D';
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax=0, $discount=0;
     public $setCost = false, $total=0;
@@ -25,6 +26,8 @@ class SumProduct extends Component
     {
         $place = auth()->user()->place;
         $store = auth()->user()->store;
+        $this->efectivoCode = '100-02';
+        $this->efectivos=$place->counts()->where('code','like','100%')->pluck('name','id');
         $this->providers = $store->providers()->pluck('fullname', 'providers.id');
         $this->products = $place->products()->where('type','Producto')->pluck('name', 'products.id');
         $this->units = $place->units()->pluck('name', 'units.id');
@@ -101,6 +104,10 @@ class SumProduct extends Component
         if ($this->transferencia>0) {
             $this->rules = array_merge($this->rules, ['bank_id' => 'required']);
             $this->rules = array_merge($this->rules, ['ref_bank' => 'required']);
+        }
+        if ($this->efectivo > 0) {
+            $this->rules = array_merge($this->rules, ['efectivoCode' => 'required']);
+           
         }
         $this->validate();
         
