@@ -10,15 +10,22 @@
                 <span class="text-green-600 font-bold"> {{ $includeTitle }}</span>
             </h1>
             <div class="p-4 ">
+                <x-button wire:click="setIncludeElement('showproducts','Productos')"
+                class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
+                    <span class="w-6 text-left far fa-file-alt"></span>
+                    <span class="lg:text-lg">Resumen</span>
+                </div>
+            </x-button>
                 <x-button wire:click="setIncludeElement('showclient','Cliente')"
-                    class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-user"></span>
                         <span class="lg:text-lg">Cliente</span>
                     </div>
                 </x-button>
                 <x-button wire:click="setIncludeElement('showproducts','Productos')"
-                    class="w-full text-xl bg-gray-100 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-layer-group"></span>
                         <span class="lg:text-lg">Productos</span>
@@ -26,28 +33,28 @@
                 </x-button>
 
                 <x-button wire:click="setIncludeElement('showseller','Vendedor')"
-                    class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left fas fa-user-tie"></span>
                         <span class="lg:text-lg">Vendedor</span>
                     </div>
                 </x-button>
                 <x-button wire:click="setIncludeElement('showcontable','Cajero')"
-                    class="w-full text-xl bg-gray-100 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-user-tie"></span>
                         <span class="lg:text-lg">Cajero</span>
                     </div>
                 </x-button>
                 <x-button wire:click="setIncludeElement('showpayments','Pagos')"
-                    class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-dollar-sign"></span>
                         <span class="lg:text-lg">Pagos</span>
                     </div>
                 </x-button>
                 <x-button wire:click="setIncludeElement('showattach','Adjuntos')"
-                    class="w-full text-xl bg-gray-100 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-paperclip"></span>
                         <span class="lg:text-lg">Adjunto</span>
@@ -56,7 +63,7 @@
                 @can('Manejar NC')
                     @if ($invoice->payment->ncf)
                         <x-button wire:click="setIncludeElement('showcredit','Nota de Crédito')"
-                            class="w-full text-xl bg-gray-200 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                            class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                             <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                                 <span class="w-6 text-left far fa-coins"></span>
                                 <span class="lg:text-lg">Nota de Crédito</span>
@@ -65,7 +72,7 @@
                     @endif
                 @endcan
                 <x-button wire:click="setIncludeElement('showhistory','Historial')"
-                    class="w-full text-xl bg-gray-100 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-history"></span>
                         <span class="lg:text-lg">Historial</span>

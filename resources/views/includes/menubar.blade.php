@@ -127,7 +127,10 @@
                                 <x-side-link routeName='finances.index' icon='far w-10 text-center fa-hand-holding-usd fa-lg'
                                     text='Cuentas' activeRoute="finances.*" scope="Ingresos" />
                             @endcan
-
+                            @can('Ver Facturas')
+                            <x-side-link routeName='reports.invoices' icon='far w-10 text-center fa-file-alt fa-lg'
+                                text='Facturas' activeRoute="report.*" scope="Facturas" />
+                        @endcan
                         </x-dropitem>
                     @endcanany
                 @endscopeanny

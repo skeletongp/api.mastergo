@@ -10,7 +10,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class IncomeTable extends LivewireDatatable
 {
     public $headTitle="Pagos a Facturas y cobros de Pendientes";
-    public $uniqueDate=true;
+   public $uniqueDate=true;
     public $reload=true;
     public $padding="p-2";
     public function builder()
@@ -23,6 +23,7 @@ class IncomeTable extends LivewireDatatable
         ->where('payer_type','App\Models\Client')
         ->orderBy('payments.created_at','desc')
         ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+        ->orderBy('payments.updated_at','desc')
         ->with('payer','payable');
         return $payments;
     }
@@ -40,8 +41,8 @@ class IncomeTable extends LivewireDatatable
                 return ellipsis($cajero,20);
             })->label('Cajero')->searchable(),
             Column::name('invoices.number')->label('Factura')->searchable(),
-            Column::callback(['efectivo'], function($efectivo){
-                return '$'.formatNumber($efectivo);
+            Column::callback(['efectivo','cambio'], function($efectivo, $cambio){
+                return '$'.formatNumber($efectivo-$cambio);
             })->label('Efectivo')->searchable()->enableSummary(),
             Column::callback(['transferencia'], function($transferencia){
                 return '$'.formatNumber($transferencia);
@@ -52,8 +53,8 @@ class IncomeTable extends LivewireDatatable
             Column::callback(['cambio'], function($cambio){
                 return '$'.formatNumber($cambio);
             })->label('Cambio')->searchable()->enableSummary(),
-            Column::callback(['payed'], function($payed){
-                return '$ <b>'.formatNumber($payed).'</b>';
+            Column::callback(['payed','cambio'], function($payed, $cambio){
+                return '$ <b>'.formatNumber($payed-$cambio).'</b>';
             })->label('Pagado')->searchable()->enableSummary(),
             Column::callback(['rest'], function($rest){
                 if($rest>0){

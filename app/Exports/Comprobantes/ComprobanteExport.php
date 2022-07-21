@@ -18,12 +18,16 @@ class ComprobanteExport implements FromCollection, WithHeadings, WithMapping, Wi
     public function collection()
     {
         $store = auth()->user()->store;
-       $invoices= $store->invoices()->has('comprobante')
-       ->where('type', '!=', 'B02')
-       ->orWhereHas('payment', function ($query) {
-           $query->where('total', '>', 250000);
-       })
-       ->with('comprobante','client','payment','payments')->get();
+        $invoices = $store->invoices()->has('comprobante')
+            ->where('type', '!=', 'B02')
+            ->orWhereHas('payment', function ($query) {
+                $query->where('total', '>', 250000);
+            })
+            ->where('invoices.status', '!=', 'waiting')
+            ->with('comprobante', 'client', 'payment', 'payments')->get()
+            ->sortBy(function ($invoice, $key) {
+                return $invoice->comprobante->ncf;
+            });
         return $invoices;
     }
     public function headings(): array
@@ -64,19 +68,19 @@ class ComprobanteExport implements FromCollection, WithHeadings, WithMapping, Wi
             Carbon::parse($invoice->day)->format('Ymd'),
             Carbon::parse($invoice->day)->format('Ymd'),
             $invoice->payment->total - $invoice->payment->tax,
-           $invoice->payment->tax,
-           '',
-           '',
-           '',
-           '',
-           '',
-           $invoice->payments()->sum('efectivo'),
-           $invoice->payments()->sum('transferencia'),
-           $invoice->payments()->sum('tarjeta'),
-           $invoice->rest,
-           '',
-           '',
-           '',
+            $invoice->payment->tax,
+            0,
+            0,
+            0,
+            0,
+            0,
+            $invoice->payments()->sum('efectivo'),
+            $invoice->payments()->sum('transferencia') + $invoice->payments()->sum('tarjeta'),
+            0,
+            $invoice->rest,
+            0,
+            0,
+            0,
         ];
     }
     public function stylesArray(): array
@@ -151,5 +155,4 @@ class ComprobanteExport implements FromCollection, WithHeadings, WithMapping, Wi
         $sheet->getStyle('A1:U1')->getAlignment()->setWrapText(true);
         return $this->stylesArray();
     }
-  
 }

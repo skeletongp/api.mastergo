@@ -13,7 +13,7 @@ class CreateOutcome extends Component
 {
 
     public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount = 0, $providers;
-    public $efectivoCode = '100-02';
+    public $efectivoCode = '100-02', $efectivos=[];
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0;
     public $setCost = true, $hideTax = true, $prov_name, $prov_rnc;
     public function mount()
@@ -21,6 +21,7 @@ class CreateOutcome extends Component
         $place = auth()->user()->place;
         $store = auth()->user()->store;
         $this->providers = $store->providers()->pluck('fullname', 'id');
+        $this->efectivos=$place->counts()->where('code','like','100%')->pluck('name','id');
         $this->counts = $place->counts()
 
             ->select(DB::raw(' name, code'))

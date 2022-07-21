@@ -14,4 +14,7 @@ class ReportController extends Controller
     {
         return view('pages.reports.outcomes');
     }
+    public function invoices(){
+        return view('pages.reports.invoices');
+    }
 }

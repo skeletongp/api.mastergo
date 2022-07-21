@@ -206,6 +206,7 @@
                                 @else
                                     <div
                                         class="table-cell {{ isset($padding) ? $padding : 'py-4 px-6 ' }} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
+                                        
                                         {!! $row->{$column['name']} !!}
                                     </div>
                                 @endif
@@ -220,6 +221,7 @@
                                     @if ($column['summary'])
                                         <div
                                             class="table-cell {{ isset($padding) ? $padding : 'py-2 px-6 ' }} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
+                                            
                                             {!! $this->summarize($column['name']) !!}
                                         </div>
                                     @else

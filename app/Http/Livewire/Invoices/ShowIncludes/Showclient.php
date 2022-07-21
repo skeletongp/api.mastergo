@@ -57,6 +57,7 @@ trait Showclient
             $client->limit = $client->limit - $invoice->payment->rest;
             $client->save();
             $invoice->update(['client_id' => $client->id]);
+            $invoice->update(['name' => '']);
             $invoice->payment->update(['payer_id' => $client->id]);
         }
         $this->emit('showAlert', 'Cliente Actualizado', 'success');

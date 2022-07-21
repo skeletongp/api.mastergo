@@ -2252,3 +2252,641 @@
       [2m+18 vendor frames [22m
   19  /home/moso/carnibores/artisan:37
       Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+  at routes/web.php:153
+
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))
+
+   ParseError 
+
+  syntax error, unexpected token ")"
+
+  at routes/web.php:153
+    149▕     ->where('payer_type','App\Models\Client')
+    150▕     ->orderBy('payments.created_at','desc')
+    151▕     ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    152▕     ->with('payer','payable')->get();
+  ➜ 153▕     dd($payments-);
+    154▕     
+    155▕ })->name('prueba');
+    156▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:37
+      Illuminate\Routing\RouteRegistrar::group("/home/moso/carnibores/routes/web.php")
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(App\Providers\RouteServiceProvider))

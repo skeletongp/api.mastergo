@@ -165,6 +165,10 @@ Breadcrumbs::for('outcomes', function($trial){
     $trial->parent('home');
     $trial->push('Gastos',route('reports.outcomes',['icon'=>'']));
 });
+Breadcrumbs::for('invoice-historial', function($trial){
+    $trial->parent('invoices.orders');
+    $trial->push('Hist. de Facturas',route('reports.invoices',['icon'=>'fas fa-file-alt']));
+});
 
 /* Provisiones */
 Breadcrumbs::for('provisions', function($trial){

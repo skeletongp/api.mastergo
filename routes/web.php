@@ -20,6 +20,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Jobs\CreatePDFJob;
+use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\ProductPlaceUnit;
 use App\Models\Store;
@@ -122,6 +123,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ReportController::class)->group(function () {
             Route::get('/incomes', 'incomes')->name('reports.incomes');
             Route::get('/outcomes', 'outcomes')->name('reports.outcomes');
+            Route::get('/rep_invoices', 'invoices')->name('reports.invoices');
         });
         Route::controller(ProvisionController::class)->group(function () {
             Route::get('/provisions', 'index')->name('provisions.index');
@@ -140,8 +142,16 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('prueba', function () {
-   /*  $cuadreController=new CuadreController();
-    $cuadreController->index('2022-07-18');
-    dd('Lo lograste'); */
+    $place=auth()->user()->place;
+    $payments=$place->payments()->where('payable_type',Invoice::class)
+    ->where('payments.day',date('Y-m-d'))
+    ->join('invoices','invoices.id','=','payments.payable_id')
+    ->join('clients','clients.id','=','payments.payer_id')
+    ->join('moso_master.users','users.id','=','payments.contable_id')
+    ->where('payer_type','App\Models\Client')
+    ->orderBy('payments.created_at','desc')
+    ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
+    ->with('payer','payable')->get();
+    dd($payments->sum('efectivo')-$payments->sum('cambio')-214947+44400-3600);
     
 })->name('prueba');

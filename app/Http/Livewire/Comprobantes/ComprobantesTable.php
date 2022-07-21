@@ -55,7 +55,8 @@ class ComprobantesTable extends LivewireDatatable
             Column::callback('id', function ($id) use ($comprobantes) {
                 $result = arrayFind($comprobantes, 'id', $id);
                 if ($result['invoice']) {
-                    return $result['invoice']['number'];
+                    return '<a href="' . route('invoices.show', $result['invoice']['id']) . '">' . $result['invoice']['number'] . '</a>';
+                     
                 } else if ($result['creditnote']) {
                     return $result['creditnote']['invoice']['number'];
                 } else {
@@ -71,7 +72,7 @@ class ComprobantesTable extends LivewireDatatable
                 } else {
                     return 'N/D';
                 }
-            })->label('Facturado'),
+            })->label('Facturado')->searchable(),
             Column::callback(['number', 'id'], function ($number, $id) use ($comprobantes) {
                 $result = arrayFind($comprobantes, 'id', $id);
                 if ($result['invoice']) {

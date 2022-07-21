@@ -200,7 +200,7 @@
                     </td>
 
                     <td style="width:19.5%; text-align: left">
-                        ${{ formatNumber($payment->efectivo) }}
+                        ${{ formatNumber($payment->efectivo-$payment->cambio) }}
                     </td>
                     <td style="width:19.5%; text-align: left">
                         ${{ formatNumber($payment->transferencia) }}
@@ -210,7 +210,7 @@
                     </td>
 
                     <td style="width:17.5%; text-align:left; font-weight:bold">
-                        ${{ formatNumber($payment->payed) }}
+                        ${{ formatNumber($payment->payed-$payment->cambio) }}
                     </td>
                 </tr>
             @empty
@@ -267,10 +267,10 @@
         </tr>
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:10px">
-                RETIRADO =>
+                BALANCE =>
             </td>
             <td colspan="2" style="padding-top:10px">
-               ${{ formatNumber(($payments->sum('efectivo') - $payments->sum('cambio')+$cuadre->inicial)-$cuadre->final) }} 
+               ${{ formatNumber(($payments->sum('efectivo') - $payments->sum('cambio'))) }} 
             </td>
         </tr>
         <tr style="font-weight: bold">

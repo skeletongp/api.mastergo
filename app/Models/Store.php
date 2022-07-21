@@ -106,6 +106,7 @@ class Store extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+   
     public function providers()
     {
         return $this->hasMany(Provider::class);

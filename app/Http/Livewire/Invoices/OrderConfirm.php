@@ -33,9 +33,7 @@ class OrderConfirm extends Component
         if ($user->hasRole('Administrador')) {
             $this->cobrable=true;
         }
-        if ($invoice['condition'] == 'De Contado' && $this->cobrable) {
-            $this->form['efectivo'] = $this->form['rest'];
-        }
+        
         $this->form['contable_id'] = auth()->user()->id;
         $this->updatedForm($this->form['efectivo'], 'efectivo');
     }

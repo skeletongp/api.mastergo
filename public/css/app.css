@@ -2249,6 +2249,9 @@ input:checked + .toggle-bg {
 .pb-0 {
   padding-bottom: 0px;
 }
+.pb-12 {
+  padding-bottom: 3rem;
+}
 .pl-1 {
   padding-left: 0.25rem;
 }
@@ -2272,9 +2275,6 @@ input:checked + .toggle-bg {
 }
 .pt-7 {
   padding-top: 1.75rem;
-}
-.pb-12 {
-  padding-bottom: 3rem;
 }
 .text-left {
   text-align: left;
