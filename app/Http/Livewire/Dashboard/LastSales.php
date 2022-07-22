@@ -9,11 +9,12 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class LastSales extends LivewireDatatable
 {
-    public $perPage=5;
+    public $perPage=10;
     public $headTitle="Últimas ventas";
     public $padding="px-2";
     public function builder()
     {
+        $this->perPage=10;
         $invoices=auth()->user()->place->invoices()->where('created_at', '>=', Carbon::now()->subWeek())
         ->orderBy('created_at','desc')->where('status','!=','anulada')->with('payment','client','seller','contable','payments');
         return $invoices;

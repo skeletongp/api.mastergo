@@ -14,7 +14,8 @@ class OutcomeTable extends LivewireDatatable
     public function builder()
     {
        $place=auth()->user()->place;
-       $outcomes=$place->outcomes()->with('outcomeable','user','payment', 'payments');
+       $outcomes=$place->outcomes()->with('outcomeable','user','payment', 'payments')
+       ->orderBy('created_at', 'desc');
        return $outcomes;
     }
 
@@ -28,12 +29,15 @@ class OutcomeTable extends LivewireDatatable
             DateColumn::name('created_at')->format('d/m/Y')->label('Fecha'),
             Column::callback(['user_id','id'], function($user,$id) use($outcomes){ 
                 $result=arrayFind($outcomes,'id',$id);
-                return $result['user']['fullname'];
+                return ellipsis($result['user']['fullname'],20);
             })->label('Responsable')->contentAlignRight(),
 
             Column::callback(['outcomeable_id','id'], function($outcomeable_id,$id) use($outcomes){ 
                 $result=arrayFind($outcomes,'id',$id);
-                return $result['outcomeable']['fullname'];
+                if($result['outcomeable']){
+                    return $result['outcomeable']['fullname'];
+                }
+                return 'N/D';
             })->label('Acreedor')->contentAlignRight(),
 
             Column::callback('amount', function($amount){
@@ -69,10 +73,10 @@ class OutcomeTable extends LivewireDatatable
             Column::callback('ref', function($ref){
                 return $ref?:'N/A';
             })->label('Ref.')->searchable(),
-            Column::callback(['deleted_at','id'], function($amount, $id) use($outcomes, $debitables, $creditables){
+            Column::callback(['ref','id'], function($amount, $id) use($outcomes, $debitables, $creditables){
                 $result=arrayFind($outcomes,'id',$id);
                 return view('pages.outcomes.actions',['outcome'=>$result,'debitables'=>$debitables,'creditables'=>$creditables]);
-            })->label('Pagado')->contentAlignCenter(),
+            })->label('Del')->contentAlignCenter(),
         ];
     }
 }

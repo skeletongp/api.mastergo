@@ -1,6 +1,6 @@
 <div>
     <x-modal title="Anular Gasto">
-        <x-slot name="button">
+        <x-slot name="button"> 
             <i class="far fa-trash-alt text-red-400"></i>
         </x-slot>
         <div>
