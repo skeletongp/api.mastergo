@@ -15,11 +15,11 @@
             
                 <div class="w-3/5 h-full  pl-0" x-data="{ open: true }">
                     <div class=" mx-auto relative w-full">
-                       {{--  @if ($invoice->pdf)
-                            <iframe src="{{ $invoice->pdf->pathLetter }}#view=FitH" width="700" height="700"
+                        @if ($url)
+                            <iframe src="{{ $url }}#view=FitH" width="700" height="700"
                                 type="application/pdf">
                             </iframe>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
             </div>

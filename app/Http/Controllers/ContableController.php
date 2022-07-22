@@ -9,6 +9,7 @@ use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ContableController extends Controller
@@ -128,10 +129,13 @@ class ContableController extends Controller
         $efectivo=$total-($transferencia + $rest);
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
-
+        
         $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
-        return $pdf->stream();
-        return view('pages.contables.report-607');
+        $content = $pdf->download()->getOriginalContent();
+        $name='carnibores/reporte 607/report'.date('Ymdhis').'.pdf';
+        Storage::disk('digitalocean')->put($name, $pdf->output());
+        $url=Storage::url($name);
+        return view('pages.contables.report-607', compact('url'));
         return Excel::download(new ComprobanteExport, 'comprobantes.xlsx');
     }
 }
