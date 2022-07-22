@@ -46,7 +46,7 @@ class InvoiceHistorial extends LivewireDatatable
             ]),
             Column::callback(['store_id','id'], function ($client, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
-                return '$'.formatNumber(array_sum(array_column($result['payments'], 'total')));
+                return '$'.formatNumber($result['payment'], 'total');
             })->label('Monto'),
 
             Column::callback(['place_id','id'], function ($client, $id) use ($invoices) {

@@ -11,6 +11,9 @@ class EditClient extends Component
     public  $client;
     public  $avatar, $photo_path;
     use WithFileUploads;
+    public function mount(){
+        $this->client['special']=0;
+    }
     public function render()
     {
         return view('livewire.clients.edit-client');

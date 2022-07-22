@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Clients;
 
 use App\Models\Client;
+use Mediconesystems\LivewireDatatables\Action;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -17,11 +18,12 @@ class ClientInvoice extends LivewireDatatable
         $invoices = $client->invoices()->where('status','!=','waiting')->orderBy('created_at', 'desc')->with('payment', 'client', 'seller', 'contable', 'payments');
         return $invoices;
     }
-
+   
     public function columns()
     {
         $invoices = $this->builder()->get()->toArray();
         return [
+            Column::checkbox(),
             Column::name('id')->callback(['id'], function ($id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 if ($result['rest'] > 0) {
@@ -43,7 +45,18 @@ class ClientInvoice extends LivewireDatatable
             })->label('Pagado'),
             Column::name('rest')->callback(['rest'], function ($rest) {
                 return '$' . formatNumber($rest);
-            })->label('Resta'),
+            })->label('Resta')->searchable(),
+        ];
+    }
+
+    public function buildActions()
+    {
+        return [
+
+            Action::value('edit')->label('Cobrar facturas')->callback(function ($mode, $items) {
+              return redirect()->route('clients.paymany', compact('items'));
+            }),
+
         ];
     }
 }

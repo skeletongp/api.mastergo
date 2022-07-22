@@ -26,4 +26,9 @@ class ClientController extends Controller
     {
         return view('pages.clients.client-invoice', ['client_id'=>$client_id]);
     }
+
+    public function paymany(Array $invoices){
+        dd($invoices);
+        return view('pages.clients.paymany');
+    }
 }

@@ -80,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(ClientController::class)->group(function () {
             Route::get('/clients', 'index')->name('clients.index');
+            Route::get('/clients/paymany/{invoices}', 'paymany')->name('clients.paymany');
             Route::get('/clients/invoices/{client_id}', 'invoices')->name('clients.invoices');
             Route::get('/clients/{client_id}', 'show')->name('clients.show');
         });
@@ -144,15 +145,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
     $place=auth()->user()->place;
-    $payments=$place->payments()->where('payable_type',Invoice::class)
-    ->where('payments.day',date('Y-m-d'))
-    ->join('invoices','invoices.id','=','payments.payable_id')
-    ->join('clients','clients.id','=','payments.payer_id')
-    ->join('moso_master.users','users.id','=','payments.contable_id')
-    ->where('payer_type','App\Models\Client')
-    ->orderBy('payments.created_at','desc')
-    ->select('payments.*','invoices.name as name','invoices.number','clients.name as client_name')
-    ->with('payer','payable')->get();
-    dd($payments->sum('efectivo')-$payments->sum('cambio')-214947+44400-3600);
+   $products= $place->products;
+   foreach ($products as $key => $product) {
+    $product->update([
+        'name'=>removeAccent($product->name)
+    ]);
+   }
+   return redirect()->route('products.index');
     
 })->name('prueba');
