@@ -62,6 +62,7 @@ return [
             'endpoint' => env('DIGITALOCEAN_SPACES_ENDPOINT'), 
             'region' => env('DIGITALOCEAN_SPACES_REGION'), 
             'bucket' => env('DIGITALOCEAN_SPACES_BUCKET'), 
+            'default_acl' => env('DIGITALOCEAN_SPACES_DEFAULT_ACL'), 
         ],
 
     ],
