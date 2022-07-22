@@ -46,13 +46,18 @@ class BankDebit extends LivewireDatatable
     {
         return [
 
-            Action::value('edit')->label('Confirmar')->callback(function ($mode, $items) {
+            Action::value('confirm')->label('Confirmar')->callback(function ($mode, $items) {
                 Transaction::whereIn('id', $items)->update([
                     'status' => 'Confirmado'
                 ]);
                 $this->emit('refresLivewireDatatable');
             }),
-            
+            Action::value('unconfirm')->label('Desconfirmar')->callback(function ($mode, $items) {
+                Transaction::whereIn('id', $items)->update([
+                    'status' => 'Pendiente'
+                ]);
+                $this->emit('refresLivewireDatatable');
+            }),
 
 
 
