@@ -29,7 +29,15 @@ class InvoiceHistorial extends LivewireDatatable
     {
         $invoices = $this->builder()->get()->toArray();
         return [
-          
+            Column::name('id')->callback(['id'], function($id) use ($invoices){
+                $result = arrayFind($invoices, 'id', $id);
+                if ($result['rest']>0) {
+                    return "  <a href=".route('invoices.show', [$id,'includeName'=>'showpayments','includeTitle'=>'Pagos']).
+                    "><span class='fas w-8 text-center fa-hand-holding-usd'></span> </a>";
+                } else {
+                    return "  <a href=".route('invoices.show', $id)."><span class='fas w-8 text-center fa-eye'></span> </a>";
+                }
+            })->label(''),
             Column::callback(['number'], function ($number) {
                 $number = ltrim(substr($number, strpos($number, '-') + 1), '0');
                 return $number;

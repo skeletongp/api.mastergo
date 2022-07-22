@@ -1,7 +1,7 @@
 <div class="w-full max-w-xl mx-auto pt-8 space-y-4">
     <div class="flex space-x-4 items-end">
         <div class="w-full">
-            <x-datalist value="" listName="cltList" model="client_code" inputId="cltCodeId" label="Camabiar cliente" placeholder="Seleccione nuevo cliente">
+            <x-datalist value="" listName="cltList" model="client_code" inputId="cltCodeId" label="Cambiar cliente" placeholder="Seleccione nuevo cliente">
                 @foreach ($clients as $code => $name)
                     <option value="{{$code.' - '. $name }}" data-value="{{$code}}"></option>
                 @endforeach

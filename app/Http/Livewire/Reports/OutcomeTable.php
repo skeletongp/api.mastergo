@@ -72,7 +72,7 @@ class OutcomeTable extends LivewireDatatable
             Column::callback(['deleted_at','id'], function($amount, $id) use($outcomes, $debitables, $creditables){
                 $result=arrayFind($outcomes,'id',$id);
                 return view('pages.outcomes.actions',['outcome'=>$result,'debitables'=>$debitables,'creditables'=>$creditables]);
-            })->label('Pagado')->contentAlignCenter(),
+            })->label('Del')->contentAlignCenter(),
         ];
     }
 }
