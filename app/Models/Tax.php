@@ -13,11 +13,9 @@ class Tax extends Model
     use HasFactory, SoftDeletes;
 protected $connection="mysql";
 
-    protected $fillable=[
-        'name',
-        'rate',
-        'store_id'
-    ];
+protected $guarded=[
+       
+];
     public function store()
     {
         return $this->belongsTo(Store::class);

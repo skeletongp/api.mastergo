@@ -134,9 +134,9 @@
                                 @elseif($column['type'] === 'checkbox')
                                     @unless($column['hidden'])
                                         <div
-                                            class="justify-center table-cell w-32 h-12  {{ isset($padding) ? $padding : 'py-4 px-6 ' }}  overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-middle border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
+                                            class="justify-center table-cell items-center   {{ isset($padding) ? $padding : 'py-4 px-6 ' }}  overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-middle border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
                                             <div
-                                                class="px-3 py-1 rounded @if (count($selected)) bg-orange-400 @else bg-gray-200 @endif text-white text-center">
+                                                class="px-3  py-1 rounded @if (count($selected)) bg-orange-400 @else bg-gray-100 @endif text-gray-100 text-center">
                                                 {{ count($selected) }}
                                             </div>
                                         </div>
@@ -189,7 +189,7 @@
                         @endforeach
                     </div>
                     @foreach ($this->results as $row)
-                        <div class="table-row p-1 {{ $this->rowClasses($row, $loop) }}">
+                        <div class="table-row  items-center  p-1 {{ $this->rowClasses($row, $loop) }}">
                             @foreach ($this->columns as $column)
                                 @if ($column['hidden'])
                                     @if ($hideable === 'inline')
@@ -198,9 +198,11 @@
                                         </div>
                                     @endif
                                 @elseif($column['type'] === 'checkbox')
+                                   <div class="table-cell align-middle">
                                     @include('datatables::checkbox', [
                                         'value' => $row->checkbox_attribute,
                                     ])
+                                   </div>
                                 @elseif($column['type'] === 'label')
                                     @include('datatables::label')
                                 @else

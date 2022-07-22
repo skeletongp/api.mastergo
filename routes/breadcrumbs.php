@@ -136,7 +136,10 @@ Breadcrumbs::for('finances', function ($trail, $componentName=null) {
     $trail->parent('home');
     $trail->push('Cuentas ', route('finances.index', ['componentName'=>$componentName]),['icon'=>'fas fa-dollar-sign']);
 });
-
+Breadcrumbs::for('bank_show', function ($trail, $bank, $type) {
+    $trail->parent('finances');
+    $trail->push('Cta. Nro. '.$bank->bank_number, route('finances.bank_show', ['bank'=>$bank,'type'=> $type]),['icon'=>'fas fa-dollar-sign']);
+});
 
 /* Contables */
 Breadcrumbs::for('general-daily', function ($trail) {

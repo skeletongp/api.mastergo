@@ -11,18 +11,9 @@ class Comprobante extends Model
 {
     use HasFactory, SoftDeletes;
 protected $connection="mysql";
-    protected $fillable=[
-        'type',
-        'prefix',
-        'number',
-        'status',
-        'period',
-        'ncf',
-        'user_id',
-        'store_id',
-        'place_id',
-        'client_id'
-    ];
+protected $guarded=[
+       
+];
     
     
     public static function boot()

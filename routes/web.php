@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(FinanceController::class)->group(function () {
             Route::get('/finances', 'index')->name('finances.index');
+            Route::get('/banks/{bank}/{type}', 'bank_show')->name('finances.bank_show');
         });
 
         Route::controller(RecurrentController::class)->group(function () {

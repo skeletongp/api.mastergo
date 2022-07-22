@@ -113,24 +113,24 @@ class CreateOutcome extends Component
         }
         /* Registro de asiento sin impuestos */
             $efectivo = $place->findCount($this->efectivoCode);
-        setTransaction($this->concept . ' - efectivo', $code, $payment->efectivo * $real, $debitable, $efectivo, 'Sumar Productos');
-        setTransaction($this->concept . ' Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Sumar Productos');
+        setTransaction($this->concept . ' - efectivo', $code, $payment->efectivo * $real, $debitable, $efectivo, 'Crear Gastos');
+        setTransaction($this->concept . ' Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Crear Gastos');
         if ($this->bank_id) {
             $bank = Bank::whereId($this->bank_id)->first();
-            setTransaction($this->concept . ' Gasto por banco', $code, $payment->transferencia * $real, $debitable, $bank->contable, 'Sumar Productos');
+            setTransaction($this->concept . ' Gasto por banco', $code, $payment->transferencia * $real, $debitable, $bank->contable, 'Crear Gastos');
         }
         $provider = Provider::whereId($this->provider_id)->first();
         if ($provider) {
-            setTransaction($this->concept . ' Gasto a crédito', $code, $payment->rest * $real, $debitable, $provider->contable, 'Sumar Productos');
+            setTransaction($this->concept . ' Gasto a crédito', $code, $payment->rest * $real, $debitable, $provider->contable, 'Crear Gastos');
         }
 
         /* Registro de impuestos */
-        setTransaction('ITBIS en efectivo', $code, $payment->efectivo * $tax, $itbis, $efectivo, 'Sumar Productos');
-        setTransaction('ITBIS otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Sumar Productos');
+        setTransaction('ITBIS en efectivo', $code, $payment->efectivo * $tax, $itbis, $efectivo, 'Crear Gastos');
+        setTransaction('ITBIS otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Crear Gastos');
         if ($this->bank_id) {
             $bank = Bank::whereId($this->bank_id)->first();
-            setTransaction('ITBIS por banco', $code, $payment->transferencia * $tax, $itbis, $bank->contable, 'Sumar Productos');
+            setTransaction('ITBIS por banco', $code, $payment->transferencia * $tax, $itbis, $bank->contable, 'Crear Gastos');
         }
-        setTransaction('ITBIS a crédito', $code, $payment->rest * $tax, $itbis, $provider->contable, 'Sumar Productos');
+        setTransaction('ITBIS a crédito', $code, $payment->rest * $tax, $itbis, $provider->contable, 'Crear Gastos');
     }
 }

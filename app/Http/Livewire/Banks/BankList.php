@@ -35,7 +35,19 @@ class BankList extends LivewireDatatable
                 $result = arrayFind($banks, 'id', $id);
                 return '<b>$'.formatNumber($result['contable']['balance']).'</b>';
             })->label('Balance'),
-            Column::delete()
+            Column::callback('id', function ($id) {
+                return '
+                <div class="flex space-x-4 items-center">
+                <a  href="'.route('finances.bank_show',['bank'=>$id,'type'=>'credit']).'" class="underline">
+                    <span class="fas fa-chevron-circle-down text-red-500"></span>
+                </a>
+                <a  href="'.route('finances.bank_show',['bank'=>$id,'type'=>'debit']).'" class="underline">
+                    <span class="fas fa-chevron-circle-up text-green-500"></span>
+                </a>
+            </div>
+                ';
+            })->label('Ver')->contentAlignCenter(),
+            /* Column::delete() */
         ];
     }
     public function delete($id)

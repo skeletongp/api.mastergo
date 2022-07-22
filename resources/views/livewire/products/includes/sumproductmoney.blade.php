@@ -11,9 +11,9 @@
         </div>
         <div class="w-full">
             <x-datalist inputId="outCountCode" label="Cuenta afectada" listName="countList"
-                wire:model.defer="count_code">
+                model="count_code">
                 @foreach ($counts as $code => $count)
-                    <option value="{{ $code }}">{{ ellipsis($count, 27) }}</option>
+                    <option data-value="{{ $code }}" value="{{$code.' - '.ellipsis($count, 27) }}"></option>
                 @endforeach
             </x-datalist>
             <x-input-error for="count_code">Campo requerido</x-input-error>

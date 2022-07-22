@@ -35,18 +35,8 @@ class User extends Authenticatable implements Searchable
     }
 
 
-    protected $fillable = [
-        'name',
-        'lastname',
-        'email',
-        'username',
-        'password',
-        'phone',
-        'logueable',
-        'avatar',
-        'store_id',
-        'place_id',
-        'loggeable'
+    protected $guarded=[
+       
     ];
     protected $searchable = [
         'columns' => [
@@ -77,7 +67,19 @@ class User extends Authenticatable implements Searchable
         'password',
         'remember_token',
     ];
-
+    protected $fillable = [
+        'name',
+        'lastname',
+        'email',
+        'username',
+        'password',
+        'phone',
+        'logueable',
+        'avatar',
+        'store_id',
+        'place_id',
+        'loggeable'
+    ];
     /**
      * The attributes that should be cast.
      *
@@ -119,7 +121,11 @@ class User extends Authenticatable implements Searchable
 
     public function contable()
     {
-        return $this->morphMany(Count::class, 'contable');
+        $place_id = 1;
+        if (auth()->user()) {
+            $place_id = auth()->user()->place->id;
+        }
+        return $this->morphOne(Count::class, 'contable')->where('place_id', $place_id);
     }
 
 

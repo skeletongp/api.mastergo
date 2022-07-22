@@ -33,4 +33,15 @@ class Bank extends Model
     {
         return $this->belongsTo(Store::class);
     }
+    
+    function transactions()
+    {
+        $counts = $this->contable()->pluck('id');
+        $place_id = 1;
+        if (auth()->user()) {
+            $place_id = auth()->user()->place->id;
+        }
+        $place = Place::find($place_id);
+        return $place->transactions()->whereIn('creditable_id', $counts)->orWhereIn('debitable_id', $counts)->orderBy('created_at', 'desc');
+    }
 }

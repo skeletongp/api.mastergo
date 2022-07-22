@@ -8,7 +8,7 @@
             </x-slot>
             <form action="" wire:submit.prevent="createCount">
                 <div class="space-y-4">
-                    @if ($chooseModel)
+                   {{--  @if ($chooseModel)
                         <div class="w-1/2 pr-2">
                             <div class="w-full">
                                 <x-base-select label="Área de la cuenta" id="ctaArea" wire:model="model">
@@ -20,7 +20,7 @@
                                 <x-input-error for="model"></x-input-error>
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                     <div class="flex space-x-4 items-start">
                         <div class="w-full">
                             <x-base-select label="Cuenta Control" id="ctaControl" wire:model="code">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="flex items-start space-x-4">
                         <div class="w-full">
-                            <x-base-select label="Titular de la cuenta" id="ctaTitular" wire:model="model_id">
+                          {{--   <x-base-select label="Titular de la cuenta" id="ctaTitular" wire:model="model_id">
                                 <option value="">General</option>
                                 @php
                                     asort($instances);
@@ -57,7 +57,7 @@
                                     <option value="{{ $index }}">{{ $fullname }}</option>
                                 @endforeach
                             </x-base-select>
-                            <x-input-error for="model_id"></x-input-error>
+                            <x-input-error for="model_id"></x-input-error> --}}
                         </div>
                         <div class="w-full">
                             <x-base-select label="Origen de la cuenta" id="ctaOrigin" wire:model="origin">

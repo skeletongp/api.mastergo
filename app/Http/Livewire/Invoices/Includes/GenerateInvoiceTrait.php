@@ -27,7 +27,7 @@ trait GenerateInvoiceTrait
             $detail['detailable_type'] = Invoice::class;
             $taxes = empty($detail['taxes']) ? [] : $detail['taxes'];
                 $detail['total'] = $detail['subtotal'] - $detail['discount'];
-            $det = Detail::create(Arr::except($detail, 'taxes'));
+            $det = Detail::create(Arr::except($detail, 'taxes','product_name','unit_name'));
             if ($invoice->type != 'B00' && $invoice->type != 'B14') {
                 $det->taxes()->sync($taxes);
                 $det->taxtotal = $det->taxes->sum('rate') * $det->total;

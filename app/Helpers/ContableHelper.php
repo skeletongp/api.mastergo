@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Bank;
 use App\Models\Count;
 use App\Models\CountMain;
 use App\Models\Payment;
@@ -57,6 +58,12 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
 {
     $canCreate=auth()->user()->hasPermissionTo('Registrar Asientos');
     $income=$amount;
+    $status='Confirmado';
+    
+    if ($debitable && substr($debitable->code,0,3)=='100' && $debitable->id>7) {
+     
+       $status='Pendiente';
+    }
     $outcome=$amount;
     if ($debitable==$creditable) {
         return;
@@ -72,6 +79,7 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
             'place_id' => auth()->user()->place->id,
             'debitable_id' => $debitable->id,
             'creditable_id' => $creditable->id,
+            'status' => $status,
         ]);
         if ($debitable->origin == "debit") {
             $debitable->balance = $debitable->balance + $amount;
