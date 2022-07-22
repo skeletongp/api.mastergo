@@ -21,7 +21,7 @@ class InvoiceHistorial extends LivewireDatatable
         $place = auth()->user()->place;
         $invoices = $place->invoices()->orderBy('invoices.created_at', 'desc')
             ->where('status', '=', 'cerrada')
-            ->with('client', 'payments');
+            ->with('client', 'payments','payment');
         return $invoices;
     }
 
@@ -47,14 +47,14 @@ class InvoiceHistorial extends LivewireDatatable
             })->label('Fecha')->searchable(),  
             Column::callback(['name','id'], function ($client, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
-                return ellipsis($result['name'] ?? $result['client']['name'], 20);
+                return ellipsis($result['name'] ?: ($result['client']['name']?:$result['client']['contact']['fullname']), 20);
             })->label('Cliente')->searchable(),
             Column::name('condition')->label('Condición')->filterable([
                 'De Contado', 'Contra Entrega', '1 A 15 Días', '16 A 30 Días', '31 A 45 Dïas'
             ]),
             Column::callback(['store_id','id'], function ($client, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
-                return '$'.formatNumber($result['payment'], 'total');
+                return '$'.formatNumber($result['payment']['total'], );
             })->label('Monto'),
 
             Column::callback(['place_id','id'], function ($client, $id) use ($invoices) {
