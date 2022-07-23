@@ -115,7 +115,7 @@ class ContableController extends Controller
         foreach ($payments as $payment) {
             if ($payment->payable->comprobante && $payment->payable->comprobante->status == 'usado' && $payment->payable->type == 'B02') {
                 if ($payment->payable->payment->total <= 250000) {
-                    $efectivo += $payment->efectivo - $payment->cambio;
+                    $efectivo += $payment->efectivo>0?($payment->efectivo - $payment->cambio):0;
                     $transferencia += $payment->transferencia + $payment->tarjeta;
                     if ($payment->id == $payment->payable->payment->id) {
                         $rest += $payment->payable->rest;
