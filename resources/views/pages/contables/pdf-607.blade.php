@@ -210,7 +210,7 @@
                     </td>
 
                     <td style=" text-align: left">
-                        {{ 'RNC  Mod.' }}
+                        {{ '-' }}
                     </td>
                     <td style="width:5%;  text-align: left">
                         1
