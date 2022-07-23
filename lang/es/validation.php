@@ -85,7 +85,7 @@ return [
     'mimes'                => 'El campo debe ser un archivo de tipo: :values.',
     'mimetypes'            => 'El campo debe ser un archivo de tipo: :values.',
     'min'                  => [
-        'numeric' => 'El campo debe ser al menos :min.',
+        'numeric' => 'Mínimo :min.',
         'file'    => 'El archivo debe pesar al menos :min kilobytes.',
         'string'  => 'El campo debe contener al menos :min caracteres.',
         'array'   => 'El campo debe contener al menos :min elementos.',

@@ -122,68 +122,68 @@
                 </tr>
                 @foreach (collect($details) as $det)
                     <tr
-                        class="bg-gray-100 odd:bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 uppercase  text-sm">
-                        <td class="px-2  text-base border border-gray-200 text-right ">
+                        class="bg-gray-100 odd:bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600   text-sm">
+                        <td class="px-2   border border-gray-200 text-right ">
                             {{ $det['product_code'] }}
                         </td>
-                        <td class="px-2   text-base border border-gray-200 text-right ">
+                        <td class="px-2    border border-gray-200 text-right ">
                             <div class="w-48 max-w-[12rem] overflow-hidden overflow-ellipsis whitespace-nowrap">
                                 {{ $det['product_name'] }}
                             </div>
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right ">
+                        <td class="px-2   border border-gray-200 text-right ">
                             {{ formatNumber($det['cant']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right ">
+                        <td class="px-2   border border-gray-200 text-right ">
                             {{ $det['unit_name'] }}
                         </td>
 
-                        <td class="px-2  text-base border border-gray-200 text-right">
+                        <td class="px-2   border border-gray-200 text-right">
                             {{ '$' . formatNumber($det['price']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right">
+                        <td class="px-2   border border-gray-200 text-right">
                             {{ formatNumber($det['discount_rate'] * 100) . '%' }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 text-right">
+                        <td class="px-2   border border-gray-200 text-right">
                             ${{ formatNumber($det['taxTotal']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200 font-bold text-right ">
+                        <td class="px-2   border border-gray-200 font-bold text-right ">
                             {{ '$' . formatNumber($det['total']) }}
                         </td>
-                        <td class="px-2  text-base border border-gray-200  ">
+                        <td class="px-2   border border-gray-200  ">
                             <div class=" flex items-center space-x-4  p-2 bg-gray-200" >
-                                <span wire:click="removeItem({{ $det['id'] }})"
-                                    class=" text-base fas fa-trash cursor-pointer text-red-600"></span>
+                               {{--  <span wire:click="removeItem({{ $det['id'] }})"
+                                    class="  fas fa-trash cursor-pointer text-red-600"></span> --}}
                                 <span wire:click="editItem({{ $det['id'] }})"
-                                    class=" text-base fas fa-pen cursor-pointer text-green-600"></span>
+                                    class="  fas fa-pen cursor-pointer text-green-600"></span>
                             </div>
                         </td>
                     </tr>
                 @endforeach
                 <tr
                     class="bg-slate-100 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 uppercase  text-sm">
-                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    <td class="px-2 py-4   border-gray-200 text-right ">
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    <td class="px-2 py-4   border-gray-200 text-right ">
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    <td class="px-2 py-4   border-gray-200 text-right ">
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    <td class="px-2 py-4   border-gray-200 text-right ">
                     </td>
 
-                    <td class="px-2 py-4 text-base  border-gray-200  text-right">
+                    <td class="px-2 py-4   border-gray-200  text-right">
 
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200  text-right">
+                    <td class="px-2 py-4   border-gray-200  text-right">
 
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200 font-bold text-right">
+                    <td class="px-2 py-4   border-gray-200 font-bold text-right">
                         ${{ formatNumber(array_sum(array_column($details, 'taxTotal'))) }}
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200 font-bold text-right ">
+                    <td class="px-2 py-4   border-gray-200 font-bold text-right ">
                         ${{ formatNumber(array_sum(array_column($details, 'total'))) }}
                     </td>
-                    <td class="px-2 py-4 text-base  border-gray-200 text-right ">
+                    <td class="px-2 py-4   border-gray-200 text-right ">
                     </td>
                 </tr>
             @endif

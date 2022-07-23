@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Clients;
 
 use App\Models\Client;
+use App\Models\Invoice;
 use Mediconesystems\LivewireDatatables\Action;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -12,8 +13,13 @@ class ClientInvoice extends LivewireDatatable
 {
     public $headTitle = "Historial de compras";
     public $client;
+    public $padding = "px-2";
+    public $total=0;
     public function builder()
     {
+       if($this->total>0){
+        $this->headTitle = "Pendiente de pago $".formatNumber($this->total);
+       }
         $client=$this->client;
         $invoices = $client->invoices()->where('status','!=','waiting')->orderBy('created_at', 'desc')->with('payment', 'client', 'seller', 'contable', 'payments');
         return $invoices;
@@ -45,7 +51,7 @@ class ClientInvoice extends LivewireDatatable
             })->label('Pagado'),
             Column::name('rest')->callback(['rest'], function ($rest) {
                 return '$' . formatNumber($rest);
-            })->label('Resta')->searchable(),
+            })->label('Resta'),
         ];
     }
 
@@ -54,9 +60,14 @@ class ClientInvoice extends LivewireDatatable
         return [
 
             Action::value('edit')->label('Cobrar facturas')->callback(function ($mode, $items) {
-              return redirect()->route('clients.paymany', compact('items'));
+              return redirect()->route('clients.paymany', ['invoices'=>implode(',',$items)]);
             }),
 
         ];
+    }
+    public function updatedSelected(){
+        $rest=Invoice::whereIn('id', $this->selected)->sum('rest');
+        $this->total=$rest;
+        $this->builder();
     }
 }

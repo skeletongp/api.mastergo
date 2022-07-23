@@ -27,6 +27,7 @@
                                     <livewire:general.toggle-place />
                                 </div>
                             @endif
+                            
                             @can('Crear Permisos')
                                 <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
                                     activeRoute="prueba.*" scope="" />

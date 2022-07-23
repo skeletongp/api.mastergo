@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -27,8 +28,8 @@ class ClientController extends Controller
         return view('pages.clients.client-invoice', ['client_id'=>$client_id]);
     }
 
-    public function paymany(Array $invoices){
-        dd($invoices);
-        return view('pages.clients.paymany');
+    public function paymany(Request $request, $invoices){
+        $invoices=$invoices;
+        return view('pages.clients.paymany', compact('invoices'));
     }
 }

@@ -28,6 +28,10 @@ Breadcrumbs::for('clients.show', function ($trail, $client) {
     $trail->parent('clients');
     $trail->push($client->name, route('clients.show', $client), ['icon'=>'fas fa-user']);
 });
+Breadcrumbs::for('clients.paymany', function ($trail,  $invoices) {
+    $trail->parent('clients');
+    $trail->push('Cobrar facturas', route('clients.paymany', $invoices), ['icon'=>'fas fa-dollar-sign']);
+});
 // Proveedores
 Breadcrumbs::for('providers', function ($trail) {
     $trail->parent('home');

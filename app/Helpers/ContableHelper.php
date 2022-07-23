@@ -59,7 +59,7 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
     $canCreate=auth()->user()->hasPermissionTo('Registrar Asientos');
     $income=$amount;
     $status='Confirmado';
-    
+   
     if ($debitable && substr($debitable->code,0,3)=='100' && $debitable->id>7) {
      
        $status='Pendiente';
@@ -69,7 +69,7 @@ function setTransaction($concept, $ref, $amount, $debitable, $creditable, $other
         return;
     }
     $canOther= $otherPermission?auth()->user()->hasPermissionTo($otherPermission):false;
-    if ($amount > 0 && ($canCreate || $canOther)) {
+    if ($amount > 0 && ($canCreate || $canOther) && $debitable && $creditable) {
         $trans = Transaction::create([
             'concepto' => $concept,
             'ref' => $ref,

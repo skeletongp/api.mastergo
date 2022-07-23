@@ -228,7 +228,7 @@
                         ${{ formatNumber($invoice->payment->tax) }}
                     </td>
                     <td style=" text-align:left; ">
-                        ${{ formatNumber($invoice->payments->sum('efectivo')-$invoice->payments->sum('cambio')) }}
+                        ${{ formatNumber($invoice->payments->sum('efectivo')>0?($invoice->payments->sum('efectivo')-$invoice->payments->sum('cambio')):0) }}
                     </td>
                     <td style=" text-align:left;">
                         ${{ formatNumber($invoice->payments->sum('transferencia')+$invoice->payments->sum('tarjeta')) }}

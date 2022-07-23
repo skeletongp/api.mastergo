@@ -1,11 +1,11 @@
 <x-app-layout>
     @slot('bread')
-        {{ Breadcrumbs::render('clients') }}
+        {{ Breadcrumbs::render('clients.paymany', $invoices) }}
     @endslot
 
-    <div class="w-full bg-gray-50  mx-auto ">
-        <div class=" py-2 w-max mx-auto min-h-max h-full relative ">
-            @livewire('clients.client-invoice', ['client_id' => $client_id], key(uniqid()))
+    <div class="w-full p-4 bg-gray-50  ">
+        <div class="max-w-6xl mx-auto">
+            <livewire:clients.pay-invoices :invoices="$invoices" />
         </div>
     </div>
 
