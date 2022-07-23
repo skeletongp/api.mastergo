@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Reports;
 
+use App\Http\Livewire\UniqueDateTrait;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\ColumnSet;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -14,7 +14,7 @@ class InvoiceHistorial extends LivewireDatatable
 
     public $headTitle = "Historial de facturas";
     public $padding = "px-2";
-    public $uniqueDate = true;
+    use UniqueDateTrait;
 
     public function builder()
     {
@@ -42,9 +42,7 @@ class InvoiceHistorial extends LivewireDatatable
                 $number = ltrim(substr($number, strpos($number, '-') + 1), '0');
                 return $number;
             })->label('Nro.')->searchable(),
-            DateColumn::callback('created_at', function($date){
-                return Carbon::parse($date)->format('m-d H:i');
-            })->label('Fecha')->searchable(),  
+            DateColumn::name('created_at')->label('Fecha')->searchable()->filterable(),  
             Column::callback(['name','id'], function ($client, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 return ellipsis($result['name'] ?: ($result['client']['name']?:$result['client']['contact']['fullname']), 20);

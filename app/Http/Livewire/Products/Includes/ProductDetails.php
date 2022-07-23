@@ -2,28 +2,31 @@
 
 namespace App\Http\Livewire\Products\Includes;
 
+use App\Http\Livewire\UniqueDateTrait;
 use Carbon\Carbon;
 use Mediconesystems\LivewireDatatables\Column;
+use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 
 class ProductDetails extends LivewireDatatable
 {
+
+    use UniqueDateTrait;
     public $product;
-    public $headTitle=' ';
+    public $headTitle='Historial de ventas ';
+    public $padding='px-2';
     public function builder()
     {
-        $this->headTitle='Desde '.Carbon::now()->startOfWeek()->format('d/m/Y')
-        .' al '.Carbon::now()->endOfWeek()->format('d/m/Y');
-         return $this->product->details()->with('unit','detailable.client')->whereBetween('created_at', 
-         [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]
-     );
+        
+         return $this->product->details()->with('unit','detailable.client');
     }
 
     public function columns()
     {
         $details=$this->builder()->get()->toArray();
         return [
+            DateColumn::name('created_at')->label('Fecha')->format('d/m/Y h:i A')->filterable(),
             Column::callback('cant', function($cant){
                 return formatNumber($cant);
             })->label('Cant.')->enableSummary(),
@@ -49,7 +52,7 @@ class ProductDetails extends LivewireDatatable
         }
         try {
            
-            return "<h1 class='font-bold text-right'>". '$'.formatNumber(array_sum(array_column($results, $column)))."</h1>";;
+            return "<h1 class='font-bold text-right'>". formatNumber(array_sum(array_column($results, $column)))."</h1>";;
         } catch (\TypeError $e) {
             return '';
         }

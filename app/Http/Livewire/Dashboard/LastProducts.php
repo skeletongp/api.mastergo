@@ -13,7 +13,7 @@ use function PHPUnit\Framework\isNan;
 
 class LastProducts extends LivewireDatatable
 {
-    public $headTitle = "Productos más vendidos";
+    public $headTitle = "Más vendidos hoy";
     public $perPage=10;
     public $padding="px-2";
     public function builder()
@@ -21,6 +21,7 @@ class LastProducts extends LivewireDatatable
         $details = auth()->user()->place->details()
             ->select(DB::raw('product_id, SUM(cant) as cant, id'))
             ->where('detailable_type', Invoice::class)
+            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))
             ->orderBy('cant', 'desc')->with('product')->distinct()->groupBy('product_id')
             ;
         return $details;

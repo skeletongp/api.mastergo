@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Contables;
 
 use App\Http\Helper\Universal;
+use App\Http\Livewire\UniqueDateTrait;
 use App\Models\Count;
 use App\Models\Transaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -15,9 +16,9 @@ use Mediconesystems\LivewireDatatables\TimeColumn;
 
 class GeneralDailyTable extends LivewireDatatable
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests, UniqueDateTrait;
     public $perPage = 5;
-    public $uniqueDate=true;
+   
     public $headTitle="Transacciones realizadas";
     public $padding='px-2';
     public function builder()
