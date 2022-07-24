@@ -68,14 +68,14 @@
 
                 @scopeanny (['Facturas','Cotizaciones','Pedidos'])
                     @canany(['Cobrar Facturas', 'Ver Facturas', 'Ver Cotizaciones'])
-                        <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders']">
+                        <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders','cotizes.*']">
                             @can('Ver Facturas')
                                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
                                     text='Facturas' activeRoute="invoices.*" scope="Facturas" />
                             @endcan
                             @can('Ver Cotizaciones')
-                                <x-side-link routeName='users.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
-                                    text='Cotizaciones' activeRoute="home.*" scope="Cotizaciones" />
+                                <x-side-link routeName='cotizes.index' icon='far w-10 text-center fa-file-exclamation fa-lg'
+                                    text='Cotizaciones' activeRoute="cotizes.*" scope="Cotizaciones" />
                             @endcan
                             @can('Cobrar Facturas')
                                 <x-side-link routeName='orders' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'

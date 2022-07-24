@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\RecursoController;
 use App\Http\Controllers\ContableController;
+use App\Http\Controllers\CotizeController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProvisionController;
 use App\Http\Controllers\RecurrentController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Jobs\CreatePDFJob;
+use App\Models\Cotize;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\ProductPlaceUnit;
@@ -63,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/invoices/create', 'create')->name('invoices.create');
             Route::get('/invoices/orders', 'orders')->name('orders');
             Route::get('/invoices/show/{invoice}', 'show')->name('invoices.show');
+        });
+
+        Route::controller(CotizeController::class)->group(function () {
+            Route::get('/cotizes', 'index')->name('cotizes.index');
+            Route::get('/cotizes/create', 'create')->name('cotizes.create');
         });
 
         Route::controller(ProductController::class)->group(function () {
@@ -144,13 +151,11 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('prueba', function () {
-    $place=auth()->user()->place;
-   $products= $place->products;
-   foreach ($products as $key => $product) {
-    $product->update([
-        'name'=>removeAccent($product->name)
-    ]);
-   }
-   return redirect()->route('products.index');
+  
+  
+
+  
+   
+
     
 })->name('prueba');

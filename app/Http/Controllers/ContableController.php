@@ -132,7 +132,7 @@ class ContableController extends Controller
         
         $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
         $content = $pdf->download()->getOriginalContent();
-        $name='carnibores/reporte 607/report'.date('Ymdhis').'.pdf';
+        $name='files'.$store->id.'/reporte 607/report'.date('Ymdhis').'.pdf';
         Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
         $url= Storage::url($name);
         return view('pages.contables.report-607', compact('url'));

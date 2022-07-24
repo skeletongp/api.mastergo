@@ -191,6 +191,8 @@ trait DetailsSectionTrait
 
     public function updatingDiscount($desc)
     {
-        $this->discount = $desc * 100;
+        if($desc && !is_nan($desc)){
+            $this->discount = $desc * 100;
+        }
     }
 }

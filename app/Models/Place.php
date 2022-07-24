@@ -67,6 +67,10 @@ protected $connection="mysql";
     {
         return $this->hasMany(Invoice::class);
     }
+    public function cotizes()
+    {
+        return $this->hasMany(Cotize::class);
+    }
     public function incomes()
     {
         return $this->hasMany(Income::class);
@@ -78,8 +82,14 @@ protected $connection="mysql";
     
     public function details()
     {
-        return $this->hasMany(Detail::class);
+        return $this->hasMany(Detail::class)->where('detailable_type', Invoice::class);
     }
+
+    public function cotdetails()
+    {
+        return $this->hasMany(Detail::class)->where('detailable_type', Cotize::class);
+    }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
