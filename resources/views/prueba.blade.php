@@ -1,6 +1,4 @@
 <x-app-layout>
-	<body class="antialiased sans-serif mx-auto">
-		<div class="border-t-8 border-gray-700 h-2"></div>
 		<div  style="width: 215.9mm"
 			class="container mx-auto py-6 px-4"
 			x-data="invoices()"
@@ -566,5 +564,4 @@
 				}
 			}
 		</script>
-	</body>
 </x-app-layout>
