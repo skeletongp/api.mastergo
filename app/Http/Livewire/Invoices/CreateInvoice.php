@@ -22,7 +22,7 @@ class CreateInvoice extends Component
     use WithPagination, ClientSectionTrait, GenerateInvoiceTrait, DetailsSectionTrait, InvoiceData, Authorize;
     public $form = [], $cant = 0, $price, $discount = 0, $total, $taxTotal = 0, $scanned;
     public $localKeys=[], $localDetail;
-    public $details = [];
+    public $details = [], $banks;
     public $producto;
     public $action;
     public  $unit, $unit_id;
@@ -35,6 +35,7 @@ class CreateInvoice extends Component
         
         $store = auth()->user()->store;
         $place = auth()->user()->place;
+        $this->banks = $store->banks()->pluck('bank_name', 'id');
         $this->vence = Carbon::now()->format('Y-m-d');
         $this->condition = 'DE CONTADO';
         $this->type = $place->preference->comprobante_type;
