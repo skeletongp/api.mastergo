@@ -133,7 +133,7 @@ trait GenerateInvoiceTrait
         $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
         $data = json_decode($dataFile, true) ?: [];
         $name=$invoice->name?:$invoice->client->name;
-        unset($data[$invoice->client->code.' '.$name]);
+        unset($data[$this->localDetail]);
         file_put_contents(storage_path('app/public/local/details.json'), json_encode($data));
         $this->mount();
     }

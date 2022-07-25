@@ -93,8 +93,10 @@ trait DetailsSectionTrait
         $this->form['product_id'] = $this->details[$id]['product_id'];
         unset($this->details[$id]);
         $this->details = array_values($this->details);
-        foreach ($this->details as $ind => $det) {
-            $this->details[$ind]['id'] = $ind;
+        if (count($this->details)) {
+            foreach ($this->details as $ind => $det) {
+                $this->details[$ind]['id'] = $ind;
+            }
         }
         $this->checkStock();
     }
@@ -144,7 +146,7 @@ trait DetailsSectionTrait
                 $this->price = $unit->pivot->price_menor;
                 $this->form['price_type'] = 'detalle';
             }
-            
+
 
             $this->form['unit_name'] = $unit->symbol;
             $discount = 0;
@@ -191,7 +193,7 @@ trait DetailsSectionTrait
 
     public function updatingDiscount($desc)
     {
-        if($desc && !is_nan($desc)){
+        if ($desc && !is_nan($desc)) {
             $this->discount = $desc * 100;
         }
     }
