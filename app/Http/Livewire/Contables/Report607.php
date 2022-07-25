@@ -23,7 +23,7 @@ class Report607 extends Component
         $this->make607();
         return view('livewire.contables.report607');
     }
-
+   
     public function make607()
     {
         dd($this);
