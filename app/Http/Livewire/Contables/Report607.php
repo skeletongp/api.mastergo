@@ -28,8 +28,7 @@ class Report607 extends Component
     {
         $store = auth()->user()->store;
         $invoices = $store->invoices()->has('comprobante')
-            ->whereDate('created_at', '>=', $this->start_at)
-            ->whereDate('created_at', '<=', $this->end_at)
+            ->whereBetween('created_at', [$this->start_at, $this->end_at])
             ->where('type', '!=', 'B02')
             ->orWhereHas('payment', function ($query) {
                 $query->where('total', '>', 250000);
