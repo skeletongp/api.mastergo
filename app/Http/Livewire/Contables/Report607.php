@@ -39,6 +39,9 @@ class Report607 extends Component
             ->orderBy('invoices.id')
             ->where('invoices.status', '!=', 'waiting')
             ->with('comprobante', 'client', 'payment', 'payments')->get();
+
+            dd($invoices);
+
         $payments = Payment::where('payable_type', 'App\Models\Invoice')
             ->where('rest', '>=', 0)
             ->with('payable.payment', 'payable.comprobante',)->get();
