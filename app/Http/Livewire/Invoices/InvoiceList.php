@@ -20,7 +20,8 @@ class InvoiceList extends LivewireDatatable
         $invoices = auth()->user()->place->invoices()->orderBy('invoices.updated_at', 'desc')
             ->join('clients', 'clients.id', '=', 'invoices.client_id')
             ->select('invoices.*', 'clients.name as client_name')
-            ->where('status', 'cerrada')->with('pdf', 'payment', 'payments', 'client');
+            ->where('status', 'cerrada')->with('pdf', 'payment', 'payments', 'client')
+           ;
         return $invoices;
     }
 
