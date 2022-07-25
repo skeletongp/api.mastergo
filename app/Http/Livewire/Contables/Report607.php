@@ -23,16 +23,20 @@ class Report607 extends Component
         $this->make607();
         return view('livewire.contables.report607');
     }
-   
+
     public function make607()
     {
         $store = auth()->user()->store;
         $invoices = $store->invoices()->has('comprobante')
+            ->where(
+                function ($query) {
+                    $query->where('type', '!=', 'B02')
+                        ->orWhereHas('payment', function ($query) {
+                            $query->where('total', '>', 250000);
+                        });
+                }
+            )
             ->whereBetween('day', [$this->start_at, $this->end_at])
-            ->where('type', '!=', 'B02')
-            ->orWhereHas('payment', function ($query) {
-                $query->where('total', '>', 250000);
-            })
             ->whereHas('comprobante', function ($query) {
                 $query->where('status', 'usado');
             })
@@ -40,10 +44,8 @@ class Report607 extends Component
             ->where('invoices.status', '!=', 'waiting')
             ->with('comprobante', 'client', 'payment', 'payments')->get();
 
-            dd($invoices);
-
         $payments = Payment::where('payable_type', 'App\Models\Invoice')
-            ->where('rest', '>=', 0)
+            ->whereBetween('day', [$this->start_at, $this->end_at])
             ->with('payable.payment', 'payable.comprobante',)->get();
         $efectivo = 0;
         $transferencia = 0;
@@ -70,13 +72,13 @@ class Report607 extends Component
         $PDF = App::make('dompdf.wrapper');
 
         $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
-        $name = 'files' . $store->id . '/reporte 607/report' . date('Ymdhis') . '.pdf';
+        $name = 'files' . $store->id . '/reporte 607/report' . date('Ymd') . '.pdf';
         Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
         $url = Storage::url($name);
         $this->url = $url;
     }
-    public function changeDate(){
+    public function changeDate()
+    {
         $this->make607();
-
     }
 }
