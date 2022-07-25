@@ -16,7 +16,6 @@ class OrderConfirm extends Component
     use OrderContable, OrderConfirmTrait, WithFileUploads, Authorize;
     public  $form, $compAvail = true, $cobrable=true, $copyCant=1;
     public $banks, $bank, $bank_id, $reference;
-
     protected $listeners=['payInvoice', 'reload'=>'render'];
 
     public function mount($invoice)

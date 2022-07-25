@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "57f91515b0cce20c7cd035495f8cdb44",
+=======
+    "content-hash": "1d4b7dd14d95a43a84706826932c76b7",
+>>>>>>> 3734523492bebb1b3be5e1b9fd2a57b7b730ea27
     "packages": [
         {
             "name": "asantibanez/livewire-select",
