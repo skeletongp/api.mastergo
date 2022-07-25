@@ -26,7 +26,6 @@ class Report607 extends Component
    
     public function make607()
     {
-        dd($this);
         $store = auth()->user()->store;
         $invoices = $store->invoices()->has('comprobante')
             ->whereDate('created_at', '>=', $this->start_at)
@@ -76,5 +75,7 @@ class Report607 extends Component
     }
     public function changeDate(){
         $this->make607();
+        dd($this);
+
     }
 }
