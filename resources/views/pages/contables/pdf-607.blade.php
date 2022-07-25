@@ -219,7 +219,7 @@
                         {{ \Carbon\Carbon::parse($invoice->day)->format('Ymd') }}
                     </td>
                     <td style=" text-align: left">
-                        {{ \Carbon\Carbon::parse($invoice->payment->updated_at)->format('Ymd') }}
+                        {{ /* \Carbon\Carbon::parse($invoice->payment->updated_at)->format('Ymd') */ }}
                     </td>
                     <td style=" text-align: left;  font-weight:bold">
                         ${{ formatNumber($invoice->payment->total) }}
