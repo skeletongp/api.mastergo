@@ -28,6 +28,7 @@
     {{-- Scripts --}}
 
     <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
 
     @livewireStyles
     @laravelPWA
