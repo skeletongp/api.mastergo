@@ -30,8 +30,8 @@ class CreateComprobante extends Component
     {
         $this->authorize('Crear Comprobantes');
         $this->validate();
-        dispatch(new CreateComprobanteJob($this->form))->onConnection('sync');
-        $this->emit('showSuccess', 'Comprobantes se están añadiendo en segundo plano','success');
+        dispatch(new CreateComprobanteJob($this->form))->onconnection('database');
+        $this->emit('showAlert', 'Comprobantes se están añadiendo en segundo plano','success');
         $this->reset();
     }
 }
