@@ -176,6 +176,10 @@ Breadcrumbs::for('invoice-historial', function($trial){
     $trial->parent('invoices.orders');
     $trial->push('Hist. de Facturas',route('reports.invoices',['icon'=>'fas fa-file-alt']));
 });
+Breadcrumbs::for('invoice-por-cobrar', function($trial){
+    $trial->parent('invoices.orders');
+    $trial->push('Facturas por cobrar',route('reports.invoices_por_cobrar',['icon'=>'fas fa-file-alt']));
+});
 
 /* Provisiones */
 Breadcrumbs::for('provisions', function($trial){

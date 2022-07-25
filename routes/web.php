@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/incomes', 'incomes')->name('reports.incomes');
             Route::get('/outcomes', 'outcomes')->name('reports.outcomes');
             Route::get('/rep_invoices', 'invoices')->name('reports.invoices');
+            Route::get('/rep_invoices_por_cobrar', 'invoices_por_cobrar')->name('reports.invoices_por_cobrar');
         });
         Route::controller(ProvisionController::class)->group(function () {
             Route::get('/provisions', 'index')->name('provisions.index');
@@ -152,5 +153,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
   
-  return view('prueba');
+  return redirect()->route('reports.invoices_por_cobrar');
 })->name('prueba');

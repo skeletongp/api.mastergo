@@ -17,4 +17,7 @@ class ReportController extends Controller
     public function invoices(){
         return view('pages.reports.invoices');
     }
+    public function invoices_por_cobrar(){
+        return view('pages.reports.invoices_por_cobrar');
+    }
 }

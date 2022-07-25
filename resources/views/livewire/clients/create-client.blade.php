@@ -13,7 +13,7 @@
         <div class="relative pt-12">
             <div class="absolute right-2 flex justify-end space-x-4 items-center left-2 top-0 font-bold text-lg">
                <div class="w 40">
-                <x-base-select label="" id="cltSpecial" wire:model="form.special">
+                <x-base-select label="" id="cltSpecial" wire:model.defer="form.special">
                     <option value="0">Normal</option>
                     <option value="1">Especial</option>
                 </x-base-select>

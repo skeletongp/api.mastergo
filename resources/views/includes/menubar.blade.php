@@ -27,7 +27,7 @@
                                     <livewire:general.toggle-place />
                                 </div>
                             @endif
-                            
+
                             @can('Crear Permisos')
                                 <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
                                     activeRoute="prueba.*" scope="" />
@@ -68,7 +68,7 @@
 
                 @scopeanny (['Facturas','Cotizaciones','Pedidos'])
                     @canany(['Cobrar Facturas', 'Ver Facturas', 'Ver Cotizaciones'])
-                        <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders','cotizes.*']">
+                        <x-dropitem text="Facturación" icon="far fa-copy" :routes="['invoices.*', 'orders', 'cotizes.*']">
                             @can('Ver Facturas')
                                 <x-side-link routeName='invoices.index' icon='far w-10 text-center fa-file-invoice-dollar fa-lg'
                                     text='Facturas' activeRoute="invoices.*" scope="Facturas" />
@@ -129,9 +129,11 @@
                                     text='Cuentas' activeRoute="finances.*" scope="Ingresos" />
                             @endcan
                             @can('Ver Facturas')
-                            <x-side-link routeName='reports.invoices' icon='far w-10 text-center fa-file-alt fa-lg'
-                                text='Facturas' activeRoute="report.*" scope="Facturas" />
-                        @endcan
+                                <x-side-link routeName='reports.invoices' icon='far w-10 text-center fa-file-alt fa-lg'
+                                    text='Facturas' activeRoute="report.*" scope="Facturas" />
+                                    <x-side-link routeName='reports.invoices_por_cobrar' icon='far w-10 text-center fa-file-alt fa-lg'
+                                text='Facturas por Cobrar' activeRoute="report.*" scope="Facturas" />
+                            @endcan
                         </x-dropitem>
                     @endcanany
                 @endscopeanny

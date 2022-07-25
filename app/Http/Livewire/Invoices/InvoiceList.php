@@ -21,6 +21,7 @@ class InvoiceList extends LivewireDatatable
             ->join('clients', 'clients.id', '=', 'invoices.client_id')
             ->select('invoices.*', 'clients.name as client_name')
             ->where('status', 'cerrada')->with('pdf', 'payment', 'payments', 'client')
+            ->where('day', '>=', now()->subDays(3)->format('Y-m-d'));
             
            ;
         return $invoices;
