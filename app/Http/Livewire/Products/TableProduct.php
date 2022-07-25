@@ -29,7 +29,11 @@ class TableProduct extends LivewireDatatable
         return [
             Column::callback(['id', 'deleted_at'], function ($id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
-                return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $result['photo']]);
+                $photo=env('NO_IMAGE');
+                if($result['image']){
+                    $photo=$result['image']['path'];
+                }
+                return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $photo]);
             })->label('Ver')->unsortable(),
             Column::name('code')->label('Cód.')->searchable()->defaultSort(true),
             Column::name('name')->label('Nombre')->searchable(),
