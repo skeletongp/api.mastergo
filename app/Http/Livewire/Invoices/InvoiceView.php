@@ -26,10 +26,7 @@ class InvoiceView extends Component
         $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
         ->where('status', '!=', 'waiting')->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')->paginate(6);
         
-        if ($invoices->count() && !$this->pdfThermal) {
-            $this->pdfThermal = $invoices->first()->pdfThermal;
-            $this->pdfLetter = $invoices->first()->pdfLetter;
-        }
+        
         if (!$this->currentInvoice && $invoices->count()) {
             $this->currentInvoice = $invoices->first();
             $this->invoice = $invoices->first();

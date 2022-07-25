@@ -29,12 +29,13 @@ class OrderView extends LivewireDatatable
             ->select('invoices.*', 'clients.name as client_name')
             ->with('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference')
             ->orderBy('invoices.id', 'desc')->where('status', 'waiting');
-
+        
         return $invoices;
     }
 
     public function columns()
     {
+        
         $invoices = $this->builder()->get()->toArray();
         $store = auth()->user()->store;
         $banks = $store->banks()->pluck('bank_name', 'id');
