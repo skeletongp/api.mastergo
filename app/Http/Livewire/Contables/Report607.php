@@ -75,7 +75,6 @@ class Report607 extends Component
     }
     public function changeDate(){
         $this->make607();
-        dd($this);
 
     }
 }
