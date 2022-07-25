@@ -40,7 +40,7 @@ class Report607 extends Component
             ->where('invoices.status', '!=', 'waiting')
             ->with('comprobante', 'client', 'payment', 'payments')->get();
 
-           // dd($invoices);
+            dd($invoices);
 
         $payments = Payment::where('payable_type', 'App\Models\Invoice')
             ->where('rest', '>=', 0)
