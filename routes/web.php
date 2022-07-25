@@ -47,11 +47,11 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('auth/logout', 'logout')->name('auth.logout');
 });
 
-/* TODO */
+
 /* Rutas protegidas por Auth */
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'debug'])->group(function () {
     Route::middleware(['web'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
 
