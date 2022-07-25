@@ -187,14 +187,14 @@
             $('#generalLoad').removeClass('hidden');
         })
         id = parseInt({{ auth()->user()->place_id }});
-        var channel = Echo.private(`invoices.${id}`);
+       /*  var channel = Echo.private(`invoices.${id}`);
         channel.listen("NewInvoice", function(data) {
             store_id = parseInt({{ optional(auth()->user()->store)->id }});
             if (data.invoice.store_id == store_id) {
                 Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
             }
 
-        });
+        }); */
         window.onbeforeunload = function() {
             $('#generalLoad').removeClass('hidden');
         }
