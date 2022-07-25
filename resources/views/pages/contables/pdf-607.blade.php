@@ -224,7 +224,7 @@
                     <td style=" text-align: left;  font-weight:bold">
                         ${{ formatNumber($invoice->payment->total) }}
                     </td>
-                    <td style="width:4%;  text-align: left">
+                    <td style=" text-align: left">
                         ${{ formatNumber($invoice->payment->tax) }}
                     </td>
                     <td style=" text-align:left; ">

@@ -87,55 +87,7 @@ class ContableController extends Controller
     }
     public function report_607()
     {
-        $store = auth()->user()->store;
-        $invoices = $store->invoices()->has('comprobante')
-            ->where('type', '!=', 'B02')
-            ->orWhereHas('payment', function ($query) {
-                $query->where('total', '>', 250000);
-            })
-            ->whereHas('comprobante', function ($query) {
-                $query->where('status', 'usado');
-            })
-            ->orderBy('invoices.id')
-            ->where('invoices.status', '!=', 'waiting')
-            ->with('comprobante', 'client', 'payment', 'payments')->get();
-
-
-
-        $payments = Payment::where('payable_type', 'App\Models\Invoice')
-            ->where('rest', '>=', 0)
-            
-            ->with('payable.payment', 'payable.comprobante',)->get();
-        $efectivo = 0;
-        $transferencia = 0;
-        $rest = 0;
-        $total = 0;
-        $tax=0;
-        $count=0;
-        foreach ($payments as $payment) {
-            if ($payment->payable->comprobante && $payment->payable->comprobante->status == 'usado' && $payment->payable->type == 'B02') {
-                if ($payment->payable->payment->total <= 250000) {
-                    $efectivo += $payment->efectivo>0?($payment->efectivo - $payment->cambio):0;
-                    $transferencia += $payment->transferencia + $payment->tarjeta;
-                    if ($payment->id == $payment->payable->payment->id) {
-                        $rest += $payment->payable->rest;
-                        $total += $payment->payable->payment->total;
-                        $tax += $payment->payable->payment->tax;
-                        $count++;
-                    }
-                }
-            }
-        }
-        $efectivo=$total-($transferencia + $rest);
-        $data = get_defined_vars();
-        $PDF = App::make('dompdf.wrapper');
         
-        $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
-        $content = $pdf->download()->getOriginalContent();
-        $name='files'.$store->id.'/reporte 607/report'.date('Ymdhis').'.pdf';
-        Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
-        $url= Storage::url($name);
-        return view('pages.contables.report-607', compact('url'));
-        return Excel::download(new ComprobanteExport, 'comprobantes.xlsx');
+        return view('pages.contables.report-607');
     }
 }
