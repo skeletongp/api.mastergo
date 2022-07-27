@@ -96,4 +96,5 @@ class DepositCheque extends Component
 
         $this->emit('refreshLivewireDatatable');
     }
+    
 }
