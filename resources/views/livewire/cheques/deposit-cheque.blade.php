@@ -5,6 +5,7 @@
     </x-slot>
     
     <div>
+       
         <form action="" wire:submit.prevent="depositCheque">
             <div class="flex flex-col space-y-4">
                 <div class="flex justify-between mb-4">
