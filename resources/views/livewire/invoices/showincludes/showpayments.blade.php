@@ -90,7 +90,6 @@
                 input.value = prevVal;
             }
             Livewire.on('printPayment', function(payment) {
-                alert('Presione aceptar...');
                 printP(payment);
             })
 

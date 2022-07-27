@@ -11,12 +11,12 @@
             </h1>
             <div class="p-4 ">
                 <x-button wire:click="setIncludeElement('showproducts','Productos')"
-                class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
-                <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
-                    <span class="w-6 text-left far fa-file-alt"></span>
-                    <span class="lg:text-lg">Resumen</span>
-                </div>
-            </x-button>
+                    class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                    <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
+                        <span class="w-6 text-left far fa-file-alt"></span>
+                        <span class="lg:text-lg">Resumen</span>
+                    </div>
+                </x-button>
                 <x-button wire:click="setIncludeElement('showclient','Cliente')"
                     class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
@@ -46,13 +46,15 @@
                         <span class="lg:text-lg">Cajero</span>
                     </div>
                 </x-button>
-                <x-button wire:click="setIncludeElement('showpayments','Pagos')"
-                    class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
-                    <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
-                        <span class="w-6 text-left far fa-dollar-sign"></span>
-                        <span class="lg:text-lg">Pagos</span>
-                    </div>
-                </x-button>
+                <a href="{{route('invoices.show', [$invoice->id, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos'])}}">
+                    <x-button wire:click="setIncludeElement('showpayments','Pagos')"
+                        class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                        <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
+                            <span class="w-6 text-left far fa-dollar-sign"></span>
+                            <span class="lg:text-lg">Pagos</span>
+                        </div>
+                    </x-button>
+                </a>
                 <x-button wire:click="setIncludeElement('showattach','Adjuntos')"
                     class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
