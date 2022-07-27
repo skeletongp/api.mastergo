@@ -4,10 +4,12 @@ namespace Tests\Feature\Store;
 
 use App\Http\Livewire\Store\CreateStore;
 use App\Models\Store;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -24,23 +26,26 @@ class CreateStoreTest extends TestCase
         /* Se llama al método store */
         /* Se espera que el array $data se encuentre en la tabla stores de la DB */
 
+        $user = User::find(1);
         $data = [
             'name' => 'AtrionTechSD EIRL',
             'address' => 'Calle Respaldo A, No. 8E',
-            'email' => 'info@atriontechsd.com',
+            'email' => 'info@bicimotoelclavo.com',
             'phone' => '8095086221',
 
         ];
 
         $existing = Store::where('email', $data['email'])->first();
         if ($existing) {
-            $existing->forceDelete();
+            $this->assertDatabaseHas('moso_master.stores', Arr::except($existing->toArray(), ['image', 'created_at', 'updated_at']));
+            return;
         }
 
-        Livewire::test(CreateStore::class)
+        Livewire::actingAs($user)
+            ->test(CreateStore::class)
             ->set('form', $data)
-            ->set('photo_path', 'https://thumbs.dreamstime.com/b/cityscape-design-corporaci%C3%B3n-de-edificios-logo-para-la-empresa-inmobiliaria-158041738.jpg')
-            ->call("store");
-        $this->assertDatabaseHas('stores', $data);
+            ->call("createStore");
+        $existing = Store::where('email', $data['email'])->first();
+        $this->assertDatabaseHas('moso_master.stores', $data);
     }
 }
