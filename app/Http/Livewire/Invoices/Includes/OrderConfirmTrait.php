@@ -11,8 +11,8 @@ trait OrderConfirmTrait
     public $action, $invoice;
     public function tryPayInvoice()
     {
-        $invoice = Invoice::find($this->form['id']);
-        $condition = $invoice->condition == 'De Contado' && $this->form['rest'] > 0;
+        $invoice = Invoice::whereId($this->form['id'])->first();
+        $condition = $this->form['condition'] == 'De Contado' && $this->form['rest'] > 0;
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
             $this->action = 'payInvoice';
             $this->emit('openAuthorize', 'Para fiar factura de contado');
@@ -22,7 +22,8 @@ trait OrderConfirmTrait
     }
     public function payInvoice()
     {
-        $invoice = Invoice::find($this->form['id']);
+        $invoice = Invoice::find($this->form['id'])->load('seller',  'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment.pdf', 'store.image', 'comprobante', 'pdf', 'place.preference');
+
         $this->validateData($invoice);
         if ($invoice->status !== 'waiting') {
             $this->emit('showAlert', 'Esta factura ya fue cobrada. Recargue la vista', 'warning');

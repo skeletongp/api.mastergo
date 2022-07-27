@@ -14,7 +14,7 @@ class Invoice extends Model implements Searchable
 {
     use HasFactory, SoftDeletes;
 protected $connection="mysql";
-
+public $primaryKey  = 'id';
     protected $guarded=[
 
     ];

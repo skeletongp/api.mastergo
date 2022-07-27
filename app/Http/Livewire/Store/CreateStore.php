@@ -130,7 +130,7 @@ class CreateStore extends Component
         $data = [
             'name' => 'Cliente',
             'lastname' => 'Genérico',
-            'email' => 'generico@' . strtok($store->uid, ' ') . '.com',
+            'email' => 'generico@' . strtok($store->name, ' ') . '.com',
             'address' => 'SIN DIRECCIÓN',
             'phone' => '(000)000-0000',
             'rnc' => '000-00000-0',

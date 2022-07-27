@@ -40,9 +40,7 @@ class Client extends Model implements Searchable
             'email' => 1,
         ]
     ];
-    protected $appends = [
-        'debt', 'avatar'
-    ];
+   
 
     public function getSearchResult(): SearchResult
     {

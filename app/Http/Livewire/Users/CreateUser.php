@@ -16,7 +16,10 @@ class CreateUser extends Component
     {
         $store=auth()->user()->store;
         $this->store_id=$store->id;
-        $roles=$store->roles()->pluck('name');
+        if(!Cache::get('storeRoles').env('STORE_ID')){
+            Cache::put('storeRoles'.env('STORE_ID'),implode(',',$store->roles->pluck('name')->toArray()));
+        }
+        $roles=explode(',',Cache::get('storeRoles'.env('STORE_ID')));
         $places=auth()->user()->places->pluck('name','id');
         $this->form['place_id']=array_key_first($places->toArray());
         return view('livewire.users.create-user',

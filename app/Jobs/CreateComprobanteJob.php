@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Invoice;
+use App\Models\Store;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,8 +29,9 @@ class CreateComprobanteJob implements ShouldQueue
      */
     public function handle()
     {
+        $store=Store::find(env('STORE_ID'));
         for ($i=$this->form['inicial']; $i <=$this->form['final'] ; $i++) { 
-            auth()->user()->store->comprobantes()->create([
+           $store->comprobantes()->create([
                 'type'=>$this->form['type'],
                 'prefix'=>Invoice::TYPES[$this->form['type']],
                 'number'=>str_pad($i, 8,'0', STR_PAD_LEFT),

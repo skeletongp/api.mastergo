@@ -1,9 +1,11 @@
 var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
     './css/app.css',
+    '../../includes/menubar.blade.php',
     './js/app.js',
     './js/jquery.tokeninput.js',
     './js/main.js',
+    '../resources/views/includes/menubar.blade.php',
     './js/print-provision.js',
     './js/printer-script.js',
     './js/formatPhoneNumber.js',

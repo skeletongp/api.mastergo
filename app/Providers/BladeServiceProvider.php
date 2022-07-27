@@ -25,38 +25,32 @@ class BladeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       
-        Blade::if('scope', function($name){
-            if (Cache::has('scopes_'.auth()->user()->store->id)) {
-                $scopes=Cache::get('scopes_'.auth()->user()->store->id);
-            } else {
-               $scopes=auth()->user()->store->scope()->pluck('name');
-               Cache::put('scopes_'.auth()->user()->store->id, $scopes);
-            }
-            if (!$name) {
+
+        Blade::if('scope', function ($name) {
+            return true;
+           /*  if (!$name) {
                 return true;
             }
-            if (auth()->user()) {
-                return $scopes->contains($name);
-            }
-            return false;
+            $scopes = explode(',', env('STORE_SCOPES'));
+            return in_array($name, $scopes); */
         });
-        Blade::if('scopeanny', function(array $scopesArray){
-            if (Cache::has('scopes_'.auth()->user()->store->id)) {
-                $scopes=Cache::get('scopes_'.auth()->user()->store->id);
+        Blade::if('scopeanny', function (array $scopesArray) {
+            return true;
+            if (Cache::has('scopes_' . auth()->user()->store->id)) {
+                $scopes = Cache::get('scopes_' . auth()->user()->store->id);
             } else {
-               $scopes=auth()->user()->store->scope()->pluck('name');
-               Cache::put('scopes_'.auth()->user()->store->id, $scopes);
+                $scopes = auth()->user()->store->scope()->pluck('name');
+                Cache::put('scopes_' . auth()->user()->store->id, $scopes);
             }
-            if (!$scopesArray || count($scopesArray)==0) {
+            if (!$scopesArray || count($scopesArray) == 0) {
                 return true;
             }
             if (auth()->user()) {
-               foreach ($scopesArray as $scope) {
-                if($scopes->contains($scope)){
-                    return true;
+                foreach ($scopesArray as $scope) {
+                    if ($scopes->contains($scope)) {
+                        return true;
+                    }
                 }
-               }
             }
             return false;
         });

@@ -24,42 +24,40 @@ class OrderView extends LivewireDatatable
     public function builder()
     {
         $this->perPage = 7;
-        $invoices = auth()->user()->place->invoices()
+        $place = auth()->user()->place;
+        $invoices =
+            Invoice::where('invoices.place_id', $place->id)
             ->join('clients', 'clients.id', '=', 'invoices.client_id')
+            ->leftJoin('payments', 'payments.payable_id', '=', 'invoices.id')
+            ->leftJoin('moso_master.users', 'users.id', '=', 'invoices.seller_id')
+            ->where('payments.payable_type', 'App\Models\Invoice')
             ->select('invoices.*', 'clients.name as client_name')
-            ->with('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference')
             ->orderBy('invoices.id', 'desc')->where('status', 'waiting');
-        
+
         return $invoices;
     }
 
     public function columns()
     {
-        
+
         $invoices = $this->builder()->get()->toArray();
         $store = auth()->user()->store;
         $banks = $store->banks()->pluck('bank_name', 'id');
         return [
-            Column::name('number')->label("Nro.")->searchable(),
+            Column::callback('number', function ($number) {
+                return ltrim(substr($number, strpos($number, '-') + 1), '0');
+            })->label("Nro.")->searchable(),
             TimeColumn::name('created_at')->label("Hora"),
             Column::callback(['clients.name', 'name'], function ($cltname, $name) {
                 return ellipsis($name ?: $cltname, 16);
             })->label('Cliente')->searchable(),
-            Column::callback(['deleted_at', 'id'], function ($amount, $id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                try {
-                    return '$' . formatNumber($result['payment']['total']);
-                } catch (\Throwable $th) {
-                    Log::error($th->getMessage());
-                    Log::info($result);
-                    return '$0';
-                }
+            Column::callback(['payments.total'], function ($total) {
+                return '$' . formatNumber($total);
             })->label("Monto"),
-            Column::name('seller.name')->callback(['day', 'id'], function ($day, $id) use ($invoices) {
+            /*  Column::name('seller.name')->callback(['day', 'id'], function ($day, $id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 return ellipsis($result['seller']['fullname'], 16);
-            })->label('Vendedor'),
-
+            })->label('Vendedor'),*/
             Column::name('condition')->label("Condición"),
             Column::callback('id', function ($id) use ($invoices,  $banks) {
                 $result = arrayFind($invoices, 'id', $id);

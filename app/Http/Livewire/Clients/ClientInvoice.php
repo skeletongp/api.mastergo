@@ -30,6 +30,9 @@ class ClientInvoice extends LivewireDatatable
         $invoices = $this->builder()->get()->toArray();
         return [
             Column::checkbox(),
+            Column::callback('number', function($number) use ($invoices){
+                return ltrim(substr($number,strpos($number,'-')+1),'0');
+            })->label('Nro.'),
             Column::name('id')->callback(['id'], function ($id) use ($invoices) {
                 $result = arrayFind($invoices, 'id', $id);
                 if ($result['rest'] > 0) {

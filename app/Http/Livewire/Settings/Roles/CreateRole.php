@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Settings\Roles;
 
 use Database\Seeders\RoleSeeder;
 use App\Http\Traits\Livewire\Confirm;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -30,6 +31,7 @@ class CreateRole extends Component
         auth()->user()->store->roles()->save($role);
         $this->emit('showAlert','El rol ha sido creado exitosamente', 'success');
         $this->reset();
+        Cache::forget('storeRoles').env('STORE_ID');
         $this->emit('reloadRoles');
     }
 }

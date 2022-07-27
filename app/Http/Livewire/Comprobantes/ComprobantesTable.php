@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Comprobantes;
 
+use App\Http\Livewire\UniqueDateTrait;
+use App\Models\Comprobante;
 use Carbon\Carbon;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -9,35 +11,45 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ComprobantesTable extends LivewireDatatable
 {
+    use UniqueDateTrait;
     public $headTitle = "Tabla de comprobantes";
     public $padding = "px-2";
     public function builder()
     {
         $store = auth()->user()->store;
-        return $store->comprobantes()
-            ->with(
-                'invoice.payment',
-                'invoice.client',
-                'creditnote.invoice.payment',
-                'creditnote.invoice.client',
-                'user'
-            );
+        $comprobantes = Comprobante::where('comprobantes.store_id', $store->id)
+            ->leftjoin('invoices', 'invoices.comprobante_id', '=', 'comprobantes.id')
+            ->leftjoin('creditnotes', 'creditnotes.comprobante_id', '=', 'comprobantes.id')
+            ->leftjoin('clients', 'clients.id', '=', 'invoices.client_id')
+            ->leftjoin('payments', 'payments.payable_id', '=', 'invoices.id')
+            ->leftjoin('moso_master.users', 'moso_master.users.id', '=', 'invoices.seller_id')
+            ->select(
+                'comprobantes.*',
+                'invoices.day as day',
+                'creditnotes.created_at as creditDay',
+                'invoices.id as invoiceId',
+                'creditnotes.id as creditId',
+                'invoices.number as invoiceNumber',
+                'clients.name as clientName',
+                'invoices.name as name'
+            )
+            ->orderBy('comprobantes.status', 'asc')
+            ->orderBy('comprobantes.ncf', 'asc')
+            ->distinct('comprobantes.id');;
+
+        return $comprobantes;
     }
 
     public function columns()
     {
-        $comprobantes = $this->builder()->get()->toArray();
         return [
-            Column::callback(['updated_at', 'id'], function ($number, $id) use ($comprobantes) {
-                $result = arrayFind($comprobantes, 'id', $id);
-                if ($result['invoice']) {
-                    return Carbon::parse($result['invoice']['day'])->format('d/m/Y');
-                } else if ($result['creditnote']) {
-                    return Carbon::parse( $result['creditnote']['created_at'])->format('d/m/Y');
+            Column::callback(['invoices.day', 'creditnotes.created_at'], function ($day, $created) {
+                if ($day || $created) {
+                    return Carbon::parse($day ?:$created )->format('d/m/Y h:i M');
                 } else {
                     return 'N/D';
                 }
-            })->label('Fecha'),
+            })->label('Fecha de Uso')->searchable(),
             Column::callback(['prefix', 'ncf'], function ($prefix, $ncf) {
                 return $ncf;
             })->label('NCF')->searchable()->filterable([
@@ -48,21 +60,22 @@ class ComprobantesTable extends LivewireDatatable
                 'B03' => 'Nota de Débito',
                 'B04' => 'Nota de Crédito',
             ]),
-
             Column::callback('status', function ($status) {
                 return ucwords($status);
             })->label('Estado')->filterable(['Usado', 'Disponible']),
-            Column::callback('id', function ($id) use ($comprobantes) {
-                $result = arrayFind($comprobantes, 'id', $id);
-                if ($result['invoice']) {
-                    return '<a href="' . route('invoices.show', $result['invoice']['id']) . '">' . $result['invoice']['number'] . '</a>';
-                     
-                } else if ($result['creditnote']) {
-                    return $result['creditnote']['invoice']['number'];
+            Column::callback(['invoices.id', 'creditnotes.id', 'invoices.number'], function ($invoiceId, $creditId, $invoiceNumber) {
+                if ($invoiceId) {
+                    return '<a href="' . route('invoices.show', $invoiceId) . '">' . ltrim(substr($invoiceNumber, strpos($invoiceNumber, '-') + 1), '0') . '</a>';
+                } else if ($creditId) {
+                    return $creditId;
                 } else {
                     return 'N/D';
-                }
-            })->label('Factura')->searchable(),
+                };
+            })->label('Doc.')->searchable(),
+            Column::callback(['invoices.name', 'clients.name'], function ($name, $client_name) {
+              ellipsis( $name?:($client_name?:'N/D'), 20);
+            })->label('Cliente.')->searchable(),
+            /* 
             Column::callback(['type', 'id'], function ($type, $id) use ($comprobantes) {
                 $result = arrayFind($comprobantes, 'id', $id);
                 if ($result['invoice']) {
@@ -100,7 +113,7 @@ class ComprobantesTable extends LivewireDatatable
                 } {
                     return 'N/D';
                 };
-            })->label('Cajero'),
+            })->label('Cajero'), */
         ];
     }
 }

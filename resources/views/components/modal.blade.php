@@ -1,8 +1,8 @@
-@props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitV'=>true, 'title', 'hideButton'=>false, 'zindex'=>'1800', 'minHeight'=>'min-h-[85vh]'])
+@props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitV'=>true, 'title', 'hideButton'=>false, 'zindex'=>'1800', 'minHeight'=>'min-h-[85vh]', 'listenOpen'=>false])
 <div class="w-full " x-data="{ open: {{$open?'true':'false'}} }" x-cloak @keydown.escape.window="open = false">
     {{-- Modal Main Button --}}
     <div class="{{$hideButton?'hidden':''}}">
-        <button id="btn{{$attributes['id']}}" type="button" x-on:click.prevent="open = ! open"
+        <button id="btn{{$attributes['id']}}" type="button" @if ($listenOpen) wire:click="modalOpened" @endif x-on:click="open = ! open"
             class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
             {{ $button }}
         </button>

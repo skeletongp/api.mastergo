@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Products;
 use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -41,7 +42,10 @@ class CreateProduct extends Component
     public function mount()
     {
         $store=auth()->user()->store;
-        $num=$store->products()->count()+1;
+        if(!Cache::get('productCount'.env('STORE_ID'))){
+            Cache::put('productCount'.env('STORE_ID'),$store->products()->withTrashed()->count());
+        }
+        $num = Cache::get('productCount'.env('STORE_ID')) + 1;
         $code=str_pad($num,3,'0', STR_PAD_LEFT);
         $this->form['code']=$code;
         $this->form['type']='Producto';
@@ -73,6 +77,7 @@ class CreateProduct extends Component
         $this->attachToPlace($product);
         $this->reset();
         $this->mount();
+        Cache::forget('productCount'.env('STORE_ID'));
         $this->emit('showAlert','Producto registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');
     }

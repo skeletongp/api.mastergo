@@ -14,26 +14,21 @@ use Livewire\WithFileUploads;
 class OrderConfirm extends Component
 {
     use OrderContable, OrderConfirmTrait, WithFileUploads, Authorize;
-    public  $form, $compAvail = true, $cobrable=true, $copyCant=1;
+    public  $form, $compAvail = true, $cobrable = true, $copyCant = 1;
     public $banks, $bank, $bank_id, $reference;
-    protected $listeners=['payInvoice', 'reload'=>'render'];
+    protected $listeners = ['payInvoice', 'reload' => 'render'];
 
     public function mount($invoice)
     {
         $store = auth()->user()->store;
-        $user=auth()->user();
+        $user = auth()->user();
         $this->form = $invoice;
         unset($invoice['payment']['id']);
-        $this->form = array_merge($this->form, $invoice['payment']);
-        if ($invoice['client']['debt']>0 || $invoice['condition']!='De Contado') {
-           $this->cobrable=false;
-        }
-        if ($user->hasRole('Administrador')) {
-            $this->cobrable=true;
-        }
         
-        $this->form['contable_id'] = auth()->user()->id;
-        $this->updatedForm($this->form['efectivo'], 'efectivo');
+        if ($user->hasRole('Administrador')) {
+            $this->cobrable = true;
+        }
+
     }
     public function updatedCopyCant()
     {
@@ -50,7 +45,7 @@ class OrderConfirm extends Component
             case 'tarjeta':
             case 'transferencia':
                 $this->form['payed'] = floatVal($this->form['efectivo']) +
-                   floatVal( $this->form['tarjeta']) + floatVal($this->form['transferencia']);
+                    floatVal($this->form['tarjeta']) + floatVal($this->form['transferencia']);
                 break;
 
             default:
@@ -64,14 +59,27 @@ class OrderConfirm extends Component
     public function validateData($invoice)
     {
         $rules = orderConfirmRules();
-       
+
         if ($this->form['transferencia'] > 0) {
             $rules = array_merge($rules, ['bank' => 'required']);
             $rules = array_merge($rules, ['reference' => 'required']);
         }
-        
+
         $this->bank = Bank::find($this->bank_id);
         $this->validate($rules);
     }
-   
+    public function modalOpened()
+    {
+        $this->form = Invoice::find($this->invoice['id'])
+        ->load('seller',  'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment.pdf', 'store.image', 'comprobante', 'pdf', 'place.preference')->toArray();
+        $payment=$this->form['payment'];
+        unset($payment['id']);
+        unset($this->form['payment']);
+        $this->form = array_merge($this->form, $payment);
+       /*   if ($invoice['client']['debt']>0 || $invoice['condition']!='De Contado') {
+           $this->cobrable=false;
+        } */
+        $this->form['contable_id'] = auth()->user()->id;
+        $this->updatedForm($this->form['efectivo'], 'efectivo');
+    }
 }

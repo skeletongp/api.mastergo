@@ -3,10 +3,19 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
+
 
 class DebugMiddleware
 {
+
+    protected $auth;
+
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
     /**
      * Handle an incoming request.
      *
@@ -21,7 +30,8 @@ class DebugMiddleware
         }
         else {
             \Debugbar::disable();
-        }
+        } 
+        
         return $next($request);
     }
 }

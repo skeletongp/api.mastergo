@@ -1,7 +1,7 @@
 <div class="">
         @include('includes.authorize')
    
-    <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl">
+    <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl" :listenOpen="true">
         <x-slot name="button">
             <span>
                 Cobrar
@@ -18,12 +18,12 @@
             </div> --}}
             <div class="col-span-2">
                 <x-base-input class="text-xl font-bold" label="Vendedor" id="form{{ $form['id'] }}.seller" disabled
-                    value="{{ $form['seller']['fullname'] }}">
+                    wire:model="form.seller.name">
                     </x-input>
             </div>
             <div class="col-span-2">
                 <x-base-input class="text-xl font-bold" label="Cliente" id="form{{ $form['id'] }}.client" disabled
-                    value="{{ $form['name'] ?: ($form['client']['name'] ?: $form['client']['fullname']) }}">
+                    wire:model="form.name">
                     </x-input>
             </div>
 

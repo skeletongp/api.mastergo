@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Clients;
 
 use App\Models\Client;
 use App\Models\CountMain;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -19,7 +20,10 @@ class CreateClient extends Component
     public function render()
     {
         $store = auth()->user()->store;
-        $num = $store->clients()->count() + 1;
+        if(!Cache::get('clientCount'.env('STORE_ID'))){
+            Cache::put('clientCount'.env('STORE_ID'),$store->clients()->withTrashed()->count());
+        }
+        $num = Cache::get('clientCount'.env('STORE_ID')) + 1;
         $code = str_pad($num, 3, '0', STR_PAD_LEFT);
         $this->form['code'] = $code;
         return view('livewire.clients.create-client');
@@ -62,6 +66,7 @@ class CreateClient extends Component
 
         $this->reset();
         $this->render();
+        Cache::forget('clientCount'.env('STORE_ID'));
         $this->emit('showAlert', 'Cliente registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
     }

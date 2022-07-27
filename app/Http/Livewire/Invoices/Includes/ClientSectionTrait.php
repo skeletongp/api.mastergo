@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 trait ClientSectionTrait
 {
 
-    public $client, $client_code, $clientNameCode, $clients, $name, $rnc;
+    public $client, $client_code, $clientNameCode, $clients=[], $name, $rnc;
 
     public function changeClient()
     {

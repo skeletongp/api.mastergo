@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ViewCompileCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,10 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
+    protected $commands = [
+        ViewCompileCommand::class,
+        //your other commands
+    ];
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');

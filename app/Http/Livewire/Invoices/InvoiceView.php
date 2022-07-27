@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Invoices;
 
 use App\Events\NewInvoice;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,16 +24,8 @@ class InvoiceView extends Component
     
     public function render()
     {
-        $invoices = auth()->user()->place->invoices()->orderBy('updated_at', 'desc')
-        ->where('status', '!=', 'waiting')->with('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference')->paginate(6);
         
-        
-        if (!$this->currentInvoice && $invoices->count()) {
-            $this->currentInvoice = $invoices->first();
-            $this->invoice = $invoices->first();
-            $this->payment = $this->invoice->payment;
-        }
-        return view('livewire.invoices.invoice-view', ['invoices' => $invoices]);
+        return view('livewire.invoices.invoice-view');
     }
     public function setPDF($id)
     {

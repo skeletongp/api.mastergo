@@ -19,7 +19,7 @@ class TableClient extends LivewireDatatable
 
     public function builder()
     {
-        $clients = auth()->user()->store->clients()->whereNull('deleted_at');
+        $clients = auth()->user()->store->clients()->with('image','contable')->whereNull('deleted_at');
         return $clients;
     }
 
@@ -48,7 +48,7 @@ class TableClient extends LivewireDatatable
             })->label('Crédito')->searchable()->headerAlignCenter(),
             Column::callback(['updated_at', 'id'], function ($updated, $id) use ($clients) {
                 $client = arrayFind($clients, 'id', $id);
-                return  '$' . formatNumber($client['debt']);
+                return  '$' . formatNumber($client['contable']['balance']);
             })->label('Deuda')->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Documento')->searchable()->headerAlignCenter(),

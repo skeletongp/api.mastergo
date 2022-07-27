@@ -48,12 +48,12 @@ trait Showclient
         $client = Client::whereId($this->client['id'])->first();
 
         if ($client && $client->id !== $invoice->client_id) {
-            $invoice->client->limit = $invoice->client->limit + $this->invoice->payment->rest;
+            $invoice->client->limit = $invoice->client->limit + $this->invoice->rest;
             $invoice->client->save();
             if(!$client->contable){
                 setContable($client,'101','debit',$client->fullname,null, true);
             }
-            setTransaction('Cambio de cliente Fact. No. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $invoice->payment->rest, $client->contable, $invoice->client->contable);
+            setTransaction('Cambio de cliente Fact. No. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $invoice->rest, $client->contable, $invoice->client->contable);
             $client->limit = $client->limit - $invoice->payment->rest;
             $client->save();
             $invoice->update(['client_id' => $client->id]);
