@@ -31,7 +31,7 @@ class InvoiceController extends Controller
     }
     public function show(Invoice $invoice)
     {
-        $invoice=$invoice->load('seller','contable','client','details.product.units','details.taxes','details.unit', 'payment','store.image','payments.pdf', 'comprobante','pdf','place.preference','creditnote');
+        $invoice=$invoice;
        return  view('pages.invoices.show', compact('invoice'));
     }
 }

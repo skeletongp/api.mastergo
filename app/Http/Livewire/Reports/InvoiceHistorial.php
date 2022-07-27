@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports;
 
+use App\Http\Classes\NumberColumn ;
 use App\Http\Livewire\UniqueDateTrait;
 use App\Models\Invoice;
 use App\Models\Payment;
@@ -20,62 +21,54 @@ class InvoiceHistorial extends LivewireDatatable
 
     public function builder()
     {
+       
         $place = auth()->user()->place;
         $invoices =
-            Invoice::where('invoices.place_id', $place->id)
+            Payment::where('invoices.place_id', $place->id)
             ->orderBy('invoices.created_at', 'desc')
-            ->join('payments', 'payments.payable_id', '=', 'invoices.id')
+            ->join('invoices', 'payments.payable_id', '=', 'invoices.id')
             ->where('payments.payable_type', '=', 'App\Models\Invoice')
-            ->select('invoices.*', 'payments.id as payment_id', 'payments.efectivo as efectivo', 'payments.transferencia as transferencia', 'payments.cambio as cambio', 'payments.payed as payed','clients.name as client_name')
             ->join('clients', 'clients.id', '=', 'invoices.client_id')
-            ->where('status', '=', 'cerrada');
+            ->selectRaw('invoices.*, clients.name as client_name')
+            ->where('status', '=', 'cerrada')
+            ->groupBy('invoices.id');
         return $invoices;
     }
-
+    
+    public function bindClasses(){
+       
+    }
     public function columns()
     {
         return [
-            Column::callback(['id','rest'], function ($id, $rest)  {
-                if ($rest>0) {
+            Column::callback(['id', 'rest'], function ($id, $rest) {
+                if ($rest > 0) {
                     return "  <a href=" . route('invoices.show', [$id, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) .
                         "><span class='fas w-8 text-center fa-hand-holding-usd'></span> </a>";
                 } else {
                     return "  <a href=" . route('invoices.show', $id) . "><span class='fas w-8 text-center fa-eye'></span> </a>";
                 }
             })->label(''),
-            Column::callback(['number'], function ($number) {
+            Column::callback(['invoices.number'], function ($number) {
                 $number = ltrim(substr($number, strpos($number, '-') + 1), '0');
                 return $number;
             })->label('Nro.')->searchable(),
-            DateColumn::name('created_at')->label('Fecha')->format('d/m/Y h:i A')->searchable()->filterable(),
-            Column::callback(['clients.name', 'name'], function ($client, $name) {
-
+            DateColumn::name('invoices.created_at')->label('Fecha')->format('d/m/Y h:i A')->searchable()->filterable(),
+            Column::callback(['clients.name', 'invoices.name'], function ($client, $name) {
                 return ellipsis($name ?: $client, 20);
             })->label('Cliente')->searchable(),
-            Column::name('condition')->label('Condición')->filterable([
+            Column::name('invoices.condition')->label('Condición')->filterable([
                 'De Contado', 'Contra Entrega', '1 A 15 Días', '16 A 30 Días', '31 A 45 Dïas'
             ]),
-            Column::callback(['payments.total','payments.payed','payments.cambio'], function ($total, $payed, $cambio)  {
-                
-                return '$ <b>' . formatNumber($total).'</b>';
-            })->label('Monto'),
-
-            Column::callback(['payments.efectivo', 'payments.cambio'], function ($efectivo, $cambio)  {
-                $efectivo=$efectivo-$cambio;
-                return '$' . formatNumber($efectivo>0?$efectivo:0);
-            })->label('Efectivo'),
-            Column::callback(['payments.transferencia', 'payments.cambio'], function ($transferencia, $cambio)  {
-                return '$' . formatNumber($transferencia);
-            })->label('Transf.'),
-            Column::callback(['payments.payed', 'payments.cambio'], function ($payed, $cambio)  {
-                return '$' . formatNumber($payed-$cambio);
-            })->label('Pagado'),
-
-            Column::callback(['rest'], function ($rest) {
-                return '$' . formatNumber($rest);
-            })->label('Pend.'),
+            NumberColumn::raw('total')->label('Total')->searchable()->formatear('money'),
+            NumberColumn::raw('SUM(efectivo) AS efectivo')->label('Efectivo')->formatear('money'),
+            NumberColumn::raw('SUM(transferencia) AS transferencia')->label('Transf.')->formatear('money'),
+            NumberColumn::raw('SUM(payed) AS payed')->label('Pagado')->formatear('money'),
+            NumberColumn::raw('SUM(cambio) AS cambio')->label('cambio')->formatear('money'),
+            NumberColumn::raw('invoices.rest')->label('Resta')->formatear('money'),
             /* Column::checkbox()->label('Seleccionar'), */
 
         ];
     }
+   
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Invoices;
 
+use App\Http\Classes\NumberColumn;
 use App\Models\Invoice;
+use App\Models\Payment;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -19,37 +21,39 @@ class InvoiceList extends LivewireDatatable
     {
         $place=auth()->user()->place;
         $invoices = 
-            Invoice::where('invoices.place_id',$place->id)
-            ->join('clients', 'clients.id', '=', 'invoices.client_id')
-            ->leftjoin('payments', 'payments.payable_id', '=', 'invoices.id')
-            ->where('payments.payable_type', 'App\Models\Invoice')
-            ->where('status', 'cerrada')
-            ->select('clients.name as client_name')
-            ->orderBy('invoices.id', 'desc')->groupBy('invoices.id');
+        Payment::where('invoices.place_id', $place->id)
+        ->orderBy('invoices.created_at', 'desc')
+        ->join('invoices', 'payments.payable_id', '=', 'invoices.id')
+        ->where('payments.payable_type', '=', 'App\Models\Invoice')
+        ->join('clients', 'clients.id', '=', 'invoices.client_id')
+        ->selectRaw('invoices.*, clients.name as client_name')
+        ->where('status', '=', 'cerrada')
+        ->groupBy('invoices.id');
            ;
         return $invoices;
     }
 
     public function columns()
     {
-        $invoices = $this->builder()->get()->toArray();
         return [
             
-            Column::name('number')->label('Orden')->searchable()->sortable(),
-            DateColumn::name('created_at')->label('hora')->format('d/m/Y H:i')->hide(),
-            Column::callback(['clients.name','name'], function($cltname, $name){
-                return ellipsis($name?:$cltname, 16);
-            })->label('Cliente')->searchable(),
-            Column::callback(['invoices.rest', 'payments.total'], function ($rest, $total)  {
-                $debe = " <span class='fas fa-times text-red-400'></span>";
-                $pagado = " <span class='fas fa-check text-green-400'></span>";
+            Column::callback(['invoices.number','invoices.rest'], function ($number, $rest){
+                $number = ltrim(substr($number, strpos($number, '-') + 1), '0');
+                $debe = " <span class='fas fa-times text-red-400 pr-2'></span>";
+                $pagado = " <span class='fas fa-check text-green-400 pr-2'></span>";
                 $mark = $pagado;
                 if ($rest > 0) {
                     $mark = $debe;
                 }
-                return '$' . formatNumber($total) . $mark;
-            })->label('Monto'),
-            Column::callback('id', function ($id) use ($invoices) {
+                return $mark.$number;
+            })->label('Nro.')->searchable(),
+            DateColumn::name('invoices.created_at')->label('hora')->format('d/m/Y H:i')->hide(),
+            Column::callback(['clients.name','invoices.name'], function($cltname, $name){
+                return ellipsis($name?:$cltname, 16);
+            })->label('Cliente')->searchable(),
+            NumberColumn::raw('total')->label('Total')->searchable()->formatear('money'),
+            NumberColumn::raw('invoices.rest')->label('Resta')->searchable()->formatear('money'),
+            Column::callback('invoices.id', function ($id)  {
                 return view('livewire.invoices.includes.actions', ['value' => $id]);
             })->label('Acciones')->contentAlignCenter()->headerAlignCenter()
         ];
