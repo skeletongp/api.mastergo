@@ -26,10 +26,10 @@ class DebugMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user() && auth()->user()->id==1) {
-            \Debugbar::enable();
+            debugbar()->enable();
         }
         else {
-            \Debugbar::disable();
+            debugbar()->disable();
         } 
         
         return $next($request);

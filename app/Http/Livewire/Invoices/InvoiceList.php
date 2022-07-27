@@ -24,7 +24,6 @@ class InvoiceList extends LivewireDatatable
             ->leftjoin('payments', 'payments.payable_id', '=', 'invoices.id')
             ->where('payments.payable_type', 'App\Models\Invoice')
             ->where('status', 'cerrada')
-            ->where('invoices.day', '=', now()->format('Y-m-d'))
             ->select('clients.name as client_name')
             ->orderBy('invoices.id', 'desc')->groupBy('invoices.id');
            ;

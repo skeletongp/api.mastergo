@@ -14,7 +14,6 @@ class PaymentsFromInvoice extends LivewireDatatable
     public $headTitle='Historial de pagos';
     public function builder()
     {
-       
         return $this->invoice->payments()->with('payable.store', 'payable.payment', 'payer', 'payer', 'place.preference', 'contable')->orderBy('id','desc');
     }
 
