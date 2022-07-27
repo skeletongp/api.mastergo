@@ -52,7 +52,7 @@ Route::controller(AuthController::class)->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::middleware(['debug'])->group(function () {
+    Route::middleware(['web'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
 
         Route::controller(UserController::class)->group(function () {
