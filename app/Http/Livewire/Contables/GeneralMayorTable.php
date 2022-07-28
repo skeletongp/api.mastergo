@@ -33,7 +33,7 @@ class GeneralMayorTable extends LivewireDatatable
     {
         return [
             Column::callback(['counts.name', 'counts.code', 'counts.currency'], function ($name, $code, $currency) {
-                return ellipsis($code . '- ' . $name . '- ' . $currency, 30);
+                return ellipsis($code . '- ' . $name . '- ' . $currency, 38);
             })->label('Cuenta')->searchable(),
             ClassesNumberColumn::name('debe.income:sum')->label('Débito')->enableSummary()->formatear('money'),
             ClassesNumberColumn::name('haber.outcome:sum')->label('Crédito')->enableSummary()->formatear('money'),
