@@ -38,15 +38,7 @@ class GeneralMayorTable extends LivewireDatatable
             ClassesNumberColumn::name('debe.income:sum')->label('Débito')->enableSummary()->formatear('money'),
             ClassesNumberColumn::name('haber.outcome:sum')->label('Crédito')->enableSummary()->formatear('money'),
             ClassesNumberColumn::raw('counts.balance')->label('Balance')->enableSummary()->formatear('money','font-bold'),
-            /* 
-            Column::name('count_main_id')->callback(['count_main_id','id'], function($countMain, $id) use ($counts){
-                $count=arrayFind($counts, 'id',$id);
-                return '$'.formatNumber(array_sum(array_column($count['haber'],'outcome')));
-            })->label('Crédito')->enableSummary()->contentAlignRight(),
-            Column::callback(['balance'], function($balance){
-                return "<span class='font-bold'>".'$'.formatNumber($balance)."</span>";
-            })->label('Balance ')->contentAlignRight(), */
-
+           
         ];
     }
     public function summarize($column)
