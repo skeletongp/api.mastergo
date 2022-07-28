@@ -33,7 +33,7 @@ class Product extends Model implements Searchable
         self::creating(function ($model) {
           if (auth()->user()) {
             $store=optional(auth()->user())->store;
-            $num=$store->products()->count()+1;
+            $num=$store->products()->withTrashed()->count()+1;
             $code=str_pad($num,3,'0', STR_PAD_LEFT);
             $model->code=$code;
           }

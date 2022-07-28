@@ -18,7 +18,7 @@ class ClientObserver
         Cache::forget('store_' . $client->store_id);
         Cache::forget('place_' . $client->store_id);
         $store=optional(auth()->user())->store?:Store::first();
-        $num=$store->clients()->count()+1;
+        $num=$store->clients()->withTrashed()->count()+1;
         $code=str_pad($num,4,'0', STR_PAD_LEFT);
         $client->code = $code;
     }

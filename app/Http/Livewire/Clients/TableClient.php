@@ -35,10 +35,10 @@ class TableClient extends LivewireDatatable
                     return view('components.avatar', ['url'=>route('clients.show',$id),'avatar' => env('NO_IMAGE')]);
                 }
             }),
-            Column::callback(["name", "id"], function ($name, $id) use ($clients) {
+            Column::callback(["name", 'code', "id"], function ($name, $code, $id) use ($clients) {
                 $result = arrayFind($clients, 'id', $id);
                 if ($name) {
-                    return ellipsis($name, 25);
+                    return ellipsis($code.'-'.$name, 25);
                 }
                 return ellipsis($result['contact']['fullname'], 25);
             })->searchable()->label('Nombre'),
