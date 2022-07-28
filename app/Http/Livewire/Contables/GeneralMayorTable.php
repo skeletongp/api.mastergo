@@ -22,9 +22,7 @@ class GeneralMayorTable extends LivewireDatatable
 
             Count::where('counts.place_id', auth()->user()->place->id)
             ->orderBy('code')
-            ->leftJoin('transactions as haber', 'counts.id', '=', 'haber.creditable_id')
-            ->leftJoin('transactions as debe', 'counts.id', '=', 'debe.debitable_id')
-            ->groupBy('counts.id');
+            ->where('balance', '>', 0)
             ;
         return $counts;
     }
@@ -35,9 +33,11 @@ class GeneralMayorTable extends LivewireDatatable
             Column::callback(['counts.name', 'counts.code', 'counts.currency'], function ($name, $code, $currency) {
                 return ellipsis($code . '- ' . $name . '- ' . $currency, 38);
             })->label('Cuenta')->searchable(),
-            ClassesNumberColumn::name('debe.income:sum')->label('Débito')->enableSummary()->formatear('money'),
-            ClassesNumberColumn::name('haber.outcome:sum')->label('Crédito')->enableSummary()->formatear('money'),
-            ClassesNumberColumn::raw('counts.balance')->label('Balance')->enableSummary()->formatear('money','font-bold'),
+            Column::callback('origin', function($origin){
+                return $origin=='debit'?'Deudor':'Acreedor';
+            
+            })->label('Saldo'),
+            ClassesNumberColumn::raw('counts.balance')->label('Balance')->formatear('money','font-bold'),
            
         ];
     }

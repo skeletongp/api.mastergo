@@ -141,10 +141,10 @@
                             <x-side-link routeName='contables.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
                                 text='Diario General' activeRoute="home.*" scope="Reportes" />
                         @endcan
-                        @can('Ver Transacciones')
+                       {{--  @can('Ver Transacciones')
                             <x-side-link routeName='contables.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
                                 text='Balance General' activeRoute="home.*" scope="Reportes" />
-                        @endcan
+                        @endcan --}}
                         @can('Ver Comprobantes')
                             <x-side-link routeName='comprobantes.index' icon='far w-10 text-center fa-receipt fa-lg'
                                 text='Comprobantes' activeRoute="comprobantes.*" scope="Impuestos" />
