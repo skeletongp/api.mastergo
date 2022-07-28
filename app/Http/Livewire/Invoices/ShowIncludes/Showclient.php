@@ -26,6 +26,7 @@ trait Showclient
                 'contact'=>$client->contact,
             ];
         }
+       
         
     }
     public function updatedClientCode()

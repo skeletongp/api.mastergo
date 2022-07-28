@@ -24,6 +24,9 @@
         @page{
             size: 215.4mm 255mm;
         }
+        *{
+            background-color: transparent !important;
+        }
         body {
             font-family: Arial, Helvetica, sans-serif;
             text-align: center;
@@ -34,21 +37,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         }
 
-        .sello {
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            position: absolute;
-            background-image: url('{{ $img }}');
-            background-size: 30%;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: -5;
-            opacity: 0.2;
-            transform: rotate(-45deg)
-        }
-
+     
         body h1 {
             font-weight: 300;
             margin-bottom: 0px;

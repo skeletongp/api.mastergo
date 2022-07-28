@@ -74,7 +74,7 @@
     <div class="">
         <livewire:invoices.show-includes.payments-from-invoice :invoice="$invoice->load('payments')" :key="$invoice->id" />
     </div>
-    @include('livewire.invoices.includes.invoice-js')
+    
     @push('js')
         <script>
             var prevVal = 0;

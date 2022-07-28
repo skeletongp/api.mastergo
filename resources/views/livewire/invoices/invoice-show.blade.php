@@ -1,4 +1,5 @@
     <div class="grid grid-cols-7 lg:gap-4 ">
+        @include('livewire.invoices.includes.invoice-js')
         <div class="col-span-2">
             <button
                 class="space-x-2 z-50 text-4xl absolute bg-gray-200 bg-opacity-20 top-0 bottom-0 left-0 right-0 bg-transparent"
@@ -10,7 +11,7 @@
                 <span class="text-green-600 font-bold"> {{ $includeTitle }}</span>
             </h1>
             <div class="p-4 ">
-                <x-button wire:click="setIncludeElement('showproducts','Productos')"
+                <x-button wire:click="setIncludeElement('showresume','Resumen')"
                     class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
                         <span class="w-6 text-left far fa-file-alt"></span>
@@ -114,6 +115,9 @@
                 @break
 
                 @case('showhistory')
+                    @include('livewire.invoices.showincludes.' . $includeName)
+                @break
+                @case('showresume')
                     @include('livewire.invoices.showincludes.' . $includeName)
                 @break
             @endswitch

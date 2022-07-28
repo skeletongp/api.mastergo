@@ -7,6 +7,7 @@ use App\Http\Livewire\Invoices\ShowIncludes\Showclient;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowCredit;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowPayments;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowProducts;
+use App\Http\Livewire\Invoices\ShowIncludes\ShowResume;
 use App\Http\Livewire\Invoices\ShowIncludes\ShowUsers;
 use App\Models\Invoice;
 use Carbon\Carbon;
@@ -15,7 +16,7 @@ use Livewire\WithFileUploads;
 
 class InvoiceShow extends Component
 {
-    use Showclient, Authorize, ShowProducts, ShowUsers, ShowPayments, WithFileUploads, ShowCredit;
+    use Showclient, Authorize, ShowProducts, ShowUsers, ShowPayments, WithFileUploads, ShowCredit, ShowResume;
 
     public Invoice $invoice;
     public $includeName = "showclient";

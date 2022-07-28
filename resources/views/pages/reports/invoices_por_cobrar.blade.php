@@ -8,5 +8,9 @@
             <livewire:reports.invoice-por-cobrar/>
         </div>
     </div>
+   @push('js')
+       <script>
+       </script>
+   @endpush
 
 </x-app-layout>
