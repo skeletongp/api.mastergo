@@ -20,14 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
-use App\Jobs\CreatePDFJob;
-use App\Models\Cotize;
-use App\Models\Invoice;
-use App\Models\Payment;
-use App\Models\ProductPlaceUnit;
-use App\Models\Store;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -152,6 +145,20 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('prueba', function () {
-  
+    $basic  = new \Vonage\Client\Credentials\Basic("1f170478", "qnELawAoru6keAr0");
+    $client = new \Vonage\Client($basic);
+    $response = $client->sms()->send(
+        new \Vonage\SMS\Message\SMS("18493153337", 'ATRIONTECH', 'A text message sent using the Nexmo SMS API')
+    );
+    
+    $message = $response->current();
+    
+    if ($message->getStatus() == 0) {
+        Log::info( "The message was sent successfully\n");
+    } else {
+        Log::info("The message failed with status: " . $message->getStatus() . "\n");
+    }
   return redirect()->route('reports.invoices_por_cobrar');
 })->name('prueba');
+
+?>
