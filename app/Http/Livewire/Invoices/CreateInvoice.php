@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Invoices;
 
 
-use App\Http\Livewire\General\Authorize;
 use App\Http\Traits\Livewire\WithPagination;
 
 use Livewire\Component;
@@ -11,6 +10,7 @@ use App\Http\Livewire\Invoices\Includes\ClientSectionTrait;
 use App\Http\Livewire\Invoices\Includes\DetailsSectionTrait;
 use App\Http\Livewire\Invoices\Includes\GenerateInvoiceTrait;
 use App\Http\Livewire\Invoices\Includes\InvoiceData;
+use App\Http\Traits\Livewire\Confirm;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -19,14 +19,14 @@ use SNMP;
 
 class CreateInvoice extends Component
 {
-    use WithPagination, ClientSectionTrait, GenerateInvoiceTrait, DetailsSectionTrait, InvoiceData, Authorize;
+    use WithPagination, ClientSectionTrait, GenerateInvoiceTrait, DetailsSectionTrait, InvoiceData, Confirm;
     public $form = [], $cant = 0, $price, $discount = 0, $total, $taxTotal = 0, $scanned;
     public $localKeys=[], $localDetail;
     public $details = [], $banks;
     public $producto;
     public $action;
     public  $unit, $unit_id;
-    protected $listeners = ['selProducto', 'tryAddItems', 'realoadClients', 'confirmedAddItems', 'sendInvoice'];
+    protected $listeners = ['selProducto', 'validateAuthorization', 'realoadClients', 'confirmedAddItems', 'sendInvoice'];
     protected $queryString = ['details', 'client', 'client_code', 'vence', 'condition', 'type'];
 
 

@@ -1,7 +1,7 @@
 <div class="">
-        @include('includes.authorize')
+      
    
-    <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl" :listenOpen="true">
+    <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl" :listenOpen="true" :clickAway="false">
         <x-slot name="button">
             <span>
                 Cobrar

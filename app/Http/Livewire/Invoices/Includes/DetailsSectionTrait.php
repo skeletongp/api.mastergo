@@ -41,8 +41,7 @@ trait DetailsSectionTrait
         $this->validate(['product' => 'required']);
 
         if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar') && $this->product['type'] != 'Servicio') {
-            $this->action = 'confirmedAddItems';
-            $this->emit('openAuthorize', 'Para vender producto fuera de stock');
+            $this->authorize('Vender producto fuera de Stock', 'validateAuthorization','confirmedAddItems','data=null','Autorizar');
         } else {
             $this->confirmedAddItems();
         }
@@ -62,7 +61,6 @@ trait DetailsSectionTrait
     }
     public function confirmedAddItems()
     {
-        // $this->updatingPrice($this->price);
         $this->price = str_replace(',', '', $this->price);
         $this->form['id'] = count($this->details);
         $this->form['cant'] = $this->cant;

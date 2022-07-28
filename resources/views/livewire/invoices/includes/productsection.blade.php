@@ -2,6 +2,7 @@
     <table class="w-max border-collapse border-2 text-sm text-left text-gray-900 dark:text-gray-400 table-auto">
         <thead class="text-sm text-gray-800 uppercase  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+               
                 <th scope="col" class="px-2 py-3 border border-gray-200 text-center block">
                     Cód.
                 </th>

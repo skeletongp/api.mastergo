@@ -73,8 +73,7 @@ trait GenerateInvoiceTrait
          && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
 
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
-            $this->action = 'sendInvoice';
-            $this->emit('openAuthorize', 'Cliente ha superado su crédito');
+            $this->authorize('El cliente ha superado su crédito', 'validateAuthorization','sendInvoice','data=null','Autorizar');
         } else {
             $this->sendInvoice();
         }

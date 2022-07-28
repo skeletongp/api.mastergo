@@ -39,9 +39,9 @@ trait Confirm
     {
         
         $user = auth()->user();
-        if (!$user->hasPermissionTo('Autorizar')) {
+       /*  if (!$user->hasPermissionTo('Autorizar')) {
             throw new AuthorizationException();
-        }
+        } */
         if ($permission && $user->hasPermissionTo($permission)) {
             $this->emit($method);
             return;
@@ -67,6 +67,7 @@ trait Confirm
     }
     public function validateAuthorization($data)
     {
+
         $approved = false;
         foreach (admins() as $name => $pwd) {
             if (Hash::check($data['value'], $pwd)) {

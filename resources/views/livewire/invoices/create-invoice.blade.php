@@ -59,7 +59,7 @@
         </div>
 
     </div>
-    @include('includes.authorize')
+    
     @include('livewire.invoices.includes.invoice-js')
     @include('livewire.invoices.includes.print-order')
 
