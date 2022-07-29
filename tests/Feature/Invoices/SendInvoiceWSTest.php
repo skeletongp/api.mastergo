@@ -19,7 +19,7 @@ class SendInvoiceWSTest extends TestCase
        
        $cellphone='(829) 804-1907';
        $path='https://paratesis.com/storage/invoices/1-0000011_20220728_letter.pdf';
-       sendInvoiceWS($path, $cellphone);
+       sendInvoiceWS($path, $cellphone, 'Factura Nº. 1');
          $this->assertTrue(true);
     }
 }

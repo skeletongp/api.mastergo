@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -140,5 +141,14 @@ class Client extends Model implements Searchable
         }
         $place = Place::find($place_id);
         return $place->transactions()->whereIn('creditable_id', $counts)->orWhereIn('debitable_id', $counts)->orderBy('created_at', 'desc');
+    }
+    public function sendCatalogue()
+    {
+        $path=Cache::get('productCatalogue_'.env('STORE_ID'));
+        
+        if(!$path){
+            $path="https://atriontechsd.nyc3.digitaloceanspaces.com/files2/cat%C3%A1logo/catalogo%20de%20productos.pdf";
+        }
+        sendWSCatalogue($this->contact->cellphone, $path);
     }
 }

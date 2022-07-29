@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Http\Classes\NumberColumn as ClassesNumberColumn;
 use App\Models\Invoice;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,37 +15,26 @@ use function PHPUnit\Framework\isNan;
 class LastProducts extends LivewireDatatable
 {
     public $headTitle = "Más vendidos hoy";
-    public $perPage=10;
-    public $padding="px-2";
+    public $perPage = 10;
+    public $padding = "px-2";
     public function builder()
     {
         $details = auth()->user()->place->details()
-            ->select(DB::raw('product_id, SUM(cant) as cant, id'))
+            ->leftjoin('products', 'products.id', '=', 'details.product_id')
             ->where('detailable_type', Invoice::class)
-            ->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'))
-            ->orderBy('cant', 'desc')->with('product')->distinct()->groupBy('product_id')
-            ;
+            ->whereDate('details.created_at', '=', Carbon::now()->subDay()->format('Y-m-d'))
+            ->orderBy('details.cant', 'desc')->distinct()->groupBy('product_id');
         return $details;
     }
 
     public function columns()
     {
-        $details = $this->builder()->get()->toArray();
         return [
             Column::index($this, 'unit_id')->label('Nº.'),
-            Column::callback(['cant', 'id'], function ($cant, $id)  use ($details) {
-                $det = arrayFind($details, 'id', $id);
-                if(!is_array($det)){
-                    return $cant;
-                }
-                return  formatNumber($det['cant']);
-            })->label('Cant.'),
-            Column::callback(['id', 'product_id'], function ($id) use ($details) {
-                $det = arrayFind($details, 'id', $id);
-                if(!is_array($det)){
-                    return $det;
-                }
-                return $det['product']['name'];
+            ClassesNumberColumn::raw('SUM(details.cant) AS cant')->label('Cant.')->formatear('number'),
+            Column::callback(['products.name'], function ($prod) {
+               
+                return $prod;
             })->label('Producto')
         ];
     }

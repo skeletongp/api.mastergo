@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -46,5 +48,22 @@ class ProductController extends Controller
     public function sum()
     {
         return view('pages.products.sum');
+    }
+    public function catalogue(){
+         $place = auth()->user()->place;
+        $store=auth()->user()->store;
+        $products = $place->products()->with('units')->get();
+ 
+        $PDF = App::make('dompdf.wrapper');
+        $data = [
+            'products' => $products,
+    
+        ];
+        $pdf = $PDF->loadView('pages.products.catalogue', $data);
+        $name = 'files' . $store->id . '/catálogo/catalogo de productos.pdf';
+        Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
+        $url = Storage::url($name);
+        Cache::put('productCatalogue_'.env('STORE_ID'), $url);
+        return view('pages.products.view-catalogue', compact('url'));
     }
 }

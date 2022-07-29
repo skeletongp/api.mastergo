@@ -57,6 +57,8 @@
         },
         "files": [
             "app/Helpers/InvoiceHelper.php",
+            "app/Helpers/ClientHelper.php",
+            "app/Helpers/ProductHelper.php",
             "app/Helpers/FormRequestHelper.php",
             "app/Helpers/ContableHelper.php",
             "app/Helpers/Universal.php"

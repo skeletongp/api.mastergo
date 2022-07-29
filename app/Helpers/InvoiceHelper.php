@@ -1,14 +1,7 @@
 <?php
-
-use App\Models\Filepdf;
-
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
-use Monolog\Handler\SendGridHandler;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 use Netflie\WhatsAppCloudApi\Message\Media\LinkID;
-use Netflie\WhatsAppCloudApi\Message\Media\MediaObjectID;
 
 function setPDFPath($invoice)
 {
@@ -52,6 +45,7 @@ function sendInvoiceWS($path, $phone, $number)
     $document_link = $path;
     $link_id = new LinkID($document_link);
     $whatsapp_cloud_api->sendDocument('1'.$phone, $link_id, $document_name, $document_caption);
+    $whatsapp_cloud_api->sendTextMessage('1'.$phone, 'Adjunto de la '.$document_caption);
 }
 
 function setIncome($model, $concepto, $amount)

@@ -9,6 +9,6 @@ trait ShowProducts{
 
     public function updateDetail($id)
     {
-       dd($this->det);
+      
     }
 }

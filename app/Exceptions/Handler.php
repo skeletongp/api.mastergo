@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -31,7 +32,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-       
+       Log::error($e);
         return parent::render($request, $e);
     }
 }

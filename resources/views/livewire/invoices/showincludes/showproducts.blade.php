@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($invoice->details as $det)
+                @foreach ($details as $det)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th editable scope="row" class="px-4 ">
                             {{ $det->product->code }}

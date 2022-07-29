@@ -77,6 +77,11 @@ Breadcrumbs::for('products.edit', function ($trail, $product) {
     $trail->push('Editar Producto', route('products.edit', $product));
 });
 
+Breadcrumbs::for('products.catalogue', function ($trail) {
+    $trail->parent('products');
+    $trail->push('Catálogo', route('products.catalogue'),['icon'=>'fas fa-layer-group']);
+});
+
 /* Recursos */
 Breadcrumbs::for('recursos', function ($trail) {
     $trail->parent('home');

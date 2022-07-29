@@ -20,6 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Sawirricardo\Whatsapp\Data\TextMessageData;
@@ -68,7 +69,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(ProductController::class)->group(function () {
             Route::get('/products', 'index')->name('products.index');
-            Route::get('/report', 'report')->name('products.report');
+            Route::get('/products/report', 'report')->name('products.report');
+            Route::get('/products/catalogue', 'catalogue')->name('products.catalogue');
             Route::get('/products/create', 'create')->name('products.create');
             Route::get('/products/sum', 'sum')->name('products.sum');
             Route::get('/products/edit/{product}', 'edit')->name('products.edit');
