@@ -14,7 +14,7 @@ class SendCatalogue extends Component
     public function mount()
     {
     
-        $this->clients = Cache::get('clientsWithCode_' . env('STORE_ID')) ?: [];
+        $this->clients = clientWithCode(env('STORE_ID'));
     }
 
     public function render()
@@ -24,7 +24,7 @@ class SendCatalogue extends Component
 
     public function updatedClientCode($value)
     {
-        $clients=$this->clients->toArray();
+        $clients=is_array($this->clients)?$this->clients:$this->clients->toArray();
         
         if($value && array_search($value, array_column($this->selected, 'code')) === false){
             array_push(
