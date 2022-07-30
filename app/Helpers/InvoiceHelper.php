@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 use Netflie\WhatsAppCloudApi\Message\Media\LinkID;
 

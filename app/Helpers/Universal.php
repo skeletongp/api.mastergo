@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 
 function formatNumber($number)
 {
@@ -176,4 +177,16 @@ function removeAccent($cadena){
    
 
     return $cadena;
+}
+function sendMessage($to, $message){
+    $phone=preg_replace('/[^0-9]/', '', $to);
+    if(substr($phone, 0, 1)!='1'){
+        $phone='1'.$phone;
+    }
+    $whatsapp_cloud_api = new WhatsAppCloudApi([
+        'from_phone_number_id' => env('WHATSAPP_NUMBER_ID'),
+        'access_token' => env('WHATSAPP_TOKEN'),
+    ]);
+    
+    $whatsapp_cloud_api->sendTextMessage($phone, $message);
 }

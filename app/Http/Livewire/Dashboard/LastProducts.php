@@ -22,7 +22,7 @@ class LastProducts extends LivewireDatatable
         $details = auth()->user()->place->details()
             ->leftjoin('products', 'products.id', '=', 'details.product_id')
             ->where('detailable_type', Invoice::class)
-            ->whereDate('details.created_at', '=', Carbon::now()->subDay()->format('Y-m-d'))
+            ->whereDate('details.created_at', '=', Carbon::now()->format('Y-m-d'))
             ->orderBy('details.cant', 'desc')->distinct()->groupBy('product_id');
         return $details;
     }
@@ -35,7 +35,7 @@ class LastProducts extends LivewireDatatable
             Column::callback(['products.name'], function ($prod) {
                
                 return $prod;
-            })->label('Producto')
+            })->label('Producto')->searchable()
         ];
     }
 }

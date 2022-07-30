@@ -20,6 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +49,7 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['web'])->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('home');
+        Route::get('', [DashboardController::class, 'index'])->name('home');
 
         Route::controller(UserController::class)->group(function () {
             Route::get('users', 'index')->name('users.index');
@@ -56,43 +57,43 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::controller(InvoiceController::class)->group(function () {
-            Route::get('/invoices', 'index')->name('invoices.index');
-            Route::get('/invoices/create', 'create')->name('invoices.create');
-            Route::get('/invoices/orders', 'orders')->name('orders');
-            Route::get('/invoices/show/{invoice}', 'show')->name('invoices.show');
+            Route::get('invoices', 'index')->name('invoices.index');
+            Route::get('invoices/create', 'create')->name('invoices.create');
+            Route::get('invoices/orders', 'orders')->name('orders');
+            Route::get('invoices/show/{invoice}', 'show')->name('invoices.show');
         });
 
         Route::controller(CotizeController::class)->group(function () {
-            Route::get('/cotizes', 'index')->name('cotizes.index');
-            Route::get('/cotizes/create', 'create')->name('cotizes.create');
+            Route::get('cotizes', 'index')->name('cotizes.index');
+            Route::get('cotizes/create', 'create')->name('cotizes.create');
         });
 
         Route::controller(ProductController::class)->group(function () {
-            Route::get('/products', 'index')->name('products.index');
-            Route::get('/products/report', 'report')->name('products.report');
-            Route::get('/products/catalogue', 'catalogue')->name('products.catalogue');
-            Route::get('/products/create', 'create')->name('products.create');
-            Route::get('/products/sum', 'sum')->name('products.sum');
-            Route::get('/products/edit/{product}', 'edit')->name('products.edit');
-            Route::get('/products/{product}', 'show')->name('products.show');
+            Route::get('products', 'index')->name('products.index');
+            Route::get('products/report', 'report')->name('products.report');
+            Route::get('products/catalogue', 'catalogue')->name('products.catalogue');
+            Route::get('products/create', 'create')->name('products.create');
+            Route::get('products/sum', 'sum')->name('products.sum');
+            Route::get('products/edit/{product}', 'edit')->name('products.edit');
+            Route::get('products/{product}', 'show')->name('products.show');
         });
 
         Route::controller(StoreController::class)->group(function () {
-            Route::get('/stores', 'index')->name('stores.index');
+            Route::get('stores', 'index')->name('stores.index');
         });
 
         Route::controller(ClientController::class)->group(function () {
-            Route::get('/clients', 'index')->name('clients.index');
-            Route::get('/clients/paymany/{invoices}', 'paymany')->name('clients.paymany');
-            Route::get('/clients/invoices/{client_id}', 'invoices')->name('clients.invoices');
-            Route::get('/clients/{client_id}', 'show')->name('clients.show');
+            Route::get('clients', 'index')->name('clients.index');
+            Route::get('clients/paymany/{invoices}', 'paymany')->name('clients.paymany');
+            Route::get('clients/invoices/{client_id}', 'invoices')->name('clients.invoices');
+            Route::get('clients/{client_id}', 'show')->name('clients.show');
         });
         Route::controller(ProviderController::class)->group(function () {
             Route::get('providers', 'index')->name('providers.index');
         });
 
         Route::controller(SettingController::class)->group(function () {
-            Route::get('/settings', 'index')->name('settings.index');
+            Route::get('settings', 'index')->name('settings.index');
         });
 
         Route::controller(RecursoController::class)->group(function () {
@@ -125,30 +126,35 @@ Route::middleware(['auth'])->group(function () {
             Route::get('cuadres/{cuadre}', 'show')->name('cuadres.show');
         });
         Route::controller(ReportController::class)->group(function () {
-            Route::get('/incomes', 'incomes')->name('reports.incomes');
-            Route::get('/outcomes', 'outcomes')->name('reports.outcomes');
-            Route::get('/rep_invoices', 'invoices')->name('reports.invoices');
-            Route::get('/rep_invoices_por_cobrar', 'invoices_por_cobrar')->name('reports.invoices_por_cobrar');
+            Route::get('incomes', 'incomes')->name('reports.incomes');
+            Route::get('outcomes', 'outcomes')->name('reports.outcomes');
+            Route::get('rep_invoices', 'invoices')->name('reports.invoices');
+            Route::get('rep_invoices_por_cobrar', 'invoices_por_cobrar')->name('reports.invoices_por_cobrar');
         });
         Route::controller(ProvisionController::class)->group(function () {
-            Route::get('/provisions', 'index')->name('provisions.index');
+            Route::get('provisions', 'index')->name('provisions.index');
         });
 
 
         Route::controller(FinanceController::class)->group(function () {
-            Route::get('/finances', 'index')->name('finances.index');
-            Route::get('/banks/{bank}/{type}', 'bank_show')->name('finances.bank_show');
+            Route::get('finances', 'index')->name('finances.index');
+            Route::get('banks/{bank}/{type}', 'bank_show')->name('finances.bank_show');
         });
 
         Route::controller(RecurrentController::class)->group(function () {
-            Route::get('/recurrents', 'index')->name('recurrents.index');
+            Route::get('recurrents', 'index')->name('recurrents.index');
         });
     });
 });
 
-
-
-Route::get('prueba', function () {
+Route::get('prueba', function (Request $request) {
    
-    return redirect()->route('reports.invoices_por_cobrar');
+  /*   return $request->hub_challenge;
+    dd($request->all());
+    return redirect()->route('reports.invoices_por_cobrar'); */
 })->name('prueba');
+
+
+
+
+

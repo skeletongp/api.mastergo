@@ -9,7 +9,7 @@ setlocale(LC_MONETARY, 'en_IN');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inventario</title>
+    <title>Catálogo de productos</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -104,7 +104,9 @@ setlocale(LC_MONETARY, 'en_IN');
             bottom: 0;
         }
 
-
+        @page {
+            size: 259mm 297mm;
+        }
 
         @media only screen and (max-width: 600px) {
             .invoice-box table tr.top table td {
@@ -126,7 +128,7 @@ setlocale(LC_MONETARY, 'en_IN');
         <thead style="display: table-header-group;">
             <tr class="item">
                 <td class="title">
-                    <img src="{{auth()->user()->store->logo}}" alt="Company logo"
+                    <img src="{{ auth()->user()->store->logo }}" alt="Company logo"
                         style=" max-width: 150px; max-height: 100px" />
                 </td>
                 <td colspan="2" style="text-align:right; line-height: 20px ">
@@ -146,52 +148,58 @@ setlocale(LC_MONETARY, 'en_IN');
         NUESTROS PRODUCTOS
     </h3>
 </header>
+
 <body>
 
-   
-    <br>
-    <table style="margin-left:auto; margin-right:auto; width:80%">
-       
-        <tbody class="cuerpo">
+    <table style="margin-left:auto; margin-right:auto; ">
 
-            @foreach ($products as $ind=> $product)
+        <tbody class="cuerpo">
+            @php
+                $index = 0;
+            @endphp
+            @foreach ($products as $ind => $product)
                 @php
                     $unit = $product->units->first();
                 @endphp
-                @if (fmod($ind,2)==0)
-                    <tr>
-                        <td style="padding:15px">
-                            <img style="border-radius: 50%; width:8rem; height:8rem" src="{{$product->photo}}" alt="logo">
-                        </td>
-                        <td style="padding:15px">
-                            <b style="text-transform: uppercase; font-size:large">{{ellipsis($product->name,30)}}</b><br>
-                            <b>Cód.: </b>{{$product->code}}<br>
-                            <br>
-                            <b>Unidad:</b> {{$unit->name}}<br>
-                            <b>Precio Det.: </b> ${{formatNumber($unit->pivot->price_menor)}}<br>
-                            <b>Precio May.: </b> ${{formatNumber($unit->pivot->price_mayor)}}<br>
-                            <b>Cant. Min.: </b> {{formatNumber($unit->pivot->min)}}<br>
-                        </td>
-                    </tr>
-                    @else
-                    <tr>
-                        <td style="padding:15px">
-                            <b style="text-transform: uppercase; font-size:large">{{ellipsis($product->name,30)}}</b><br>
-                            <b>Cód.: </b>{{$product->code}}<br>
-                            <br>
-                            <b>Unidad:</b> {{$unit->name}}<br>
-                            <b>Precio Det.: </b> ${{formatNumber($unit->pivot->price_menor)}}<br>
-                            <b>Precio May.: </b> ${{formatNumber($unit->pivot->price_mayor)}}<br>
-                            <b>Cant. Min.: </b> {{formatNumber($unit->pivot->min)}}<br>
-                        </td>
-                        <td style="padding:15px">
-                            <img style="border-radius: 50%; width:8rem; height:8rem" src="{{$product->photo}}" alt="logo">
-                        </td>
-                    </tr>
+                @if ($unit->pivot->price_menor > 0)
+                @php
+                    $index+=1;
+                @endphp
+                    @if (fmod($index, 2) == 1)
+                        <tr style="border-bottom: solid 1.5px #AAA">
+                            <td style="padding:15px; text-align:center">
+                                <img style="border-radius: 50%; width:8rem; height:8rem" src="{{ $product->photo }}"
+                                    alt="logo">
+                            </td>
+                            <td style="padding:15px; width:30%">
+                                <b
+                                    style="text-transform: uppercase; font-size:medium; color: #8E1301">{{ ellipsis($product->name, 30) }}</b><br>
+                                <b style="color: #555">Cód.: </b>{{ $product->code }}<br>
+                                <br>
+                                <b style="color: #555">Unidad:</b> {{ $unit->name }}<br>
+                                <b style="color: #555">Detalle: </b> ${{ formatNumber($unit->pivot->price_menor) }}<br>
+                                <b style="color: #555">Mayoreo: </b> ${{ formatNumber($unit->pivot->price_mayor) }}<br>
+                                <b style="color: #555">Cant. Min.: </b> {{ formatNumber($unit->pivot->min) }}<br>
+                            </td>
+                        @else
+                            <td style="padding:15px; width:30%">
+                                <b
+                                    style="text-transform: uppercase; font-size:medium; color: #8E1301">{{ ellipsis($product->name, 30) }}</b><br>
+                                <b style="color: #555">Cód.: </b>{{ $product->code }}<br>
+                                <br>
+                                <b style="color: #555">Unidad:</b> {{ $unit->name }}<br>
+                                <b style="color: #555">Detalle: </b> ${{ formatNumber($unit->pivot->price_menor) }}<br>
+                                <b style="color: #555">Mayoreo: </b> ${{ formatNumber($unit->pivot->price_mayor) }}<br>
+                                <b style="color: #555">Cant. Min.: </b> {{ formatNumber($unit->pivot->min) }}<br>
+                            </td>
+                            <td style="padding:15px; text-align:center">
+                                <img style="border-radius: 50%; width:8rem; height:8rem" src="{{ $product->photo }}"
+                                    alt="logo">
+                            </td>
+                        </tr>
+                    @endif
                 @endif
-              
             @endforeach
-
         </tbody>
 
     </table>
