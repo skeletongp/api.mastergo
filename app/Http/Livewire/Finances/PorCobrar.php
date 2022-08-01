@@ -8,14 +8,14 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class PorCobrar extends LivewireDatatable
 {
     public $padding = "px-2";
-    public $headTitle = "Cuentas Por Cobrar";
+    public $headTitle = "Cuentas Por Cobrar Clientes";
     public function builder()
     {
         $place = auth()->user()->place;
         $porCobrar = $place->counts()
             ->where('balance', '>', 0)
             ->where(function ($porCobrar) {
-                return $porCobrar->where('code', 'like', '10%')
+                return $porCobrar->where('code', 'like', '101%')
                     ->where('code', 'not like', '100%')
                     ->Where('code', 'not like', '104%')
                     ;
@@ -26,8 +26,13 @@ class PorCobrar extends LivewireDatatable
     public function columns()
     {
         return [
+            Column::callback('contable_id', function($id) {
+                return "<a href='".route('clients.show', $id)."'> <span class='fas fa-eye'></span> </a>";
+            })->label('Ver'),
             Column::name('code')->label('Código')->searchable(),
-            Column::name('name')->label('Nombre')->searchable(),
+            Column::callback('name', function ($name){
+                return ellipsis($name, 32);
+            })->label('Nombre')->searchable(),
             Column::callback('balance', function ($saldo) {
                 return '$' . formatNumber($saldo);
             })->label('Saldo')->enableSummary(),

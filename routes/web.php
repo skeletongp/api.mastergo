@@ -149,13 +149,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function (Request $request) {
    
-<<<<<<< HEAD
-  /*   return $request->hub_challenge;
-    dd($request->all());
-    return redirect()->route('reports.invoices_por_cobrar'); */
-=======
     return view('prueba');
->>>>>>> 8b7b42f4a51a464d3d5d1188895a12c81cc10bd9
 })->name('prueba');
 
 
