@@ -5,13 +5,12 @@
             <div class="h-12 w-12 bg-contain bg-no-repeat bg-center rounded-full"
                 style="background-image: url({{ auth()->user()->store->logo }})"></div>
         </a>
-    
-            <a href="{{ route('home') }}">
-                <span
-                    class="self-center text-xl  font-bold whitespace-nowrap dark:text-white">{{ ellipsis(auth()->user()->store->name,20) }}
-                    | {{ env('APP_NAME') }}</span>
-            </a>
-       
+
+        <a href="{{ route('home') }}">
+            <span
+                class="self-center text-xl  font-bold whitespace-nowrap dark:text-white">{{ ellipsis(auth()->user()->store->name, 20) }}
+            </span>
+        </a>
 
     </div>
     <div class="container flex flex-row justify-end items-end mx-auto ">
@@ -48,7 +47,7 @@
                         </span>
                     @endcan
                 @endscope
-               
+
 
                 @scope('Facturas')
                     @can('Crear Facturas')

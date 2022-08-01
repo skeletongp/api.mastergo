@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/cache": "^9.8",
         "jantinnerezo/livewire-alert": "^2.2",
+        "kirschbaum-development/eloquent-power-joins": "^2.6",
         "laravel/framework": "^9.21",
         "laravel/sanctum": "^2.14.1",
         "laravel/telescope": "^4.9",

@@ -1,23 +1,21 @@
 <div>
-   <x-modal  title="Gestionar Cheque"  maxWidth="max-w-xl">
+   <x-modal :listenOpen="true" title="Gestionar Cheque"  maxWidth="max-w-xl">
     <x-slot name="button">
-        <span class="fas fa-check text-green-500"></span>
+        @if ($status)
+        <span class="fas fa-check-circle text-green-500"></span>
+    @else
+        <span class="fas fa-times-circle text-red-500"></span>
+    @endif
     </x-slot>
     
     <div>
        
+       {{count($counts)}}
         <form action="" wire:submit.prevent="depositCheque">
             <div class="flex flex-col space-y-4">
                 <div class="flex justify-between mb-4">
                     <span class="uppercase font-medium text-base">{{$status?:'Cancelado'}}</span>
-                    <x-toggle  id="deposit{{$cheque['id']}}" wire:model="status" value="Pago">
-                        <x-slot name="label">
-                            <span class="fas fa-check-circle text-green-500"></span>
-                        </x-slot>
-                        <x-slot name="label2">
-                            <span class="fas fa-ban text-red-400"></span>
-                        </x-slot>
-                    </x-toggle>
+                    
                 </div>
                 <div class="flex space-x-4 items-start text-left">
                     <div class="w-full">

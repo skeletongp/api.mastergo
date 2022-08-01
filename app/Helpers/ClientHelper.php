@@ -11,3 +11,13 @@ function clientWithCode($store_id){
     }
     return $clients;
 }
+function clientWithId(){
+  $store_id=env('STORE_ID');
+  $clients=Cache::get('clientsWithId_'.$store_id);
+  if (!$clients) {
+     $clients=Client::where('store_id',$store_id)->get()->pluck('name','id');
+       Cache::put('clientsWithId_'.$store_id, $clients);
+  }
+  return $clients;
+    
+}

@@ -14,7 +14,7 @@
             )
         </div>
     @endslot
-    <div class="  sticky top-24 pt-8 " style="width: 34rem; max-width: 34rem">
+    <div class="  sticky top-24 pt-8 " style="width: 16rem; max-width: 16rem; min-width:16rem">
         <div
             class="w-full text-lg font-medium text-gray-900  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white ">
             <div aria-current="true"
@@ -69,7 +69,7 @@
 
         @switch($componentName)
             @case('banks.bank-list')
-                <div class="max-w-xl mx-auto">
+                <div class="mx-auto">
                     @livewire($componentName)
                 </div>
             @break

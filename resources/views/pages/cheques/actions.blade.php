@@ -1,8 +1,4 @@
-<div class="flex space-x-4 justify-center">
-    @if ($cheque['status'] == 'Pendiente')
-    @livewire('cheques.deposit-cheque', ['cheque' => $cheque], key(uniqid()))
-        
-    @else
-        <span class="fas fa-ban text-red-400"></span>
-    @endif
+<div class="flex space-x-2 justify-center">
+    @livewire('cheques.deposit-cheque', ['cheque_id' => $id,'status'=>'Pago','type'=>$type], key(uniqid()))
+    @livewire('cheques.deposit-cheque', ['cheque_id' => $id,'type'=>$type], key(uniqid().$id))
 </div>

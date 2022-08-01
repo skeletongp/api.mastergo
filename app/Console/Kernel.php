@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('model:prune')->monthly();
+        $schedule->command('model:prune')->monthlyOn(1,'0:20');
         $schedule->command('get_currency')->everySixHours();
         // $schedule->command('inspire')->hourly();
     }

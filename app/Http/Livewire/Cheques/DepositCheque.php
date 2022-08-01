@@ -8,26 +8,42 @@ use Livewire\Component;
 
 class DepositCheque extends Component
 {
-    public array $cheque;
+    public  $cheque=[], $cheque_id, $type;
     public $check;
-    public $status = 'Pago', $counts, $count;
+    public $status, $counts=[], $count;
     public $count_id, $comment;
     public $debitable, $creditable;
+    protected $listeners = ['modalOpened' => 'modalOpened'];
 
-    public function mount($cheque)
+    public function mount()
     {
-        $this->cheque = $cheque;
+        $this->cheque=[
+            'id' => $this->cheque_id,
+            'reference' => '',
+            'amount' => '',
+            'user_id' => '',
+            'bank_id' => '',
+            'type' => $this->type,
+            'status' => $this->status,
+            'comment' => '',
+            'debitable' => '',
+            'creditable' => '',
+        ];
+        
+       
+    }
+    public function render()
+    {
+        return view('livewire.cheques.deposit-cheque');
+    }
+    public function modalOpened()
+    {
+        $this->cheque = Cheque::find($this->cheque_id)->load('user','bank','chequeable')->toArray();
         $place = auth()->user()->place;
         $this->check = $place->check();
-        if ($this->cheque['type'] == 'Recibido') {
-            $this->counts = $place->counts()
-                ->where('code', 'like', '100%')
-                ->selectRaw('CONCAT(code, " - ", name) as name, counts.id')->pluck('name', 'counts.id');
-        } else if ($this->cheque['type'] == 'Emitido') {
-            $this->counts = $place->counts()
-                ->where('code', 'like', '2%')
-                ->selectRaw('CONCAT(code, " - ", name) as name, counts.id')->pluck('name', 'counts.id');
-        }
+      
+        $this->updatedStatus();
+
     }
     public function updatedStatus()
     {
@@ -60,10 +76,7 @@ class DepositCheque extends Component
                 ->where('code', 'like', '100%')
                 ->selectRaw('CONCAT(code, " - ", name) as name, counts.id')->pluck('name', 'counts.id');
         }
-    }
-    public function render()
-    {
-        return view('livewire.cheques.deposit-cheque');
+        $this->render();
     }
 
     public function depositCheque()
