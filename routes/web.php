@@ -150,5 +150,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function () {
    
-    return redirect()->route('reports.invoices_por_cobrar');
+    return view('prueba');
 })->name('prueba');

@@ -8,6 +8,7 @@ use App\Models\Place;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 function setContable($model, String $code, String $origin, $name = null, $place_id = null, $borrable=NULL)
@@ -126,23 +127,14 @@ function setPayment($data)
     {
         $haber = $model->haber;
         $debe = $model->debe;
-        $amount = $model->income;
+        Log::info('Ajustando contable ' . $debe->name);
+
         if ($debe->type == 'nominal') {
-            if ($debe->origin == "debit") {
-                $debe->balance = $debe->balance - $amount;
+                $debe->balance = 0;
                 $debe->save();
-            } else {
-                $debe->balance = $debe->balance + $amount;
-                $debe->save();
-            }
         }
         if ($haber->type == 'nominal') {
-            if ($haber->origin == "credit") {
-                $haber->balance = $haber->balance - $amount;
+                $haber->balance =0;
                 $haber->save();
-            } else {
-                $haber->balance = $haber->balance + $amount;
-                $haber->save();
-            }
         }
     }

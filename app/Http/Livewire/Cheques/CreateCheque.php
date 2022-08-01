@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Cheques;
 
+use App\Models\Client;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -26,7 +27,12 @@ class CreateCheque extends Component
     {
         $store = auth()->user()->store;
         $place = auth()->user()->place;
-        $clients = $store->clients()->select(DB::raw("name, CONCAT(id,'|','App\\\Models\\\Client') AS id"))->pluck('name', 'id');
+
+        $clients = clientWithId();
+        foreach ($clients as $key => $value) {
+            $clients[$key.'|'.Client::class] = $value;
+            unset($clients[$key]);
+        }
         $providers = $store->providers()->select(DB::raw("fullname as name,CONCAT(id,'|','App\\\Models\\\Provider') AS id"))->pluck('name', 'id');
         $users = $store->users()->select(DB::raw("fullname as name, CONCAT(users.id,'|','App\\\Models\\\User') AS id"))->pluck('name', 'id');
         $this->persons = $clients->merge($providers)->merge($users);

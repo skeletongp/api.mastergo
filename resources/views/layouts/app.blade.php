@@ -42,7 +42,6 @@
             <div class="sticky left-0 top-0  z-50 px-2" style="z-index: 80">
                 @include('includes.menubar')
             </div>
-            {{-- Navbar --}}
             <header class="sticky top-[4.5rem] z-50 w-full mx-auto py-2 bg-white">
                 @include('includes.header')
                 <div class=" w-full bg-gray-50 py-1 px-4 flex justify-between items-center">

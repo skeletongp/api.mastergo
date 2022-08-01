@@ -2,24 +2,30 @@
 
 namespace App\Http\Livewire\Banks;
 
+use App\Http\Classes\NumberColumn;
+use App\Models\Bank;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class BankList extends LivewireDatatable
 {
-    public $headTitle="Cuentas de Registradas";
+    public $headTitle="Cuentas de banco Registradas";
     public $perPage=5;
     public $padding='px-2';
     public function builder()
     {
         $store = auth()->user()->store;
-        $banks = $store->banks()->with('store','contable');
+        $banks = Bank::where('banks.store_id', $store->id)
+        ->join('counts', 'counts.contable_id', '=', 'banks.id')
+        ->where('contable_type', 'App\Models\Bank')
+        ->select('banks.*', 'counts.balance');
+        ;
         return $banks;
     }
 
     public function columns()
     {
-        $banks=$this->builder()->get()->toArray();
+        $store=auth()->user()->store;
         return [
             Column::index($this),
             Column::callback('bank_name', function($name){
@@ -27,14 +33,10 @@ class BankList extends LivewireDatatable
             })->label('Banco')->searchable(),
             Column::name('bank_number')->label('Cuenta')->searchable(),
             Column::name('currency')->label('Divisa')->filterable(['DOP','USD']),
-            Column::callback(['created_at','id'], function ($created, $id)  use($banks) {
-                $result = arrayFind($banks, 'id', $id);
-                return $result['titular']?:ellipsis($result['store']['name'],20);
+            Column::callback(['titular','id'], function ($titular) use ($store) {
+                return ellipsis($titular?:$store->name,20);
             })->label('Titular'),
-            Column::name('deleted_at')->callback(['deleted_at','id'], function ($deleted, $id)  use($banks) {
-                $result = arrayFind($banks, 'id', $id);
-                return '<b>$'.formatNumber($result['contable']['balance']).'</b>';
-            })->label('Balance'),
+            NumberColumn::name('counts.balance')->label('Balance')->formatear('money', 'font-bold'),
             Column::callback('id', function ($id) {
                 return '
                 <div class="flex space-x-4 items-center">

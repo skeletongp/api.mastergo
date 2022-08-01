@@ -23,7 +23,7 @@ class LastProducts extends LivewireDatatable
             ->leftjoin('products', 'products.id', '=', 'details.product_id')
             ->where('detailable_type', Invoice::class)
             ->whereDate('details.created_at', '=', Carbon::now()->subDay()->format('Y-m-d'))
-            ->orderBy('details.cant', 'desc')->distinct()->groupBy('product_id');
+            ->orderBy(DB::raw('sum(details.cant)'), 'desc')->distinct()->groupBy('product_id');
         return $details;
     }
 
