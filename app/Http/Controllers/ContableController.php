@@ -23,6 +23,10 @@ class ContableController extends Controller
     {
         return view('pages.contables.general_daily');
     }
+    public function historial_daily()
+    {
+        return view('pages.contables.historial_daily');
+    }
     public function general_mayor()
     {
         return view('pages.contables.general_mayor');

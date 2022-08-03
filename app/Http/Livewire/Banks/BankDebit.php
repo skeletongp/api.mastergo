@@ -20,7 +20,7 @@ class BankDebit extends LivewireDatatable
     public function builder()
     {
         
-        $transactions = $this->bank->transactions()->where('debitable_id', $this->bank->contable->id);
+        $transactions = Transaction::where('debitable_id', $this->bank->contable->id);
         $this->headTitle='Ingresos a la cuenta';
         return $transactions;
     }

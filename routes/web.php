@@ -111,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::controller(ContableController::class)->group(function () {
             Route::get('general_daily', 'general_daily')->name('contables.general_daily');
+            Route::get('historial_daily', 'historial_daily')->name('contables.historial_daily');
             Route::get('general_mayor', 'general_mayor')->name('contables.general_mayor');
             Route::get('catalogue', 'catalogue')->name('contables.catalogue');
             Route::get('view_catalogue', 'view_catalogue')->name('contables.view_catalogue');

@@ -38,7 +38,7 @@ class Transaction extends Model
         foreach ($models->get() as $model) {
             ajustCount($model);
         }
-        $models->delete();
+       /*  $models->delete(); */
 
         return static::whereMonth('day', '>', $month);
     }
