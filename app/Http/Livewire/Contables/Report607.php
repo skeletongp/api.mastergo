@@ -27,6 +27,7 @@ class Report607 extends Component
     public function make607()
     {
         $store = auth()->user()->store;
+        $start_at=$this->start_at;
         $invoices = $store->invoices()->has('comprobante')
             ->where(
                 function ($query) {
@@ -72,7 +73,7 @@ class Report607 extends Component
         $PDF = App::make('dompdf.wrapper');
 
         $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
-        $name = 'files' . $store->id . '/reporte 607/report' . date('Ymd') . '.pdf';
+        $name = 'files' . $store->id . '/reporte 607/report' . Carbon::parse($this->start_at)->format('Ym') . '.pdf';
         Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
         $url = Storage::url($name);
         $this->url = $url;

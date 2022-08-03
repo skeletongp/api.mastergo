@@ -10,7 +10,7 @@
 
             <div class="flex items-center bg-gray-100 dark:bg-gray-900 p-4 max-w-6xl">
                 <div class="container  px-5 mx-auto my-28">
-                    <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="grid gap-7 grid-cols-2">
                         <div class="p-5 bg-green-100 rounded shadow-sm dark:bg-gray-800">
                             <div class="text-base text-gray-400 dark:text-gray-300">Cliente</div>
                             <div class="flex items-center pt-1">

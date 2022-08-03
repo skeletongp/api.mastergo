@@ -161,7 +161,7 @@
         </tr>
     </table>
     <h2 style="text-transform: uppercase">
-        Comprobantes para el 607 ({{ date('Ym') }})
+        Comprobantes para el 607 ({{ \Carbon\Carbon::parse($start_at)->format('Ym') }})
     </h2>
 
     <table>

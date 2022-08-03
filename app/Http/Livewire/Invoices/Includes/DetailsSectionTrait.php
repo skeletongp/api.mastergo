@@ -57,6 +57,13 @@ trait DetailsSectionTrait
             } elseif ($this->cant >= $min) {
                 $this->price = $unt->price_mayor;
             }
+            $pr = removeComma($this->price);
+            $sub = removeComma(formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
+            if ($this->product) {
+                $this->taxTotal = $sub * $this->producto->taxes->sum('rate');
+                $this->checkStock();
+            }
+            $this->total =removeComma(formatNumber($sub + $this->taxTotal)  );
         }
     }
     public function confirmedAddItems()
@@ -147,19 +154,17 @@ trait DetailsSectionTrait
 
 
             $this->form['unit_name'] = $unit->symbol;
-            $discount = 0;
-            if ($this->discount) {
-                $discount = $this->discount;
-            }
-            $pr = str_replace(',', '', $this->price);
-            $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ($discount / 100))));
+            
+            $pr = removeComma($this->price);
+            $sub = removeComma(formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
             if ($this->product) {
                 $this->form['cost'] = $unit->pivot->cost;
                 $this->taxTotal = $sub * $this->producto->taxes->sum('rate');
                 $this->checkStock();
             }
-            $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
+            $this->total =removeComma(formatNumber($sub + $this->taxTotal)  );
             $this->pivot_id = $unit->pivot->id;
+
         }
     }
     public function updatedProductCode()
@@ -178,8 +183,8 @@ trait DetailsSectionTrait
         $this->freshUnitId();
 
 
-        $pr = str_replace(',', '', $newPrice);
-        $sub = str_replace(',', '', formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
+        $pr = removeComma($newPrice);
+        $sub = removeComma(formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
         if ($this->product) {
 
             $this->taxTotal = $sub * $this->producto->taxes->sum('rate');

@@ -19,6 +19,7 @@ class ComprobantesTable extends LivewireDatatable
         $store = auth()->user()->store;
         $comprobantes = Comprobante::where('comprobantes.store_id', $store->id)
             ->leftjoin('invoices', 'invoices.comprobante_id', '=', 'comprobantes.id')
+            ->where('invoices.deleted_at', null)
             ->leftjoin('creditnotes', 'creditnotes.comprobante_id', '=', 'comprobantes.id')
             ->leftjoin('clients', 'clients.id', '=', 'invoices.client_id')
             ->leftjoin('payments', 'payments.payable_id', '=', 'invoices.id')

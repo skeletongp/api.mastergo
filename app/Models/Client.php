@@ -122,7 +122,7 @@ class Client extends Model implements Searchable
     }
     public function getDebtAttribute()
     {
-        return optional($this->contable)->balance;
+        return optional($this->invoices)->sum('rest');
     }
     public function store()
     {
