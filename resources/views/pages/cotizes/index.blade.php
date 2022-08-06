@@ -1,6 +1,6 @@
 <x-app-layout>
     @slot('bread')
-        {{ Breadcrumbs::render('invoices') }}
+        {{ Breadcrumbs::render('cotizes') }}
     @endslot
 
     @slot('rightButton')

@@ -296,6 +296,16 @@
                     (${{ formatNumber(abs($cotize->discount)) }})
                 </td>
             </tr>
+            <tr class="total" style="font-weight: bold;">
+                <td colspan="2"></td>
+                <td style="text-align: right; ">
+                    <div>IMPUESTOS</div>
+                </td>
+                <td style="text-align: right; ">
+                    <div>${{ formatNumber($cotize->details->sum('taxtotal')) }}</div>
+                </td>
+            </tr>
+            
             <tr class="" style="font-weight: bold; font-size:medium">
                 <td colspan="2"></td>
                 <td style="text-align: right; border-top: 1px solid #777; padding-bottom:15px">

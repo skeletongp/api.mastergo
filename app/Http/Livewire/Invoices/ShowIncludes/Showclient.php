@@ -10,7 +10,7 @@ trait Showclient
 
     public function changeClient()
     {
-        $code = str_pad($this->client_code, 4, '0', STR_PAD_LEFT);
+        $code = $this->client_code;
         $client = Client::where('code', $code)->first();
         if ($client) {
             $this->client = [

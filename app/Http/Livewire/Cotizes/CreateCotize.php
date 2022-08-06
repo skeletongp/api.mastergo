@@ -96,7 +96,7 @@ class CreateCotize extends Component
             'isRemoteEnabled'=> true
         ])->loadView('pages.cotizes.letter', $data);
         $store=$cotize->store;
-        $name='files'.$store->id.'/cotizes/cotize'.date('Ymdhis').'.pdf';
+        $name='files'.$store->id.'/cotizes/cotize'.$cotize->id.'.pdf';
         Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
         $url= Storage::url($name);
         $cotize->pdf()->create([

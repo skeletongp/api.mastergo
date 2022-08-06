@@ -1,4 +1,6 @@
 <?php
+
+use App\Models\Store;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
@@ -35,18 +37,22 @@ function setPDFPath($invoice)
 }
 function sendInvoiceWS($path, $phone, $number)
 {
+    $user=auth()->user();
     $phone=preg_replace('/[^0-9]/', '', $phone);
+    $phone2=preg_replace('/[^0-9]/', '', $user->phone);
     $whatsapp_cloud_api = new WhatsAppCloudApi([
         'from_phone_number_id' => env('WHATSAPP_NUMBER_ID'),
         'access_token' => env('WHATSAPP_TOKEN'),
     ]);
     $document_name = basename($path);
-    $document_caption = 'Factura Nº. ' . $number;
-
+    $document_caption =  $number;
+    $user=auth()->user();
     $document_link = $path;
     $link_id = new LinkID($document_link);
     $whatsapp_cloud_api->sendDocument('1'.$phone, $link_id, $document_name, $document_caption);
-    $whatsapp_cloud_api->sendTextMessage('1'.$phone, 'Adjunto de la '.$document_caption);
+    $whatsapp_cloud_api->sendDocument('1'.$phone2, $link_id, $document_name, $document_caption);
+    $whatsapp_cloud_api->sendTextMessage('1'.$phone, 'Adjunto del documento Noº. '.$document_caption);
+    $whatsapp_cloud_api->sendTextMessage('1'.$user->phone, 'Adjunto del documento Noº. '.$document_caption);
 }
 
 function setIncome($model, $concepto, $amount)

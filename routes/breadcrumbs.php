@@ -55,6 +55,13 @@ Breadcrumbs::for('invoices.show', function ($trail, $invoice) {
     $trail->parent('invoices');
     $trail->push('Fct. '.$invoice->number, route('invoices.show', $invoice));
 });
+
+/* Cotizaciones */
+Breadcrumbs::for('cotizes', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Cotizaciones', route('cotizes.index'), ['icon'=>'fas fa-file-invoice']);
+});
+
 /* Productos */
 Breadcrumbs::for('products', function ($trail) {
     $trail->parent('home');

@@ -40,7 +40,7 @@ class CreateInvoice extends Component
         $this->condition = 'DE CONTADO';
         $this->type = $place->preference->comprobante_type;
         $this->number = $place->id . '-' . str_pad($place->invoices()->withTrashed()->count() + 1, 7, '0', STR_PAD_LEFT);
-        $this->clients = $store->clients()->orderBy('name')->pluck('name', 'code');
+        $this->clients = clientWithCode($store->id);
         $this->products = $store->products()->orderBy('name')->pluck('name', 'code');
         $this->seller = auth()->user()->fullname;
         $this->client_code = '0001';
