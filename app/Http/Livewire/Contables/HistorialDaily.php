@@ -12,7 +12,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class HistorialDaily extends LivewireDatatable
 {
-    use AuthorizesRequests, UniqueDateTrait;
+    use AuthorizesRequests;
     public $perPage = 5;
 
     public $headTitle = "Historial de transacciones borradas";

@@ -65,8 +65,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(CotizeController::class)->group(function () {
             Route::get('cotizes', 'index')->name('cotizes.index');
-            Route::get('cotizes/{cotize}', 'show')->name('cotizes.show');
             Route::get('cotizes/create', 'create')->name('cotizes.create');
+            Route::get('cotizes/{cotize}', 'show')->name('cotizes.show');
         });
 
         Route::controller(ProductController::class)->group(function () {

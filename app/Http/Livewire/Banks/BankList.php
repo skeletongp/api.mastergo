@@ -36,7 +36,7 @@ class BankList extends LivewireDatatable
             Column::callback(['titular','id'], function ($titular) use ($store) {
                 return ellipsis($titular?:$store->name,20);
             })->label('Titular'),
-            NumberColumn::name('counts.balance')->label('Balance')->formatear('money', 'font-bold'),
+            NumberColumn::name('counts.balance')->label('Balance')->formatear('money', 'font-bold')->enableSummary(),
             Column::callback('id', function ($id) {
                 return '
                 <div class="flex space-x-4 items-center">
@@ -59,6 +59,21 @@ class BankList extends LivewireDatatable
         $bank->delete();
 
         $this->emit('refreshLivewireDatatable');
+    }
+    public function summarize($column)
+    {
+        
+        $results = json_decode(json_encode($this->results->items()), true);
+        foreach ($results as $key => $value) {
+            $val = json_decode(json_encode($value), true);
+            $results[$key][$column] = preg_replace("/[^0-9 .]/", '', $val[$column]);
+        }
+        try {
+
+            return "<h1 class='font-bold text-right'>" . '$' . formatNumber(array_sum(array_column($results, $column))) . "</h1>";;
+        } catch (\TypeError $e) {
+            return '';
+        }
     }
    
 }

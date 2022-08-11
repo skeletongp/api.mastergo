@@ -66,7 +66,7 @@ class CreateClient extends Component
 
         $this->reset();
         $this->render();
-        Cache::forget('clientsCount'.env('STORE_ID'));
+        Cache::forget('clientCount'.env('STORE_ID'));
         Cache::forget('clientsWithCode_'.env('STORE_ID'));
         $this->emit('showAlert', 'Cliente registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
