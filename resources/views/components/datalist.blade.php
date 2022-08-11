@@ -4,7 +4,7 @@
         <label for="{{ $inputId }}"
             class="block text-base  font-medium text-gray-900 dark:text-gray-300">{{ $label }}</label>
     @endif
-    <x-base-input label="" type="search" id="{{ $inputId }}" list="{{ $listName }}" onfocus="this.value=''"
+    <x-base-input label="" type="text" id="{{ $inputId }}" list="{{ $listName }}" onfocus="this.value=''"
         {{ $attributes }} />
     <datalist id="{{ $listName }}">
         {{ $slot }}
