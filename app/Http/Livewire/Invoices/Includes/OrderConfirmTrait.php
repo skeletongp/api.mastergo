@@ -12,9 +12,11 @@ trait OrderConfirmTrait
     public function tryPayInvoice()
     {
         $invoice = Invoice::whereId($this->form['id'])->first();
-        $condition = $this->form['condition'] == 'De Contado' && $this->form['rest'] > 0;
+        $condition = ($this->form['condition'] == 'De Contado'|| $this->form['client']['id']==1) && $this->form['rest'] > 0;
+        
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
-            $this->authorize('Fiar factura de contado', 'validateAuthorization','payInvoice','data=null','Autorizar');
+           
+            $this->authorize('Fiar factura de contado o a Genérico', 'validateAuthorization','payInvoice','data=null','Autorizar');
         } else {
             $this->payInvoice();
         }

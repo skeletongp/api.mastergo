@@ -112,7 +112,7 @@ class CreateOutcome extends Component
             $real = 0.82;
         }
         /* Registro de asiento sin impuestos */
-            $efectivo = $place->findCount($this->efectivoCode);
+            $efectivo = $place->counts()->whereId($this->efectivoCode)->first();
         setTransaction($this->concept . ' - efectivo', $code, $payment->efectivo * $real, $debitable, $efectivo, 'Crear Gastos');
         setTransaction($this->concept . ' Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Crear Gastos');
         if ($this->bank_id) {
