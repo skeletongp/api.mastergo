@@ -20,6 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -150,7 +151,19 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-   
+    $invoice=Invoice::whereId(38)->with('payment')->first();
+    $data = [
+        'invoice' => $invoice->load('details', 'payments', 'client', 'seller', 'contable'),
+        'payment' => $invoice->payment
+    ];
+    $PDF = App::make('dompdf.wrapper');
+    $pdf = $PDF->setOptions([
+        'logOutputFile' => null,
+        'isHtml5ParserEnabled' => true,
+        'isRemoteEnabled' => true
+    ])->loadView('pages.invoices.letter', $data);
+
+   return  $pdf->stream();
     return view('prueba');
 })->name('prueba');
 

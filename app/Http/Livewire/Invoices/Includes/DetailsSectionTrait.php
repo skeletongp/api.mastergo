@@ -159,7 +159,7 @@ trait DetailsSectionTrait
             $sub = removeComma(formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
             if ($this->product) {
                 $this->form['cost'] = $unit->pivot->cost;
-                $this->taxTotal = $sub * $this->producto->taxes->sum('rate');
+                $this->taxTotal =(floatVal($this->cant)  * $pr) * $this->producto->taxes->sum('rate');
                 $this->checkStock();
             }
             $this->total =removeComma(formatNumber($sub + $this->taxTotal)  );

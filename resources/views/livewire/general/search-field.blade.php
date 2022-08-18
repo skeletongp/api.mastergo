@@ -1,6 +1,6 @@
     <div class="absolute h-max top-3 w-56" x-data="{ open: true }" style="z-index: 1600">
         <div @click.away="open= false">
-            <x-input label="Buscar" wire:model="search" class="relative w-56 max-w-xs" @focus="open=true" type="search">
+            <x-input label="Buscar" wire:model.debounce.500ms="search" class="relative w-56 max-w-xs" @focus="open=true" type="search">
                 {{-- <x-slot name="icon">
                     <span class="fas fa-search text-gray-500"></span>
                 </x-slot> --}}

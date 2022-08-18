@@ -83,6 +83,7 @@
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">
                 <x-base-select label="Caja a Reducir" wire:model="efectivoCode" id="efectivoCode">
+                    <option value=""></option>
                     @foreach ($efectivos as $index=> $efectivo)
                         <option value="{{$index}}">{{$efectivo}}</option>
                     @endforeach
