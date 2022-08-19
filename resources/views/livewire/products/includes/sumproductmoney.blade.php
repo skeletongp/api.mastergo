@@ -79,15 +79,16 @@
 
         </div>
     @endif
-    @if (isset($efectivoCode) && $this->efectivo > 0)
+    @if ($this->efectivo > 0)
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">
                 <x-base-select label="Caja a Reducir" wire:model="efectivoCode" id="efectivoCode">
+                    <option value=""></option>
                     @foreach ($efectivos as $index=> $efectivo)
                         <option value="{{$index}}">{{$efectivo}}</option>
                     @endforeach
                 </x-base-select>
-                <x-input-error for="bank_id">Campo requerido</x-input-error>
+                <x-input-error for="efectivo_code">Campo requerido</x-input-error>
             </div>
             <div class="w-full"></div>
         </div>

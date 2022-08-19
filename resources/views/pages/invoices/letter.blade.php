@@ -21,12 +21,14 @@
         
     @endphp
     <style>
-        @page{
+        @page {
             size: 215.4mm 255mm;
         }
-        *{
+
+        * {
             background-color: transparent !important;
         }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             text-align: center;
@@ -37,7 +39,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         }
 
-     
+
         body h1 {
             font-weight: 300;
             margin-bottom: 0px;
@@ -62,7 +64,7 @@
             margin: auto;
             padding: 5px;
             padding-top: 0;
-           
+
             font-size: 14px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             color: #555;
@@ -160,7 +162,6 @@
                 text-align: center;
             }
         }
-
     </style>
 </head>
 
@@ -202,7 +203,7 @@
             </tr>
 
             <tr class="information">
-                <td colspan="{{ $invoice->comprobante ? '5' : '4' }}">
+                <td colspan="{{ $invoice->comprobante ? '6' : '5' }}">
                     <table>
                         <tr>
                             <td colspan="2" style="border-right: .3px solid #ccc; border-bottom: .3px solid #ccc; ">
@@ -220,8 +221,8 @@
                             <td colspan="2" style="border-bottom: .3px solid #ccc; ">
                                 <div style="text-align:right; ">
                                     <b>{{ 'DIRIGIDA A:' }}</b> <br>
-                                    {{ $invoice->name?:($invoice->client->name?:$invoice->client->contact->fullname) }}<br />
-                                    {!! $invoice->rnc?:($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
+                                    {{ $invoice->name ?: ($invoice->client->name ?: $invoice->client->contact->fullname) }}<br />
+                                    {!! $invoice->rnc ?: ($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
                                     <b>TEL:</b> {{ $invoice->client->phone }} <br>
                                     {{ $invoice->client->address ?: 'Dirección N/D' }}
                                 </div>
@@ -233,13 +234,13 @@
             </tr>
             <tr>
                 @if ($invoice->store->rnc)
-                    <td colspan="{{ $invoice->comprobante ? '5' : '4' }}"
+                    <td colspan="{{ $invoice->comprobante ? '6' : '5' }}"
                         style="text-transform:uppercase; font-weight:bold; font-size:large; text-align:center; padding: 15px">
                         {{ array_search($invoice->type, App\Models\Invoice::TYPES) }}
 
                     </td>
                 @else
-                    <td colspan="{{ $invoice->comprobante ? '5' : '4' }}"
+                    <td colspan="{{ $invoice->comprobante ? '6' : '5' }}"
                         style="text-transform:uppercase; font-weight:bold; font-size:large; text-align:center; padding-bottom: 15px">
                         {{ $invoice->ncf ? $invoice->title : ($invoice->type == 'sale' ? 'Factura' : 'Cotización') }}
                     </td>
@@ -247,11 +248,12 @@
             </tr>
 
             <tr class="heading">
-                <td >Cant.</td>
-                <td >
+                <td>Cant.</td>
+                <td>
                     Descripción
                 </td>
                 <td style="text-align:right"">Precio</td>
+                <td style="text-align:right"">Descuento</td>
                 <td style=" text-align:right"">Subtotal</td>
                 @if ($invoice->comprobante)
                     <td style=" text-align:right">IMP.</td>
@@ -259,14 +261,16 @@
             </tr>
 
             @forelse ($invoice->details as $ind=> $detail)
-                <tr class="item">
-                    <td style=" width:13%; text-align:right;">
-                        <div style="padding-right: 20px">{{ \formatNumber($detail->cant)}}<sup>{{$detail->unit->symbol}}</sup></div>
+                <tr class="" style="font-size: small">
+                    <td style=" width:15%; text-align:left; padding-left:10px;">
+                        <span>{{ formatNumber($detail->cant) }} <span
+                                style="font-size: xx-small">{{ $detail->unit->symbol }}</span></span>
                     </td>
-                    <td style=" width:54%;">{{ $detail->product->name }}</td>
-                    <td style=" width: 25%; text-align:right;">${{ \formatNumber($detail->price) }}</td>
+                    <td style=" width:45%;">{{ellipsis( $detail->product->name,25) }}</td>
+                    <td style=" width: 20%; text-align:right;">${{ \formatNumber($detail->price) }}</td>
+                    <td style="width: 20%; text-align:right">${{ formatNumber($detail->discount) }}</td>
                     <td style=" width: 25%; text-align:right;">
-                        ${{ \formatNumber($detail->subtotal) }}
+                        ${{ \formatNumber($detail->total) }}
                     </td>
                     @if ($invoice->comprobante)
                         <td style=" width: 20%; text-align:right">
@@ -297,11 +301,15 @@
                     <div></div>
                 </td>
                 <td style="text-align: right; padding-top:15px  ">
-                    <div>${{ \formatNumber($payment->amount) }}</div>
+                    <div>${{ \formatNumber($payment->discount) }}</div>
                 </td>
+                <td style="text-align: right; padding-top:15px  ">
+                    <div>${{ \formatNumber($payment->total - $payment->tax) }}</div>
+                </td>
+
                 @if ($invoice->comprobante)
                     <td style=" width: 20%; text-align:right; padding-top:15px ">
-                        {!! \formatNumber($invoice->tax) !!}
+                        {!! \formatNumber($payment->tax) !!}
 
                     </td>
                 @endif
@@ -321,18 +329,16 @@
                 </td>
             </tr>
             @if ($invoice->comprobante)
-                    <tr class="total" style="line-height: 14px">
-                        <td colspan="2" style="padding-top:-10px"></td>
-                        <td style="text-align: right; padding-top:-10px">
-                            {{ __('ITBIS') }}
+                <tr class="total" style="line-height: 14px">
+                    <td colspan="2" style="padding-top:-10px"></td>
+                    <td style="text-align: right; padding-top:-10px">
+                        {{ __('ITBIS') }}
 
-                        </td>
-                        <td style="text-align: right; padding-top:-10px">
-                            ${{ \formatNumber($payment->tax) }}
-                        </td>
-                    </tr>
-
-
+                    </td>
+                    <td style="text-align: right; padding-top:-10px">
+                        ${{ \formatNumber($payment->tax) }}
+                    </td>
+                </tr>
             @endif
             <tr class="total" style="font-weight: bold;">
                 <td colspan="2"></td>
@@ -386,7 +392,7 @@
                 </tr>
             @endif
             @if ($payment->rest > 0)
-                <tr class="total" style="font-weight: bold; ">
+                <tr class="total" style="font-weight: bold; color:red ">
                     <td colspan="2"></td>
                     <td class="td-total text-right" style="text-align: right; padding-top:10px">
                         <b>PENDIENTE</b>
@@ -424,7 +430,7 @@
         </table>
         <table>
             <tr>
-                <td colspan="4" style="padding-top: 10px; text-align:center">
+                <td colspan="4" style="padding-top: 10px; text-align:center; font-size:x-small">
                     @if ($invoice->note && $invoice->note != '***')
                         <div
                             style=" padding-top: 0px; width:100%; text-align:center; margin-right: 20px; text-transform:uppercase; font-weight:bold">
@@ -440,30 +446,18 @@
         </table>
 
     </div>
-    <div style="position: absolute; right:4; bottom: 0; color:black; z-index:50; text-align:right">
+    <div style="position: absolute; right:4; bottom: 0; color:black; z-index:50; text-align:right; font-size:x-small">
         <b> VENDEDOR:</b> {{ $invoice->seller->lastname . ', ' . substr($invoice->seller->name, 0, 1) . '.' }}
         <b> CAJERO:</b> {{ $invoice->contable->lastname . ', ' . substr($invoice->contable->name, 0, 1) . '.' }}
     </div>
     <footer>
-        <table style="width: 100%">
+        <table style="width: 100%; font-size:x-small">
             <tr>
                 <td>GENERADA POR SISTEMA</td>
                 <td style="text-align: right">ORIGINAL CLIENTE</td>
             </tr>
         </table>
     </footer>
-    <table style="width: 100%; page-break-after: always;">
-        <tr style="{{ isset($show) ? '' : 'display:none' }}">
-            <td colspan="2">
-                @if ($invoice->type == 'sale')
-                    <div style=""><a href="/invoices">Volver</a></div>
-                @else
-                    <div style=""><a href="/cotizes">Volver</a></div>
-                @endif
-            </td>
-
-        </tr>
-    </table>
 
 </body>
 

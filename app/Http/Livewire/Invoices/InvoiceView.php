@@ -38,9 +38,13 @@ class InvoiceView extends Component
         $this->payment = $this->invoice->payment;
         $this->render();
     }
-    public function toggleThermal()
+    public function updatePDF()
     {
-        $this->thermal = !$this->thermal;
-        $this->render();
+        if($this->currentInvoice){
+            
+            $this->emit('showAlert','PDF actualizado correctamente','success');
+            setPDFPath($this->currentInvoice);
+            $this->setPDF($this->currentInvoice->id);
+        }
     }
 }
