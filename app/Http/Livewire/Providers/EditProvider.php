@@ -8,10 +8,10 @@ use Livewire\Component;
 class EditProvider extends Component
 {
 
-    public $provider, $provDocType;
-
+    public $provider=[], $provDocType, $provider_id;
+    protected $listeners = ['modalOpened' => 'modalOpened'];
     protected $rules = [
-        'provider'=>'required',
+        'provider' => 'required',
         'provider.name' => 'required|string|max:50',
         'provider.lastname' => 'required|string|max:75',
         'provider.email' => 'required|email|max:100|unique:clients,email',
@@ -22,22 +22,25 @@ class EditProvider extends Component
         'provDocType' => 'required',
     ];
 
-    public function mount($provider)
+    public function mount($provider_id)
     {
-        
-        
-        $this->provider=$provider;
+
+        $this->provider_id = $provider_id;
     }
     public function render()
     {
         return view('livewire.providers.edit-provider');
     }
+    public function modalOpened()
+    {
+        $this->provider = Provider::find($this->provider_id)->toArray();
+    }
     public function updateProvider()
     {
         $this->validate();
-        $provider=Provider::find($this->provider['id']);
+        $provider = Provider::find($this->provider['id']);
         $provider->update($this->provider);
-        $this->emit('showAlert','Datos actualizados correctamente','success');
+        $this->emit('showAlert', 'Datos actualizados correctamente', 'success');
         $this->emit('refreshLivewireDatatable');
     }
 }

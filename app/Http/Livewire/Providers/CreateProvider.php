@@ -9,10 +9,10 @@ class CreateProvider extends Component
     public $form, $provDocType;
     protected $querystring = ['provDocType'];
     protected $rules = [
-        'form.name' => 'required|string|max:50',
-        'form.lastname' => 'required|string|max:75',
-        'form.email' => 'required|email|max:100|unique:clients,email',
-        'form.address' => 'required|string|max:100',
+        'form.name' => 'required|string|max:100',
+        'form.lastname' => 'required|string|max:100',
+        'form.email' => 'required|email|max:100|unique:providers,email',
+        'form.address' => 'required|string|max:150',
         'form.limit' => 'required|numeric|min:0',
         'form.phone' => 'required|string|max:25',
         'form.rnc' => 'required|string|max:25',

@@ -13,7 +13,8 @@ class CreateOutcome extends Component
 {
 
     public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount = 0, $providers;
-    public $efectivoCode = '21', $efectivos=[];
+    public $efectivos=[];
+    public $efectivoCode;
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0;
     public $setCost = true, $hideTax = true, $prov_name, $prov_rnc;
     public function mount()

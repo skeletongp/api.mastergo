@@ -14,14 +14,17 @@ class ProviderTable extends LivewireDatatable
     public function builder()
     {
         $store=auth()->user()->store;
-        $providers=$store->providers()->with('store','provisions');
-        
+        $providers=
+        Provider::where('providers.store_id', $store->id)
+        ->leftjoin('moso_master.stores', 'stores.id', '=', 'providers.store_id')
+        ->select('providers.*','stores.name as storeName')
+        ;
+
         return $providers;
     }
 
     public function columns()
     {
-        $providers=$this->builder()->get()->toArray();
         return [
             Column::name('fullname')->label('Nombre'),
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
@@ -30,16 +33,16 @@ class ProviderTable extends LivewireDatatable
             })->label('Crédito')->searchable()->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Doc.')->searchable()->headerAlignCenter(),
-            $this->editColumn($providers),
+            $this->editColumn(),
             $this->deleteColumn(),
         ];
     }
-    public function editColumn($providers)
+    public function editColumn()
     {
         if (auth()->user()->hasPermissionTo('Editar Clientes')) {
-            return Column::name('created_at')->callback(['created_at','id'], function($created, $id) use ($providers) {
-                $provider=arrayFind($providers, 'id', $id);
-                return view('pages.providers.actions', compact('provider'));
+            return Column::name('created_at')->callback(['created_at','id'], function($created, $id)  {
+                $provider_id=$id;
+                return view('pages.providers.actions', compact('provider_id'));
             })->label('Editar')->headerAlignCenter();
         } else{
             return Column::callback('address', function($address){
