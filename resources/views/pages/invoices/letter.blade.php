@@ -365,7 +365,7 @@
                         <div>EFECTIVO</div>
                     </td>
                     <td style="text-align: right; ">
-                        <div>${{ \formatNumber($payment->efectivo) }}</div>
+                        <div>${{ \formatNumber($invoice->payments->sum('efectivo')) }}</div>
                     </td>
                 </tr>
             @endif
@@ -376,7 +376,7 @@
                         <div>TARJETA</div>
                     </td>
                     <td style="text-align: right; x">
-                        <div>${{ \formatNumber($payment->tarjeta) }}</div>
+                        <div>${{ \formatNumber($invoice->payments->sum('tarjeta')) }}</div>
                     </td>
                 </tr>
             @endif
@@ -387,18 +387,18 @@
                         <div>TRANSFERENCIA</div>
                     </td>
                     <td style="text-align: right; ">
-                        <div>${{ \formatNumber($payment->transferencia) }}</div>
+                        <div>${{ \formatNumber($invoice->payments->sum('transferencia')) }}</div>
                     </td>
                 </tr>
             @endif
-            @if ($payment->rest > 0)
+            @if ($invoice->rest > 0)
                 <tr class="total" style="font-weight: bold; color:red ">
                     <td colspan="2"></td>
                     <td class="td-total text-right" style="text-align: right; padding-top:10px">
                         <b>PENDIENTE</b>
                     </td>
                     <td class="td-total text-right" style="text-align: right; padding-top:10px">
-                        <b> ${{ formatNumber($payment->rest) }}</b>
+                        <b> ${{ formatNumber($invoice->rest) }}</b>
                     </td>
                 </tr>
             @else
@@ -408,7 +408,7 @@
                         <b>CAMBIO</b>
                     </td>
                     <td class="td-total text-right" style="text-align: right; padding-top:2px">
-                        <b> ${{ formatNumber($payment->cambio) }}</b>
+                        <b> ${{ \formatNumber($invoice->payments->sum('cambio')) }}</b>
                     </td>
                 </tr>
             @endif
