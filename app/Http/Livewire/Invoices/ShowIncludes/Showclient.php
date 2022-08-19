@@ -26,10 +26,10 @@ trait Showclient
                 'contact'=>$client->contact,
             ];
         }
-        
+       
         
     }
-    public function updatedClientCode($value)
+    public function updatedClientCode()
     {
         $this->changeClient();
     }

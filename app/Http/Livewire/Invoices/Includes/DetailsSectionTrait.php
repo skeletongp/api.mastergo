@@ -40,11 +40,11 @@ trait DetailsSectionTrait
     {
         $this->validate(['product' => 'required']);
 
-        if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar') && $this->product['type'] != 'Servicio') {
+        /* if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar') && $this->product['type'] != 'Servicio') {
             $this->authorize('Vender producto fuera de Stock', 'validateAuthorization','confirmedAddItems','data=null','Autorizar');
-        } else {
+        } else { */
             $this->confirmedAddItems();
-        }
+       /*  } */
         $this->emit('focusCode');
     }
     public function updatedCant()

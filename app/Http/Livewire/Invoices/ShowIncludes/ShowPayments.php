@@ -60,7 +60,7 @@ trait ShowPayments
         $forma='cobro';
         
         if ($invoice->day==date('Y-m-d')) {
-            $forma=$invoice->condiction=='De Contado'?'contado':'credito';
+            $forma=$invoice->condition=='De Contado'?'contado':'credito';
         }
         
         $data = [
@@ -83,11 +83,11 @@ trait ShowPayments
         $invoice->payments()->save(setPayment($data));
         
         $payment = $invoice->payments()->orderBy('id', 'desc')->first();
-        setIncome($invoice, 'Abono saldo Factura Nº. ' . $invoice->number, $payment->payed);
+        setIncome($invoice, 'Abono saldo Factura Nº. ' . $invoice->number, $payed);
         $invoice->client->payments()->save($payment);
         setPaymentTransaction($invoice, $payment, $invoice->client, $this->bank, $this->reference);
         $invoice->update([
-            'rest' => $invoice->rest - ($payment->payed - $payment->cambio)
+            'rest' => $invoice->rest - (array_sum($this->payment) - $payment->cambio)
         ]);
        
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');
