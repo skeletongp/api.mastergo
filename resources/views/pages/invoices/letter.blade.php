@@ -309,7 +309,7 @@
 
                 @if ($invoice->comprobante)
                     <td style=" width: 20%; text-align:right; padding-top:15px ">
-                        {!! \formatNumber($invoice->details->sum('taxtotal')) !!}
+                        {!! \formatNumber($payment->tax) !!}
 
                     </td>
                 @endif

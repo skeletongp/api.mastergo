@@ -152,6 +152,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function (Request $request) {
     $invoice=Invoice::whereId(38)->with('payment')->first();
+   
     $data = [
         'invoice' => $invoice->load('details', 'payments', 'client', 'seller', 'contable'),
         'payment' => $invoice->payment

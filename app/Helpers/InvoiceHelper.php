@@ -18,6 +18,10 @@ function setPDFPath($invoice)
         'isHtml5ParserEnabled' => true,
         'isRemoteEnabled' => true
     ])->loadView('pages.invoices.letter', $data);
+    //delete file if exists
+    if (file_exists( asset('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf'))) {
+        unlink( asset('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf'));
+    }
     file_put_contents('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf', $pdf->output());
     $path = asset('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf');
     $pdf = [
@@ -31,7 +35,8 @@ function setPDFPath($invoice)
     );
    
     $payment = $invoice->payments()->orderBy('id', 'desc')->first();
-    $payment->pdf()->create(
+    $payment->pdf()->updateOrCreate(
+        ['fileable_id' => $payment->id],
         $pdf
     );
 }
