@@ -30,26 +30,10 @@ class Catalogue extends LivewireDatatable
             Column::callback(['counts.id:count'], function($count) {
                 return $count." Cuentas";
             })->label('Ctas. Detalle'),
-            Column::callback('counts.origin', function($origin) {
-                return 'En desarrollo';
-                return $origin;
-            })->label('Origen')
-          /*   Column::callback(['created_at','id'], function($created, $id) use ($controls){
-                $result=arrayFind($controls, 'id', $id);
-                return view('pages.contables.rows.ctaorigen', ['counts'=>$result['counts']]);
-            })->label('Origen'),
-            Column::callback(['updated_at','id'], function($updated, $id) use ($controls){
-                $result=arrayFind($controls, 'id', $id);
-                return view('pages.contables.rows.ctatype', ['counts'=>$result['counts']]);
-            })->label('Tipo'),
-            Column::callback(['deleted_at','id'], function($updated, $id) use ($controls){
-                $result=arrayFind($controls, 'id', $id);
-                return view('pages.contables.rows.ctabalance', ['counts'=>$result['counts']]);
-            })->label('Balance'), */
-          /*   Column::callback(['id'], function($id) use ($controls){
-                $result=arrayFind($controls, 'id', $id);
-                return view('pages.contables.rows.ctadelete', ['counts'=>$result['counts']]);
-            })->label('Borrar')->contentAlignCenter(), */
+            Column::callback('count_mains.code', function($code) {
+                return view('components.view',['url'=>route('contables.countview',['code'=>$code])]);
+            })->label('Detalle')
+          
           
         ];
     }

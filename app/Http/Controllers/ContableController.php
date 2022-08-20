@@ -94,4 +94,9 @@ class ContableController extends Controller
         
         return view('pages.contables.report-607');
     }
+    public function countview($code){
+        $count = CountMain::whereCode($code)->first();
+        $code=$code;
+        return view('pages.contables.countview', compact('count','code'));
+    }
 }

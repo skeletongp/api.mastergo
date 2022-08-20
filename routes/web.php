@@ -119,6 +119,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('view_catalogue', 'view_catalogue')->name('contables.view_catalogue');
             Route::get('results', 'results')->name('contables.results');
             Route::get('report_607', 'report_607')->name('contables.report_607');
+            Route::get('countview/{code}', 'countview')->name('contables.countview');
         });
         Route::controller(ComprobanteController::class)->group(function () {
             Route::get('comprobantes', 'index')->name('comprobantes.index');
@@ -151,20 +152,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-    $invoice=Invoice::whereId(38)->with('payment')->first();
-   
-    $data = [
-        'invoice' => $invoice->load('details', 'payments', 'client', 'seller', 'contable'),
-        'payment' => $invoice->payment
-    ];
-    $PDF = App::make('dompdf.wrapper');
-    $pdf = $PDF->setOptions([
-        'logOutputFile' => null,
-        'isHtml5ParserEnabled' => true,
-        'isRemoteEnabled' => true
-    ])->loadView('pages.invoices.letter', $data);
-
-   return  $pdf->stream();
+    $invoices = Invoice::where('rest', '>', 0)
+    ->whereHas('payments', function ($query) {
+        $query->where('rest', '=', '0');
+    });
+   return  dd($invoices->get());
     return view('prueba');
 })->name('prueba');
 
