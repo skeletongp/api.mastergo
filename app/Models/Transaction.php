@@ -34,7 +34,7 @@ class Transaction extends Model
     public function prunable()
     {
         $month = date('m');
-        $models = Transaction::whereMonth('day', '!=', $month)->with('haber', 'debe');
+        $models = Transaction::whereMonth('day', '=', $month)->with('haber', 'debe');
         foreach ($models->get() as $model) {
             ajustCount($model);
         }

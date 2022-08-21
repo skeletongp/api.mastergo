@@ -20,7 +20,6 @@ class OtherSeeder extends Seeder
         $place=Place::first();
         $store=Store::find(env('STORE_ID'));
         $this->createBanks($place, $store);
-        $this->createdProducts($place, $store);
         $this->createComprobantes($store);
        
     }

@@ -87,7 +87,7 @@ trait ShowPayments
         $invoice->client->payments()->save($payment);
         setPaymentTransaction($invoice, $payment, $invoice->client, $this->bank, $this->reference);
         $invoice->update([
-            'rest' => $invoice->rest - (array_sum($this->payment) - $payment->cambio)
+            'rest' => $rest
         ]);
        
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');

@@ -8,6 +8,7 @@ use App\Models\Detail;
 use App\Models\Invoice;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 trait GenerateInvoiceTrait
 {
@@ -53,6 +54,7 @@ trait GenerateInvoiceTrait
         $invoice->update(['venta' => $venta]);
         $invoice->update(['gasto_service' => $gasto_service]);
         $invoice->update(['venta_service' => $venta_service]);
+        Log::info('Invoice created', ['invoice' => $invoice, 'gasto' => $gasto, 'venta' => $venta, 'gasto_service' => $gasto_service, 'venta_service' => $venta_service]);
     }
     public function setFromScan()
     {

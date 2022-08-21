@@ -94,13 +94,14 @@ class DatabaseSeeder extends Seeder
                 RoleSeeder::class,
                 ScopeSeeder::class,
                 CountMainSeeder::class,
-                ProductSeeder::class,
+                
               
             ]
         );
         
         setContable($client, '101', 'debit', $client->fullname, $place->id);
         setContable($tax, '203', 'credit', 'ITBIS por Pagar', $place->id);
+        setContable($tax, '203', 'credit', 'ISR por Pagar', $place->id);
         setContable($tax, '103', 'debit', $tax->name . ' por Cobrar', $place->id);
         $user->assignRole('Super Admin');
         $user->assignRole('Administrador');
@@ -109,7 +110,8 @@ class DatabaseSeeder extends Seeder
         $store->roles()->save(Role::find(3));
         $this->setCounts($place, $provider);
         $this->call([
-            OtherSeeder::class
+            OtherSeeder::class,
+            ProductSeeder::class,
         ]);
         $roles = ['Administrador', 'Super Admin', 'Generico'];
       

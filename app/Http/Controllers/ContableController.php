@@ -87,6 +87,9 @@ class ContableController extends Controller
         $pdf = $PDF->loadView('pages.contables.pdf-results', compact('data'));
         file_put_contents('storage/cuadres/' . 'result' . date('Ymd') . $place->id . '.pdf', $pdf->output());
         $path = asset('storage/cuadres/' . 'result' . date('Ymd') . $place->id . '.pdf');
+        getResults();
+        $cap=$place->findCount('300-01');
+        $cap->update(['balance'=>$capital+($activo-$pasivo_capital)]);
         return view('pages.contables.view-results', compact('path'));
     }
     public function report_607()
@@ -98,5 +101,9 @@ class ContableController extends Controller
         $count = CountMain::whereCode($code)->first();
         $code=$code;
         return view('pages.contables.countview', compact('count','code'));
+    }
+    public function counttrans($id){
+        $count_id=$id;
+        return view('pages.contables.counttrans', compact('count_id'));
     }
 }

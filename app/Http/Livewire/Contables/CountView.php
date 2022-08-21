@@ -28,6 +28,11 @@ class CountView extends LivewireDatatable
     public function columns()
     {
         return [
+            Column::callback(['id'], function ($id) {
+                return view('components.view', [
+                    'url' => route('contables.counttrans', $id),
+                ]);
+            }),
             Column::name('code')->label('Código'),
             Column::callback([ 'name'], function ($name) {
                 return ellipsis($name, 30);

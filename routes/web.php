@@ -20,6 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Models\Count;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -120,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('results', 'results')->name('contables.results');
             Route::get('report_607', 'report_607')->name('contables.report_607');
             Route::get('countview/{code}', 'countview')->name('contables.countview');
+            Route::get('counttrans/{id}', 'counttrans')->name('contables.counttrans');
         });
         Route::controller(ComprobanteController::class)->group(function () {
             Route::get('comprobantes', 'index')->name('comprobantes.index');
@@ -152,11 +154,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-    $invoices = Invoice::where('rest', '>', 0)
-    ->whereHas('payments', function ($query) {
-        $query->where('rest', '=', '0');
-    });
-   return  dd($invoices->get());
+    $count=Count::where('code', '=', '400-01')->first();
+    $ingreso=$count->debe()->withTrashed()->sum('income');
+    $egreso=$count->haber()->withTrashed()->sum('outcome');
+   dd($ingreso, $egreso, $ingreso-$egreso, $count->balance);
     return view('prueba');
 })->name('prueba');
 
