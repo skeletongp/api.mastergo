@@ -162,9 +162,9 @@
                                 text='Catalógo de Ctas.' activeRoute="contables.*" scope="Impuestos" />
                         @endcan
                         @can('Ver Transacciones')
-                            <x-side-link routeName='contables.report_607' icon='far w-10 text-center fa-list fa-lg'
+                            <x-side-link routeName='contables.report_607' icon='fas w-10 text-center fa-file-upload fa-lg'
                                 text='Reporte 607' activeRoute="contables.*" scope="Impuestos" />
-                                <x-side-link routeName='contables.report_606' icon='far w-10 text-center fa-list fa-lg'
+                                <x-side-link routeName='contables.report_606' icon='fas w-10 text-center fa-file-download fa-lg'
                                 text='Reporte 606' activeRoute="contables.*" scope="Impuestos" />
                         @endcan
                     </x-dropitem>
