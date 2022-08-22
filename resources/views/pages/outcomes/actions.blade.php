@@ -1,6 +1,6 @@
 <div>
     @can('Borrar Gastos')
-        @if (!array_key_exists($outcome, 'ncf'))
+        @if (!array_key_exists('ncf',$outcome))
             <livewire:outcomes.delete-outcome :outcome="$outcome" :debitables="$debitables" :creditables="$creditables"
                 :wire:key="$outcome['id']" />
         @else
