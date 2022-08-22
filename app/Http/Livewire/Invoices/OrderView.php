@@ -40,7 +40,7 @@ class OrderView extends LivewireDatatable
     public function columns()
     {
 
-        $invoices = $this->builder()->get()->toArray();
+       // $invoices = $this->builder()->get()->toArray();
         $store = auth()->user()->store;
         $banks = $store->banks()->pluck('bank_name', 'id');
         return [
@@ -59,13 +59,11 @@ class OrderView extends LivewireDatatable
                 return ellipsis($result['seller']['fullname'], 16);
             })->label('Vendedor'),*/
             Column::name('condition')->label("Condición"),
-            Column::callback('id', function ($id) use ($invoices,  $banks) {
-                $result = arrayFind($invoices, 'id', $id);
-                return view('pages.invoices.order-page', ['invoice' => $result, 'banks' => $banks]);
+            Column::callback('id', function ($id) use ( $banks) {
+                return view('pages.invoices.order-page', ['invoice_id' => $id, 'banks' => $banks]);
             })->label('Acción'),
-            Column::callback(['uid', 'id'], function ($uid, $id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                return view('pages.invoices.delete-invoice-page', ['invoice' => $result]);
+            Column::callback(['uid', 'id'], function ($uid, $id)  {
+                return view('pages.invoices.delete-invoice-page', ['invoice_id' => $id]);
             })->label('Anular')->alignCenter()
 
         ];

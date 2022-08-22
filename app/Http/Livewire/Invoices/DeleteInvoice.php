@@ -9,7 +9,7 @@ use Livewire\Component;
 class DeleteInvoice extends Component
 {
     use Confirm;
-    public $invoice;
+    public $invoice_id;
     protected $listeners = ['deleteInvoice', 'validateAuthorization'];
 
 

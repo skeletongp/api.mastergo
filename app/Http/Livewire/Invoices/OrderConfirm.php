@@ -14,22 +14,15 @@ use Livewire\WithFileUploads;
 class OrderConfirm extends Component
 {
     use OrderContable, OrderConfirmTrait, WithFileUploads, Confirm;
-    public  $form, $compAvail = true, $cobrable = true, $copyCant = 1;
+    public  $form=[], $compAvail = true, $cobrable = true, $copyCant = 1;
     public $banks, $bank, $bank_id, $reference;
-    protected $listeners = ['payInvoice', 'validateAuthorization', 'reload' => 'render'];
-
-    public function mount($invoice)
-    {
-        $store = auth()->user()->store;
-        $user = auth()->user();
-        $this->form = $invoice;
-        unset($invoice['payment']['id']);
-        
-        if ($user->hasRole('Administrador')) {
-            $this->cobrable = true;
-        }
-
+    protected $listeners = ['payInvoice', 'validateAuthorization', 'reload' => 'render','modalOpened'];
+    public $invoice_id;
+    
+    public function mount($invoice_id){
+        $this->form['id'] = $invoice_id;
     }
+    
     public function updatedCopyCant()
     {
         $this->emit('changeCant', $this->copyCant);
@@ -70,7 +63,7 @@ class OrderConfirm extends Component
     }
     public function modalOpened()
     {
-        $this->form = Invoice::find($this->invoice['id'])
+        $this->form = Invoice::find($this->invoice_id)
         ->load('seller',  'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment.pdf', 'store.image', 'comprobante', 'pdf', 'place.preference')->toArray();
         $payment=$this->form['payment'];
         unset($payment['id']);

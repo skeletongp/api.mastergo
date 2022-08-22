@@ -1,14 +1,14 @@
 <div class="">
       
    
-    <x-modal id="modalConfirmInvoice" maxWidth="max-w-3xl" :listenOpen="true" :clickAway="false">
+    <x-modal listenOpen="true" id="modalConfirmInvoice" maxWidth="max-w-3xl" :listenOpen="true" :clickAway="false">
         <x-slot name="button">
             <span>
                 Cobrar
             </span>
         </x-slot>
         <x-slot name="title">
-            Cobrar Pedido Nº. {{ $form['number'] }}
+            Cobrar Pedido 
         </x-slot>
         
         <form wire:submit.prevent="tryPayInvoice" class="grid grid-cols-5 gap-4 p-3 max-w-3xl mx-auto text-left relative pt-16">
