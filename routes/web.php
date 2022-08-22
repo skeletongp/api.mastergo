@@ -120,6 +120,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('view_catalogue', 'view_catalogue')->name('contables.view_catalogue');
             Route::get('results', 'results')->name('contables.results');
             Route::get('report_607', 'report_607')->name('contables.report_607');
+            Route::get('report_606', 'report_606')->name('contables.report_606');
             Route::get('countview/{code}', 'countview')->name('contables.countview');
             Route::get('counttrans/{id}', 'counttrans')->name('contables.counttrans');
         });

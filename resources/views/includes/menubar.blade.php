@@ -161,9 +161,11 @@
                             <x-side-link routeName='contables.catalogue' icon='far w-10 text-center fa-list fa-lg'
                                 text='Catalógo de Ctas.' activeRoute="contables.*" scope="Impuestos" />
                         @endcan
-                        @can('Ver Catálogo')
+                        @can('Ver Transacciones')
                             <x-side-link routeName='contables.report_607' icon='far w-10 text-center fa-list fa-lg'
                                 text='Reporte 607' activeRoute="contables.*" scope="Impuestos" />
+                                <x-side-link routeName='contables.report_606' icon='far w-10 text-center fa-list fa-lg'
+                                text='Reporte 606' activeRoute="contables.*" scope="Impuestos" />
                         @endcan
                     </x-dropitem>
                 @endcanany

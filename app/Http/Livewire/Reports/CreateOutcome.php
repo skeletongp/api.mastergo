@@ -15,7 +15,7 @@ class CreateOutcome extends Component
     public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount = 0, $providers;
     public $efectivos=[];
     public $efectivoCode;
-    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0;
+    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0, $rate=18;
     public $setCost = true, $hideTax = true, $prov_name, $prov_rnc;
     public function mount()
     {
@@ -42,7 +42,6 @@ class CreateOutcome extends Component
         'count_code' => 'required',
         'efectivo' => 'required',
         'tarjeta' => 'required',
-        'ref' => 'required',
         'transferencia' => 'required',
         'tax' => 'required'
 
@@ -59,29 +58,45 @@ class CreateOutcome extends Component
             $this->rules = array_merge($this->rules, ['efectivoCode' => 'required']);
            
         }
+        if ($this->tax > 0) {
+            $this->rules = array_merge($this->rules, ['rate' => 'required']);
+            $this->rules = array_merge($this->rules, ['ref' => 'required|regex:/(B)([0-9]{2})([0-9]{8})$/']);
+           
+        }
         $this->validate();
-
-        $code = Provision::LETTER[rand(0, 25)] . date('His');
-        $code = $this->ref ?: $code;
+        if(!$this->check()){
+            return;
+        }
+        $codeProv = Provision::LETTER[rand(0, 25)] . date('His');
+        $code = $this->ref ?: $codeProv;
         $provider = Provider::whereId($this->provider_id)->first();
-        $outcome = setOutcome($this->amount, $this->concept, $this->ref);
+        $outcome = setOutcome($this->amount, $this->concept, $this->tax>0?$codeProv:$code, null, $this->tax>0?$code:null);
         if ($provider) {
             $provider->outcomes()->save($outcome);
         }
         $this->createPayment($outcome, $code);
         $this->emit('refreshLivewireDatatable');
-        $this->reset('amount', 'efectivo', 'tarjeta', 'transferencia', 'count_code', 'bank_id', 'ref_bank', 'tax', 'ref');
+        $this->reset('amount', 'efectivo', 'tarjeta', 'transferencia','concept','provider_id', 'count_code', 'bank_id', 'ref_bank', 'tax', 'ref');
         $this->emit('showAlert', 'Gasto registrado exitosamente', 'success');
+    }
+    public function check(): bool
+    {
+        $payed=$this->efectivo+$this->tarjeta+$this->transferencia;
+        if($payed>$this->amount){
+            $this->emit('showAlert', 'El monto pagado no puede ser mayor al monto del gasto', 'error',5000);
+            return false;
+        }
+        return true;
     }
     public function createPayment($outcome, $code)
     {
         $payed = $this->efectivo + $this->transferencia + $this->tarjeta;
         $data = [
-            'ncf' => $this->ref,
+            'ncf' => $outcome->ncf,
             'day' => date('Y-m-d'),
-            'amount' => $outcome->amount - $this->tax,
+            'amount' => $this->getBruto($outcome->amount, $this->tax),
             'discount' => 0,
-            'tax' => $this->tax,
+            'tax' => $outcome->amount - $this->getBruto($outcome->amount, $this->tax),
             'total' => $outcome->amount,
             'payed' => $payed,
             'efectivo' => $this->efectivo,
@@ -105,33 +120,44 @@ class CreateOutcome extends Component
     {
         $place = auth()->user()->place;
         $debitable = $place->findCount($this->count_code);
-        $tax = 0;
         $real = 1;
         $itbis = $place->findCount('103-01');
-        if ($this->tax == 1) {
-            $tax = 0.18;
-            $real = 0.82;
-        }
+        $hasTax=$this->tax==1?true:false;
         /* Registro de asiento sin impuestos */
             $efectivo = $place->counts()->whereId($this->efectivoCode)->first();
-        setTransaction($this->concept . ' - efectivo', $code, $payment->efectivo * $real, $debitable, $efectivo, 'Crear Gastos');
-        setTransaction($this->concept . ' Gasto otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Crear Gastos');
+        setTransaction($this->concept . ' - efectivo', $code, $this->getBruto($payment->efectivo, $hasTax ), $debitable, $efectivo, 'Crear Gastos');
+        setTransaction($this->concept . ' Gasto otros', $code,$this->getBruto($payment->tarjeta, $hasTax ), $debitable, $place->other(), 'Crear Gastos');
         if ($this->bank_id) {
             $bank = Bank::whereId($this->bank_id)->first();
-            setTransaction($this->concept . ' Gasto por banco', $code, $payment->transferencia * $real, $debitable, $bank->contable, 'Crear Gastos');
+            setTransaction($this->concept . ' Gasto por banco', $code, $this->getBruto($payment->transferencia, $hasTax ), $debitable, $bank->contable, 'Crear Gastos');
         }
         $provider = Provider::whereId($this->provider_id)->first();
         if ($provider) {
-            setTransaction($this->concept . ' Gasto a crédito', $code, $payment->rest * $real, $debitable, $provider->contable, 'Crear Gastos');
+            setTransaction($this->concept . ' Gasto a crédito', $code,$this->getBruto($payment->rest, $hasTax), $debitable, $provider->contable, 'Crear Gastos');
         }
 
         /* Registro de impuestos */
-        setTransaction('ITBIS en efectivo', $code, $payment->efectivo * $tax, $itbis, $efectivo, 'Crear Gastos');
-        setTransaction('ITBIS otros', $code, $payment->tarjeta * $real, $debitable, $place->other(), 'Crear Gastos');
-        if ($this->bank_id) {
-            $bank = Bank::whereId($this->bank_id)->first();
-            setTransaction('ITBIS por banco', $code, $payment->transferencia * $tax, $itbis, $bank->contable, 'Crear Gastos');
+        if($hasTax){
+
+            setTransaction('ITBIS en efectivo', $code, $this->getTax($payment->efectivo, $hasTax ), $itbis, $efectivo, 'Crear Gastos');
+            setTransaction('ITBIS otros', $code, $this->getTax($payment->tarjeta, $hasTax ), $itbis, $place->other(), 'Crear Gastos');
+            if ($this->bank_id) {
+                $bank = Bank::whereId($this->bank_id)->first();
+                setTransaction('ITBIS por banco', $code,$this->getTax($payment->transferencia, $hasTax ), $itbis, $bank->contable, 'Crear Gastos');
+            }
+            setTransaction('ITBIS a crédito', $code, $this->getTax($payment->rest, $hasTax ), $itbis, $provider->contable, 'Crear Gastos');
         }
-        setTransaction('ITBIS a crédito', $code, $payment->rest * $tax, $itbis, $provider->contable, 'Crear Gastos');
+       
+    }
+    public function getBruto($amount, $tax=false)
+    {
+        if(!$tax){
+            return $amount;
+           }
+        return $amount /(1+($this->rate/100));
+    }
+    public function getTax($amount, $tax=false)
+    {
+        return $amount - $this->getBruto($amount, true);
     }
 }
