@@ -33,12 +33,11 @@ class Report606 extends Component
         $outcomes=Outcome::where('outcomes.store_id',$store->id)
             ->whereBetween('outcomes.created_at', [$this->start_at, $this->end_at])
             ->whereNotNull('outcomes.ncf')
-            ->where('providers.rnc','!=','000-00000-0')
             ->leftJoin('payments','payments.payable_id','=','outcomes.id')
             ->where('payments.payable_type','App\Models\Outcome')
             ->leftJoin('providers','outcomes.outcomeable_id','=','providers.id')
             ->where('outcomes.outcomeable_type','App\Models\Provider')
-            ->selectRaw('outcomes.*, providers.rnc as rnc, payments.updated_at as day, payments.efectivo, payments.tarjeta, payments.transferencia, payments.tax as tax')
+            ->selectRaw('outcomes.*, providers.rnc as rnc, payments.updated_at as day, payments.efectivo, payments.tarjeta, payments.transferencia, payments.tax as tax, providers.fullname as provider')
             ->get();
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');

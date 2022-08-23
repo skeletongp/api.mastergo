@@ -194,6 +194,7 @@
                 @php
                     $docId = $outcome->rnc ;
                     $docId=str_replace('-', '',$docId);
+                    $docId=='0000000000'?$docId=ellipsis($outcome->provider,15):$docId=$docId;
                 @endphp
                 <tr style="font-size: normal; {{ fmod($ind+1, 2) == 0 ? 'background-color:#EEE' : '' }}">
                     <td style=" text-align: left">
