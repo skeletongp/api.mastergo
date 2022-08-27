@@ -70,6 +70,10 @@ class CreateOutcome extends Component
         $codeProv = Provision::LETTER[rand(0, 25)] . date('His');
         $code = $this->ref ?: $codeProv;
         $provider = Provider::whereId($this->provider_id)->first();
+        if($this->tax && $provider->id==1){
+            $this->emit('showAlert', 'No se puede aplicar el impuesto a un proveedor no registrado','error',10000);
+            return;
+        }
         $outcome = setOutcome($this->amount, $this->concept, $this->tax>0?$codeProv:$code, null, $this->tax>0?$code:null);
         if ($provider) {
             $provider->outcomes()->save($outcome);

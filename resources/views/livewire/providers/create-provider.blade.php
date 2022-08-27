@@ -11,16 +11,7 @@
             <span> Proveedor</span>
         </x-slot>
         <div class="relative pt-8">
-            @if ($errors->any())
-                <div class="absolute top-0 right-0 -mt-4 -mr-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow" role="alert">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ dd($errors) }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                
-            @endif
+           
             <form wire:submit.prevent="createProvider">
                 <div class="flex space-x-4">
                     <div class="w-full overflow-hidden">
@@ -29,11 +20,7 @@
                                 <x-base-input label="Primer nombre" id="provider.name" wire:model.defer="form.name" />
                                 <x-input-error for="form.name" />
                             </div>
-                            <div class="w-full overflow-hidden">
-                                <x-base-input label="Apellidos" id="provider.lastname"
-                                    wire:model.defer="form.lastname" />
-                                <x-input-error for="form.lastname" />
-                            </div>
+                            
                         </div>
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
