@@ -172,11 +172,13 @@ class EditDetail extends Component
 
         $debitable2 = $this->place->findCount('203-01');
           /* Ajuste Impuesto */
-          if ($diffTax < 0) {
-            setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2,  $desc_dev_ventas);
-        } else {
-            setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTax, $creditable2, $debitable2);
-        }
+         if($invoice->type!='B00' && $invoice->type!='B14'){
+            if ($diffTax < 0) {
+                setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2,  $desc_dev_ventas);
+            } else {
+                setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTax, $creditable2, $debitable2);
+            }
+         }
         /* Ajuste Detalle */
         $credi=$this->place->cash();
         if($this->diffPayment<0){
