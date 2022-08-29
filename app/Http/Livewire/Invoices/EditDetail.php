@@ -132,7 +132,7 @@ class EditDetail extends Component
     public function updatePayment($invoice, $details)
     {
         $payment = $invoice->payment;
-       
+       $total=$payment->total;
         $this->prevRest = $payment->rest;
         $payment->amount = $details->sum('subtotal');
         $payment->discount = $details->sum('discount');
@@ -143,8 +143,8 @@ class EditDetail extends Component
         } else {
             $payment->rest = $payment->total - $payment->payed;
         }
-        $this->diffPayment =($payment->payed-$payment->cambio) - $payment->total;
         $payment->save();
+        $this->diffPayment = $total-$payment->total;
         $invoice->update(['rest' => $payment->rest]);
         $this->updateClientLimit($this->prevRest, $invoice->client, $payment);
     }
@@ -172,17 +172,19 @@ class EditDetail extends Component
 
         $debitable2 = $this->place->findCount('203-01');
           /* Ajuste Impuesto */
-          if ($diffTax < 0) {
-            setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2,  $desc_dev_ventas);
-        } else {
-            setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTax, $creditable2, $debitable2);
-        }
+         if($invoice->type!='B00' && $invoice->type!='B14'){
+            if ($diffTax < 0) {
+                setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2,  $desc_dev_ventas);
+            } else {
+                setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTax, $creditable2, $debitable2);
+            }
+         }
         /* Ajuste Detalle */
         $credi=$this->place->cash();
-        if($this->diffPayment<0){
+        if($this->diffPayment == abs($diffRest)){
             $credi=$invoice->client->contable;
         }
-        if ($this->diffPayment < 0) {
+        if ($this->diffPayment <= abs($diffRest)) {
             if ($diffRest > 0) {
                 setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $credi,$desc_dev_ventas);
             } else {
@@ -191,6 +193,7 @@ class EditDetail extends Component
             
         } else {
             setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number,$this->diffPayment, $desc_dev_ventas, $credi);
+            
         }
       
     }
