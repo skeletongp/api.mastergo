@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Settings\Comprobantes;
 use App\Jobs\CreateComprobanteJob;
 use App\Models\Invoice;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
 
 class CreateComprobante extends Component
@@ -30,7 +31,7 @@ class CreateComprobante extends Component
     {
         $this->authorize('Crear Comprobantes');
         $this->validate();
-        dispatch(new CreateComprobanteJob($this->form))->onconnection('database');
+        dispatch(new CreateComprobanteJob($this->form))->onconnection('sync');
         $this->emit('showAlert', 'Comprobantes se están añadiendo en segundo plano','success');
         $this->reset();
     }
