@@ -79,6 +79,7 @@ trait OrderContable
         $itbisCount=$place->findCount('203-01');
         setTransaction('Reg. retención de ITBIS', $ref, $payment->tax,   $toTax, $itbisCount, 'Cobrar Facturas');
         setTransaction('Reg. Costo Mercancía General Vendida', $ref, $this->gastoGeneral, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
+       
         setTransaction('Reg. Costo Producto Terminado Vendido', $ref, $this->gastoTerminado, $place->ventas(), $place->producto_terminado(), 'Cobrar Facturas');
      
         $client->update([
