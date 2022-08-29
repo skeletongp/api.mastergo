@@ -127,4 +127,7 @@
             </div>
         </div>
     </div>
+    <div wire:loading wire:target="payInvoice">
+        <x-loading></x-loading>
+    </div>
 </div>

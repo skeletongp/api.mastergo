@@ -225,13 +225,13 @@
                         ${{ formatNumber($invoice->payment->total) }}
                     </td>
                     <td style=" text-align: left">
-                        ${{ formatNumber($invoice->payment->tax) }}
+                        ${{ formatNumber($invoice->payment->tax*(1-$invoice->details->avg('discount_rate'))) }}
                     </td>
                     <td style=" text-align:left; ">
                         ${{ formatNumber($invoice->payments->sum('efectivo')>0?($invoice->payments->sum('efectivo')-$invoice->payments->sum('cambio')):0) }}
                     </td>
                     <td style=" text-align:left;">
-                        ${{ formatNumber($invoice->payments->sum('transferencia')+$invoice->payments->sum('tarjeta')) }}
+                        ${{ formatNumber($invoice->payments->sum('transferencia')+$invoice->payments->sum('tarjeta')>0?($invoice->payments->sum('transferencia')+$invoice->payments->sum('tarjeta')-$invoice->payments->sum('cambio')):0) }}
                     </td>
                     <td style=" text-align:left; ">
                         ${{ formatNumber(0) }}
