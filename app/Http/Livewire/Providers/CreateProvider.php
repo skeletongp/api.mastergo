@@ -33,7 +33,7 @@ class CreateProvider extends Component
        $this->emit('refreshLivewireDatatable');
     }
     public function loadFromRNC(){
-        $url='contribuyentes/'.$this->form['rnc'];
+        $url='contribuyentes/'.str_replace('-','',$this->form['rnc']);
         $prov=getApi($url);
         if (array_key_exists('model', $prov)) {
             $this->form['name']=$prov['model']['name'];
