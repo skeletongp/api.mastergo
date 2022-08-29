@@ -225,7 +225,7 @@
                         ${{ formatNumber($invoice->payment->total) }}
                     </td>
                     <td style=" text-align: left">
-                        ${{ formatNumber($invoice->payment->tax*(1-$invoice->details->avg('discount_rate'))) }}
+                        ${{ formatNumber($invoice->payment->tax) }}
                     </td>
                     <td style=" text-align:left; ">
                         ${{ formatNumber($invoice->payments->sum('efectivo')>0?($invoice->payments->sum('efectivo')-$invoice->payments->sum('cambio')):0) }}
