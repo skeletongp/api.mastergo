@@ -58,7 +58,9 @@ trait OrderContable
                 break;
         }
         $moneys[$max] = 0;
-
+        $payment->update([
+            'tax'=>$invoice->payment->tax*(1-$invoice->details->avg('discount_rate')),
+        ]);
 
         setTransaction('Reg. venta de productos en Efectivo', $ref,  $moneys[0]*$rp, $place->cash(), $creditable, 'Cobrar Facturas');
         setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash(), 'Cobrar Facturas');
@@ -77,6 +79,7 @@ trait OrderContable
         setTransaction('Descuento en servicios a Fct. ' . $invoice->number, $ref, $payment->discount*$rs,  $discount, $ingresos_service, 'Cobrar Facturas');
 
         $itbisCount=$place->findCount('203-01');
+        
         setTransaction('Reg. retención de ITBIS', $ref, $payment->tax,   $toTax, $itbisCount, 'Cobrar Facturas');
         setTransaction('Reg. Costo Mercancía General Vendida', $ref, $this->gastoGeneral, $place->ventas(), $place->inventario(), 'Cobrar Facturas');
        

@@ -59,7 +59,7 @@ class Report607 extends Component
                 if ($payment->payable->payment->total <= 250000) {
                     $efectivo += $payment->efectivo > 0 ? ($payment->efectivo - $payment->cambio) : 0;
                     $transferencia += $payment->transferencia + $payment->tarjeta;
-                    if ($payment->id == $payment->payable->payment->id) {
+                    if ($payment->id == $payment->payable->payment->id && Carbon::parse($payment->payable->day)->between($this->start_at, $this->end_at)) {
                         $rest += $payment->payable->rest;
                         $total += $payment->payable->payment->total;
                         $tax += $payment->payable->payment->tax;

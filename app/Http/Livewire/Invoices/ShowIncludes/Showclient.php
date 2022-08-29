@@ -55,7 +55,7 @@ trait Showclient
                 setContable($client,'101','debit',$client->fullname,null, true);
             }
             setTransaction('Cambio de cliente Fact. No. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $invoice->rest, $client->contable, $invoice->client->contable);
-            $client->limit = $client->limit - $invoice->payment->rest;
+            $client->limit = $client->limit - $invoice->rest;
             $client->save();
             $invoice->update(['client_id' => $client->id]);
             $invoice->update(['name' => '']);
