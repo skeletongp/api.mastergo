@@ -30,12 +30,18 @@ class DeleteOutcome extends Component
         ]);
         $place=auth()->user()->place;
         $outcome=Outcome::find($this->outcome['id'])->load('outcomeable','payments');
+        
         $outcomeable=$outcome->outcomeable;
         $debitable=$place->counts()->find($this->debitableId);
         $creditable=$place->counts()->find($this->creditableId);
         setTransaction('Reversar '.$outcome->concepto, $outcome->ref, $outcome->payments->sum('payed'), $debitable, $creditable, 'Borrar Gastos');
         setTransaction('Reversar deuda '.$outcome->concepto, $outcome->ref, $outcome->rest, $outcomeable->contable, $creditable, 'Borrar Gastos');
         $outcome->delete();
-        $this->emit('refreshLivewireDatatable');
+        if($outcome->payments->sum('tax')>0){
+            $this->emit('showAlert','Este gasto tenía impuestos, así que debe ajustar los asientos debidamente', 'warning', 20000);
+        } else{
+
+            $this->emit('refreshLivewireDatatable');
+        }
     }
 }
