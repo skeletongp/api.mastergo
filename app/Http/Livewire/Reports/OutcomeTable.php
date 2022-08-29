@@ -35,10 +35,10 @@ class OutcomeTable extends LivewireDatatable
             Column::callback(['outcomeable_id','id'], function($outcomeable_id,$id) use($outcomes){ 
                 $result=arrayFind($outcomes,'id',$id);
                 if($result['outcomeable']){
-                    return $result['outcomeable']['fullname'];
+                    return ellipsis($result['outcomeable']['fullname'],20);
                 }
                 return 'N/D';
-            })->label('Acreedor')->contentAlignRight(),
+            })->label('Acreedor'),
 
             Column::callback('amount', function($amount){
                 return '$'.formatNumber($amount);

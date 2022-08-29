@@ -18,6 +18,7 @@ class ProviderTable extends LivewireDatatable
         Provider::where('providers.store_id', $store->id)
         ->leftjoin('moso_master.stores', 'stores.id', '=', 'providers.store_id')
         ->select('providers.*','stores.name as storeName')
+        ->orderBy('providers.name');
         ;
 
         return $providers;

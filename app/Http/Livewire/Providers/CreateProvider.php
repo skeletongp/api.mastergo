@@ -10,7 +10,6 @@ class CreateProvider extends Component
     protected $querystring = ['provDocType'];
     protected $rules = [
         'form.name' => 'required|string|max:100',
-        'form.lastname' => 'required|string|max:100',
         'form.email' => 'required|email|max:100|unique:providers,email',
         'form.address' => 'required|string|max:150',
         'form.limit' => 'required|numeric|min:0',
@@ -37,8 +36,8 @@ class CreateProvider extends Component
         $url='contribuyentes/'.$this->form['rnc'];
         $prov=getApi($url);
         if (array_key_exists('model', $prov)) {
-            $this->form['name']=strtok($prov['model']['name'],' ');
-            $this->form['lastname']=substr($prov['model']['name'],strlen($this->form['name'])+1);
+            $this->form['name']=$prov['model']['name'];
+           
         }
     }
 }
