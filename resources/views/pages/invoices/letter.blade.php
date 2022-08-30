@@ -212,7 +212,7 @@
                                     <b>Fact. Nº. </b>{{ $invoice->number }}<br />
                                     <b>Fecha:</b> {{ date_format(date_create($invoice->day), 'd/m/Y') }}<br />
                                     <b>Vence:</b>
-                                    {{ date_format(\Carbon\Carbon::create($invoice->expires_at), 'd/m/Y') }}
+                                    {{ date_format(\Carbon\Carbon::create($invoice->day)->addYear(), '31/12/Y') }}
                                     <br />
                                     <b>Forma de pago:</b>
                                     {{ $invoice->payway }}
