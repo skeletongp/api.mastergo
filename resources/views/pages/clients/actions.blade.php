@@ -1,5 +1,5 @@
 <div class="flex space-x-4 items-center justify-center">
-    @if ($client['id'] !== 1)
+    @if ($client['id'] != 1)
         <div class="flex space-x-4 items-center">
             @can('Editar Clientes')
                 <div>
