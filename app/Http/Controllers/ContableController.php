@@ -85,14 +85,30 @@ class ContableController extends Controller
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
         $pdf = $PDF->loadView('pages.contables.pdf-results', compact('data'));
-        file_put_contents('storage/cuadres/' . 'result' . date('Ymd') . $place->id . '.pdf', $pdf->output());
-        $path = asset('storage/cuadres/' . 'result' . date('Ymd') . $place->id . '.pdf');
+        file_put_contents('storage/results/' . 'result' . date('Ymd') . $place->id . '.pdf', $pdf->output());
+        $path = asset('storage/results/' . 'result' . date('Ymd') . $place->id . '.pdf');
+        $result=$place->results()->whereMonth('created_at', Carbon::now()->month)->first();
         if (date('Ymd') == Carbon::now()->lastOfMonth()->format('Ymd')) {
+            if(!$result){
+                $this->createResult($data, $place, $path);
+            }
             getResults();
             $cap = $place->findCount('300-01');
             $cap->update(['balance' => $capital + ($activo - $pasivo_capital)]);
         }
         return view('pages.contables.view-results', compact('path'));
+    }
+    public function createResult($data, $place, $path){
+      $result= $place->results()->create([
+        'ventas' => $data['ingresos'],
+        'costos'=> $data['costos_totales'],
+        'gastos'=> $data['gastos_admin']+$data['gastos_ventas']+$data['gastos_financieros'],
+        'utilidad'=> $data['utilidad_neta'],
+        'isr'=> $data['utilidad_antes_impuestos']-$data['utilidad_neta'],
+       ]);
+       $result->pdf()->create([
+        'pathLetter'=> $path,
+       ]);
     }
     public function report_607()
     {

@@ -168,5 +168,9 @@ protected $connection="mysql";
     {
         return $this->hasMany(Recurrent::class);
     }
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
     
 }
