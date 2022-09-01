@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 class Payment extends Model
 {
     use HasFactory, SoftDeletes;
@@ -24,11 +24,11 @@ protected $connection="mysql";
 
     public function payable()
     {
-       return  $this->morphTo();
+       return  $this->morphTo()->withoutGlobalScope(SoftDeletingScope::class);
     }
     public function payer()
     {
-       return  $this->morphTo();
+       return  $this->morphTo()->withoutGlobalScope(SoftDeletingScope::class);
     }
     public function contable()
     {

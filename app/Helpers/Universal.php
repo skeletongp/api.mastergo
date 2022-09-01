@@ -91,39 +91,39 @@ function getApi($endPoint)
 }
 function ellipsis($string, $maxLength)
 {
-    if (strlen($string) > $maxLength) {
-        return substr($string, 0, $maxLength) . '...';
+    if (mb_strlen($string) > $maxLength) {
+        return mb_substr($string, 0, $maxLength) . '...';
     }
     return $string;
 }
 function getNextDate(string $recurrency, $date){
-    $date=Carbon::parse($date);
+    $fecha = Carbon::createFromDate($date);
+    $recurrency=mb_strtolower($recurrency);
     switch ($recurrency) {
-        case 'Quincenal':
-            $date->addDays(15);
+        case 'diario':
+            $fecha->addDay();
+            $fecha_db = $fecha->toDateString();
             break;
-        case 'Mensual':
-            $date->addMonth();
+        case 'semanal':
+            $fecha->addWeek();
+            $fecha_db = $fecha->toDateString();
             break;
-        case 'Bimestral':
-            $date->addMonth(2);
+        case 'quincenal':
+            $fecha->addDays(3);
+            $day=$fecha->format('d');
+            if ($day<15) {
+              $fecha=$fecha->day(15);
+            } else {
+              $fecha=$fecha->lastOfMonth();
+            }
+            $fecha_db = $fecha->toDateString();
             break;
-        case 'Trimestral':
-            $date->addMonth(3);
-            break;
-        case 'Cuatrimestral':
-            $date->addMonth(4);
-            break;
-        case 'Semestral':
-            $date->addMonth(6);
-            break;
-        case 'Anual':
-            $date->addYear();
-            break;
-        default:
+        case 'mensual':
+            $fecha->addMonth();
+            $fecha_db = $fecha;
             break;
     }
-    return $date;
+    return Carbon::parse($fecha_db);
 }
 function operate( $a, $op, $b)
 {

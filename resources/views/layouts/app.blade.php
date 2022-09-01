@@ -159,7 +159,7 @@
             });
         });
 
-        Livewire.onError(statusCode => {
+        Livewire.onError((statusCode, message) => {
             switch (statusCode) {
                 case 403:
                     msg = 'No tienes permiso para realizar esta acción';
@@ -171,6 +171,7 @@
                     msg = 'Ha ocurrido un error con tu solicitud '
                     break;
             }
+            console.log(message)
             Swal.fire({
                 title: `<div class="p-4 mb-4 text-lg uppercase text-red-700 bg-red-100 
                 rounded-lg font-bold role="alert"> ${msg} </div>`,
