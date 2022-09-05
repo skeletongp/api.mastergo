@@ -43,6 +43,7 @@ class EditStore extends Component
                 ['imageable_id' => $this->store->id, 'imageable_type' => 'App\Models\Store'],
                 ['path' => $this->photo_path]
             );
+            Cache::forget('store_logo' . $this->store->id);
         }
         $this->store->save();
         $this->emit('showAlert', 'Datos actualizados correctamente', 'success');

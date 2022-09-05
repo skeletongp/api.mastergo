@@ -7,6 +7,7 @@ use App\Models\Comprobante;
 use App\Models\Detail;
 use App\Models\Invoice;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -84,6 +85,7 @@ trait GenerateInvoiceTrait
     public function sendInvoice()
     {
         $store=auth()->user()->store;
+        $place=optional(auth()->user())->place?:$store->places->first();
         $this->checkCompAmount($store);
         if (!count($this->details)) {
             return;
@@ -101,6 +103,10 @@ trait GenerateInvoiceTrait
                 'place_id'=>$user->place->id,
                 'client_id'=>$this->client['id'],
             ]);
+            $comprobantes=getComprobantes($this->type);
+            $comprobantes=$comprobantes->keyBy('id');
+            $comprobantes->forget($comprobante->id);
+            Cache::put($this->type.'_comprobantes_'.env('STORE_ID'), $comprobantes);
         }
         $invoice = $user->store->invoices()->create(
             [
@@ -136,6 +142,10 @@ trait GenerateInvoiceTrait
         $name=$invoice->name?:$invoice->client->name;
         unset($data[$this->localDetail]);
         file_put_contents(storage_path('app/public/local/details.json'), json_encode($data));
+        if($place->preference->instant=='yes'){
+            $this->instant=true;
+            $this->emit('modalOpened');
+        }
         $this->mount();
     }
     public function createPayment($invoice)

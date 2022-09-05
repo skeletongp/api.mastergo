@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Invoices;
 
 use App\Http\Traits\Livewire\Confirm;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class DeleteInvoice extends Component
@@ -35,6 +36,7 @@ class DeleteInvoice extends Component
             $comprobante->update([
                 'status' => 'disponible'
             ]);
+            Cache::forget($comprobante->prefix.'_comprobantes_'.env('STORE_ID'));
         }
     }
     public function deleteTaxes($invoice)

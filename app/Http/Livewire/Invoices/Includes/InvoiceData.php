@@ -5,17 +5,18 @@ namespace App\Http\Livewire\Invoices\Includes;
 use App\Models\Comprobante;
 use App\Models\Invoice;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 trait InvoiceData
 {
 
     public $number, $ncf, $condition = "DE CONTADO", $type, $vence, $seller, $compAvail = true, $comprobante_id;
 
+  
     public function checkComprobante($type): bool
     {
-        $comprobante = Comprobante::
-            where('type', array_search($type, Invoice::TYPES))->where('status', 'disponible')
-            ->orderBy('number')->first();
+        $comprobante=getComprobantes($type)->first();
         if ($comprobante) {
             $this->comprobante_id = $comprobante->id;
             $this->type = $type;

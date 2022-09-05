@@ -6,6 +6,7 @@ use App\Jobs\CreateComprobanteJob;
 use App\Models\Invoice;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class CreateComprobante extends Component
@@ -31,6 +32,12 @@ class CreateComprobante extends Component
     {
         $this->authorize('Crear Comprobantes');
         $this->validate();
+        if($this->form['final']-$this->form['inicial']>500){
+            $this->emit('showAlert','No puede añadir más de 500 comprobantes a la vez','error', 5000);
+            return;
+        }
+        $type=Invoice::TYPES[$this->form['type']];
+        Cache::forget($type.'_comprobantes_'.env('STORE_ID'));
         dispatch(new CreateComprobanteJob($this->form))->onconnection('sync');
         $this->emit('showAlert', 'Comprobantes se están añadiendo en segundo plano','success');
         $this->reset();

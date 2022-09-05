@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Bank;
+use App\Models\Comprobante;
 use App\Models\Count;
 use App\Models\CountMain;
 use App\Models\Payment;
@@ -175,4 +176,14 @@ function getResults()
         $isr_por_pagar->update(['balance' => $isr_por_pagar->balance + $isr]);
     }
     Artisan::call('model:prune');
+}
+function getComprobantes($type){
+   // Cache::forget($type.'_comprobantes_'.env('STORE_ID'));
+    $comprobantes=Cache::get($type.'_comprobantes_'.env('STORE_ID'));
+    if(!$comprobantes){
+        $comprobantes=Comprobante::where('prefix',$type)->where('store_id',env('STORE_ID'))->where('status','disponible')->orderBy('number')->get();
+        Cache::put($type.'_comprobantes_'.env('STORE_ID'),$comprobantes);
+    }
+    
+    return collect($comprobantes);
 }

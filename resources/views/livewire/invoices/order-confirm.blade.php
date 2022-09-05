@@ -1,7 +1,7 @@
 <div class="">
       
    
-    <x-modal listenOpen="true" id="modalConfirmInvoice" maxWidth="max-w-3xl" :listenOpen="true" :clickAway="false">
+    <x-modal id="modalConfirmInvoice{{ $form['id'] }}" maxWidth="max-w-3xl" :listenOpen="true" :clickAway="false" :open="$instant">
         <x-slot name="button">
             <span>
                 Cobrar

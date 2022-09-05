@@ -13,9 +13,6 @@ use App\Http\Livewire\Invoices\Includes\InvoiceData;
 use App\Http\Traits\Livewire\Confirm;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
-use SNMP;
 
 class CreateInvoice extends Component
 {
@@ -25,6 +22,7 @@ class CreateInvoice extends Component
     public $details = [], $banks;
     public $producto;
     public $action;
+    public $instant=false;
     public  $unit, $unit_id;
     protected $listeners = ['selProducto', 'validateAuthorization', 'realoadClients', 'confirmedAddItems', 'sendInvoice'];
     protected $queryString = ['details', 'client', 'client_code', 'vence', 'condition', 'type'];
@@ -35,10 +33,10 @@ class CreateInvoice extends Component
         
         $store = auth()->user()->store;
         $place = auth()->user()->place;
-        $this->banks = $store->banks()->pluck('bank_name', 'id');
+        $this->banks = getBanks();
         $this->vence = Carbon::now()->format('Y-m-d');
         $this->condition = 'DE CONTADO';
-        $this->type = $place->preference->comprobante_type;
+        $this->type = getPreference($place->id)->comprobante_type;
         $this->number = $place->id . '-' . str_pad($place->invoices()->withTrashed()->count() + 1, 7, '0', STR_PAD_LEFT);
         $this->clients = clientWithCode($store->id);
         $this->products = $store->products()->orderBy('name')->pluck('name', 'code');

@@ -14,7 +14,7 @@ trait ClientSectionTrait
     {
        
         $code = str_pad($this->client_code, 4, '0', STR_PAD_LEFT);
-        $client = Client::where('code', $code)->with('contact')->first();
+        $client = Client::where('code', $code)->first();
         
 
         if ($client) {
