@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43b2bef8dbcee23efda5a139fb175230",
+    "content-hash": "e34e565d3ab7e634ba5a8b12d25593fe",
     "packages": [
         {
             "name": "asantibanez/livewire-select",
@@ -209,6 +209,52 @@
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.231.16"
             },
             "time": "2022-07-28T18:17:24+00:00"
+        },
+        {
+            "name": "balping/json-raw-encoder",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/balping/json-raw-encoder.git",
+                "reference": "e2b0ab888342b0716f1f0628e2fa13b345c5f276"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/balping%2Fjson-raw-encoder/repository/archive.zip?sha=e2b0ab888342b0716f1f0628e2fa13b345c5f276",
+                "reference": "e2b0ab888342b0716f1f0628e2fa13b345c5f276",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Balping\\JsonRaw\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Balázs Dura-Kovács"
+                }
+            ],
+            "description": "Encode arrays to json with raw JS objects (eg. callbacks) in them",
+            "keywords": [
+                "callback",
+                "encode",
+                "json"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/api/v4/projects/6731265/issues"
+            },
+            "time": "2020-06-06T16:24:31+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -620,6 +666,62 @@
                 "source": "https://github.com/cloudinary/php-transformation-builder-sdk/tree/1.0.0"
             },
             "time": "2022-05-24T08:16:26+00:00"
+        },
+        {
+            "name": "consoletvs/charts",
+            "version": "6.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ConsoleTVs/Charts.git",
+                "reference": "6914e85086749ac90832b0b14479642fe0337cf4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ConsoleTVs/Charts/zipball/6914e85086749ac90832b0b14479642fe0337cf4",
+                "reference": "6914e85086749ac90832b0b14479642fe0337cf4",
+                "shasum": ""
+            },
+            "require": {
+                "balping/json-raw-encoder": "^1.0",
+                "illuminate/console": "^5.0|^6.0|^7.0|^8.0|^9.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ConsoleTVs\\Charts\\ChartsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ConsoleTVs\\Charts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Èrik Campobadal Forés",
+                    "email": "soc@erik.cat"
+                }
+            ],
+            "description": "The laravel charting package",
+            "support": {
+                "issues": "https://github.com/ConsoleTVs/Charts/issues",
+                "source": "https://github.com/ConsoleTVs/Charts/tree/6.5.6"
+            },
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/ErikCampobadal",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2022-08-08T11:01:59+00:00"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -5615,6 +5717,72 @@
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
             },
             "time": "2021-12-11T13:40:54+00:00"
+        },
+        {
+            "name": "sarfraznawaz2005/meter",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sarfraznawaz2005/meter.git",
+                "reference": "f7e20c53ece4d9367112588a12de5f5ce42d556e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sarfraznawaz2005/meter/zipball/f7e20c53ece4d9367112588a12de5f5ce42d556e",
+                "reference": "f7e20c53ece4d9367112588a12de5f5ce42d556e",
+                "shasum": ""
+            },
+            "require": {
+                "balping/json-raw-encoder": "^1.0",
+                "consoletvs/charts": "6.*",
+                "illuminate/support": "~5|~6|~7|~8|~9",
+                "php": ">=7.3|>=8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sarfraznawaz2005\\Meter\\MeterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers.php"
+                ],
+                "psr-4": {
+                    "Sarfraznawaz2005\\Meter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sarfraz Ahmed",
+                    "email": "sarfraznawaz2005@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "laravel package to find performance bottlenecks in your laravel application.",
+            "homepage": "https://github.com/sarfraznawaz2005/meter",
+            "keywords": [
+                "database",
+                "health",
+                "laravel",
+                "log",
+                "meter",
+                "monitor",
+                "performance",
+                "queries",
+                "request"
+            ],
+            "support": {
+                "issues": "https://github.com/sarfraznawaz2005/meter/issues",
+                "source": "https://github.com/sarfraznawaz2005/meter/tree/1.1.0"
+            },
+            "time": "2022-04-01T05:22:42+00:00"
         },
         {
             "name": "shrikeh/teapot",
