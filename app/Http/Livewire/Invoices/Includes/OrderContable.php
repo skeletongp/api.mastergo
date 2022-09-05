@@ -86,7 +86,8 @@ trait OrderContable
         setTransaction('Reg. Costo Producto Terminado Vendido', $ref, $this->gastoTerminado, $place->ventas(), $place->producto_terminado(), 'Cobrar Facturas');
      
         $client->update([
-            'limit' => $client->limit - $invoice->payment->rest
+            'limit' => $client->limit - $invoice->payment->rest,
+            'debt' => $client->invoices->sum('rest')
         ]);
     }
     public function setTaxes($invoice)

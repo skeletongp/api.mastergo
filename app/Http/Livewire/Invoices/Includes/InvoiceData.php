@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Invoices\Includes;
 
+use App\Models\Comprobante;
 use App\Models\Invoice;
 use Carbon\Carbon;
 
@@ -12,8 +13,8 @@ trait InvoiceData
 
     public function checkComprobante($type): bool
     {
-        $comprobante = auth()->user()->store->comprobantes()
-            ->where('type', array_search($type, Invoice::TYPES))->where('status', 'disponible')
+        $comprobante = Comprobante::
+            where('type', array_search($type, Invoice::TYPES))->where('status', 'disponible')
             ->orderBy('number')->first();
         if ($comprobante) {
             $this->comprobante_id = $comprobante->id;

@@ -29,6 +29,7 @@ class Client extends Model implements Searchable
         'special',
         'address',
         'rnc',
+        'debt',
         'phone',
         'limit',
         'store_id',
@@ -87,13 +88,13 @@ class Client extends Model implements Searchable
     public function address(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => $this->attributes['name'] = ucwords($value, ' '),
+            set: fn ($value) => $this->attributes['address'] = ucwords($value, ' '),
         );
     }
     public function email(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => $this->attributes['name'] = strtolower($value),
+            set: fn ($value) => $this->attributes['email'] = strtolower($value),
         );
     }
     public function contable()
@@ -120,10 +121,10 @@ class Client extends Model implements Searchable
     {
         return $this->morphMany(Payment::class, 'payer');
     }
-    public function getDebtAttribute()
+    /* public function getDebtAttribute()
     {
         return optional($this->invoices)->sum('rest');
-    }
+    } */
     public function store()
     {
         return $this->belongsTo(Store::class);

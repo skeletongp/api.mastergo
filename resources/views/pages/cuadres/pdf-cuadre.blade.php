@@ -270,7 +270,7 @@
                 BALANCE =>
             </td>
             <td colspan="2" style="padding-top:10px">
-               ${{ formatNumber(($payments->sum('efectivo') - $payments->sum('cambio'))) }} 
+               ${{ formatNumber(($efectivoSaldo)) }} 
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -288,7 +288,7 @@
                 Efectivo...
             </td>
             <td colspan="2">
-                ${{ formatNumber($payments->sum('efectivo') - $payments->sum('cambio')) }}
+                ${{ formatNumber($efectivoSaldo) }}
             </td>
         </tr>
         <tr style="">
@@ -312,7 +312,7 @@
                 Cobrado...
             </td>
             <td colspan="2">
-                ${{ formatNumber($payments->sum('efectivo') - $payments->sum('cambio') + $payments->sum('transferencia') + $payments->sum('tarjeta')) }}
+                ${{ formatNumber($efectivoSaldo + $payments->sum('transferencia') + $payments->sum('tarjeta')) }}
             </td>
         </tr>
         <hr>
@@ -330,7 +330,7 @@
                 Total...
             </td>
             <td colspan="2">
-                ${{ formatNumber($payments->sum('efectivo') - $payments->sum('cambio') + $payments->sum('transferencia') + $payments->sum('tarjeta')+$invoices->sum('rest')) }}
+                ${{ formatNumber($efectivoSaldo + $payments->sum('transferencia') + $payments->sum('tarjeta')+$invoices->sum('rest')) }}
             </td>
         </tr>
        

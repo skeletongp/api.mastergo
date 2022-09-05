@@ -61,6 +61,7 @@ trait OrderConfirmTrait
         $this->closeComprobante($invoice->comprobante, $invoice);
         $invoice = Invoice::whereId($this->form['id'])->with('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference')->first();
         $this->emit('showAlert', 'Factura cobrada exitosamente', 'success');
+       
         if (auth()->user()->hasPermissionTo('Imprimir Facturas'))
             $this->emit('changeInvoice', $invoice);
         $this->emit('refreshLivewireDatatable');

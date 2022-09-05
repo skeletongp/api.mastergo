@@ -102,6 +102,7 @@ function setPaymentTransaction($invoice, $payment, $client, $bank, $reference)
     setTransaction('Reg. abono por Transferencia', $ref . ' | ' . $reference,  $moneys[2], optional($bank)->contable, $creditable, 'Cobrar Facturas');
 
     $client->update([
-        'limit' => $client->limit + $payment->payed
+        'limit' => $client->limit + $payment->payed,
+        'debt' => $client->invoices->sum('rest'),
     ]);
 }
