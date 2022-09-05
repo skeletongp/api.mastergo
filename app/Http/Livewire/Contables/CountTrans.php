@@ -60,9 +60,7 @@ class CountTrans extends LivewireDatatable
     }
     public function summarize($column)
     {
-        if ($this->perPage < 500) {
-            return '';
-        }
+       
         $results = json_decode(json_encode($this->results->items()), true)?:[];
         foreach ($results as $key => $value) {
             $val = json_decode(json_encode($value), true);
