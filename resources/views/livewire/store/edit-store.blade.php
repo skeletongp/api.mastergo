@@ -44,16 +44,16 @@
                 {{-- Correo y teléfono --}}
                 <div class="flex space-x-4 items-center">
                     <div class="w-full">
-                        <x-input class="text-2xl" label="Dirección" wire:model.defer="store.address"
-                            id="store.address"></x-input>
+                        <x-input class="text-2xl" label="Dirección" wire:model.defer="store.address" id="store.address">
+                        </x-input>
                         <x-input-error for="store.address"></x-input-error>
                     </div>
 
                 </div>
                 <div class="flex space-x-4 items-center">
                     <div class="w-full">
-                        <x-input class="text-2xl" label="Lema o Slogan" wire:model.defer="store.lema"
-                            id="store.lema"></x-input>
+                        <x-input class="text-2xl" label="Lema o Slogan" wire:model.defer="store.lema" id="store.lema">
+                        </x-input>
                         <x-input-error for="store.lema"></x-input-error>
                     </div>
 
@@ -66,7 +66,7 @@
                         <x-input-error for="store.phone"></x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-input class="text-2xl" label="RNC/ID" wire:model.defer="store.rnc" id="store.rnc">
+                        <x-input class="text-2xl" label="RNC/ID" wire:model.defer="store.rnc" id="store_rnc">
                         </x-input>
                         <x-input-error for="store.rnc"></x-input-error>
                     </div>
@@ -92,6 +92,13 @@
             <livewire:settings.scopes.scope-index />
         @endcan
     </div>
+    @push('js')
+        <script>
+            $('#store_rnc').formatPhoneNumber({
+                format: '#-##-#####-#'
+            })
+        </script>
+    @endpush
 
 
 </div>
