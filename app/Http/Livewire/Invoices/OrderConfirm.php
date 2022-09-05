@@ -18,6 +18,7 @@ class OrderConfirm extends Component
     public $banks, $bank, $bank_id, $reference;
     protected $listeners = ['payInvoice', 'validateAuthorization', 'reload' => 'render','modalOpened'];
     public $invoice_id;
+    public $instant=false;
     
     public function mount($invoice_id){
         $this->form['id'] = $invoice_id;

@@ -3,7 +3,7 @@
     <div class="flex space-x-2 uppercase items-center">
         <a href="{{ route('home') }}">
             <div class="h-12 w-12 bg-contain bg-no-repeat bg-center rounded-full"
-                style="background-image: url({{ auth()->user()->store->logo }})"></div>
+                style="background-image: url({{ getStoreLogo() }})"></div>
         </a>
 
         <a href="{{ route('home') }}">

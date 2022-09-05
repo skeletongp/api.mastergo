@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Invoices\Includes;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -116,7 +117,12 @@ trait OrderContable
                 'user_id' => $invoice->contable_id,
                 'client_id' => $invoice->client_id,
             ]);
+            $comprobantes=getComprobantes($this->type);
+            $comprobantes=$comprobantes->keyBy('id');
+            $comprobantes->forget($comprobante->id);
+            Cache::put($invoice->type.'_comprobantes_'.env('STORE_ID'), $comprobantes);
         }
+       
     }
     public function setPendiente()
     {

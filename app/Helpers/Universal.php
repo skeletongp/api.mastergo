@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Bank;
+use App\Models\Preference;
+use App\Models\Store;
 use Carbon\Carbon;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Cache;
@@ -189,4 +192,28 @@ function sendMessage($to, $message){
     ]);
     
     $whatsapp_cloud_api->sendTextMessage($phone, $message);
+}
+function getBanks(){
+    $banks=Cache::get('banks'.env('STORE_ID'));
+    if (!$banks) {
+        $banks=Bank::where('store_id', env('STORE_ID'))->get();
+        Cache::put('banks'.env('STORE_ID'), $banks);
+    }
+    return $banks;
+}
+function getPreference($place_id){
+    $preference=Cache::get('preference'.$place_id);
+    if (!$preference) {
+        $preference=Preference::where('place_id', $place_id)->first();
+        Cache::put('preference'.$place_id, $preference);
+    }
+    return $preference;
+}
+function getStoreLogo(){
+    $logo=Cache::get('store_logo'.env('STORE_ID'));
+    if (!$logo) {
+        $logo=Store::find(env('STORE_ID'))->logo;
+        Cache::put('store_logo'.env('STORE_ID'), $logo);
+    }
+    return $logo;
 }

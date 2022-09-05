@@ -15,6 +15,7 @@ class SettingPreference extends Component
         'preference.printer'=>'required',
         'preference.min_comprobante'=>'required',
         'preference.print_order'=>'required',
+        'preference.instant'=>'required',
         'preference.copy_print'=>'required|numeric|min:1|max:3',
     ];
     protected $listeners=['setPrinters'];

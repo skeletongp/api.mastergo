@@ -18,7 +18,7 @@
                         <div class="py-4">
                             <div class="flex justify-between items-center">
                                 <div>
-                                @livewire('invoices.order-confirm', ['invoice_id' => $invoice->id, 'banks'=>$banks], key(uniqid()))
+                                @livewire('invoices.order-confirm', ['invoice_id' => $invoice->id, 'banks'=>$banks, 'instant'=>$instant], key(uniqid()))
                                 </div>
                             </div>
                         </div>

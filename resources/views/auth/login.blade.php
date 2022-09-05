@@ -48,7 +48,7 @@
 
                         <div class="flex justify-center">
                             <div class="w-44 h-24 bg-contain bg-no-repeat bg-center"
-                                style="background-image: url({{ $store->logo }})">
+                                style="background-image: url({{ getStoreLogo() }})">
 
                             </div>
                         </div>

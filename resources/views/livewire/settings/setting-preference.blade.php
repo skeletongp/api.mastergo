@@ -64,13 +64,22 @@
                                 </x-base-select>
                                 <x-input-error for="preference.printer"></x-input-error>
                             </div>
-                            <div class="">
+                            <div class="w-[7rem]">
+                                <x-base-select label="Instantánea" wire:model.defer="preference.instant"  id="instant">
+                                    <option value=""></option>
+                                    <option value="yes">Sí</option>
+                                    <option value="no">No</option>
+                                </x-base-select>
+                                <x-input-error for="preference.instant"></x-input-error>
+                            </div>
+                         
+                            <div class="w-[7rem]">
                                 <x-base-input label="Comprobantes" placeholder="Alertar desde" wire:model.defer="preference.min_comprobante" type="number" id="minComp">
                                 </x-base-input>
                                 <x-input-error for="preference.min_comprobante"></x-input-error>
                             </div>
-                            <div class="">
-                                <x-base-select label="Imprimir Orden" placeholder="Alertar desde" wire:model.defer="preference.print_order"  id="prntOrder">
+                            <div class="w-[7rem]">
+                                <x-base-select label="Orden" placeholder="Alertar desde" wire:model.defer="preference.print_order"  id="prntOrder">
                                     <option value=""></option>
                                     <option value="yes">Sí</option>
                                     <option value="no">No</option>
