@@ -32,7 +32,13 @@ class CuadreController extends Controller
             ->orderBy('payments.created_at', 'desc')
             ->select('payments.*', 'invoices.name as name', 'invoices.number', 'clients.name as client_name')
             ->with('payer', 'payable')->get();
-       
+            $efectivoSaldo=0;
+        foreach ($payments as $pay){
+            $efect=$pay->efectivo-$pay->cambio;
+            if($efect>0){
+                $efectivoSaldo+=$efect;
+            }
+        }
         $gastos = $place->payments()->where('payable_type', Outcome::class)
             ->join('invoices', 'invoices.id', '=', 'payments.payable_id')
             ->join('clients', 'clients.id', '=', 'payments.payer_id')
@@ -53,7 +59,9 @@ class CuadreController extends Controller
             'ctaCajaGeneral' => $ctaCajaGeneral,
             'pdf' => $PDF,
             'efectivos' => $efectivos,
+            'efectivoSaldo'=>$efectivoSaldo,
         ];
+        
         $pdf = $PDF->loadView('pages.cuadres.pdf-cuadre', $data);
         file_put_contents('storage/cuadres/' . 'cuadre_diario_' . $date . $place->id . '.pdf', $pdf->output());
         $path = asset('storage/cuadres/' . 'cuadre_diario_' . $date . $place->id . '.pdf');

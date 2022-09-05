@@ -153,6 +153,7 @@ class EditDetail extends Component
         $client->limit = $client->limit + $prevRest;
         $client->save();
         $client->limit = $client->limit - $payment->rest;
+        $client->debt=$client->invoices->sum('rest');
         $client->save();
     }
     public function updateTransaction($invoice)

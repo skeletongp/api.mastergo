@@ -30,6 +30,7 @@ class IncomeTable extends LivewireDatatable
             ->orderBy('payments.created_at', 'desc')
             ->select('payments.*', 'invoices.name as name', 'invoices.number', 'clients.name as client_name')
             ->orderBy('payments.updated_at', 'desc');
+           
         return $payments;
     }
 

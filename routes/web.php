@@ -20,6 +20,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Models\Client;
 use App\Models\Count;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
@@ -157,7 +158,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function (Request $request) {
     
-   dd(Cache::get('spatie.permission.cache'));
+   $clients=Client::get();
+   foreach($clients as $client){
+       $client->update(['debt'=>$client->invoices->sum('rest')]);
+   }
+   
     return view('prueba');
 })->name('prueba');
 
