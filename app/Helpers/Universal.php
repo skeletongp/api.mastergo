@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Bank;
+use App\Models\Invoice;
 use App\Models\Preference;
 use App\Models\Store;
 use Carbon\Carbon;
@@ -216,4 +217,20 @@ function getStoreLogo(){
         Cache::put('store_logo'.env('STORE_ID'), $logo);
     }
     return $logo;
+}
+function getPlaceInvoices($place_id){
+    $invoices=Cache::get('place_invoices'.$place_id);
+    if (!$invoices) {
+        $invoices=Invoice::where('place_id', $place_id)->get();
+        Cache::put('place_invoices'.$place_id, $invoices);
+    }
+    return $invoices;
+}
+function getPlaceInvoicesWithTrashed($place_id){
+    $invoices=Cache::get('place_invoices_with_trashed'.$place_id);
+    if (!$invoices) {
+        $invoices=Invoice::where('place_id', $place_id)->withTrashed()->get();
+        Cache::put('place_invoices_with_trashed'.$place_id, $invoices);
+    }
+    return $invoices;
 }
