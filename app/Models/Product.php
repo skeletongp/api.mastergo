@@ -15,7 +15,6 @@ class Product extends Model implements Searchable
     use HasFactory, SoftDeletes, SearchableTrait;
     protected $connection="mysql";
 
-    protected $with = ['store','units', 'image'];
 
     protected $appends = ['photo'];
     protected $guarded=[

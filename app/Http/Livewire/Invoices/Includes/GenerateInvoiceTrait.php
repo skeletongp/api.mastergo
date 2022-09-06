@@ -84,7 +84,7 @@ trait GenerateInvoiceTrait
 
     public function sendInvoice()
     {
-        $store=auth()->user()->store;
+        $store=getStore();
         $place=optional(auth()->user())->place?:$store->places->first();
         $this->checkCompAmount($store);
         if (!count($this->details)) {
@@ -134,7 +134,7 @@ trait GenerateInvoiceTrait
         event(new NewInvoice($invoice));
         $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name', 'name');
         $this->invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
-        if (auth()->user()->place->preference->print_order=='yes') {
+        if (getPreference($place->id)->print_order=='yes') {
             $this->emit('printOrder', $this->invoice);
         }
         $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
@@ -142,7 +142,7 @@ trait GenerateInvoiceTrait
         $name=$invoice->name?:$invoice->client->name;
         unset($data[$this->localDetail]);
         file_put_contents(storage_path('app/public/local/details.json'), json_encode($data));
-        if($place->preference->instant=='yes'){
+        if(getPreference($place->id)->instant=='yes'){
             $this->instant=true;
             $this->emit('modalOpened');
         }
