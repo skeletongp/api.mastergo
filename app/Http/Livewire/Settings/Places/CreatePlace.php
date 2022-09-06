@@ -7,6 +7,7 @@ use App\Models\Store;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -45,6 +46,7 @@ class CreatePlace extends Component
         CreateCountForPlaceJob::dispatch($store, $place)->onConnection('sync');
         $this->emit('showAlert', 'Sucursal creada exitosamente', 'success');
         $this->reset();
+        Cache::forget('places' . env('STORE_ID'));
         $this->emit('reloadPlaces');
     }
 }

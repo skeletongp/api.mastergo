@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Settings\Taxes;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class CreateTax extends Component
@@ -32,6 +33,7 @@ class CreateTax extends Component
         setContable($tax, '103', 'credit', $tax->name.' por Cobrar');
         $this->emit('showAlert', 'Impuesto registrado exitosamente', 'success');
         $this->reset();
+        Cache::forget('taxes'.env('STORE_ID'));
         $this->emit('refreshLivewireDatatable');
     }
 }

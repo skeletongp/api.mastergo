@@ -117,7 +117,7 @@ trait OrderContable
                 'user_id' => $invoice->contable_id,
                 'client_id' => $invoice->client_id,
             ]);
-            $comprobantes=getComprobantes($this->type);
+            $comprobantes=getComprobantes($invoice->type);
             $comprobantes=$comprobantes->keyBy('id');
             $comprobantes->forget($comprobante->id);
             Cache::put($invoice->type.'_comprobantes_'.env('STORE_ID'), $comprobantes);

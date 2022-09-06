@@ -23,7 +23,7 @@
 
                             <x-side-link routeName='settings.index' icon='fas w-10 text-center fa-cogs' text='Ajustes'
                                 activeRoute="settings.*" />
-                            @if (auth()->user()->places->count() > 1)
+                            @if (getPlaces()->count() > 1)
                                 <div class="py-4 px-4">
                                     <livewire:general.toggle-place />
                                 </div>

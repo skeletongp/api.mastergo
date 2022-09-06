@@ -19,7 +19,7 @@ class CreateInvoice extends Component
     use WithPagination, ClientSectionTrait, GenerateInvoiceTrait, DetailsSectionTrait, InvoiceData, Confirm;
     public $form = [], $cant = 0, $price, $discount = 0, $total, $taxTotal = 0, $scanned;
     public $localKeys=[], $localDetail;
-    public $details = [], $banks;
+    public $details = [], $banks=[];
     public $producto;
     public $action;
     public $instant=false;
@@ -31,8 +31,8 @@ class CreateInvoice extends Component
     public function mount()
     {
         
-        $store = auth()->user()->store;
-        $place = auth()->user()->place;
+        $store = getStore();
+        $place = getPlace();
         $this->banks = getBanks();
         $this->vence = Carbon::now()->format('Y-m-d');
         $this->condition = 'DE CONTADO';
@@ -47,9 +47,9 @@ class CreateInvoice extends Component
     }
     public function render()
     {
-        $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
+     /*    $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
         $data = json_decode($dataFile, true) ?: [];
-        $this->localKeys = array_keys($data);
+        $this->localKeys = array_keys($data); */
         return view('livewire.invoices.create-invoice');
     }
     public function checkCompAmount($store)

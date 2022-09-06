@@ -1,5 +1,5 @@
 <div>
-    <x-modal :fitV='false' maxWidth="max-w-4xl">
+    <x-modal :fitV='false' maxWidth="max-w-4xl" :listenOpen="true">
         <x-slot name="title">
             <div class="flex justify-between items-center">
                 <span> Nuevo Cliente</span>

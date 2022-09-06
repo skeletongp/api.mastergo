@@ -26,6 +26,7 @@ use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Sawirricardo\Whatsapp\Data\TextMessageData;
@@ -157,16 +158,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-    
-   $clients=Client::get();
-   foreach($clients as $client){
-       $client->update(['debt'=>$client->invoices->sum('rest')]);
-   }
-   
+
+   dd(cache()->getMemcached()->getAllKeys());
+    dd($request->user()->hasRole('admin'));
     return view('prueba');
 })->name('prueba');
-
-
-
-
-

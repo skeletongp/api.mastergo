@@ -25,8 +25,6 @@ class InvoiceList extends LivewireDatatable
         ->orderBy('invoices.created_at', 'desc')
         ->join('invoices', 'payments.payable_id', '=', 'invoices.id')
         ->where('payments.payable_type', '=', 'App\Models\Invoice')
-        ->join('clients', 'clients.id', '=', 'invoices.client_id')
-        ->selectRaw('invoices.*, clients.name as client_name')
         ->where('status', '=', 'cerrada')
         ->groupBy('invoices.id');
            ;
@@ -48,8 +46,8 @@ class InvoiceList extends LivewireDatatable
                 return $mark.$number;
             })->label('Nro.')->searchable(),
             DateColumn::name('invoices.created_at')->label('hora')->format('d/m/Y H:i')->hide(),
-            Column::callback(['clients.name','invoices.name'], function($cltname, $name){
-                return ellipsis($name?:$cltname, 16);
+            Column::callback(['invoices.name'], function( $name){
+                return ellipsis($name, 16);
             })->label('Cliente')->searchable(),
             NumberColumn::raw('total')->label('Total')->searchable()->formatear('money'),
             NumberColumn::raw('invoices.rest')->label('Resta')->searchable()->formatear('money'),

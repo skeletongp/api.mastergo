@@ -11,22 +11,13 @@ use Livewire\WithFileUploads;
 class CreateUser extends Component
 {
     public $form, $avatar, $photo_path, $store_id, $role, $loggeable;
+    public $roles=[], $places=[];
+    protected $listeners=['modalOpened'];
     use WithFileUploads;
     public function render()
     {
-        $store=auth()->user()->store;
-        $this->store_id=$store->id;
-        if(!Cache::get('storeRoles').env('STORE_ID')){
-            Cache::put('storeRoles'.env('STORE_ID'),implode(',',$store->roles->pluck('name')->toArray()));
-        }
-        $roles=explode(',',Cache::get('storeRoles'.env('STORE_ID')));
-        $places=auth()->user()->places->pluck('name','id');
-        $this->form['place_id']=array_key_first($places->toArray());
-        return view('livewire.users.create-user',
-        [
-            'roles'=>$roles,
-            'places'=>$places
-        ]);
+       
+        return view('livewire.users.create-user');
     }
 
     protected $rules = [
@@ -39,7 +30,18 @@ class CreateUser extends Component
         'form.place_id' => 'required|numeric|exists:places,id',
         'role'=>'required|exists:roles,name'
     ];
-
+    public function modalOpened(){
+        $store=auth()->user()->store;
+        $this->store_id=$store->id;
+        if(!Cache::get('storeRoles').env('STORE_ID')){
+            Cache::put('storeRoles'.env('STORE_ID'),implode(',',$store->roles->pluck('name')->toArray()));
+        }
+        $roles=explode(',',Cache::get('storeRoles'.env('STORE_ID')));
+        $places=auth()->user()->places->pluck('name','id');
+        $this->form['place_id']=array_key_first($places->toArray());
+        $this->places=$places;
+        $this->roles=$roles;
+    }
     public function createUser()
     {
         $this->validate();
@@ -56,6 +58,7 @@ class CreateUser extends Component
         setContable($user, '102', 'credit');
         Cache::forget($store->id.'admins');
         $this->reset();
+        $this->modalOpened();
         $this->emit('showAlert','Usuario registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');
     }

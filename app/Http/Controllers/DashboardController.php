@@ -10,7 +10,9 @@ class DashboardController extends Controller
     {
         
         $user=auth()->user();
-       
+
+
+
         if ($user->hasPermissionTo('Ver Utilidad')) {
             return view('dashboard.index');
         } else if ($user->hasPermissionTo('Crear Facturas')) {
