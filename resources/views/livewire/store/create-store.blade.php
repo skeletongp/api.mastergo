@@ -1,6 +1,6 @@
 
 <div>
-    <x-modal  maxWidth="max-w-3xl" :fitV="false">
+    <x-modal  maxWidth="max-w-3xl" :fitV="false" >
         <x-slot name="title">
             <span> Nueva Empresa</span>
         </x-slot>

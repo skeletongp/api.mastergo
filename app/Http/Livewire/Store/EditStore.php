@@ -49,6 +49,7 @@ class EditStore extends Component
         $this->emit('showAlert', 'Datos actualizados correctamente', 'success');
         $this->resetExcept('store');
         Cache::forget('store_' . auth()->user()->id);
+        Cache::forget('store' . env('STORE_ID'));
         $this->store = auth()->user()->store;
         $this->emitUp('reloadSettingStore');
     }

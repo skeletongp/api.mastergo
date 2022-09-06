@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Store extends Model
 {
-    use HasFactory, SoftDeletes, SearchableTrait, HasRoles, StoreTrait;
+    use HasFactory, SoftDeletes, SearchableTrait,  StoreTrait;
     protected $connection="moso_master";
     protected $guarded = [
        

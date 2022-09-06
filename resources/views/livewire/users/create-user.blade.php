@@ -1,6 +1,6 @@
 
 <div>
-    <x-modal :fitV="false" maxWidth="max-w-3xl">
+    <x-modal :fitV="false" maxWidth="max-w-3xl" :listenOpen="true">
         <x-slot name="title">
             <span> Nuevo Usuario</span>
         </x-slot>

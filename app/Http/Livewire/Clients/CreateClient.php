@@ -12,13 +12,18 @@ class CreateClient extends Component
 {
     public $form, $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
     use WithFileUploads;
-
+    protected $listeners=['modalOpened'];
     public function mount(){
-        $this->form['special']=0;
+        $this->form['code']=0;
     }
 
     public function render()
     {
+       
+        return view('livewire.clients.create-client');
+    }
+    public function modalOpened(){
+        $this->form['special']=0;
         $store = auth()->user()->store;
         if(!Cache::get('clientCount'.env('STORE_ID'))){
             Cache::put('clientCount'.env('STORE_ID'),$store->clients()->withTrashed()->count());
@@ -26,7 +31,6 @@ class CreateClient extends Component
         $num = Cache::get('clientCount'.env('STORE_ID')) + 1;
         $code = str_pad($num, 3, '0', STR_PAD_LEFT);
         $this->form['code'] = $code;
-        return view('livewire.clients.create-client');
     }
     protected $rules = [
         'form.name' => 'max:50',

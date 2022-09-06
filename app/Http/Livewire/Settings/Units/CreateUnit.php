@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Settings\Units;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class CreateUnit extends Component
@@ -31,6 +32,7 @@ class CreateUnit extends Component
         auth()->user()->store->units()->create($this->form);
         $this->emit('showAlert', 'Unidad registrada exitosamente', 'success');
         $this->reset();
+        Cache::forget('units' . env('STORE_ID'));
         $this->emit('refreshLivewireDatatable');
     }
 }

@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>
+    <title >
         @if (isset($title))
-            {{ $title }}
+            {{ env('APP_NAME') . ' | ' .$title }}
         @else
-            {{ env('APP_NAME') . ' | ' . auth()->user()->store->name }}
+            {{ env('APP_NAME') . ' | ' . getStore()->name }}
         @endif
     </title>
 
-
     {{-- Fonts --}}
-
 
 
     {{-- Styles --}}
@@ -31,7 +29,6 @@
     <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
 
     @livewireStyles
-   
     @stack('css')
 </head>
 
@@ -230,7 +227,7 @@
         </div>
     </div>
     @php
-        $preference = auth()->user()->place->preference;
+        $preference = getPreference(1);
     @endphp
     <script>
         $('#hBack').mouseenter(function() {

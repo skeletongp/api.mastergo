@@ -1,5 +1,5 @@
 <div>
-    <x-modal maxWidth="max-w-7xl mx-4" :fitV="false">
+    <x-modal maxWidth="max-w-7xl mx-4" :fitV="false" :listenOpen="true">
         <x-slot name="title">
             <div class="flex justify-between items-center w-full">
                 <span> Nuevo Producto {{array_key_exists('name',$form)?$form['name']:''}}</span>

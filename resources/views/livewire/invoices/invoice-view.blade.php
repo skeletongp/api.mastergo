@@ -1,5 +1,5 @@
    <div class="w-full flex  items-start">
-       <div class="w-2/5 pb-6 relative">
+       <div class="w-3/5 pb-6 relative">
            <div
                class="w-full text-lg font-medium text-gray-900 bg-white  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                <livewire:invoices.invoice-list />

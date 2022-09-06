@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Invoices\Includes;
 trait DetailsSectionTrait
 {
     public $producto;
-    public $product, $product_code, $product_name, $products, $stock, $unit, $open = false;
+    public $product, $product_code, $product_name, $products=[], $stock, $unit, $open = false;
 
 
     function rules()

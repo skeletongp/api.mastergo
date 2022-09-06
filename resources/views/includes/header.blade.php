@@ -8,7 +8,7 @@
 
         <a href="{{ route('home') }}">
             <span
-                class="self-center text-xl  font-bold whitespace-nowrap dark:text-white">{{ ellipsis(auth()->user()->store->name, 20) }}
+                class="self-center text-xl  font-bold whitespace-nowrap dark:text-white">{{ ellipsis(getStore()->name, 20) }}
             </span>
         </a>
 
@@ -21,36 +21,47 @@
         </div>
         <x-actions>
             <x-slot name="content">
-                @scope('Usuarios')
-                    @can('Crear Usuarios')
-                        <span class="float-element">
-                            <livewire:users.create-user />
-                        </span>
-                    @endcan
-                @endscope
+
+                @can('Crear Usuarios')
+                    <span class="float-element">
+                        <livewire:users.create-user />
+                    </span>
+                @endcan
+
                 @can('Crear Negocios')
                     <span class="float-element">
                         <livewire:store.create-store />
                     </span>
                 @endcan
-                @scope('Clientes')
-                    @can('Crear Clientes')
-                        <span class="float-element">
-                            <livewire:clients.create-client />
-                        </span>
-                    @endcan
-                @endscope
-                @scope('Productos')
-                    @can('Crear Productos')
-                        <span class="float-element">
-                            <livewire:products.create-product />
-                        </span>
-                    @endcan
-                @endscope
+
+                @can('Crear Clientes')
+                    <span class="float-element">
+                        <livewire:clients.create-client />
+                    </span>
+                @endcan
 
 
-                @scope('Facturas')
-                    @can('Crear Facturas')
+                @can('Crear Productos')
+                    <span class="float-element">
+                        <livewire:products.create-product />
+                    </span>
+                @endcan
+
+
+
+
+                @can('Crear Facturas')
+                    @if (request()->routeIs('invoices.create'))
+                        @can('Ver Facturas')
+                            <div>
+                                <a href="{{ route('invoices.index') }}"
+                                    class="text-gray-900 load bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+                                    <span class="far w-6 text-center fa-file-invoice"></span>
+                                    <span> Facturas</span>
+                                </a>
+                            </div>
+                        @endcan
+                    @else
                         <div>
                             <a href="{{ route('invoices.create') }}"
                                 class="text-gray-900 load bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
@@ -58,8 +69,9 @@
                                 <span> Facturar</span>
                             </a>
                         </div>
-                    @endcan
-                @endscope
+                    @endif
+                @endcan
+
 
             </x-slot>
         </x-actions>

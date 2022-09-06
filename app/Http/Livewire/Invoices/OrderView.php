@@ -41,7 +41,7 @@ class OrderView extends LivewireDatatable
     {
 
        // $invoices = $this->builder()->get()->toArray();
-        $store = auth()->user()->store;
+        $store = getStore();
         $banks = $store->banks()->pluck('bank_name', 'id');
         return [
             Column::callback('number', function ($number) {
