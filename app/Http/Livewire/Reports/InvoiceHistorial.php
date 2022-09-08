@@ -41,7 +41,7 @@ class InvoiceHistorial extends LivewireDatatable
     public function columns()
     {
         return [
-            Column::callback(['invoices.id', 'rest'], function ($id, $rest) {
+            Column::callback(['invoices.id', 'invoices.rest'], function ($id, $rest) {
                 if ($rest > 0) {
                     return "  <a href=" . route('invoices.show', [$id, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) .
                         "><span class='fas w-8 text-center fa-hand-holding-usd'></span> </a>";
