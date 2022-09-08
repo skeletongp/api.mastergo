@@ -222,7 +222,7 @@
                                 <div style="text-align:right; ">
                                     <b>{{ 'DIRIGIDA A:' }}</b> <br>
                                     {{ $invoice->name ?: ($invoice->client->name ?: $invoice->client->contact->fullname) }}<br />
-                                    {!! $invoice->rnc ?: ($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
+                                    {!! $invoice->rnc ?'<b>RNC /CED:</b> ' .$invoice->rnc: ($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
                                     <b>TEL:</b> {{ $invoice->client->phone }} <br>
                                     {{ $invoice->client->address ?: 'Dirección N/D' }}
                                 </div>

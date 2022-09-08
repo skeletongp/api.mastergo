@@ -17,7 +17,7 @@ class TableProduct extends LivewireDatatable
     public $hideable = 'select';
     public function builder()
     {
-        $products = auth()->user()->place->products()->orderBy('code')->whereNull('deleted_at');
+        $products = auth()->user()->place->products()->orderBy('code')->with('units')->whereNull('deleted_at');
         return $products;
     }
 

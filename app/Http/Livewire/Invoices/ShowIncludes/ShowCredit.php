@@ -62,6 +62,7 @@ trait ShowCredit
     }
     public function printCreditNote(){
         $invoice=$this->invoice;
+        $invoice =$invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
         $this->emit('changeInvoice', $invoice, true, true);
     }
 
