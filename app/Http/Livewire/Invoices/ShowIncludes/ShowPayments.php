@@ -89,7 +89,10 @@ trait ShowPayments
         $invoice->update([
             'rest' => $rest
         ]);
-       
+        $invoice->client->update([
+            'limit' => $invoice->client->limit + $payment->payed,
+            'debt'=>$invoice->client->invoices->sum('rest')
+        ]);
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
         $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'payable.payment', 'contable');

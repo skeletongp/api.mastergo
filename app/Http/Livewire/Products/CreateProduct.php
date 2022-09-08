@@ -79,6 +79,8 @@ class CreateProduct extends Component
         $this->reset();
         $this->mount();
         Cache::forget('productCount'.env('STORE_ID'));
+       
+        
         $this->emit('showAlert','Producto registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');
     }
@@ -94,6 +96,7 @@ class CreateProduct extends Component
     {
         foreach ($this->placeSelected as $placeId) {
             $this->createPrices($product, $placeId);
+            Cache::forget('products'.$placeId);
         }
     }
     public function createPrices(Product $product, $placeId)

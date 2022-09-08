@@ -6,6 +6,7 @@ use App\Http\Traits\Livewire\Confirm;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -67,6 +68,8 @@ class EditProduct extends Component
            
         }
         $this->product->save();
+        $place=auth()->user()->place;
+        Cache::forget('products'.$place->id);
         $this->emit('showAlert', 'Producto actualizado correctamente', 'success');
     }
    

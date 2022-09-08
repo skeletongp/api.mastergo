@@ -146,6 +146,7 @@ trait GenerateInvoiceTrait
             $this->instant=true;
             $this->emit('modalOpened');
         }
+        Cache::forget('place_invoices_with_trashed'.$place->id);
         $this->mount();
     }
     public function createPayment($invoice)

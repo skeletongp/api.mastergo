@@ -91,7 +91,7 @@
 
         <div class="flex space-x-4">
             <div class=" py-2 w-full  min-h-max h-full relative ">
-                @livewire('clients.client-invoice', ['client' => $client], key(uniqid()))
+                @livewire('clients.client-invoice', ['client_id' => $client->id], key(uniqid()))
             </div>
             <div class=" py-2 w-full  min-h-max h-full relative ">
                 @livewire('clients.client-transactions', ['client' => $client], key(uniqid()))
