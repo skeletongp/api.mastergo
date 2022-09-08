@@ -63,7 +63,6 @@
                         <span class="lg:text-lg">Adjunto</span>
                     </div>
                 </x-button>
-                @can('Manejar NC')
                     @if ($invoice->payment->ncf)
                         <x-button wire:click="setIncludeElement('showcredit','Nota de Crédito')"
                             class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
@@ -73,7 +72,6 @@
                             </div>
                         </x-button>
                     @endif
-                @endcan
                 <x-button wire:click="setIncludeElement('showhistory','Historial')"
                     class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
