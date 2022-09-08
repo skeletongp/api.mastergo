@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Contables;
 
+use App\Models\Comprobante;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -12,11 +14,13 @@ class Report607 extends Component
 {
     public $url, $start_at, $end_at;
 
-
+    protected $queryString = ['start_at', 'end_at'];
     public function mount()
     {
-        $this->start_at = Carbon::now()->firstOfMonth()->format('Y-m-d');
-        $this->end_at = Carbon::now()->format('Y-m-d');
+        if (!$this->start_at) {
+            $this->start_at = Carbon::now()->firstOfMonth()->format('Y-m-d');
+            $this->end_at = Carbon::now()->format('Y-m-d');
+        }
     }
     public function render()
     {
@@ -27,48 +31,42 @@ class Report607 extends Component
     public function make607()
     {
         $store = auth()->user()->store;
-        $start_at=$this->start_at;
-        $invoices = $store->invoices()->has('comprobante')
-            ->where(
-                function ($query) {
-                    $query->where('type', '!=', 'B02')
-                        ->orWhereHas('payment', function ($query) {
-                            $query->where('total', '>', 250000);
-                        });
-                }
-            )
-            ->whereBetween('day', [$this->start_at, $this->end_at])
-            ->whereHas('comprobante', function ($query) {
-                $query->where('status', 'usado');
-            })
-            ->orderBy('invoices.id')
-            ->where('invoices.status', '!=', 'waiting')
-            ->with('comprobante', 'client', 'payment', 'payments')->get();
+        $start_at = $this->start_at;
 
-        $payments = Payment::where('payable_type', 'App\Models\Invoice')
-            ->whereBetween('day', [$this->start_at, $this->end_at])
-            ->with('payable.payment', 'payable.comprobante',)->get();
-        $efectivo = 0;
-        $transferencia = 0;
-        $rest = 0;
-        $total = 0;
-        $tax = 0;
-        $count = 0;
-        foreach ($payments as $payment) {
-            if ($payment->payable->comprobante && $payment->payable->comprobante->status == 'usado' && $payment->payable->type == 'B02') {
-                if ($payment->payable->payment->total <= 250000) {
-                    $efectivo += $payment->efectivo > 0 ? ($payment->efectivo - $payment->cambio) : 0;
-                    $transferencia += $payment->transferencia + $payment->tarjeta;
-                    if ($payment->id == $payment->payable->payment->id && Carbon::parse($payment->payable->day)->between($this->start_at, $this->end_at)) {
-                        $rest += $payment->payable->rest;
-                        $total += $payment->payable->payment->total;
-                        $tax += $payment->payable->payment->tax;
-                        $count++;
-                    }
-                }
-            }
-        }
-        $efectivo = $total - ($transferencia + $rest);
+
+        $comprobantes = Comprobante::where('comprobantes.status', 'usado')
+            ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
+            ->whereBetween('invoices.day', [$start_at, $this->end_at])
+            ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
+            ->where('payments.payable_type', 'App\Models\Invoice')
+            ->leftJoin('clients', 'comprobantes.client_id', '=', 'clients.id')
+            ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc ,comprobantes.ncf as ncf, invoices.day as day, 
+                        sum(payments.payed-payments.cambio)+invoices.rest as amount,   
+                        sum(payments.tax) as tax, sum(payments.efectivo-payments.cambio) as efectivo,
+                        sum(payments.transferencia+payments.tarjeta) as transferencia, invoices.rest
+                        as rest')
+            ->where(function ($query) {
+                $query->where('comprobantes.prefix', '!=', 'B02')
+                    ->orWhere('payments.amount', '>', 250000);
+            })
+            ->orderBy('payments.id')
+            ->groupBy('comprobantes.id')
+            ->get();
+
+        $resumen = Comprobante::where('comprobantes.status', 'usado')
+            ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
+            ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
+            ->whereBetween('invoices.day', [$start_at, $this->end_at])
+            ->where('payments.payable_type', 'App\Models\Invoice')
+            ->selectRaw('sum(payments.tax) as tax, sum(payments.payed-payments.cambio)+invoices.rest 
+                as amount, sum(payments.tax) as tax, sum(payments.efectivo-payments.cambio) as efectivo,
+                sum(payments.transferencia+payments.tarjeta) as transferencia, invoices.rest
+                as rest, count(comprobantes.id) as count')
+            ->where('comprobantes.prefix', 'B02')
+            ->where('payments.amount', '<=', 250000)
+            ->orderBy('payments.id')
+            ->groupBy('comprobantes.store_id')
+            ->first();
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
 
