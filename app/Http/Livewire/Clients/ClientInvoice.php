@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Clients;
 
+use App\Http\Classes\NumberColumn;
 use App\Models\Client;
 use App\Models\Invoice;
 use Mediconesystems\LivewireDatatables\Action;
@@ -12,49 +13,52 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class ClientInvoice extends LivewireDatatable
 {
     public $headTitle = "Historial de compras";
-    public $client;
+    public $client_id;
     public $padding = "px-2";
     public $total=0;
+    public $hideable='select';
+    public $hideResults = true;
+
     public function builder()
     {
        if($this->total>0){
         $this->headTitle = "Pendiente de pago $".formatNumber($this->total);
+       } else{
+        $this->headTitle = "Historial de compras";
        }
-        $client=$this->client;
-        $invoices = $client->invoices()->where('status','!=','waiting')->orderBy('created_at', 'desc')->with('payment', 'client', 'seller', 'contable', 'payments');
+        $invoices = 
+        Invoice::where('invoices.client_id',$this->client_id)
+        ->where('invoices.status','!=','waiting')
+        ->leftJoin('payments', 'payments.payable_id', '=', 'invoices.id')
+        ->where('payments.payable_type', '=', 'App\Models\Invoice')
+        ->leftJoin('moso_master.users as seller', 'seller.id', '=', 'invoices.seller_id')
+        ->leftJoin('moso_master.users as contable', 'contable.id', '=', 'invoices.contable_id')
+        ->groupBy('invoices.id')
+      ;
         return $invoices;
     }
    
     public function columns()
     {
-        $invoices = $this->builder()->get()->toArray();
         return [
             Column::checkbox(),
-            Column::callback('number', function($number) use ($invoices){
+            Column::callback('invoices.number', function($number){
                 return ltrim(substr($number,strpos($number,'-')+1),'0');
             })->label('Nro.'),
-            Column::name('id')->callback(['id'], function ($id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                if ($result['rest'] > 0) {
+            Column::callback(['invoices.id','invoices.rest'], function ($id,$rest)  {
+                if ($rest > 0) {
                     return "  <a href=" . route('invoices.show', [$id, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) .
                         "><span class='fas w-8 text-center fa-dollar-sign'></span> </a>";
                 } else {
                     return "  <a href=" . route('invoices.show', $id) . "><span class='fas w-8 text-center fa-eye'></span> </a>";
                 }
             })->label(''),
-            DateColumn::name('created_at')->label('Hora')->format('h:i A'),
-            Column::name('condition')->label('Condición')->filterable(['De Contado','1 A 15 Días', '16 A 30 Días']),
-            Column::callback(['uid', 'id'], function ($total, $id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                return '$' . formatNumber($result['payment']['total']);
-            })->label("Monto"),
-            Column::name('client.id')->callback(['id', 'client_id'], function ($id, $client_id) use ($invoices) {
-                $result = arrayFind($invoices, 'id', $id);
-                return '$' . formatNumber(array_sum(array_column($result['payments'], 'payed')));
-            })->label('Pagado'),
-            Column::name('rest')->callback(['rest'], function ($rest) {
-                return '$' . formatNumber($rest);
-            })->label('Resta'),
+            DateColumn::name('invoices.created_at')->label('Fecha')->format('d/m/Y h:i A')->hide(),
+            Column::name('invoices.condition')->label('Condición')->filterable(['De Contado','Contra Entrega','1 A 15 Días', '16 A 30 Días']),
+            NumberColumn::raw('SUM(payments.payed-payments.cambio)+invoices.rest AS monto')->label('Monto')->formatear('money'),
+            NumberColumn::raw('SUM(payments.payed-payments.cambio) AS pago')->label('Pagado')->formatear('money'),
+            NumberColumn::raw('invoices.rest AS resta')->label('Resta')->formatear('money'),
+          
         ];
     }
 

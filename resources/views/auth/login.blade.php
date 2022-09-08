@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="flex items-center min-h-screen bg-gray-50">
+    <div class="flex items-center min-h-screen bg-gray-50 select-none">
         <div class="flex-1 h-full lg:max-h-[30rem] max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
             <div class="flex flex-col lg:flex-row ">
                 <div class="h-full lg:h-auto lg:w-1/2 bg-teal-700 text-gray-100 grid grid-cols-2 gap-6 p-6">

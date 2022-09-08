@@ -21,7 +21,7 @@ class PaymentsFromInvoice extends LivewireDatatable
     {
         
         return [
-            DateColumn::name('created_at')->label('Fecha')->hide()->format('d/m/Y H:i'),
+            DateColumn::name('updated_at')->label('Fecha')->hide()->format('d/m/Y H:i A'),
             Column::name('total')->callback(['total'], function ($total) {
                 return '$' . formatNumber($total);
             })->label('Monto'),

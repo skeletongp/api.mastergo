@@ -16,7 +16,6 @@ class CreateUser extends Component
     use WithFileUploads;
     public function render()
     {
-       
         return view('livewire.users.create-user');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Clients;
 
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -13,22 +14,22 @@ class ClientTransactions extends LivewireDatatable
     public $client;
     public $headTitle = "Transacciones Realizadas";
     public $padding = "px-2";
-    public $uniqueDate = "";
+    public $hideResults = true;
     public function builder()
     {
-        $transactions = $this->client->transactions()->with('haber', 'debe')->orderBy('created_at', 'desc');
+        $contable=$this->client->contable;
+        $transactions = 
+       Transaction::where('debitable_id',$contable->id)
+       ->orWHere('creditable_id',$contable->id)
+       ->orderBy('created_at', 'desc');
         return $transactions;
     }
 
     public function columns()
     {
-        $counts = $this->client->counts()->pluck('id');
-        $transactions = $this->builder()->get()->toArray();
         return [
             NumberColumn::index($this)->label('#'),
-            Column::callback('created_at', function ($created) {
-                return Carbon::parse($created)->format('h:i A');
-            })->label('Hora'),
+            DateColumn::name('created_at')->label('Hora')->format('d/m/Y h:i A'),
             Column::callback('concepto', function ($concepto) {
                 return ellipsis($concepto, 50);
             })->label('Concepto')->searchable()->filterable(

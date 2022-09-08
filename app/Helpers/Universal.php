@@ -4,6 +4,7 @@ use App\Models\Bank;
 use App\Models\Invoice;
 use App\Models\Place;
 use App\Models\Preference;
+use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tax;
 use App\Models\Unit;
@@ -278,4 +279,13 @@ function getPlace(){
         Cache::put('place'.$place_id, $place);
     }
     return $place;
+}
+function getProductsWithCode(){
+    $place=getPlace();
+    $products=Cache::get('products'.$place->id);
+    if (!$products) {
+        $products=$place->products->pluck('name','code');
+        Cache::put('products'.$place->id, $products);
+    }
+    return $products;
 }

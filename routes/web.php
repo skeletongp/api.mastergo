@@ -159,7 +159,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function (Request $request) {
 
-   dd(cache()->getMemcached()->getAllKeys());
+   dd(getProductsWithCode());
     dd($request->user()->hasRole('admin'));
     return view('prueba');
 })->name('prueba');
