@@ -20,7 +20,9 @@ class ComprobantesTable extends LivewireDatatable
         $comprobantes = Comprobante::where('comprobantes.store_id', $store->id)
             ->leftjoin('invoices', 'invoices.comprobante_id', '=', 'comprobantes.id')
             ->leftjoin('clients', 'clients.id', '=', 'comprobantes.client_id')
-            ->orderBy('comprobantes.ncf','desc');
+            ->orderBy('comprobantes.ncf','desc')
+            ->groupBy('comprobantes.id')
+            ;
             
 
         return $comprobantes;

@@ -192,9 +192,9 @@
                     </div>
                 </td>
             </tr> --}}
-            @forelse ($invoices as $ind=>  $invoice)
+            @forelse ($comprobantes as $ind=>  $comprobante)
                 @php
-                    $docId = $invoice->rnc ?: $invoice->client->rnc;
+                    $docId = $comprobante->invRnc ?: $comprobante->rnc;
                     $docId=str_replace('-', '',$docId);
                 @endphp
                 <tr style="font-size: normal; {{ fmod($ind+1, 2) == 0 ? 'background-color:#EEE' : '' }}">
@@ -206,7 +206,7 @@
                         {{ strlen($docId) == 9 ? 1 : 2 }}
                     </td>
                     <td style="  text-align: left">
-                        {{ $invoice->payment->ncf }}
+                        {{ $comprobante->ncf }}
                     </td>
 
                     <td style=" text-align: left">
@@ -216,28 +216,28 @@
                         1
                     </td>
                     <td style=" text-align: left">
-                        {{ \Carbon\Carbon::parse($invoice->day)->format('Ymd') }}
+                        {{ \Carbon\Carbon::parse($comprobante->day)->format('Ymd') }}
                     </td>
                     <td style=" text-align: left">
                         - - -
                     </td>
                     <td style=" text-align: left;  font-weight:bold">
-                        ${{ formatNumber($invoice->payment->total) }}
+                        ${{ formatNumber($comprobante->amount) }}
                     </td>
                     <td style=" text-align: left">
-                        ${{ formatNumber($invoice->payment->tax) }}
+                        ${{ formatNumber($comprobante->tax) }}
                     </td>
                     <td style=" text-align:left; ">
-                        ${{ formatNumber($invoice->payments->sum('efectivo')>0?($invoice->payments->sum('efectivo')-$invoice->payments->sum('cambio')):0) }}
+                        ${{ formatNumber($comprobante->efectivo>0?$comprobante->efectivo:0) }}
                     </td>
                     <td style=" text-align:left;">
-                        ${{ formatNumber($invoice->payments->sum('transferencia')+$invoice->payments->sum('tarjeta')>0?($invoice->payments->sum('transferencia')+$invoice->payments->sum('tarjeta')-$invoice->payments->sum('cambio')):0) }}
+                        ${{ formatNumber($comprobante->transferencia) }}
                     </td>
                     <td style=" text-align:left; ">
                         ${{ formatNumber(0) }}
                     </td>
                     <td style=" text-align:left;">
-                        ${{ formatNumber($invoice->rest) }}
+                        ${{ formatNumber($comprobante->rest) }}
                     </td>
                 </tr>
             @empty
@@ -258,7 +258,7 @@
                                             $pdf->page_text(18, 32, date('d/m/Y'), $font, 12, array(0,0,0));
                                             $pdf->page_text(18, 1640, "Reporte de comprobantes para el 607", $font, 12, array(0,0,0));
                                         }</script>
-    @if ($invoices->count() > (18 * $invoices->count()) / 2 + 2)
+    @if ($comprobantes->count() > (18 * $comprobantes->count()) / 2 + 2)
         <div style="page-break-after: always"></div>
     @endif
     <table style="width: 40%; margin-top:35px;float: left; line-height:10px">
@@ -275,7 +275,7 @@
                 Cantidad NCFs Emitidos de F.C.:
             </td>
             <td colspan="2" style="padding-top:25px">
-                {{ $count }}
+                {{ $resumen->count() }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -283,7 +283,7 @@
                 Total ITBIS Facturado:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($tax) }}
+                ${{ formatNumber($resumen->tax) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -291,7 +291,7 @@
                 Total Monto Facturado:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($total) }}
+                ${{ formatNumber($resumen->amount) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -333,7 +333,7 @@
                 EFECTIVO:
             </td>
             <td colspan="2" style="padding-top:25px">
-                ${{ formatNumber($efectivo)}}
+                ${{ formatNumber($resumen->efectivo)}}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -341,7 +341,7 @@
                 CHEQUE/TRANSFERENCIA/DEPOSITO:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($transferencia) }}
+                ${{ formatNumber($resumen->transferencia) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -357,7 +357,7 @@
                 VENTA A CREDITO:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($rest) }}
+                ${{ formatNumber($resumen->rest) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
