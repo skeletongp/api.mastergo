@@ -23,7 +23,7 @@
                     </div>
                     <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
                         <span class="fas fa-cash-register text-7xl"></span>
-                        Cobros
+                        Contabilidad
                     </div>
                     <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
                         <span class="fas fa-file-invoice-dollar text-7xl"></span>
