@@ -40,7 +40,6 @@ class Report607 extends Component
         $resumen = $this->getResumen($start_at);
 
         $creditnotes= $this->getCreditNotes($start_at);
-        dd($creditnotes);
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
 
@@ -99,11 +98,12 @@ class Report607 extends Component
         $creditnotes = 
         Creditnote::whereBetween('modified_at', [$start_at, $this->end_at])
         ->leftJoin('invoices', 'creditnotes.invoice_id', '=', 'invoices.id')
-        ->leftjoin('clients','creditnotes.client_id','=','clients.id')
+        ->leftJoin('comprobantes', 'invoices.comprobante_id', '=', 'comprobantes.id')
+        ->leftjoin('clients','invoices.client_id','=','clients.id')
         ->selectRaw(
-            'clients.rnc as rnc, invoices.rnc as invRnc ,creditnotes.ncf as ncf, 
-            creditnotes.modified_at as day, creditnotes.amount as amount, 
-            creditotes.tax as tax,'
+            'clients.rnc as rnc, invoices.rnc as invRnc, comprobantes.ncf as invNcf ,creditnotes.modified_ncf as ncf, 
+           invoices.day as invDay, creditnotes.modified_at as day, creditnotes.amount as amount, 
+            creditnotes.tax as tax'
         )
         ->groupBy('creditnotes.id')
         ->get();

@@ -1275,14 +1275,14 @@ input:checked + .toggle-bg {
 .w-1\/5 {
   width: 20%;
 }
-.w-2\/5 {
-  width: 40%;
-}
 .w-3\/5 {
   width: 60%;
 }
 .w-\[22rem\] {
   width: 22rem;
+}
+.w-2\/5 {
+  width: 40%;
 }
 .w-\[3rem\] {
   width: 3rem;
@@ -1316,6 +1316,9 @@ input:checked + .toggle-bg {
 }
 .w-\[80mm\] {
   width: 80mm;
+}
+.w-2\/4 {
+  width: 50%;
 }
 .w-2 {
   width: 0.5rem;

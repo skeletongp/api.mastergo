@@ -201,7 +201,7 @@ function sendMessage($to, $message){
 function getBanks(){
     $banks=Cache::get('banks'.env('STORE_ID'));
     if (!$banks) {
-        $banks=Bank::where('store_id', env('STORE_ID'))->get();
+        $banks=Bank::where('store_id', env('STORE_ID'))->pluck('bank_name', 'id');
         Cache::put('banks'.env('STORE_ID'), $banks);
     }
     return $banks;
