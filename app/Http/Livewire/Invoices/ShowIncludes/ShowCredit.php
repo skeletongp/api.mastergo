@@ -11,7 +11,11 @@ trait ShowCredit
     public function createCreditnote()
     {
         if ($this->invoice->creditnote) {
-            $this->emit('showAlert', 'La factura ya tiene una nota de crédito', 'error');
+            $this->emit('showAlert', 'La factura ya tiene una nota de crédito', 'error', 3200);
+            return;
+        }
+        if ($this->amount>$this->invoice->rest && $this->amount>$this->invoice->payments->sum('payed')) {
+            $this->emit('showAlert', 'Monto inválido. Favor revisar', 'error', 3200);
             return;
         }
         $this->validate([
@@ -37,7 +41,7 @@ trait ShowCredit
             $payment = $this->invoice->payments->last();
             $payment->update([
                 'rest' => $payment->rest - $this->amount,
-                'cambio' => $payment->cambio + $this->amount,
+               
             ]);
             $this->invoice->update([
                 'rest' => $this->invoice->rest - $this->amount,
@@ -100,8 +104,14 @@ trait ShowCredit
         $desc_dev_ventas = $place->findCount('401-01');
         $cash = $place->findCount('101-01');
         $itbis = $place->findCount('203-01');
-
-        setTransaction('Dev. Nota de crédito', $this->modified_ncf, $mount - $tax, $desc_dev_ventas, $cash, 'Editar Facturas');
-        setTransaction('Dev. Nota de crédito ITBIS', $this->modified_ncf, $tax, $itbis, $cash, 'Editar Facturas');
+        $client= $this->invoice->client->contable;
+        if ($this->invoice->rest>=$mount) {
+            setTransaction('Dev. Nota de crédito', $this->modified_ncf, $mount - $tax, $desc_dev_ventas, $client, 'Editar Facturas');
+            setTransaction('Dev. Nota de crédito ITBIS', $this->modified_ncf, $tax, $itbis, $client, 'Editar Facturas');
+        } else {
+            setTransaction('Dev. Nota de crédito', $this->modified_ncf, $mount - $tax, $desc_dev_ventas, $cash, 'Editar Facturas');
+            setTransaction('Dev. Nota de crédito ITBIS', $this->modified_ncf, $tax, $itbis, $cash, 'Editar Facturas');
+        }
+        
     }
 }
