@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 trait ShowCredit
 {
-    public $modified_ncf, $modified_at, $comment, $creditComprobantes, $comprobanteCredit;
+    public $modified_ncf, $modified_at, $comment, $creditComprobantes, $comprobanteCredit, $amount, $tax;
 
     public function createCreditnote(){
         if($this->invoice->creditnote){

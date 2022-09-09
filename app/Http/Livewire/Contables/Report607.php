@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Contables;
 
 use App\Models\Comprobante;
+use App\Models\Creditnote;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -34,6 +35,28 @@ class Report607 extends Component
         $start_at = $this->start_at;
 
 
+        $comprobantes = $this->getComprobantes($start_at);
+
+        $resumen = $this->getResumen($start_at);
+
+        $creditnotes= $this->getCreditNotes($start_at);
+        dd($creditnotes);
+        $data = get_defined_vars();
+        $PDF = App::make('dompdf.wrapper');
+
+        $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
+        $name = 'files' . $store->id . '/reporte 607/report' . Carbon::parse($this->start_at)->format('Ym') . '.pdf';
+
+        Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
+        $url = Storage::url($name);
+        $this->url = $url;
+    }
+    public function changeDate()
+    {
+        $this->make607();
+    }
+    public function getComprobantes($start_at)
+    {
         $comprobantes = Comprobante::where('comprobantes.status', 'usado')
             ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
             ->whereBetween('invoices.day', [$start_at, $this->end_at])
@@ -41,10 +64,10 @@ class Report607 extends Component
             ->where('payments.payable_type', 'App\Models\Invoice')
             ->leftJoin('clients', 'comprobantes.client_id', '=', 'clients.id')
             ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc ,comprobantes.ncf as ncf, invoices.day as day, 
-                        sum(payments.payed-payments.cambio)+invoices.rest as amount,   
-                        sum(payments.tax) as tax, sum(payments.efectivo-payments.cambio) as efectivo,
-                        sum(payments.transferencia+payments.tarjeta) as transferencia, invoices.rest
-                        as rest')
+                    sum(payments.payed-payments.cambio)+invoices.rest as amount,   
+                    sum(payments.tax) as tax, sum(payments.efectivo-payments.cambio) as efectivo,
+                    sum(payments.transferencia+payments.tarjeta) as transferencia, invoices.rest
+                    as rest')
             ->where(function ($query) {
                 $query->where('comprobantes.prefix', '!=', 'B02')
                     ->orWhere('payments.amount', '>', 250000);
@@ -52,7 +75,10 @@ class Report607 extends Component
             ->orderBy('payments.id')
             ->groupBy('comprobantes.id')
             ->get();
-
+        return $comprobantes;
+    }
+    public function getResumen($start_at)
+    {
         $resumen = Comprobante::where('comprobantes.status', 'usado')
             ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
             ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
@@ -67,17 +93,20 @@ class Report607 extends Component
             ->orderBy('payments.id')
             ->groupBy('comprobantes.store_id')
             ->first();
-        $data = get_defined_vars();
-        $PDF = App::make('dompdf.wrapper');
-
-        $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
-        $name = 'files' . $store->id . '/reporte 607/report' . Carbon::parse($this->start_at)->format('Ym') . '.pdf';
-        Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
-        $url = Storage::url($name);
-        $this->url = $url;
+        return $resumen;
     }
-    public function changeDate()
-    {
-        $this->make607();
+    public function getCreditNotes($start_at){
+        $creditnotes = 
+        Creditnote::whereBetween('modified_at', [$start_at, $this->end_at])
+        ->leftJoin('invoices', 'creditnotes.invoice_id', '=', 'invoices.id')
+        ->leftjoin('clients','creditnotes.client_id','=','clients.id')
+        ->selectRaw(
+            'clients.rnc as rnc, invoices.rnc as invRnc ,creditnotes.ncf as ncf, 
+            creditnotes.modified_at as day, creditnotes.amount as amount, 
+            creditotes.tax as tax,'
+        )
+        ->groupBy('creditnotes.id')
+        ->get();
+    return $creditnotes;
     }
 }
