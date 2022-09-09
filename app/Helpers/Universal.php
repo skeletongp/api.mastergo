@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 
-function formatNumber($number)
+function formatNumber($number, $lenght=2)
 {
     $number = floatval(str_replace(',', '', $number));
     $formatted = rtrim(rtrim(number_format($number, 4, ".", ""), '0'), '.');
     if (!strpos('.', $formatted)) {
-        $formatted = number_format($formatted, 2);
+        $formatted = number_format($formatted, $lenght);
     }
     return $formatted;
 }

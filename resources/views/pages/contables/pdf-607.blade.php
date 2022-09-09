@@ -275,7 +275,7 @@
                 Cantidad NCFs Emitidos de F.C.:
             </td>
             <td colspan="2" style="padding-top:25px">
-                {{ $resumen->count() }}
+                {{ optional($resumen)->count?:'0' }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -283,7 +283,7 @@
                 Total ITBIS Facturado:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($resumen->tax) }}
+                ${{ formatNumber(optional($resumen)->tax) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -291,7 +291,7 @@
                 Total Monto Facturado:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($resumen->amount) }}
+                ${{ formatNumber(optional($resumen)->amount) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -333,7 +333,7 @@
                 EFECTIVO:
             </td>
             <td colspan="2" style="padding-top:25px">
-                ${{ formatNumber($resumen->efectivo)}}
+                ${{ formatNumber(optional($resumen)->efectivo)}}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -341,7 +341,7 @@
                 CHEQUE/TRANSFERENCIA/DEPOSITO:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($resumen->transferencia) }}
+                ${{ formatNumber(optional($resumen)->transferencia) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -357,7 +357,7 @@
                 VENTA A CREDITO:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($resumen->rest) }}
+                ${{ formatNumber(optional($resumen)->rest) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
