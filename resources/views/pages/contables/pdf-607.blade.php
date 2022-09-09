@@ -131,7 +131,10 @@
         tfoot {
             display: table-footer-group;
         }
-        @page { size: a2 portrait; } 
+
+        @page {
+            size: a2 portrait;
+        }
     </style>
 </head>
 
@@ -183,7 +186,7 @@
             </tr>
         </thead>
         <tbody class="cuerpo">
-           {{--  <tr>
+            {{-- <tr>
                 <td colspan="9">
                     <hr>
                     <div
@@ -195,11 +198,11 @@
             @forelse ($comprobantes as $ind=>  $comprobante)
                 @php
                     $docId = $comprobante->invRnc ?: $comprobante->rnc;
-                    $docId=str_replace('-', '',$docId);
+                    $docId = str_replace('-', '', $docId);
                 @endphp
-                <tr style="font-size: normal; {{ fmod($ind+1, 2) == 0 ? 'background-color:#EEE' : '' }}">
+                <tr style="font-size: normal; {{ fmod($ind + 1, 2) == 0 ? 'background-color:#EEE' : '' }}">
                     <td style=" text-align: left">
-                        {{ $docId }} 
+                        {{ $docId }}
                     </td>
 
                     <td style="width:3%;  text-align: left">
@@ -228,7 +231,7 @@
                         ${{ formatNumber($comprobante->tax) }}
                     </td>
                     <td style=" text-align:left; ">
-                        ${{ formatNumber($comprobante->efectivo>0?$comprobante->efectivo:0) }}
+                        ${{ formatNumber($comprobante->efectivo > 0 ? $comprobante->efectivo : 0) }}
                     </td>
                     <td style=" text-align:left;">
                         ${{ formatNumber($comprobante->transferencia) }}
@@ -248,7 +251,61 @@
                 </tr>
             @endforelse
 
+            @forelse ($creditnotes as $indi=>  $creditnote)
+                @php
+                    $docId = $creditnote->invRnc ?: $creditnote->rnc;
+                    $docId = str_replace('-', '', $docId);
+                @endphp
+                <tr style="font-size: normal; {{ fmod($indi + 1, 2) == 0 ? 'background-color:#EEE' : '' }}">
+                    <td style=" text-align: left">
+                        {{ $docId }}
+                    </td>
 
+                    <td style="width:3%;  text-align: left">
+                        {{ strlen($docId) == 9 ? 1 : 2 }}
+                    </td>
+                    <td style="  text-align: left">
+                        {{ $creditnote->invNcf }}
+                    </td>
+
+                    <td style=" text-align: left">
+                        {{ $creditnote->ncf }}
+                    </td>
+                    <td style="width:5%;  text-align: left">
+                        1
+                    </td>
+                    <td style=" text-align: left">
+                        {{ \Carbon\Carbon::parse($creditnote->invDay)->format('Ymd') }}
+                    </td>
+                    <td style=" text-align: left">
+                        {{ \Carbon\Carbon::parse($creditnote->day)->format('Ymd') }}
+                    </td>
+                    <td style=" text-align: left;  font-weight:bold">
+                        ${{ formatNumber($creditnote->amount) }}
+                    </td>
+                    <td style=" text-align: left">
+                        ${{ formatNumber($creditnote->tax) }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7">
+
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
     <hr>
@@ -264,7 +321,8 @@
     <table style="width: 40%; margin-top:35px;float: left; line-height:10px">
         <tr>
             <td colspan="6">
-                <div style="text-transform: uppercase; font-weight:bold; font-size:large; width:100%; text-align:center">
+                <div
+                    style="text-transform: uppercase; font-weight:bold; font-size:large; width:100%; text-align:center">
                     Resumen General de Facturas de Consumo (F.C.):
                 </div>
             </td>
@@ -275,7 +333,7 @@
                 Cantidad NCFs Emitidos de F.C.:
             </td>
             <td colspan="2" style="padding-top:25px">
-                {{ optional($resumen)->count?:'0' }}
+                {{ optional($resumen)->count ?: '0' }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -322,8 +380,9 @@
     <table style="width: 40%; margin-top:35px; float: right; line-height:10px">
         <tr>
             <td colspan="6">
-                <div style="text-transform: uppercase; font-weight:bold; font-size:large; width:100%; text-align:center">
-                   DETALLES DE LAS VENTAS:
+                <div
+                    style="text-transform: uppercase; font-weight:bold; font-size:large; width:100%; text-align:center">
+                    DETALLES DE LAS VENTAS:
                 </div>
             </td>
         </tr>
@@ -333,7 +392,7 @@
                 EFECTIVO:
             </td>
             <td colspan="2" style="padding-top:25px">
-                ${{ formatNumber(optional($resumen)->efectivo)}}
+                ${{ formatNumber(optional($resumen)->efectivo) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -373,7 +432,7 @@
                 PERMUTA:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber(0)}}
+                ${{ formatNumber(0) }}
             </td>
         </tr>
     </table>
