@@ -66,7 +66,7 @@ class CreateInvoice extends Component
             }
         }
         if ($msg) {
-            $this->emit('showAlert', 'Comprobantes pronto a agotarse <br>' . $msg, 'warning', 1000);
+            $this->emit('showAlert', 'Comprobantes pronto a agotarse <br>' . $msg, 'warning', 3000);
 
         }
     }
