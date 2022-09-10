@@ -137,11 +137,7 @@ trait GenerateInvoiceTrait
         if (getPreference($place->id)->print_order=='yes') {
             $this->emit('printOrder', $this->invoice);
         }
-        $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
-        $data = json_decode($dataFile, true) ?: [];
-        $name=$invoice->name?:$invoice->client->name;
-        unset($data[$this->localDetail]);
-        file_put_contents(storage_path('app/public/local/details.json'), json_encode($data));
+        $this->deleteLocal();
         if(getPreference($place->id)->instant=='yes'){
             $this->instant=true;
             $this->emit('modalOpened');

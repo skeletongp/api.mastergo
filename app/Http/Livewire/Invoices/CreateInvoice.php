@@ -92,7 +92,7 @@ class CreateInvoice extends Component
             $detail = $this->details;
             $client = $this->client;
             $name=$this->name?:$client['name'];
-            $data[$client['code'].' '.rtrim($name)] = $detail;
+            $data[$client['code'].'-'.preg_replace('/\s+/', '', $name)] = $detail;
             file_put_contents(storage_path('app/public/local/details.json'), json_encode($data));
         }
         $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
@@ -130,5 +130,6 @@ class CreateInvoice extends Component
         $this->client_code='001';
         $this->name='';
         $this->updatedClientCode();
+        $this->render();
     }
 }
