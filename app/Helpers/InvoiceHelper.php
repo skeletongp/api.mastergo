@@ -58,7 +58,6 @@ function sendInvoiceWS($path, $phone, $number)
     $whatsapp_cloud_api->sendDocument($phone2, $link_id, $document_name, $document_caption);
     $whatsapp_cloud_api->sendTextMessage($phone, 'Adjunto del documento Noº. '.$document_caption);
     $whatsapp_cloud_api->sendTextMessage($phone2, 'Adjunto del documento Noº. '.$document_caption);
-    dd($phone, $phone2, $whatsapp_cloud_api->sendTextMessage($phone2, 'Adjunto del documento Noº. '.$document_caption));
 }
 
 function setIncome($model, $concepto, $amount)

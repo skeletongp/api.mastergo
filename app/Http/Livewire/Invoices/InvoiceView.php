@@ -3,9 +3,12 @@
 namespace App\Http\Livewire\Invoices;
 
 use App\Events\NewInvoice;
+use App\Mail\CotizeMail;
+use App\Mail\InvoiceEmail;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -45,6 +48,14 @@ class InvoiceView extends Component
             $this->emit('showAlert','PDF actualizado correctamente','success');
             setPDFPath($this->currentInvoice);
             $this->setPDF($this->currentInvoice->id);
+        }
+    }
+    public function sendInvoice(){
+        if($this->currentInvoice){
+            $invoice=$this->currentInvoice;
+            Mail::to([$invoice->client->email, $invoice->store->email])->send(new InvoiceEmail($invoice));
+            sendInvoiceWS($invoice->pdf->pathLetter, $invoice->client->contact->cellphone, $invoice->id);
+            $this->emit('showAlert','Factura enviada correctamente','success');
         }
     }
 }
