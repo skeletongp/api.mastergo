@@ -57,7 +57,9 @@
 
             @include('livewire.invoices.includes.totalsection')
         </div>
-
+        <div wire:loading wire:target="trySendInvoice">
+            <x-loading></x-loading>
+        </div>
     </div>
     
     @include('livewire.invoices.includes.invoice-js')

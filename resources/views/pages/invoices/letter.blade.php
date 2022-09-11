@@ -358,7 +358,7 @@
                     <div>${{ \formatNumber($payment->total) }}</div>
                 </td>
             </tr>
-            @if ($payment->efectivo >= 0)
+            @if ($invoice->payments->sum('efectivo') > 0)
                 <tr class="" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td style="text-align: right; ">
@@ -369,7 +369,7 @@
                     </td>
                 </tr>
             @endif
-            @if ($payment->tarjeta > 0)
+            @if ($invoice->payments->sum('tarjeta') > 0)
                 <tr class="total" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td style="text-align: right; ">
@@ -380,7 +380,7 @@
                     </td>
                 </tr>
             @endif
-            @if ($payment->transferencia > 0)
+            @if ($invoice->payments->sum('transferencia') > 0)
                 <tr class="total" style="font-weight: bold; ">
                     <td colspan="2"></td>
                     <td style="text-align: right; ">

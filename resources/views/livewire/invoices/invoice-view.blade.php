@@ -22,10 +22,10 @@
                            data-tooltip-target="updatePDF" wire:click="updatePDF">
                            <span class="far fa-sync-alt"></span>
                        </a>
-                       <x-tooltip id="seeOrders">Ver pedidos</x-tooltip>
-                       <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
-                           href="{{ route('orders') }}" data-tooltip-target="seeOrders">
-                           <span class="far fa-copy"></span>
+                       <x-tooltip id="sendInvoice">Enviar Factura</x-tooltip>
+                       <a role="button" class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
+                           wire:click="sendInvoice" data-tooltip-target="sendInvoice">
+                           <span class="far fa-share-alt"></span>
                        </a>
                        <a class="cursor-pointer py-1 px-3 rounded-lg shadow-lg hover:bg-gray-300"
                            href="{{ route('invoices.show', $currentInvoice) }}">
