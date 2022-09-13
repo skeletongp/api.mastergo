@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 
 class CreateClient extends Component
 {
-    public $form, $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
+    public $form=[], $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
     use WithFileUploads;
     protected $listeners=['modalOpened'];
     public function mount(){
@@ -74,6 +74,7 @@ class CreateClient extends Component
         Cache::forget('clientsWithCode_'.env('STORE_ID'));
         $this->emit('showAlert', 'Cliente registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
+        $this->modalOpened();
     }
     public function updatedAvatar()
     {
