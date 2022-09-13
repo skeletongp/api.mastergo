@@ -9,11 +9,15 @@ use Livewire\WithFileUploads;
 
 class EditClient extends Component
 {
-    public  $client;
+    public  $client, $client_id;
     public  $avatar, $photo_path;
     use WithFileUploads;
-    public function mount(){
-        $this->client['special']=0;
+
+    protected $listeners = ['modalOpened'];
+
+    public function mount()
+    {
+        $this->client['special'] = 0;
     }
     public function render()
     {
@@ -31,33 +35,40 @@ class EditClient extends Component
             'client.store_id' => 'required|numeric|exists:moso_master.stores,id',
         ];
     }
+    public function modalOpened()
+    {
+
+        $this->client = Client::find($this->client_id)->toArray();
+        $this->client['special'] = $this->client['special']?:0;
+    }
     public function updateClient()
     {
         $this->validate();
-        $client=Client::find($this->client['id']);
+        $client = Client::find($this->client['id']);
         if ($this->photo_path) {
-            $client->image()->updateOrCreate(['imageable_id'=>$client->id],[
+            $client->image()->updateOrCreate(['imageable_id' => $client->id], [
                 'path' => $this->photo_path
             ]);
         }
         $client->update($this->client);
-        Cache::forget('clientCount'.env('STORE_ID'));
-        Cache::forget('clientsWithCode_'.env('STORE_ID'));
+        Cache::forget('clientCount' . env('STORE_ID'));
+        Cache::forget('clientsWithCode_' . env('STORE_ID'));
         $this->emit('refreshLivewireDatatable');
         $this->emit('showAlert', 'Cliente Actualizado Exitosamente', 'success');
     }
 
     public function updatedAvatar()
     {
-        
-        $path = cloudinary()->upload($this->avatar->getRealPath(),
-        [
-            'folder' => 'carnibores/avatars',
-            'transformation' => [
-                      'width' => 250,
-             ]
-        ])->getSecurePath();
+
+        $path = cloudinary()->upload(
+            $this->avatar->getRealPath(),
+            [
+                'folder' => 'carnibores/avatars',
+                'transformation' => [
+                    'width' => 250,
+                ]
+            ]
+        )->getSecurePath();
         $this->photo_path = $path;
     }
-    
 }

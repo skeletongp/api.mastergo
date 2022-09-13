@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Clients;
 
+use App\Http\Classes\NumberColumn as ClassesNumberColumn;
+use App\Models\Payment;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Mediconesystems\LivewireDatatables\Column;
@@ -17,19 +19,22 @@ class ClientTransactions extends LivewireDatatable
     public $hideResults = true;
     public function builder()
     {
-        $contable=$this->client->contable;
-        $transactions = 
-       Transaction::where('debitable_id',$contable->id)
-       ->orWHere('creditable_id',$contable->id)
-       ->orderBy('created_at', 'desc');
-        return $transactions;
+        $payments = 
+       Payment::where('payer_id', $this->client->id)
+       ->leftjoin('invoices', 'invoices.id', 'payments.payable_id')
+       ->where('payments.payable_type', 'App\Models\Invoice')
+       ;
+        return $payments;
     }
 
     public function columns()
     {
         return [
-            NumberColumn::index($this)->label('#'),
-            DateColumn::name('created_at')->label('Hora')->format('d/m/Y h:i A'),
+            Column::name('invoices.number')->label('Factura'),
+            ClassesNumberColumn::name('total')->label('Monto')->formatear('money'),
+            ClassesNumberColumn::raw('payed-cambio AS payed')->label('Pago')->formatear('money'),
+            ClassesNumberColumn::name('rest')->label('Resta')->formatear('money'),
+           /*  DateColumn::name('created_at')->label('Hora')->format('d/m/Y h:i A'),
             Column::callback('concepto', function ($concepto) {
                 return ellipsis($concepto, 50);
             })->label('Concepto')->searchable()->filterable(
@@ -38,7 +43,7 @@ class ClientTransactions extends LivewireDatatable
             Column::callback('income', function ($income) {
                 return '$' . formatNumber($income);
             })->label('Monto'),
-
+ */
 
 
         ];
