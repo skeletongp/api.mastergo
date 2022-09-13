@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(ClientController::class)->group(function () {
             Route::get('clients', 'index')->name('clients.index');
             Route::get('clients/paymany/{invoices}', 'paymany')->name('clients.paymany');
+            Route::get('clients/printmany/{invoices}', 'printmany')->name('clients.printmany');
             Route::get('clients/invoices/{client_id}', 'invoices')->name('clients.invoices');
             Route::get('clients/{client_id}', 'show')->name('clients.show');
         });

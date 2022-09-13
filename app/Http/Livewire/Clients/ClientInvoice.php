@@ -43,7 +43,7 @@ class ClientInvoice extends LivewireDatatable
         return [
             Column::checkbox(),
             Column::callback('invoices.number', function($number){
-                return ltrim(substr($number,strpos($number,'-')+1),'0');
+                return "<a class='hover:underline hover:text-blue-500' href=".route('invoices.show',$number).">".ltrim(substr($number, strpos($number, '-') + 1), '0')."</a>";
             })->label('Nro.'),
             Column::callback(['invoices.id','invoices.rest'], function ($id,$rest)  {
                 if ($rest > 0) {
@@ -69,6 +69,9 @@ class ClientInvoice extends LivewireDatatable
             Action::value('edit')->label('Cobrar facturas')->callback(function ($mode, $items) {
               return redirect()->route('clients.paymany', ['invoices'=>implode(',',$items)]);
             }),
+            Action::value('print')->label('Imprimir facturas')->callback(function ($mode, $items) {
+                return redirect()->route('clients.printmany', ['invoices'=>implode(',',$items)]);
+              }),
 
         ];
     }
