@@ -32,4 +32,8 @@ class ClientController extends Controller
         $invoices=$invoices;
         return view('pages.clients.paymany', compact('invoices'));
     }
+    public function printMany(Request $request, $invoices){
+        $invoices=$invoices;
+        return view('pages.clients.printmany', compact('invoices'));
+    }
 }
