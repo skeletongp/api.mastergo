@@ -17,7 +17,7 @@
                 
                 <div class="w-1/3">
                     <x-base-input type="number" id="outAmount" label="Monto" placeholder="Ingrese el monto total"
-                        wire:model.defer="amount">
+                        wire:model.defer="amount" disabled>
                     </x-base-input>
                     <x-input-error for="amount">Campo requerido</x-input-error>
                 </div>

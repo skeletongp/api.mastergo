@@ -37,7 +37,7 @@ class CreateOutcome extends Component
 
     protected $rules = [
         'provider_id' => 'required',
-        'amount' => 'required',
+        'amount' => 'required|numeric|min:1',
         'concept' => 'required',
         'count_code' => 'required',
         'efectivo' => 'required',
@@ -163,5 +163,8 @@ class CreateOutcome extends Component
     public function getTax($amount, $tax=false)
     {
         return $amount - $this->getBruto($amount, true);
+    }
+    public function updated(){
+        $this->amount=floatVal($this->efectivo)+floatVal($this->tarjeta)+floatVal($this->transferencia);
     }
 }

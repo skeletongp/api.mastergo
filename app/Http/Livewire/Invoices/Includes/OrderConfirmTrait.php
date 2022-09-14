@@ -66,5 +66,6 @@ trait OrderConfirmTrait
             $this->emit('changeInvoice', $invoice);
         $this->emit('refreshLivewireDatatable');
         setDebt($invoice->client_id, 0);
+        $this->emit('closeModal');
     }
 }

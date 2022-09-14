@@ -32,7 +32,7 @@
                 value = $(this).val();
                 list = '{{ $listName }}';
                 model = '{{ $model }}';
-                setValue = $('#' + list + ' [value="' + value + '"]').data('value');
+                setValue = $('#' + list + ' [value="' + value.replace(/"/g, '&quot;') + '"]').data('value');
                 if (model) {
                     @this.set(model, setValue);
                 }

@@ -24,7 +24,7 @@ class CreateInvoice extends Component
     public $action;
     public $instant=false;
     public  $unit, $unit_id;
-    protected $listeners = ['selProducto', 'validateAuthorization', 'realoadClients', 'confirmedAddItems', 'sendInvoice'];
+    protected $listeners = ['selProducto', 'validateAuthorization', 'realoadClients', 'confirmedAddItems', 'sendInvoice', 'closeModal'];
     protected $queryString = ['details', 'client', 'client_code', 'vence', 'condition', 'type'];
 
 
@@ -131,5 +131,8 @@ class CreateInvoice extends Component
         $this->name='';
         $this->updatedClientCode();
         $this->render();
+    }
+    public function closeModal(){
+        $this->invoice=null;
     }
 }
