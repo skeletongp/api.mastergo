@@ -33,20 +33,26 @@ class DatabaseSeeder extends Seeder
             'rnc' => '132487524',
             'expires_at' => Carbon::now()->addMonths(3)
         ]);
-        $store->image()->create([
-            'path' => 'https://res.cloudinary.com/dboafhu31/image/upload/v1638122890/bfguvm5lp8qfoydcsinz.png',
-        ]); */
+         */
 
         $store=Store::find(env('STORE_ID'));
-        $unit = $store->units()->create([
-            'name' => 'Libra',
-            'symbol' => 'LB.'
+        $store->image()->create([
+            'path' => 'https://res.cloudinary.com/atriontechsd/image/upload/v1663103277/carnibores/logo/k1tzrsuuje751p7uc9up.jpg',
         ]);
-        $unit2 = $store->units()->create([
-            'name' => 'Unidad',
-            'symbol' => 'UND'
-        ]);
-        
+      
+        $units=[
+            ['name'=>'Libra','symbol'=>'LB'],
+            ['name'=>'Unidad','symbol'=>'UND'],
+            ['name'=>'Metro3','symbol'=>'MT3'],
+            ['name'=>'Rollo','symbol'=>'RLL'],
+            ['name'=>'Funda','symbol'=>'FDA'],
+            ['name'=>'Cubeta','symbol'=>'CBT'],
+            ['name'=>'Galón','symbol'=>'GAL'],
+            ['name'=>'Quintal','symbol'=>'QTL']
+        ];
+        foreach($units as $unit){
+            $store->units()->create($unit);
+        }
         $tax = $store->taxes()->create([
             'name' => 'ITBIS',
             'rate' => 0.18
@@ -60,7 +66,7 @@ class DatabaseSeeder extends Seeder
         $place = $store->places()->create($data);
         $place->preference()->create([
             'comprobante_type' => 'B00',
-            'unit_id' => $unit->id,
+            'unit_id' => 1,
             'tax_id' => $tax->id,
         ]);
         $provider = $store->providers()->create([

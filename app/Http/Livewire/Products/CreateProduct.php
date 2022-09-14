@@ -77,12 +77,12 @@ class CreateProduct extends Component
         $this->createTaxes($product);
         $this->attachToPlace($product);
         $this->reset();
-        $this->mount();
         Cache::forget('productCount'.env('STORE_ID'));
        
         
         $this->emit('showAlert','Producto registrado exitosamente','success');
         $this->emit('refreshLivewireDatatable');
+        $this->modalOpened();
     }
     public function createTaxes(Product $product)
     {

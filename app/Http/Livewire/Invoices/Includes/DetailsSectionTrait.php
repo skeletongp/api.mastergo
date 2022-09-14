@@ -177,6 +177,10 @@ trait DetailsSectionTrait
         $code = substr($this->product_name, 0, 3);
         $this->setProduct($code);
     }
+    public function updatedUnitId()
+    {
+        $this->freshUnitId();
+    }
     public function updatingPrice($newPrice)
     {
         $oldPrice = floatVal($this->price) ?: 0.0001;

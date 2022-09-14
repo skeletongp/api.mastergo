@@ -89,10 +89,7 @@ trait ShowPayments
         $invoice->update([
             'rest' => $rest
         ]);
-        $invoice->client->update([
-            'limit' => $invoice->client->limit + $payment->payed,
-            'debt'=>$invoice->client->invoices->sum('rest')
-        ]);
+        
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');
         $this->emit('showAlert', 'Pago registrado exitosamente', 'success');
         $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'payable.payment', 'contable');
@@ -102,6 +99,7 @@ trait ShowPayments
         $this->payment['efectivo']=0;
         $this->payment['tarjeta']=0;
         $this->payment['transferencia']=0;
+        setDebt($invoice->client_id, $payed);
     }
     
 }

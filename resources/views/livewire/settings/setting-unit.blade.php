@@ -4,7 +4,7 @@
         <livewire:settings.units.create-unit />
         <hr>
         <br>
-        <div class=" py-2 w-max min-h-max h-full relative sm:px-6 lg:px-8">
+        <div class=" py-2 w-max min-h-max ml-auto h-full relative sm:px-6 lg:px-8">
             <livewire:settings.units.unit-table />
         </div>
     @endcan

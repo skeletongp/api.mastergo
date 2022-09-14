@@ -73,7 +73,7 @@ Breadcrumbs::for('products.create', function ($trail) {
 });
 Breadcrumbs::for('products.show', function ($trail, $product) {
     $trail->parent('products');
-    $trail->push($product->name, route('products.show', $product));
+    $trail->push($product->code.'-'.$product->name, route('products.show', $product));
 });
 Breadcrumbs::for('products.sum', function ($trail) {
     $trail->parent('products');

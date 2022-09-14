@@ -31,7 +31,7 @@
                             <div class="text-base text-gray-400 dark:text-gray-300">Pagado</div>
                             <div class="flex items-center pt-1">
                                 <div class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                    ${{ formatNumber($invoice->payments->sum('payed') - $invoice->payments->sum('cambio')) }}
+                                    ${{ formatNumber($invoice->payments->sum('payed')) }}
                                 </div>
 
                             </div>
