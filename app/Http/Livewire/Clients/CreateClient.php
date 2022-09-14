@@ -50,6 +50,9 @@ class CreateClient extends Component
         if (empty($this->form['limit'])) {
             $this->form['limit'] = 0.00;
         }
+        if (!array_key_exists('name', $this->form) || empty($this->form['name'])) {
+            $this->form['name'] = strtoupper(strtok($this->name, ' ').' '.strtok($this->lastname, ' '));
+        }
         $store = auth()->user()->store;
         $this->validate();
         $client = $store->clients()->create($this->form);
@@ -76,6 +79,7 @@ class CreateClient extends Component
         $this->emit('refreshLivewireDatatable');
         $this->modalOpened();
     }
+    
     public function updatedAvatar()
     {
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);

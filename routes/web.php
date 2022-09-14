@@ -23,6 +23,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Client;
 use App\Models\Count;
 use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -160,7 +161,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('prueba', function (Request $request) {
 
-   dd(getProductsWithCode());
-    dd($request->user()->hasRole('admin'));
+    $products=Product::get();
+    foreach ($products as $product) {
+      $product->update(['name'=>str_replace('"',' Inch. ',$product->name)]);
+    }
     return view('prueba');
 })->name('prueba');

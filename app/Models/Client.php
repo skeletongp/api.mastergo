@@ -79,7 +79,7 @@ class Client extends Model implements Searchable
     public function name(): Attribute
     {
         return new Attribute(
-            set: fn ($value) => $this->attributes['name'] = ucwords($value, ' '),
+            set: fn ($value) => $this->attributes['name'] = strtoupper($value),
         );
     }
     public function address(): Attribute
