@@ -25,7 +25,7 @@
                 <div class="flex justify-end pb-2">
                     <a href="{{ route('products.catalogue') }}"
                         class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
-                        <span class="fas fa-sync-alt text-xl"></span>
+                        <span class="fas fa-layer-group text-xl"></span>
                         <span>Catálogo</span>
                     </a>
                 </div>

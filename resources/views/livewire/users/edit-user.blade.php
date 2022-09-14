@@ -1,5 +1,5 @@
 <div>
-    <x-modal >
+    <x-modal maxWidth="max-w-4xl">
         <x-slot name="title">
             <span> Editar registro</span>
         </x-slot>

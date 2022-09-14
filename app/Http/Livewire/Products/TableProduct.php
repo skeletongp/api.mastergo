@@ -33,7 +33,7 @@ class TableProduct extends LivewireDatatable
                 if($result['image']){
                     $photo=$result['image']['path'];
                 }
-                return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $photo]);
+                return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $photo, 'ide'=> $id]);
             })->label('Ver')->unsortable(),
             Column::name('code')->label('Cód.')->searchable()->defaultSort(true),
             Column::name('name')->label('Nombre')->searchable(),

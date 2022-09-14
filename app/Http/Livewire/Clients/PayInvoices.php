@@ -101,5 +101,6 @@ class PayInvoices extends Component
         $payment = $payment->load('payable.store', 'payer', 'payer', 'place.preference', 'payable.payment', 'contable');
         $this->emit('printPayment', $payment);
         $this->mount($this->invoicesIds);
+        setDebt($invoice->client_id, $payment->payed-$payment->cambio);
     }
 }

@@ -65,5 +65,6 @@ trait OrderConfirmTrait
         if (auth()->user()->hasPermissionTo('Imprimir Facturas'))
             $this->emit('changeInvoice', $invoice);
         $this->emit('refreshLivewireDatatable');
+        setDebt($invoice->client_id, 0);
     }
 }

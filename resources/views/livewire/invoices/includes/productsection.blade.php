@@ -46,7 +46,7 @@
                 <td class=" pt-0 border-gray-200 border  max-w-[12rem]">
                     <div class="w-48 max-w-[12rem] px-1">
                         <x-datalist value="{{ $product_name }}" class="border-none h-full" :inputId="'pr_name'"
-                            model="product_name" type="text" placeholder="Producto" listName="pr_code_name"
+                            model="product_name" type="search" placeholder="Producto" listName="pr_code_name"
                             wire:keydown.enter.prevent="$emit('focusCant')">
                             @foreach ($products as $index => $prod)
                                 <option class="bg-gray-200 " value="{{ $index }} {{ $prod }}"
