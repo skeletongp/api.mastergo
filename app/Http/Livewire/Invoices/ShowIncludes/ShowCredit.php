@@ -22,7 +22,7 @@ trait ShowCredit
             'modified_ncf' => 'required',
             'modified_at' => 'required',
             'comment' => 'required',
-            'tax' => 'required|numeric|min:1',
+            'tax' => 'required|numeric|min:0',
             'amount' => 'required|numeric|min:1|gte:tax',
         ]);
         $this->closeComprobante();

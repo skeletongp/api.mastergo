@@ -17,7 +17,7 @@
                     <div class="w-full overflow-hidden">
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
-                                <x-base-input label="Primer nombre" id="provider.name" wire:model.defer="form.name" />
+                                <x-base-input label="Nombre Completo" id="provider.name" wire:model.defer="form.name" />
                                 <x-input-error for="form.name" />
                             </div>
                             

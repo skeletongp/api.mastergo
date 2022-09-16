@@ -18,15 +18,11 @@
                         <div class="w-full overflow-hidden">
                             <div class="  pb-6 flex items-start space-x-3">
                                 <div class="w-full overflow-hidden">
-                                    <x-base-input label="Primer nombre" id="provider.{{ $provider_id }}.name"
-                                        wire:model.defer="provider.name" />
-                                    <x-input-error for="provider.name" />
+                                    <x-base-input label="Nombre Completo" id="provider.{{ $provider_id }}.name"
+                                        wire:model.defer="provider.fullname" />
+                                    <x-input-error for="provider.fullname" />
                                 </div>
-                                <div class="w-full overflow-hidden">
-                                    <x-base-input label="Apellidos" id="provider.{{ $provider_id }}.lastname"
-                                        wire:model.defer="provider.lastname" />
-                                    <x-input-error for="provider.lastname" />
-                                </div>
+                               
                             </div>
                             <div class="  pb-6 flex items-start space-x-3">
                                 <div class="w-full overflow-hidden">

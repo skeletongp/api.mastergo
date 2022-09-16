@@ -18,63 +18,42 @@ class TableUser extends LivewireDatatable
     public $exportable = true;
     public $name = "Tabla Usuarios";
     public  $hideable = "select";
+    public $padding="px-2";
     public $roles;
 
 
     public function builder()
     {
-        $this->roles = auth()->user()->store->roles()->get();
-        $users = auth()->user()->store->users()->whereNull('deleted_at');
-        
-        if ($users->count() == 1) {
-            return $users->with('image', 'roles');
-        }
-        $users = $users->get();
-        $users = $users->reject(function ($user, $key) {
-            return $user->hasRole('Super Admin');
-        });
-        return $users->toQuery()->with('image', 'roles');
+      $users=User::
+        join(env('DB_DATABASE').'.store_users','users.id','=','store_users.user_id')
+        ->leftJoin(env('DB_DATABASE').'.model_has_roles', 'users.id', '=', env('DB_DATABASE').'.model_has_roles.model_id')
+        ->leftjoin(env('DB_DATABASE').'.roles', env('DB_DATABASE').'.model_has_roles.role_id', '=', 'roles.id')
+        ->where('users.id','!=',1)
+        ->orderBy('users.name')
+        ->groupBy('users.id')
+        ;
+        return $users;
     }
 
     public function columns()
     {
-        $canEdit = auth()->user()->hasPermissionTo('Editar Usuarios');
-        $users = $this->builder()->get()->toArray();
+        
         return [
-            Column::callback('id', function ($id) use ($users) {
-                $result = arrayFind($users, 'id', $id);
-                if ($result['image']) {
-                    return view('components.avatar', ['avatar' => $result['image']['path']]);
-                } else {
-                    return view('components.avatar', ['avatar' => env('NO_IMAGE')]);
-                }
-            })->defaultSort('asc'),
             Column::name('fullname')->label('Nombre Completo')->searchable(),
             Column::name('name')->label('Nombre')->searchable()->hide(),
             Column::name('lastname')->label('Apellido')->searchable()->hide(),
             Column::name('email')->label('Correo Electrónico')->searchable(),
             Column::name('phone')->label('Teléfono')->searchable(),
-            Column::callback(['created_at', 'id'], function ($role, $id) use ($users) {
-                $result = arrayFind($users, 'id', $id);
-                foreach ($result['roles'] as $key => $rol) {
-                    $result['roles'][$key]['name'] = preg_replace('/[0-9]+/', '', $result['roles'][$key]['name']);
-                }
-                return implode(', ', array_column($result['roles'], 'name'));
-            })->label('Rol')->searchable()->hide(),
+            Column::name('roles.name')->label('Rol')->searchable()->hide(),
             Column::name('username')->label('Usuario')->searchable()->hide(),
             Column::name('created_at')->label('Registro')->searchable()->hide(),
-            Column::callback(['updated_at', 'id'], function ($updated, $id) use ($users) {
-                $result = arrayFind($users, 'id', $id);
-                return  view('pages.users.actions', ['user' => $result, 'roles' => $this->roles, 'key' => uniqid()]);
+            Column::callback(['id'], function ($id)  {
+                return  view('pages.users.actions', ['user' => $id,  'key' => uniqid()]);
             })->label('Acciones'),
+            
 
         ];
     }
 
 
-    public function cellClasses($row, $column)
-    {
-        return
-            'whitespace-normal  text-gray-900 px-6 py-2';
-    }
 }

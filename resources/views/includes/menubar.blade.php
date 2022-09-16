@@ -33,7 +33,7 @@
                                 <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
                                     activeRoute="prueba.*" scope="" />
                             @endcan
-                            <form action="{{ route('auth.logout') }}" method="POST">
+                            <form action="{{ route('auth.logout') }}" method="GET">
                                 @csrf
                                 <x-button class=" bg-transparent text-black flex space-x-3 items-center">
                                     <span class="far fa-sign-out-alt  text-xl"></span>

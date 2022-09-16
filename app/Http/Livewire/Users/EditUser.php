@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Spatie\Permission\Models\Role;
 
 class EditUser extends Component
 {
-    public  $user, $isAdmin, $userRoles, $roles;
+    public  $user=[], $user_id, $isAdmin, $userRoles, $roles=[];
     public  $avatar, $photo_path, $role, $loggeable=false;
     use WithFileUploads;
+    protected $listeners=['modalOpened'];
     function rules()
     {
         return [
@@ -26,15 +28,24 @@ class EditUser extends Component
           
         ];
     }
-    public function mount( $user)
+    public function modalOpened( )
     {
-        $this->userRoles=$user['roles'];
-        $this->role=count($this->userRoles)?$this->userRoles[0]['name']:'';
+        $user=User::where('users.id',$this->user_id)
+        ->leftJoin(env('DB_DATABASE').'.model_has_roles', 'users.id', '=', env('DB_DATABASE').'.model_has_roles.model_id')
+        ->leftjoin(env('DB_DATABASE').'.roles', env('DB_DATABASE').'.model_has_roles.role_id', '=', 'roles.id')
+        ->selectRaw('users.*, roles.name as roles')
+
+        ->with('image') ->first()->toArray();
+
+        $rol=optional(Role::where('name',$user['roles'])->first())->toArray()?:[];
+        $this->userRoles=$rol;
+        $this->role=count($this->userRoles)?$this->userRoles['name']:'';
         $this->user = $user;
         if($user['loggeable']=='yes'){
             $this->loggeable=true;
         }
-        $this->roles=$this->roles->pluck('name');
+        $roles=DB::table('roles')->get();
+        $this->roles=$roles->pluck('name');
         $user=auth()->user();
         if (!$user->hasRole('Super Admin')) {
            unset($this->roles[0]);
