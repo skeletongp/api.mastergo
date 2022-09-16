@@ -24,10 +24,12 @@ use App\Models\Client;
 use App\Models\Count;
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Sawirricardo\Whatsapp\Data\TextMessageData;
@@ -46,7 +48,7 @@ use Sawirricardo\Whatsapp\Data\TextMessageData;
 Route::controller(AuthController::class)->group(function () {
     Route::get('auth/login', 'login')->name('login');
     Route::post('auth/login', 'store')->name('login.store');
-    Route::post('auth/logout', 'logout')->name('auth.logout');
+    Route::get('auth/logout', 'logout')->name('auth.logout');
 });
 
 
@@ -160,10 +162,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-
-    $products=Product::get();
-    foreach ($products as $product) {
-      $product->update(['name'=>str_replace('"',' Inch. ',$product->name)]);
-    }
-    return view('prueba');
+   /*  $user = User::find(5);
+   $user->update([
+        'password' => '123456',
+    ]);
+    return view('prueba'); */
 })->name('prueba');

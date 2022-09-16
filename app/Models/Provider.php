@@ -36,10 +36,12 @@ class Provider extends Model
     {
         parent::boot();
         self::creating(function($model){
-            $model->fullname = $model->name.' '.(string) rtrim($model->lastname);
+            $model->fullname =strtoupper( $model->name.' '.(string) rtrim($model->lastname));
+            $model->email=strtolower($model->email);
         });
         self::updating(function($model){
-            $model->fullname = $model->name.' '.(string) rtrim($model->lastname);
+            $model->fullname =strtoupper( $model->name.' '.(string) rtrim($model->lastname));
+            $model->email=strtolower($model->email);
         });
     }
     public function image()

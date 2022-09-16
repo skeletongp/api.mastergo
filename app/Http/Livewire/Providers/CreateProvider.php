@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class CreateProvider extends Component
 {
-    public $form, $provDocType;
+    public $form=[], $provDocType;
     protected $querystring = ['provDocType'];
     protected $rules = [
         'form.name' => 'required|string|max:100',
@@ -17,6 +17,9 @@ class CreateProvider extends Component
         'form.rnc' => 'required|string|max:25',
         'provDocType' => 'required',
     ];
+    public function mount(){
+        $this->form['limit'] = 0;
+    }
     public function render()
     {
         return view('livewire.providers.create-provider');

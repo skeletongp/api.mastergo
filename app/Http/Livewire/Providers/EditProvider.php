@@ -13,7 +13,6 @@ class EditProvider extends Component
     protected $rules = [
         'provider' => 'required',
         'provider.name' => 'required|string|max:50',
-        'provider.lastname' => 'required|string|max:75',
         'provider.email' => 'required|email|max:100|unique:clients,email',
         'provider.address' => 'required|string|max:100',
         'provider.limit' => 'required|numeric|min:0',

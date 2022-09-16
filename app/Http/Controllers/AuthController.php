@@ -27,9 +27,9 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('username', 'password'), false)) {
             $request->session()->regenerate();
             session()->put('place_id',auth()->user()->place->id);
-            if (!Cache::has('scopes_' . auth()->user()->store->id)) {
+            if (!Cache::has('scopes_' . env('STORE_ID'))) {
                 Cache::put(
-                    'scopes_' . auth()->user()->store->id,
+                    'scopes_' . env('STORE_ID'),
                     auth()->user()->store->scope()->pluck('name')
                 );
             }
