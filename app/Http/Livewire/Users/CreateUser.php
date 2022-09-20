@@ -54,7 +54,7 @@ class CreateUser extends Component
             ]);
         }
         $user->assignRole($this->role);
-        setContable($user, '102', 'credit');
+        setContable($user, '102', 'debit');
         Cache::forget($store->id.'admins');
         $this->reset();
         $this->modalOpened();
