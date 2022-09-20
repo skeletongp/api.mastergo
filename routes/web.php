@@ -23,6 +23,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Client;
 use App\Models\Count;
 use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -162,9 +163,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-   /*  $user = User::find(5);
-   $user->update([
-        'password' => '123456',
-    ]);
-    return view('prueba'); */
+   $payments=Payment::where('contable_id',0)->get();
+    foreach($payments as $payment){
+         if($payment->payable->status=='cerrada'){
+            $payment->payable->update([
+                'status'=>'anulada'
+            ]);
+         }
+    }
 })->name('prueba');

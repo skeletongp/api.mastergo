@@ -17,6 +17,7 @@ class InvoiceHistorial extends LivewireDatatable
 
     public $headTitle = "Historial de facturas";
     public $padding = "px-2";
+    public $hideable='select';
     use UniqueDateTrait;
 
     public function builder()
@@ -28,8 +29,9 @@ class InvoiceHistorial extends LivewireDatatable
             ->orderBy('invoices.created_at', 'desc')
             ->join('invoices', 'payments.payable_id', '=', 'invoices.id')
             ->where('payments.payable_type', '=', 'App\Models\Invoice')
+            ->leftjoin('comprobantes','invoices.comprobante_id','=','comprobantes.id')
             ->join('clients', 'clients.id', '=', 'invoices.client_id')
-            ->where('status', '=', 'cerrada')
+            ->where('invoices.status', '=', 'cerrada')
             ->groupBy('invoices.id');
         return $invoices;
     }
@@ -59,15 +61,40 @@ class InvoiceHistorial extends LivewireDatatable
             Column::name('invoices.condition')->label('Condición')->filterable([
                 'De Contado', 'Contra Entrega', '1 A 15 Días', '16 A 30 Días', '31 A 45 Dïas'
             ]),
-            NumberColumn::raw('total')->label('Total')->searchable()->formatear('money'),
-            NumberColumn::raw('SUM(efectivo) AS efectivo')->label('Efectivo')->formatear('money'),
-            NumberColumn::raw('SUM(transferencia) AS transferencia')->label('Transf.')->formatear('money'),
-            NumberColumn::raw('SUM(payed) AS payed')->label('Pagado')->formatear('money'),
-            NumberColumn::raw('SUM(cambio) AS cambio')->label('cambio')->formatear('money'),
-            NumberColumn::raw('invoices.rest')->label('Resta')->formatear('money'),
+            NumberColumn::raw('total')->label('Total')->searchable()->formatear('money')->enableSummary(),
+            NumberColumn::raw('SUM(efectivo) AS efectivo')->label('Efectivo')->formatear('money')->enableSummary(),
+            NumberColumn::raw('SUM(transferencia) AS transferencia')->label('Transf.')->formatear('money')->enableSummary(),
+            NumberColumn::raw('SUM(payed) AS payed')->label('Pagado')->formatear('money')->enableSummary(),
+            NumberColumn::raw('SUM(cambio) AS cambio')->label('cambio')->formatear('money')->enableSummary(),
+            NumberColumn::raw('invoices.rest')->label('Resta')->formatear('money')->enableSummary(),
+            Column::callback(['invoices.type', 'comprobantes.type'], function ($prefix, $type) {
+                return $type?:'DOCUMENTO CONDUCE';
+            })->label('TIPO')->searchable()->filterable([
+                'B00' => 'CONDUCE',
+                'B01' => 'CRÉDITO FISCAL',
+                'B02' => 'CONSUMO FINAL',
+                'B14' => 'RÉGIMEN ESPECIAL',
+                'B15' => 'GUBERNAMENTAL',
+            ])->hide(),
             /* Column::checkbox()->label('Seleccionar'), */
 
         ];
+    }
+
+    public function summarize($column)
+    {
+      
+        $results = json_decode(json_encode($this->results->items()), true);
+        foreach ($results as $key => $value) {
+            $val = json_decode(json_encode($value), true);
+            $results[$key][$column] = preg_replace("/[^0-9 .]/", '', $val[$column]);
+        }
+        try {
+
+            return "<h1 class='font-bold text-right'>" . '$' . formatNumber(array_sum(array_column($results, $column))) . "</h1>";;
+        } catch (\TypeError $e) {
+            return '';
+        }
     }
    
 }
