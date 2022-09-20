@@ -57,16 +57,17 @@ class Report607 extends Component
     public function getComprobantes($start_at)
     {
         $comprobantes = Comprobante::where('comprobantes.status', 'usado')
-            ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
-            ->whereBetween('invoices.day', [$start_at, $this->end_at])
-            ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
-            ->where('payments.payable_type', 'App\Models\Invoice')
-            ->leftJoin('clients', 'comprobantes.client_id', '=', 'clients.id')
-            ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc ,comprobantes.ncf as ncf, invoices.day as day, 
-                    sum(payments.payed-payments.cambio)+invoices.rest as amount,   
-                    sum(payments.tax) as tax, sum(payments.efectivo-payments.cambio) as efectivo,
-                    sum(payments.transferencia+payments.tarjeta) as transferencia, invoices.rest
-                    as rest')
+        ->where('invoices.deleted_at', null)
+       ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
+       ->whereBetween('invoices.day', [$start_at, $this->end_at])
+       ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
+       ->where('payments.payable_type', 'App\Models\Invoice')
+       ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
+       ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc,comprobantes.ncf as ncf, invoices.day as day, 
+           if(invoices.status!="anulada",payments.total,50) as amount,   
+           sum(payments.tax) as tax, if(invoices.status!="anulada",if(sum(payments.efectivo-payments.cambio)>0,sum(payments.efectivo-payments.cambio),0),50) as efectivo,
+          if(invoices.status!="anulada", sum(payments.transferencia+payments.tarjeta),0) as transferencia, invoices.rest
+           as rest, invoices.number as number')
             ->where(function ($query) {
                 $query->where('comprobantes.prefix', '!=', 'B02')
                     ->orWhere('payments.amount', '>', 250000);
