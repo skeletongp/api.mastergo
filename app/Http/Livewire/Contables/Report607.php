@@ -46,9 +46,9 @@ class Report607 extends Component
         $pdf = $PDF->loadView('pages.contables.pdf-607', $data);
         $name = 'files' . $store->id . '/reporte 607/report' . Carbon::parse($this->start_at)->format('Ym') . '.pdf';
 
-        Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
-        $url = Storage::url($name);
-        $this->url = $url;
+        /* Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
+        $url = Storage::url($name); */
+        $this->url = base64_encode($pdf->output());
     }
     public function changeDate()
     {
