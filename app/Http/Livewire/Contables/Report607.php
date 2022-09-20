@@ -89,7 +89,7 @@ class Report607 extends Component
             ->selectRaw('clients.rnc as rnc, invoices.* ,comprobantes.ncf as ncf, invoices.day as day, 
                 if(invoices.status!="anulada",payments.total,50) as amount,   
                 sum(payments.tax) as tax, if(invoices.status!="anulada",if(sum(payments.efectivo-payments.cambio)>0,sum(payments.efectivo-payments.cambio),0),50) as efectivo,
-               if(invoices.status!="anulada", sum(payments.transferencia+payments.tarjeta),0) as transferencia, invoices.rest
+               if(invoices.status!="anulada", if(sum(payments.transferencia-payments.cambio)>0,sum(payments.transferencia-payments.cambio),0),50) as transferencia, invoices.rest
                 as rest, invoices.number as number')
             ->where('comprobantes.prefix', '=', 'B02')
             ->where('payments.amount', '<=', 250000)
