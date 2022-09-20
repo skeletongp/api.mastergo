@@ -57,15 +57,15 @@ class Report607 extends Component
     public function getComprobantes($start_at)
     {
         $comprobantes = Comprobante::where('comprobantes.status', 'usado')
-        ->where('invoices.deleted_at', null)
-       ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
-       ->whereBetween('invoices.day', [$start_at, $this->end_at])
-       ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
-       ->where('payments.payable_type', 'App\Models\Invoice')
-       ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
-       ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc,comprobantes.ncf as ncf, invoices.day as day, 
+            ->where('invoices.deleted_at', null)
+            ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
+            ->whereBetween('invoices.day', [$start_at, $this->end_at])
+            ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
+            ->where('payments.payable_type', 'App\Models\Invoice')
+            ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
+            ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc,comprobantes.ncf as ncf, invoices.day as day, 
            if(invoices.status!="anulada",payments.total,50) as amount,   
-           sum(payments.tax) as tax, if(invoices.status!="anulada",if(sum(payments.efectivo-payments.cambio)>0,sum(payments.efectivo-payments.cambio),0),50) as efectivo,
+           sum(payments.tax) as tax, if(invoices.status!="anulada",sum(payments.efectivo-payments.cambio),50) as efectivo,
           if(invoices.status!="anulada", sum(payments.transferencia+payments.tarjeta),0) as transferencia, invoices.rest
            as rest, invoices.number as number')
             ->where(function ($query) {
@@ -80,23 +80,23 @@ class Report607 extends Component
     public function getResumen($start_at)
     {
         $resumen = Comprobante::where('comprobantes.status', 'usado')
-             ->where('invoices.deleted_at', null)
+            ->where('invoices.deleted_at', null)
             ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
             ->whereBetween('invoices.day', [$start_at, $this->end_at])
             ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
             ->where('payments.payable_type', 'App\Models\Invoice')
             ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
-            ->selectRaw('clients.rnc as rnc, invoices.* ,comprobantes.ncf as ncf, invoices.day as day, 
-                if(invoices.status!="anulada",payments.total,50) as amount,   
-                sum(payments.tax) as tax, if(invoices.status!="anulada",if(sum(payments.efectivo-payments.cambio)>0,sum(payments.efectivo-payments.cambio),0),50) as efectivo,
-               if(invoices.status!="anulada", if(sum(payments.transferencia-payments.cambio)>0,sum(payments.transferencia-payments.cambio),0),50) as transferencia, invoices.rest
-                as rest, invoices.number as number')
+            ->selectRaw('if(invoices.status!="anulada",sum(payments.payed-payments.cambio)+invoices.rest,50) as amount,   
+            sum(payments.tax) as tax, sum(payments.efectivo-payments.cambio) as efectivo,
+           if(invoices.status!="anulada", sum(payments.transferencia+payments.tarjeta),0) as transferencia, invoices.rest
+            as rest, if(invoices.status!="anulada",sum(payments.cambio),50) as cambio')
             ->where('comprobantes.prefix', '=', 'B02')
             ->where('payments.amount', '<=', 250000)
             ->orderBy('payments.id')
             ->groupBy('comprobantes.id')
             ->get();
 
+           
         return $resumen;
     }
     public function getCreditNotes($start_at)
