@@ -377,6 +377,46 @@
                 ${{ formatNumber(0) }}
             </td>
         </tr>
+        <tr >
+            <td colspan="6">
+                <div
+                style="text-transform: uppercase; font-weight:bold; font-size:large; width:100%; text-align:center; margin-top: 30px">
+               DETALLES DE TRIBUTACIÓN
+            </div>
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+               PROPRORCIÓN RESUMEN:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($props['resProp']) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+                OTRA PROPORCIÓN:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($props['compProp']) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+               MONTO GRAVADO:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($props['propTotal']) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+              MONTO NO GRAVADO:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($props['total']-$props['propTotal']) }}
+            </td>
+        </tr>
     </table>
     <table style="width: 40%; margin-top:35px; float: right; line-height:10px">
         <tr>
@@ -420,23 +460,9 @@
                 ${{ formatNumber($resumen->sum('rest')) }}
             </td>
         </tr>
-        <tr style="font-weight: bold">
-            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
-                BONOS O CERTIFICADOS DE REGALO:
-            </td>
-            <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber(0) }}
-            </td>
-        </tr>
-        <tr style="font-weight: bold">
-            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
-                PERMUTA:
-            </td>
-            <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber(0) }}
-            </td>
-        </tr>
+      
     </table>
+    
 </body>
 
 </html>

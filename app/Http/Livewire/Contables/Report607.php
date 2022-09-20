@@ -39,6 +39,8 @@ class Report607 extends Component
 
         $resumen = $this->getResumen($start_at);
 
+        $props=$this->getOtherData($resumen, $comprobantes);
+        
         $creditnotes = $this->getCreditNotes($start_at);
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
@@ -72,6 +74,7 @@ class Report607 extends Component
                 $query->where('comprobantes.prefix', '!=', 'B02')
                     ->orWhere('payments.amount', '>', 250000);
             })
+            ->where('comprobantes.prefix', '!=', 'B14')
             ->orderBy('payments.id')
             ->groupBy('comprobantes.id')
             ->get();
@@ -114,5 +117,23 @@ class Report607 extends Component
             ->groupBy('creditnotes.id')
             ->get();
         return $creditnotes;
+    }
+    public function getOtherData($resumen, $comprobante){
+        $resTax=$resumen->sum('tax');
+        $resTotal=$resumen->sum('amount');
+        $resProp=$resTax/(18/100);
+
+        $compTax=$comprobante->sum('tax');
+        $compTotal=$comprobante->sum('amount');
+        $compProp=$compTax/(18/100);
+
+        $total=$compTotal+$resTotal;
+        $propTotal=$compProp+$resProp;
+        return [
+            'compProp'=>$compProp,
+            'resProp'=>$resProp,
+            'total'=>$total,
+            'propTotal'=>$propTotal,
+        ];
     }
 }
