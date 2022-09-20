@@ -393,7 +393,7 @@
                 EFECTIVO:
             </td>
             <td colspan="2" style="padding-top:25px">
-                ${{ formatNumber($resumen->sum('efectivo')) }}
+                ${{ formatNumber($resumen->sum('efectivo')>0?$resumen->sum('efectivo'):0) }}
             </td>
         </tr>
         <tr style="font-weight: bold">

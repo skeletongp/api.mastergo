@@ -65,7 +65,7 @@ class Report607 extends Component
        ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
        ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc,comprobantes.ncf as ncf, invoices.day as day, 
            if(invoices.status!="anulada",payments.total,50) as amount,   
-           sum(payments.tax) as tax, if(invoices.status!="anulada",if(sum(payments.efectivo-payments.cambio)>0,sum(payments.efectivo-payments.cambio),0),50) as efectivo,
+           sum(payments.tax) as tax, if(invoices.status!="anulada",payments.efectivo-payments.cambio,50) as efectivo,
           if(invoices.status!="anulada", sum(payments.transferencia+payments.tarjeta),0) as transferencia, invoices.rest
            as rest, invoices.number as number')
             ->where(function ($query) {
@@ -88,7 +88,7 @@ class Report607 extends Component
             ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
             ->selectRaw('clients.rnc as rnc, invoices.* ,comprobantes.ncf as ncf, invoices.day as day, 
                 if(invoices.status!="anulada",payments.total,50) as amount,   
-                sum(payments.tax) as tax, if(invoices.status!="anulada",if(sum(payments.efectivo-payments.cambio)>0,sum(payments.efectivo-payments.cambio),0),50) as efectivo,
+                sum(payments.tax) as tax, if(invoices.status!="anulada",payments.efectivo-payments.cambio,50) as efectivo,
                if(invoices.status!="anulada", sum(payments.transferencia+payments.tarjeta),0) as transferencia, invoices.rest
                 as rest, invoices.number as number')
             ->where('comprobantes.prefix', '=', 'B02')
