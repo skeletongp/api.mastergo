@@ -16,10 +16,7 @@ class CountView extends LivewireDatatable
     {
         $count = CountMain::where('code', $this->code)->first();
         $this->headTitle = $count->name;
-        $counts = Count::where('code', 'like', $this->code . '%')
-            ->leftjoin('transactions as debit', 'debit.debitable_id', '=', 'counts.id')
-            ->leftjoin('transactions as credit', 'credit.creditable_id', '=', 'counts.id')
-        
+        $counts = Count::where('count_main_id', $count->id)
             ->orderBy('counts.code')
             ->groupby('counts.id');
         return $counts;
@@ -34,11 +31,11 @@ class CountView extends LivewireDatatable
                 ]);
             }),
             Column::name('code')->label('Código'),
-            Column::callback([ 'name'], function ($name) {
+            Column::callback(['name'], function ($name) {
                 return ellipsis($name, 30);
             })->label('Nombre de la cuenta')->searchable(),
-            Column::callback(['origin'], function($origin){
-                return $origin=='debit'?"Deudor":"Acreedor";
+            Column::callback(['origin'], function ($origin) {
+                return $origin == 'debit' ? "Deudor" : "Acreedor";
             })->label('Origen'),
             NumberColumn::name('balance')->label('Balance')->formatear('money', 'font-bold'),
 

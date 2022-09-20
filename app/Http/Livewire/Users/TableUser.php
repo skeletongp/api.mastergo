@@ -15,7 +15,6 @@ use Spatie\Permission\Models\Role;
 class TableUser extends LivewireDatatable
 {
     use AuthorizesRequests;
-    public $exportable = true;
     public $name = "Tabla Usuarios";
     public  $hideable = "select";
     public $padding="px-2";

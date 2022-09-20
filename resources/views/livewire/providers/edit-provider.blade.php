@@ -87,6 +87,11 @@
 </div>
 @push('js')
     <script>
+        $(document).ready(function() {
+            $("input[type=tel]").formatPhoneNumber({
+                    format: '(###) ###-####'
+                })
+        });
         $("#provDocType{{ $provider_id }}").on('change', function() {
             if ($(this).val() === 'RNC') {
                 $("#provider_{{ $provider_id }}_rnc").formatPhoneNumber({
@@ -99,6 +104,7 @@
                 })
             }
             $("#provider_{{ $provider_id }}_rnc").val('');
+
         })
     </script>
 @endpush
