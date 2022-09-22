@@ -30,7 +30,7 @@ class CountView extends LivewireDatatable
                     'url' => route('contables.counttrans', $id),
                 ]);
             }),
-            Column::name('code')->label('Código'),
+            Column::name('code')->label('Código')->editable(),
             Column::callback(['name'], function ($name) {
                 return ellipsis($name, 30);
             })->label('Nombre de la cuenta')->searchable(),
