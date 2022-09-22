@@ -163,12 +163,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-   $payments=Payment::where('contable_id',0)->get();
-    foreach($payments as $payment){
-         if($payment->payable->status=='cerrada'){
-            $payment->payable->update([
-                'status'=>'anulada'
-            ]);
-         }
-    }
+  $invoices=Invoice::get();
+  foreach ($invoices as $invoice) {
+    $invoice->update(['rest'=>$invoice->payments->last()->rest]);
+  }
+  return redirect()->route('invoices.index');
 })->name('prueba');
