@@ -48,7 +48,7 @@
                 @endif
             </div>
             <div class="flex justify-end my-2">
-                <x-button wire:click.prevent="tryUpdateDetail">
+                <x-button wire:loading.disabled wire:click.prevent="tryUpdateDetail">
                     Actualizar
                 </x-button>
             </div>
