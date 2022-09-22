@@ -82,14 +82,16 @@ class EditDetail extends Component
     public function updateDetail()
     {
         $invoice = $this->detail->detailable->load('details', 'payment', 'client');
+        if($invoice->payments()->count()>1){
+            $this->emit('showAlert', 'No se puede editar el detalle, ya que la factura tiene pagos realizados','error',3000);
+            return;
+         }
         if ($this->detail['cant']==$this->prevCant && $this->detail['price']==$this->prevPrice) {
           $this->emit('showAlert', 'No se ha realizado ningun cambio','warning');
           dispatch(new CreatePDFJob($invoice))->onConnection('sync');
           return;
         }
-        if($invoice->payments()->count()>1){
-           $this->emit('showAlert', 'No se puede editar el detalle, ya que la factura tiene pagos realizados','error',3000);
-        }
+       
         $this->updateUnit();
         $this->detail->product_id = $this->product->id;
         $details=$this->updatePrice();
@@ -182,7 +184,7 @@ class EditDetail extends Component
          }
         /* Ajuste Detalle */
         $credi=$this->place->cash();
-        if($this->diffPayment == abs($diffRest)){
+        if(abs($diffRest) >= $rest){
             $credi=$invoice->client->contable;
         }
         if ($this->diffPayment <= abs($diffRest)) {

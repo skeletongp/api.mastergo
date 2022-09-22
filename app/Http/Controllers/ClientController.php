@@ -20,6 +20,8 @@ class ClientController extends Controller
     public function show($client_id)
     {
         $client=Client::find($client_id);
+        $client->debt=$client->invoices->sum('rest');
+        $client->save();
         return view('pages.clients.show', compact('client'));
     }
 
