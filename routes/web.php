@@ -163,12 +163,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-  $clients=Client::with('contable')->get();
-  $diff=0;
-  foreach ($clients as $client) {
-    $client->contable->update(['name'=>$client->name]);
-    $diff+=$client->debt-$client->contable->balance;
-  }
-  dd($diff);
-  return redirect()->route('invoices.index');
+    /* $invoices = Invoice::where('invoices.rest', '>', 0)
+        ->leftJoin('payments', 'payments.payable_id', '=', 'invoices.id')
+        ->where('payments.payable_type', '=', 'App\Models\Invoice')
+        ->where('payments.rest', 0)
+        ->orderBy('payments.id', 'desc')
+        ->groupBy('invoices.id')
+        ->get();
+    dd($invoices); */
+    return redirect()->route('invoices.index');
 })->name('prueba');
