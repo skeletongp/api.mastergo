@@ -21,6 +21,7 @@ class LastSales extends LivewireDatatable
         $invoices =
             Invoice::where('invoices.place_id', $place->id)
             ->where('invoices.created_at', '>=', Carbon::now()->subWeek())
+            ->where('invoices.status', '=', 'cerrada')
             ->orderBy('invoices.created_at', 'desc')->where('invoices.status', '!=', 'anulada')
             ->leftJoin('payments', 'payments.payable_id', '=', 'invoices.id')
             ->where('payments.payable_type', 'App\Models\Invoice')

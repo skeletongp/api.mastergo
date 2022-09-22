@@ -29,7 +29,7 @@ class CreateProvider extends Component
        $this->validate();
        $store = auth()->user()->store;
        $provider = $store->providers()->create($this->form);
-       setContable($provider, '201', 'credit');
+       setContable($provider, '200', 'credit');
        $this->reset();
        $this->render();
        $this->emit('showAlert', 'Proveedor registrado exitosamente', 'success');
