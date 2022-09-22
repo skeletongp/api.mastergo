@@ -7,6 +7,7 @@ use App\Jobs\CreatePDFJob;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class EditDetail extends Component
@@ -88,15 +89,17 @@ class EditDetail extends Component
          }
         if ($this->detail['cant']==$this->prevCant && $this->detail['price']==$this->prevPrice) {
           $this->emit('showAlert', 'No se ha realizado ningun cambio','warning');
-          dispatch(new CreatePDFJob($invoice))->onConnection('sync');
           return;
         }
-       
+        if ($this->detail['cant']>$this->prevCant || $this->detail['price'] > $this->prevPrice) {
+            $this->emit('showAlert', 'No se pueden aumentar los montos','error',3000);
+            return;
+          }
         $this->updateUnit();
         $this->detail->product_id = $this->product->id;
-        $details=$this->updatePrice();
+        $details=$this->updatePrice($invoice);
         $this->updatePayment($invoice, $details);
-        $this->updateTransaction($invoice);
+        
         $this->render();
         $this->setTaxes($invoice);
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');
@@ -104,18 +107,26 @@ class EditDetail extends Component
         $this->emit('showAlert', 'Detalle actualizado', 'success');
         $this->emitUp('reloadEdit');
     }
-    public function updatePrice()
+    public function updatePrice($invoice)
     {
         $unit = $this->place->units()->wherePivot('id', $this->unit->pivot['id'])->first();
         $price=$this->detail->price;
         $subtotal = $price * $this->detail->cant;
         $taxTotal = $subtotal * $this->product->taxes->sum('rate');
-        $total = $subtotal + $taxTotal;
+        $prevTotal=$this->detail->total;
+        $this->prevRest = $invoice->rest;
+        if($invoice->type!='B00' && $invoice->type!='B14'){
+            $total = $subtotal + $taxTotal;
+        } else {
+            $total = $subtotal;
+        }
         $this->detail->unit_id = $unit->id;
         $this->detail->subtotal = $subtotal;
         $this->detail->taxtotal = $taxTotal;
         $this->detail->total = $total;
         $this->detail->utility = $this->detail->subtotal-($this->detail->cost+$this->detail->cost_service);
+        $diffTotal=$prevTotal-$total;
+        $this->updateTransaction($invoice, $diffTotal);
         $this->detail->save();
         $this->detail->taxes()->detach($this->prevTaxes);
         $this->detail->taxes()->attach($this->product->taxes()->pluck('taxes.id')->toArray());
@@ -135,13 +146,15 @@ class EditDetail extends Component
     {
         $payment = $invoice->payment;
        $total=$payment->total;
-        $this->prevRest = $payment->rest;
+        
         $payment->amount = $details->sum('subtotal');
         $payment->discount = $details->sum('discount');
         $payment->tax = $details->sum('taxtotal');
         $payment->total = $details->sum('total');
         if ($payment->payed>$payment->total) {
-            $payment->cambio = $payment->payed - $payment->total;
+            $payment->cambio = $payment->payed - $payment->total-$payment->rest;
+      
+            $payment->rest=0;
         } else {
             $payment->rest = $payment->total - $payment->payed;
         }
@@ -158,13 +171,10 @@ class EditDetail extends Component
         $client->debt=$client->invoices->sum('rest');
         $client->save();
     }
-    public function updateTransaction($invoice)
+    public function updateTransaction($invoice, $diffTotal)
     {
-        $rest = $invoice->payment->rest;
         $tax = $invoice->payment->tax;
-        $diffRest = $rest-$this->prevRest;
         $diffTax =  $tax-$this->prevInvTax;
-        
         if ($this->prevPrice != $this->detail->price) {
             $desc_dev_ventas = $this->place->findCount('401-03');
         } else {
@@ -178,26 +188,20 @@ class EditDetail extends Component
          if($invoice->type!='B00' && $invoice->type!='B14'){
             if ($diffTax < 0) {
                 setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffTax), $debitable2,  $desc_dev_ventas);
+                
             } else {
                 setTransaction('Ajuste impuestos Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTax, $creditable2, $debitable2);
             }
          }
         /* Ajuste Detalle */
         $credi=$this->place->cash();
-        if(abs($diffRest) >= $rest){
+        if($diffTotal<$this->prevRest){
             $credi=$invoice->client->contable;
+            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTotal, $desc_dev_ventas, $credi);
+            return;
         }
-        if ($this->diffPayment <= abs($diffRest)) {
-            if ($diffRest > 0) {
-                setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $credi,$desc_dev_ventas);
-            } else {
-                setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, abs($diffRest), $desc_dev_ventas, $credi);
-            }
-            
-        } else {
-            setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number,$this->diffPayment, $desc_dev_ventas, $credi);
-            
-        }
+        setTransaction('Ajuste detalle Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $diffTotal-$this->prevRest, $desc_dev_ventas, $credi);
+        setTransaction('Saldo deuda vía devolución Fct. ' . $invoice->number, $invoice->payment->ncf ?: $invoice->number, $this->prevRest, $desc_dev_ventas, $invoice->client->contable);
       
     }
     public function setTaxes($invoice)

@@ -3,7 +3,7 @@
         {{ Breadcrumbs::render('invoices.create') }}
     @endslot
     @slot('title')
-        {{__('Nueva Factura | CARNÍ-BORES')}}
+        {{__('Nueva Factura | ') . config('app.name')}}
     @endslot
 
     <div class=" w-full ">

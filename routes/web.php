@@ -163,9 +163,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('prueba', function (Request $request) {
-  $invoices=Invoice::get();
-  foreach ($invoices as $invoice) {
-    $invoice->update(['rest'=>$invoice->payments->last()->rest]);
+  $clients=Client::with('contable')->get();
+  $diff=0;
+  foreach ($clients as $client) {
+    $client->contable->update(['name'=>$client->name]);
+    $diff+=$client->debt-$client->contable->balance;
   }
+  dd($diff);
   return redirect()->route('invoices.index');
 })->name('prueba');

@@ -55,7 +55,7 @@ trait GenerateInvoiceTrait
         $invoice->update(['venta' => $venta]);
         $invoice->update(['gasto_service' => $gasto_service]);
         $invoice->update(['venta_service' => $venta_service]);
-        Log::info('Invoice created', ['invoice' => $invoice, 'gasto' => $gasto, 'venta' => $venta, 'gasto_service' => $gasto_service, 'venta_service' => $venta_service]);
+        
     }
     public function setFromScan()
     {
