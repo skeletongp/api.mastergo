@@ -11,7 +11,7 @@ use Livewire\Component;
 class OtherCobrar extends Component
 {
     use Confirm;
-    public $countMains=[], $cobrables=[], $cMainDebit_id=1, $cDetailDebit_id, $cMainCredit_id, $cDetailCredit_id, $countsDebit = [], $countsCredit = [];
+    public $countMains=[], $cobrables=[], $cMainDebit_id, $cDetailDebit_id, $cMainCredit_id, $cDetailCredit_id, $countsDebit = [], $countsCredit = [];
     public $cMainDebitName, $cDetailDebitName, $cMainCreditName, $cDetailCreditName, $creditable_code;
     public $concept, $ref, $amount;
     protected $listeners = ['validateAuthorization', 'createTransaction', 'modalOpened'];
@@ -47,7 +47,7 @@ class OtherCobrar extends Component
         $this->countsDebit = $countMain->counts()->select(
             DB::raw('CONCAT(code," - ",name) AS name'),
             'id'
-        )->pluck('name', 'id');
+            )->pluck('name', 'id');
 
         $countMain = CountMain::whereId($this->cMainCredit_id)->with('counts')->first();
         $this->countsCredit = $countMain->counts()->select(
@@ -56,6 +56,7 @@ class OtherCobrar extends Component
         )->pluck('name', 'id');
         $this->cDetailCreditName=$this->countsCredit[$this->cDetailCredit_id];
         $this->concept="Abono a cuenta ".$this->creditable_code;
+        $this->render();
     }
     
    
