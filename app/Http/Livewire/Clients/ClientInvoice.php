@@ -6,8 +6,7 @@ use App\Http\Classes\NumberColumn;
 use App\Models\Client;
 use App\Models\Invoice;
 use Mediconesystems\LivewireDatatables\Action;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ClientInvoice extends LivewireDatatable

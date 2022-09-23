@@ -8,27 +8,18 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Nicolaslopezj\Searchable\SearchableTrait;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class Store extends Model
 {
-    use HasFactory, SoftDeletes, SearchableTrait,  StoreTrait;
+    use HasFactory, SoftDeletes, StoreTrait;
     protected $connection="moso_master";
     protected $guarded = [
        
     ];
-    protected $searchable = [
-
-        'columns' => [
-            'name' => 10,
-            'address' => 10,
-            'email' => 2,
-            'rnc' => 2,
-        ]
-    ];
+   
     public function getRouteKeyName()
     {
         return 'uid';

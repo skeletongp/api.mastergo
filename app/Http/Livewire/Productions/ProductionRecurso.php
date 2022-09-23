@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Productions;
 
 use App\Models\Brand;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ProductionRecurso extends LivewireDatatable
 {

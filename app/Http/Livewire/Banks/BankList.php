@@ -4,8 +4,7 @@ namespace App\Http\Livewire\Banks;
 
 use App\Http\Classes\NumberColumn;
 use App\Models\Bank;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class BankList extends LivewireDatatable
 {

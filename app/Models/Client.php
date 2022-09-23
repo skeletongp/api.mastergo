@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Nicolaslopezj\Searchable\SearchableTrait;
+
 
 class Client extends Model implements Searchable
 {
-    use HasFactory, SoftDeletes, SearchableTrait;
+    use HasFactory, SoftDeletes;
 
     protected $connection = "mysql";
     protected $fillable = [
@@ -30,14 +30,6 @@ class Client extends Model implements Searchable
         'phone',
         'limit',
         'store_id',
-    ];
-    protected $searchable = [
-
-        'columns' => [
-            'name' => 10,
-            'lastname' => 5,
-            'email' => 1,
-        ]
     ];
    
 

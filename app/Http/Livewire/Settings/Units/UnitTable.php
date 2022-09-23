@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Settings\Units;
 
 use App\Models\Unit;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class UnitTable extends LivewireDatatable
 {

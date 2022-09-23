@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Reports;
 
 use App\Http\Livewire\UniqueDateTrait;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class InvoicePorCobrar extends LivewireDatatable

@@ -7,8 +7,7 @@ use App\Models\Recurso;
 use App\Models\Store;
 use App\Models\Unit;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class TableRecurso extends LivewireDatatable
 {
