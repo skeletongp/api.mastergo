@@ -7,6 +7,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class DataTable extends LivewireDatatable
 {
+    
     public $sortField;
     public function sort($index, $direction = null)
     {
