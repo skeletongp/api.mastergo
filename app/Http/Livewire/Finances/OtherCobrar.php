@@ -38,7 +38,9 @@ class OtherCobrar extends Component
         $this->cobrables = CountMain::select(
             DB::raw('CONCAT(code," - ",name) AS name'),
             'id'
-        )->where('code','100')->orderBy('code')->pluck('name', 'id')->toArray();
+        )->where('code','100')->orderBy('code');
+        $this->cMainDebit_id=$this->cobrables->first()->id;
+        $this->cobrables=$this->cobrables->pluck('name', 'id')->toArray();
         $this->cMainDebitName = $this->cobrables[$this->cMainDebit_id];
         $this->cMainCreditName= $this->countMains[$this->cMainCredit_id];
         $countMain = CountMain::whereId($this->cMainDebit_id)->with('counts')->first();
