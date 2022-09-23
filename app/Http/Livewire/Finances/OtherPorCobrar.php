@@ -25,9 +25,13 @@ class OtherPorCobrar extends LivewireDatatable
     public function columns()
     {
         return [
-            Column::name('count_mains.code')->label('Código'),
+            Column::callback(['count_mains.code','count_mains.id'], function($code, $id) {
+                return "<a class='text-blue-700 hover:text-blue-400 hover:underline' href=".route('contables.countview',$code).">".$code."</a>";
+            })->label('Cta.'),
             Column::name('count_mains.name')->label('Cuenta Control'),
-            Column::name('counts.code')->label('Código')->searchable(),
+            Column::callback(['counts.code','counts.id'], function($code, $id) {
+                return "<a class='text-blue-700 hover:text-blue-400 hover:underline' href=".route('contables.counttrans',$id).">".$code."</a>";
+            })->label('Sub.'),
             Column::name('counts.name')->label('Cuenta Detalle')->searchable(),
             NumberColumn::name('counts.balance')->label('Balance')->formatear('money'),
             Column::callback(['count_mains.id', 'counts.id', 'counts.name', 'counts.code'], function ($cMainId, $id, $name, $code) {
