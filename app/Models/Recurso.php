@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 
 class Recurso extends Model implements Searchable
 {
-    use HasFactory, SoftDeletes, SearchableTrait;
+    use HasFactory, SoftDeletes;
     protected $connection = "mysql";
 
     protected $fillable = [

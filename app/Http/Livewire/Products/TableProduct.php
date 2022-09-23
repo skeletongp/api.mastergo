@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire\Products;
 
+use App\Http\Classes\DataTable;
 use App\Http\Helper\Universal;
 use App\Models\Product;
 use App\Models\Unit;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\NumberColumn;
+use App\Http\Classes\Column;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class TableProduct extends LivewireDatatable
 {
@@ -17,7 +17,10 @@ class TableProduct extends LivewireDatatable
     public $hideable = 'select';
     public function builder()
     {
-        $products = auth()->user()->place->products()->orderBy('code')->with('units')->whereNull('deleted_at');
+       $sortField=$this->sortField ?? 'code';
+        $products = auth()->user()->place->products()->with('units')->whereNull('deleted_at')
+        /* ->orderBy($sortField, $this->direction ? 'asc' : 'desc') */;
+        ;
         return $products;
     }
 

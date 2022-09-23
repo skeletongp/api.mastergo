@@ -15,12 +15,11 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements Searchable
 {
-    use HasApiTokens, HasFactory, Notifiable, SearchableTrait, HasRoles, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
     protected $connection = "moso_master";
 
     public function getSearchResult(): SearchResult
@@ -38,15 +37,7 @@ class User extends Authenticatable implements Searchable
     protected $guarded=[
        
     ];
-    protected $searchable = [
-        'columns' => [
-            'name' => 10,
-            'lastname' => 5,
-            'email' => 1,
-            'username' => 3,
-
-        ]
-    ];
+   
 
     public function getRouteKeyName()
     {

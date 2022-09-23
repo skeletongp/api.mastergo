@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Provider extends Model
 {
-    use HasFactory, SoftDeletes, SearchableTrait;
+    use HasFactory, SoftDeletes;
     protected $connection="mysql";
 
     protected $fillable = [

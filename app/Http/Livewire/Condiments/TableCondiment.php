@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Condiments;
 use App\Models\Condiment;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Illuminate\Support\Str;
 class TableCondiment extends LivewireDatatable
 {

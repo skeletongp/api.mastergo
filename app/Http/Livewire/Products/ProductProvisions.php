@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Products;
 
 use Illuminate\Support\Facades\DB;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ProductProvisions extends LivewireDatatable
 {

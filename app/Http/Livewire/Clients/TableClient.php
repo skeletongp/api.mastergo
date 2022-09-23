@@ -7,8 +7,7 @@ use App\Http\Helper\Universal;
 use App\Models\Client;
 use App\Models\User;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\NumberColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\NumberColumn;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TableClient extends LivewireDatatable

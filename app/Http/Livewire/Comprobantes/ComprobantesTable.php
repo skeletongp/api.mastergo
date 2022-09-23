@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Comprobantes;
 use App\Http\Livewire\UniqueDateTrait;
 use App\Models\Comprobante;
 use Carbon\Carbon;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ComprobantesTable extends LivewireDatatable
