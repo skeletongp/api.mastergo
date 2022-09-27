@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Cotizes;
 use App\Http\Classes\NumberColumn;
 use App\Http\Livewire\UniqueDateTrait;
 use App\Models\Cotize;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class CotizeTable extends LivewireDatatable

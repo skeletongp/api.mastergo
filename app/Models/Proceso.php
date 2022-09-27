@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Proceso extends Model implements Searchable
 {
-    use HasFactory, SoftDeletes, SearchableTrait;
+    use HasFactory, SoftDeletes;
     protected $connection = "mysql";
 
     protected $fillable = [

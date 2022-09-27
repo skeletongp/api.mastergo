@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Users;
 
 use App\Models\User;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\NumberColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\NumberColumn;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Livewire;

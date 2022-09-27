@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Settings\Comprobantes;
 
 use App\Models\Comprobante;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\NumberColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\NumberColumn;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;

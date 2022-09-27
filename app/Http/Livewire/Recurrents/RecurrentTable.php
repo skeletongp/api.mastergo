@@ -4,8 +4,7 @@ namespace App\Http\Livewire\Recurrents;
 
 use App\Models\Recurrent;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class RecurrentTable extends LivewireDatatable

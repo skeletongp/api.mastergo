@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Invoices;
 use App\Http\Classes\NumberColumn;
 use App\Models\Invoice;
 use App\Models\Payment;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class InvoiceList extends LivewireDatatable
