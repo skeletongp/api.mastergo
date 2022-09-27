@@ -2,19 +2,31 @@
 
 namespace App\Http\Livewire\Outcomes;
 
+use App\Models\Count;
 use App\Models\Outcome;
 use Livewire\Component;
 
 class DeleteOutcome extends Component
 {
     public Array $outcome;
-    public $creditables, $debitables;
+    public $outcome_id;
+    public $creditables=[], $debitables=[];
     public $debitableId, $creditableId;
-    public function mount($outcome)
-    {
-        $this->outcome = $outcome;
 
-       
+    protected $listeners = ['modalOpened'];
+
+  
+    public function modalOpened(){
+        $this->outcome=Outcome::find($this->outcome_id)->toArray();
+        $this->debitables=
+        Count::where('place_id',getPlace()->id)
+        ->where('code','like','100%')
+        ->pluck('name','id');
+        ;
+        $this->creditables=
+        Count::where('place_id',getPlace()->id)
+        ->pluck('name','id');
+        ;
     }
 
 
