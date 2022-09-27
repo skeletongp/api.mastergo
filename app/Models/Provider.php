@@ -11,7 +11,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Provider extends Model
 {
     use HasFactory, SoftDeletes, SearchableTrait;
-    protected $connection="mysql";
+    protected $connection = "mysql";
 
     protected $fillable = [
         'name',
@@ -25,7 +25,7 @@ class Provider extends Model
         'store_id',
     ];
     protected $searchable = [
-        
+
         'columns' => [
             'name' => 10,
             'lastname' => 5,
@@ -35,13 +35,15 @@ class Provider extends Model
     public static function boot()
     {
         parent::boot();
-        self::creating(function($model){
-            $model->fullname =strtoupper( $model->name.' '.(string) rtrim($model->lastname));
-            $model->email=strtolower($model->email);
+        self::creating(function ($model) {
+            $model->fullname = strtoupper($model->name . ' ' . (string) rtrim($model->lastname));
+            $model->email = strtolower($model->email);
+            $model->name = mb_strtoupper($model->name);
         });
-        self::updating(function($model){
-            $model->fullname =strtoupper( $model->name.' '.(string) rtrim($model->lastname));
-            $model->email=strtolower($model->email);
+        self::updating(function ($model) {
+            $model->fullname = strtoupper($model->name . ' ' . (string) rtrim($model->lastname));
+            $model->email = strtolower($model->email);
+            $model->name = mb_strtoupper($model->name);
         });
     }
     public function image()
@@ -50,16 +52,16 @@ class Provider extends Model
     }
     public function contable()
     {
-         $place_id=1;
+        $place_id = 1;
         if (auth()->user()) {
-            $place_id=auth()->user()->place->id;
+            $place_id = auth()->user()->place->id;
         }
-        return $this->morphOne(Count::class,'contable')->where('place_id',$place_id);;
+        return $this->morphOne(Count::class, 'contable')->where('place_id', $place_id);;
     }
     public function avatar(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->image?$this->image->path:env('NO_IMAGE')
+            get: fn () => $this->image ? $this->image->path : env('NO_IMAGE')
         );
     }
     public function store()
@@ -74,5 +76,4 @@ class Provider extends Model
     {
         return $this->morphMany(Outcome::class, 'outcomeable');
     }
-
 }
