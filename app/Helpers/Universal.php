@@ -289,3 +289,12 @@ function getProductsWithCode(){
     }
     return $products;
 }
+function getInitials($string){
+    $words = explode(" ", $string);
+    $acronym = "";
+    foreach ($words as $w) {
+      $acronym .= $w[0];
+    }
+    $acronym=preg_replace('/[^A-Za-z0-9\-]/', '', $acronym);
+    return $acronym;
+}
