@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Finances;
 use App\Http\Classes\NumberColumn;
 use App\Models\Count;
 use App\Models\CountMain;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class OtherPorCobrar extends LivewireDatatable
 {

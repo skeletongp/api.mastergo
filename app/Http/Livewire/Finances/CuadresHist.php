@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Finances;
 
 use Carbon\Carbon;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class CuadresHist extends LivewireDatatable

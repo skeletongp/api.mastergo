@@ -6,8 +6,7 @@ use App\Http\Classes\NumberColumn;
 use App\Models\Count;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Date;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class CountTrans extends LivewireDatatable

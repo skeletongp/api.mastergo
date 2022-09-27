@@ -4,8 +4,7 @@ namespace App\Http\Livewire\Contables;
 
 use App\Http\Classes\NumberColumn;
 use App\Models\CountMain;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class Catalogue extends LivewireDatatable

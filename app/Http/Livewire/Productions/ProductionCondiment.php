@@ -5,8 +5,7 @@ namespace App\Http\Livewire\Productions;
 use App\Models\Condiment;
 use App\Models\CondimentProduction;
 use Illuminate\Support\Facades\DB;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Illuminate\Support\Str;
 
 class ProductionCondiment extends LivewireDatatable

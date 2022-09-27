@@ -6,8 +6,7 @@ use App\Http\Classes\NumberColumn as ClassesNumberColumn;
 use App\Models\Payment;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 
