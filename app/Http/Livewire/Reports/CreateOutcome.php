@@ -12,19 +12,20 @@ use Livewire\Component;
 class CreateOutcome extends Component
 {
 
-    public $provider_id, $counts, $count_code, $ref, $amount, $concept, $discount = 0, $providers;
+    public $provider_id, $counts=[], $count_code, $ref, $amount, $concept, $discount = 0, $providers=[];
     public $efectivos=[];
     public $efectivoCode;
-    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks, $bank_id, $ref_bank, $tax = 0, $rate=18;
+    public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks=[], $bank_id, $ref_bank, $tax = 0, $rate=18;
     public $setCost = true, $hideTax = true, $prov_name, $prov_rnc;
-    public function mount()
+
+    protected $listeners=['modalOpened'];
+    public function modalOpened()
     {
-        $place = auth()->user()->place;
-        $store = auth()->user()->store;
+        $place = getPlace();
+        $store = getStore();
         $this->providers = $store->providers()->pluck('fullname', 'id');
         $this->efectivos=$place->counts()->where('code','like','100%')->pluck('name','id');
         $this->counts = $place->counts()
-
             ->select(DB::raw(' name, code'))
             ->orderBy('code')
             ->pluck('name', 'code');
