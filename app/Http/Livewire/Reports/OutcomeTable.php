@@ -23,17 +23,15 @@ class OutcomeTable extends LivewireDatatable
        ->where('outcomeable_type','App\Models\Provider')
        ->leftJoin('payments','payments.payable_id','outcomes.id')
          ->where('payable_type','App\Models\Outcome')
-       /* $place->outcomes()->with('outcomeable','user','payment', 'payments')
-       ->orderBy('created_at', 'desc') */;
+
+         ;
+       
        return $outcomes;
     }
 
     public function columns()
     {
-       /*  $outcomes=$this->builder()->get()->toArray();
-        $place=auth()->user()->place;
-        $debitables=$place->counts()->where('code','like','100%')->pluck('name','id');
-        $creditables=$place->counts()->pluck('name','id'); */
+      
         return [
             DateColumn::name('outcomes.created_at')->format('d/m/Y')->label('Fecha'),
             Column::callback('users.fullname', function($user){
@@ -60,11 +58,7 @@ class OutcomeTable extends LivewireDatatable
             Column::callback(['id'], function($id){
                 return view('pages.outcomes.actions',['outcome_id'=>$id]);
             })->label('Del')->contentAlignCenter()
-            /* 
             
-           
-           
-             */
         ];
     }
 }
