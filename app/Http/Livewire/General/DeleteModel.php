@@ -25,13 +25,17 @@ class DeleteModel extends Component
         
         $model=$this->class::find($this->model_id);
         $model->delete();
+
+        $this->forgetCache();
+        
         $this->emit('showAlert', "Registro ha sido eliminado", 'success');
         $this->emit($this->event);
     }
     public function forgetCache(){
         switch ($this->class) {
             case Client::class:
-                Cache::forget('clientWithCode'.env('STORE_ID'));
+                Cache::forget('clientCount'.env('STORE_ID'));
+                Cache::forget('clientsWithCode_'.env('STORE_ID'));
                 break;
             
             default:

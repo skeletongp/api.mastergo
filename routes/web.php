@@ -162,14 +162,10 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
+
 Route::get('prueba', function (Request $request) {
-    /* $invoices = Invoice::where('invoices.rest', '>', 0)
-        ->leftJoin('payments', 'payments.payable_id', '=', 'invoices.id')
-        ->where('payments.payable_type', '=', 'App\Models\Invoice')
-        ->where('payments.rest', 0)
-        ->orderBy('payments.id', 'desc')
-        ->groupBy('invoices.id')
-        ->get();
-    dd($invoices); */
+   
     return redirect()->route('invoices.index');
 })->name('prueba');
