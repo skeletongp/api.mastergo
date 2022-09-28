@@ -243,10 +243,10 @@
         }
         preference = {!! $preference !!};
         $('#hOpenCajon').on('click', function() {
-            conn = new ConectorPlugin();
-            conn.abrirCajon();
+            conn = new Impresora();
+            conn.cash();
 
-            conn.imprimirEn(preference.printer)
+            conn.imprimirEnImpresora(preference.printer)
                 .then(respuestaAlImprimir => {
                     if (respuestaAlImprimir === true) {
                         console.log("Impreso correctamente");

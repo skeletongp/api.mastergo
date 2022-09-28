@@ -14,6 +14,11 @@
                     break;
             }
         }
+        var removeAccent = function (string) {
+    string = string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return string;
+};
+
         function texto(impresora, string){
             impresora.write(removeAccent(string.toUpperCase()));
         }
@@ -51,6 +56,7 @@
                 return false;
             }
             const conector = new Impresora();
+            
             conector.cut();
             /* Encabezado Negocio */
             align(conector, 'center');
