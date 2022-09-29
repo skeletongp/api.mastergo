@@ -1,4 +1,3 @@
-
 @push('js')
     <script>
         function align(conector, dir) {
@@ -14,12 +13,12 @@
                     break;
             }
         }
-        var removeAccent = function (string) {
-    string = string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    return string;
-};
+        var removeAccent = function(string) {
+            string = string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            return string;
+        };
 
-        function texto(impresora, string){
+        function texto(impresora, string) {
             impresora.write(removeAccent(string.toUpperCase()));
         }
         var formatter = new Intl.NumberFormat('en-US', {
@@ -33,16 +32,16 @@
         var sumField = (obj, field) => obj
             .map(items => items[field])
             .reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
-        cant=1;
-        Livewire.on('changeCant', function (cant) {
+        cant = 1;
+        Livewire.on('changeCant', function(cant) {
             cant = cant;
         });
         Livewire.on('changeInvoice', function(invoice, letPrint = true, creditNote = false) {
             obj = invoice;
             if (letPrint) {
-               
+
                 console.log(cant);
-              
+
                 for (let index = 0; index < cant; index++) {
                     console.log(cant)
                     print(creditNote);
@@ -56,7 +55,7 @@
                 return false;
             }
             const conector = new Impresora();
-            
+
             conector.cut();
             /* Encabezado Negocio */
             align(conector, 'center');
@@ -66,11 +65,11 @@
              }
              */
             conector.setEmphasize(1);
-            conector.setFontSize(1,1)
+            conector.setFontSize(2, 2)
             texto(conector, obj.store.name.toUpperCase() + "\n");
             conector.feed(1);
             conector.setEmphasize(0);
-            conector.setFontSize(1,1)
+            conector.setFontSize(1, 1)
             if (obj.payment.ncf) {
                 texto(conector, 'RNC: ')
                 texto(conector, obj.store.rnc + "\n");
@@ -179,14 +178,14 @@
 
             /* Tipo de Factura */
             conector.setEmphasize(1);
-            conector.setFontSize(1,1)
+            conector.setFontSize(1, 1)
             align(conector, 'center');
             if (creditNote) {
                 texto(conector, 'NOTA DE CRÉDITO')
             } else {
                 texto(conector, obj.comprobante ? obj.comprobante.type : 'DOCUMENTO CONDUCE')
             }
-            conector.setFontSize(1,1)
+            conector.setFontSize(1, 1)
             conector.feed(2);
             /* Fin Tipo */
 
