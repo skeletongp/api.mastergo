@@ -202,3 +202,4 @@ class Impresora {
     }
 
 }
+console.log("Cargando plugin de impresión");

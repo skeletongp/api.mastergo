@@ -69,16 +69,9 @@
             </footer>
         </div>
     </div>
-    {{-- <div class="landscape:hidden">
-        <h1>Por favor, gire su pantalla para ustilizar el sistema</h1>
-    </div> --}}
-    {{-- <div class="flex justify-center items-center sm:hidden w-screen h-screen">
-        <h1 class=" font-bold text-3xl uppercase text-center max-w-lg leading-12">Este tamaño de pantalla no es
-            compatible. Utilice un monitor más
-            grande o
-            aplique zoom out al sistema</h1>
-    </div> --}}
+    
     @livewireScripts
+    <script src="{{ asset('js/printer-script.js') }}"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
@@ -87,7 +80,6 @@
     <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/formatPhoneNumber.js') }}"></script>
-    <script src="{{ asset('js/printer-script.js') }}"></script>
 
     <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>

@@ -23,7 +23,7 @@ function clientWithId(){
 }
 function setDebt($client_id, $payed){
   $client=Client::find($client_id);
-  $client->debt=$client->invoices->sum('rest');
+  $client->debt=$client->invoices()->where('rest','>',0)->sum('rest');
   $client->limit=$client->limit+$payed;
   $client->save();
 }
