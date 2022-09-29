@@ -38,7 +38,7 @@ class Client extends Model implements Searchable
         $url = route('clients.show', $this->id);
         return new SearchResult(
             $this,
-            $this->name,
+           $this->code.'-'.$this->name,
             $url
         );
     }
