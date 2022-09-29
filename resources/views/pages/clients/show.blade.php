@@ -2,6 +2,9 @@
     @slot('bread')
         {{ Breadcrumbs::render('clients.show', $client) }}
     @endslot
+    @slot('rightButton')
+        <livewire:clients.edit-client :client_id="$client->id" />
+    @endslot
     <div class="w-full mx-auto my-5 p-4">
         <div class="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
             <!-- Left Side -->

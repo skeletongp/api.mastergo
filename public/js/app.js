@@ -2171,6 +2171,8 @@ if (window.removeAccent == null) {
   };
 }
 
+console.log(removeAccent("áéíóú"));
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
