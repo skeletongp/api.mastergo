@@ -1,10 +1,16 @@
 <div class="max-w-7xl shadow-xl p-4">
+    @if ($open)
+        <livewire:reports.create-outcome :open="true" :efectivo="$efectivo" :tarjeta="$tarjeta"
+            :transferencia="$transferencia" :amount="$total" :payAll="true" :count_code="$count_code" :code_name="$code_name" :concept="'Compra de mercancía ' . date('d/m/y')"
+            :provider_id="$provider_id" />
+    @endif
     <div class="flex flex-row space-x-4  items-start relative">
         <div class="w-full min-w-[40rem]">
             <form action="" wire:submit.prevent="addProduct">
                 <div class="flex space-x-2 items-start pt-12 relative">
                     <div class="w-full max-w-[12rem] ">
-                        <x-datalist label="Nombre de producto" model="form.product_id" inputId="producto_id" listName="productIdList">
+                        <x-datalist label="Nombre de producto" model="form.product_id" inputId="producto_id"
+                            listName="productIdList">
                             <option value=""></option>
                             @foreach ($products as $id => $product)
                                 <option data-value="{{ $id }}" value="{{ $product }}"></option>
@@ -76,7 +82,7 @@
                                                 {{ $added['product_name'] }}
                                             </th>
                                             <td class="px-4 py-2  cursor-pointer">
-                                                {{ $added['unit_name']}}
+                                                {{ $added['unit_name'] }}
                                             </td>
                                             <td class="px-4 py-2  cursor-pointer">
                                                 {{ formatNumber($added['cost']) }}
@@ -113,16 +119,263 @@
                         wire:loading.attr='disabled' wire:click.prevent="sumCant">Guardar</x-button>
                 </div>
             </div>
-            
+
         </div>
         @if (count($productAdded))
             <div class="w-full">
-                @include('livewire.products.includes.sumproductmoney')
+                <div class="flex space-x-4 items-start pt-12">
+                    <div class="w-full">
+                        <x-base-select id="outProvider" label="Proveedor" wire:model="provider_id">
+                            <option class="text-gray-300"> Elija un proveedor</option>
+                            @foreach ($providers as $idProv => $prov)
+                                <option value="{{ $idProv }}">{{ $prov }}</option>
+                            @endforeach
+                        </x-base-select>
+                        <x-input-error for="provider_id">Campo requerido</x-input-error>
+                    </div>
+                    <div class="w-full">
+                        <x-datalist disabled type="search" inputId="outCountCode" label="Cuenta afectada"
+                            listName="countList" wire:model.lazy="code_name">
+                            @foreach ($counts as $code => $count)
+                                <option value="{{ $code . ' - ' . ellipsis($count, 27) }}"></option>
+                            @endforeach
+                        </x-datalist>
+                        <x-input-error for="count_code">Campo requerido</x-input-error>
+                    </div>
+
+                </div>
             </div>
-          
         @endif
     </div>
     <div class="opacity-0">
         @livewire('provisions.print-provision', ['provision_code' => 0], key(uniqid()))
-       </div>
+    </div>
+    @push('js')
+    <script>
+        var prevVal = 0;
+
+        function clrInput(event) {
+            input = event.target;
+            prevVal = input.value;
+            input.value = '';
+        }
+
+        function restoreInput(event) {
+            input = event.target;
+            input.value = prevVal;
+        }
+        Livewire.on('printPayment', function(payment) {
+            printP(payment);
+        })
+
+        function align(conector, dir) {
+            switch (dir) {
+                case 'right':
+                    conector.setAlign(dir);
+                    break;
+                case 'center':
+                    conector.setAlign(dir);
+                    break;
+                case 'left':
+                    conector.setAlign(dir);
+                    break;
+            }
+        }
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        var toDecimal = new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 2,
+        });
+        var sumField = (obj, field) => obj
+            .map(items => items[field])
+            .reduce((prev, curr) => parseFloat(prev) + parseFloat(curr), 0);
+        var removeAccent = function(string) {
+            string = string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            return string;
+        };
+
+        function texto(impresora, string) {
+            impresora.write(removeAccent(string.toUpperCase()));
+
+        }
+
+        function printP(payment) {
+            obj = payment;
+            if (!obj.place.preference.printer) {
+                Livewire.emit('showAlert', 'No hay ninguna impresora añadida', 'warning');
+                return false;
+            }
+            conector = new Impresora();
+            conector.cut();
+            /* Encabezado Negocio */
+            align(conector, 'center');
+            conector.setEmphasize(1);
+            conector.setFontSize(1, 2)
+            texto(conector, obj.store.name.toUpperCase() + "\n");
+            conector.setEmphasize(0);
+            conector.setFontSize(1, 1)
+            texto(conector, 'RNC: ')
+            texto(conector, obj.store.rnc + "\n");
+            texto(conector, obj.store.phone + "\n");
+            texto(conector, obj.store.address + "\n");
+            texto(conector, '--------------------------------------');
+            conector.feed(1);
+            /* Fin Encabezado */
+
+            /* Sección Título */
+            conector.setEmphasize(1);
+            conector.setFontSize(1, 2);
+            texto(conector, 'RECIBO DE PAGO DE GASTO');
+            conector.setEmphasize(0);
+            conector.setFontSize(1, 1);
+            conector.feed(2)
+            /* Fin Sección */
+
+
+
+            conector.setEmphasize(1);
+            texto(conector, 'NCF: ')
+            conector.setEmphasize(0);
+            texto(conector, obj.payable.ncf ? obj.payable.ncf : " ND");
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'FECHA: ')
+            conector.setEmphasize(0);
+            texto(conector, obj.day);
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'CÓD.: ')
+            conector.setEmphasize(0);
+            texto(conector, obj.payable.ref);
+            conector.feed(1);
+
+            align(conector, 'center');
+            texto(conector, '--------------------------------------');
+            conector.feed(1);
+            /* Fin detalle */
+
+
+            /* Datos del cliente */
+            align(conector, 'left');
+            conector.setEmphasize(1);
+            texto(conector, 'SUPLIDOR: ')
+            conector.setEmphasize(0);
+            texto(conector, obj.payer.fullname);
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'RNC: ');
+            conector.setEmphasize(0);
+            texto(conector, obj.payer.rnc)
+            texto(conector, ' / ');
+
+            conector.setEmphasize(1);
+            texto(conector, 'TEL: ');
+            conector.setEmphasize(0);
+            texto(conector, obj.payer.phone);
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'DIR: ');
+            conector.setEmphasize(0);
+            texto(conector, obj.payer.address ? obj.payer.address : 'N/D');
+            conector.feed(1);
+            align(conector, 'center');
+            texto(conector, '--------------------------------------');
+            conector.feed(1);
+            /* Fin Cliente */
+
+            /* Encabezado de pago */
+            conector.setEmphasize(1);
+            align(conector, 'center');
+            conector.setFontSize(1, 2);
+            texto(conector, 'DETALLES DEL PAGO')
+            conector.setFontSize(1, 1);
+            conector.feed(1)
+            conector.setEmphasize(0);
+            /* Fin encabezados */
+
+            /* Detalles del pago */
+            align(conector, 'left');
+            conector.setEmphasize(1);
+            texto(conector, 'SALDO ANTERIOR: ')
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(obj.total));
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'EFECTIVO: ');
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(obj.efectivo));
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'TRANSFERENCIA: ');
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(obj.transferencia));
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'OTROS: ');
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(obj.tarjeta));
+            conector.feed(2);
+
+            conector.setEmphasize(1);
+            texto(conector, 'TOTAL PAGADO: ');
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(parseFloat(obj.efectivo) + parseFloat(obj.tarjeta) + parseFloat(obj
+                .transferencia)));
+            conector.feed(1);
+
+
+            conector.setEmphasize(1);
+            texto(conector, 'SALDO RESTANTE: ');
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(obj.rest));
+            conector.feed(1);
+
+            conector.setEmphasize(1);
+            texto(conector, 'CAMBIO: ');
+            conector.setEmphasize(0);
+            texto(conector, formatter.format(obj.cambio));
+            conector.feed(1);
+
+            align(conector, 'center');
+            texto(conector, '--------------------------------------');
+            conector.feed(1);
+            /* Fin Detalles */
+            /* Sección personas */
+
+            conector.setEmphasize(1);
+            texto(conector, 'CAJERO: ');
+            conector.setEmphasize(0);
+            texto(conector, obj.contable.fullname);
+            conector.feed(2);
+            /* Fin sección */
+
+            /* Pie */
+            texto(conector, '-------- GRACIAS POR PREFERIRNOS --------\n');
+            conector.feed(2);
+            /* Fin pie */
+
+            conector.feed(3);
+            conector.cut();
+            conector.imprimirEnImpresora(obj.place.preference.printer)
+                .then(respuestaAlImprimir => {
+                    if (respuestaAlImprimir === true) {
+                        console.log("Impreso correctamente");
+                    } else {
+                        console.log("Error. La respuesta es: " + respuestaAlImprimir);
+                    }
+                });
+
+        }
+    </script>
+@endpush
 </div>

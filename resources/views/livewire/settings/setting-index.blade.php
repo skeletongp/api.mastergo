@@ -56,7 +56,7 @@
                 </div>
                 <hr>
             @endcan
-           
+
             @can('Crear Bancos')
                 <div wire:click="changeView('settings.setting-preference')" id="divPreference"
                     class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'settings.setting-preference' ? 'bg-blue-100' : '' }}">
@@ -101,8 +101,6 @@
                 @livewire($componentName)
             @break
 
-          
-
             @case('settings.setting-preference')
                 @livewire($componentName)
             @break
@@ -112,17 +110,15 @@
     </div>
     @push('js')
         <script>
-           
             function searchPrinter() {
-                ConectorPlugin.obtenerImpresoras()
-                    .then(impresoras => {
-                        Livewire.emit('setPrinters', impresoras);
+                Impresora.getImpresoras()
+                    .then(listaDeImpresoras => {
+                        Livewire.emit('setPrinters', listaDeImpresoras)
                        
                     });
+              
             }
-            $(document).ready(function() {
-             
-            })
+         
         </script>
     @endpush
 </div>

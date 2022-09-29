@@ -23,7 +23,7 @@ class OutcomeTable extends LivewireDatatable
        ->where('outcomeable_type','App\Models\Provider')
        ->leftJoin('payments','payments.payable_id','outcomes.id')
          ->where('payable_type','App\Models\Outcome')
-
+        ->groupBy('outcomes.id')
          ;
        
        return $outcomes;
@@ -41,11 +41,11 @@ class OutcomeTable extends LivewireDatatable
                 return ellipsis($provider, 30);
             })->label('Suplidor')->searchable(),
             NumberColumn::name('amount')->label('Monto')->formatear('money'),
-            NumberColumn::name('payments.efectivo:sum')->label('Efectivo')->formatear('money')->hide(),
-            NumberColumn::name('payments.transferencia:sum')->label('Transferencia')->formatear('money')->hide(),
-            NumberColumn::name('payments.tarjeta:sum')->label('Otros')->formatear('money')->hide(),
-            NumberColumn::name('payments.tarjeta:payed')->label('Pagado')->formatear('money'),
-            NumberColumn::name('outcomes.rest')->label('Rest')->formatear('money')->hide(),
+            NumberColumn::raw('sum(payments.efectivo) AS efectivo')->label('Efectivo')->formatear('money')->hide(),
+            NumberColumn::raw('sum(payments.transferencia) AS transferencia')->label('Transferencia')->formatear('money')->hide(),
+            NumberColumn::raw('sum(payments.tarjeta) AS tarjeta')->label('Otros')->formatear('money')->hide(),
+            NumberColumn::raw('sum(payments.payed) AS pagado')->label('Pagado')->formatear('money'),
+            NumberColumn::name('outcomes.rest')->label('Resta')->formatear('money'),
             Column::callback(['outcomes.concepto'], function($concepto){
                 return ellipsis($concepto, 30);
             })->label('Concepto')->searchable(),
@@ -57,7 +57,7 @@ class OutcomeTable extends LivewireDatatable
             })->label('Ref.')->searchable(),
             Column::callback(['id'], function($id){
                 return view('pages.outcomes.actions',['outcome_id'=>$id]);
-            })->label('Del')->contentAlignCenter()
+            })->label('Acciones')->contentAlignCenter()
             
         ];
     }

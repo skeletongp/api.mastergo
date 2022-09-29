@@ -31,6 +31,7 @@ trait SumProductTrait
     public function print($code)
     {
         $provisions=Provision::whereCode($code)->with('provider','provisionable','atribuible', 'place.store','place.preference', 'user')->get();
+        
         $this->emit('printProvision',$provisions);
 
     }
@@ -92,7 +93,7 @@ trait SumProductTrait
         /* Compra en efectivo */
         setTransaction('Reg. Compra de mercancía en efectivo', $code, $payment->efectivo * $rNonTax, $debitable, $efectivo, 'Sumar Productos');
         /* Impuestos */
-        setTransaction('Reg. ITBIS gravado a compra', $code, $payment->efectivo * $rTax, $itbisCount,  $debitable, $efectivo, 'Sumar Productos');
+        setTransaction('Reg. ITBIS gravado a compra', $code, $payment->efectivo * $rTax, $itbisCount,  $efectivo, 'Sumar Productos');
 
         /* Compras con tarjeta */
         setTransaction('Reg. Compra de mercancía otros', $code, $payment->tarjeta * $rNonTax, $debitable, $place->other(), 'Sumar Productos');
