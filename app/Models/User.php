@@ -157,9 +157,9 @@ class User extends Authenticatable implements Searchable
         if (!is_null($place)) {
             return $place;
         }
-        $placeOnStore = $this->store->places()->whereId($this->place_id)->first();
+        $placeOnStore = Place::whereId($this->place_id?:1)->first();
         if (!$placeOnStore) {
-            $place = $this->store->places()->first();
+            $place = Place::first();
             $this->update(['place_id' => $place->id]);
         } else {
             $place = $placeOnStore;

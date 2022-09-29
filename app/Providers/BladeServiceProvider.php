@@ -26,33 +26,20 @@ class BladeServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Blade::if('scope', function ($name) {
-            return true;
-           /*  if (!$name) {
+        Blade::if('scope', function ($value) {
+           
+            if(!$value){
                 return true;
             }
-            $scopes = explode(',', env('STORE_SCOPES'));
-            return in_array($name, $scopes); */
+            $value=config('scopes.'.$value);
+            return $value;
+           
         });
         Blade::if('scopeanny', function (array $scopesArray) {
-            return true;
-            if (Cache::has('scopes_' . auth()->user()->store->id)) {
-                $scopes = Cache::get('scopes_' . auth()->user()->store->id);
-            } else {
-                $scopes = auth()->user()->store->scope()->pluck('name');
-                Cache::put('scopes_' . auth()->user()->store->id, $scopes);
-            }
-            if (!$scopesArray || count($scopesArray) == 0) {
-                return true;
-            }
-            if (auth()->user()) {
-                foreach ($scopesArray as $scope) {
-                    if ($scopes->contains($scope)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
+           foreach($scopesArray as $scope){
+               
+                   return $scope;
+           }
         });
     }
 }

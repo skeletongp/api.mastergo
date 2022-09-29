@@ -106,6 +106,12 @@ class Product extends Model implements Searchable
             get:fn($value)=> $this->taxes()->sum('rate')
         );
     }
+    public function name() : Attribute
+    {
+        return new Attribute(
+            set:fn($value)=>preg_replace("/[^A-Za-z0-9- ]/", '', $value)
+        );
+    }
     public function stock():Attribute
     {
         $places=$this->units()->where('place_id', auth()->user()->place->id)->get()->pluck('stock','name');

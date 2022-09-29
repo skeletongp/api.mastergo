@@ -10,10 +10,10 @@
             <x-input-error for="provider_id">Campo requerido</x-input-error>
         </div>
         <div class="w-full">
-            <x-datalist inputId="outCountCode" label="Cuenta afectada" listName="countList"
-                model="count_code">
+            <x-datalist type="search" inputId="outCountCode" label="Cuenta afectada" listName="countList"
+                wire:model.lazy="code_name">
                 @foreach ($counts as $code => $count)
-                    <option data-value="{{ $code }}" value="{{$code.' - '.ellipsis($count, 27) }}"></option>
+                    <option value="{{$code.' - '.ellipsis($count, 27) }}"></option>
                 @endforeach
             </x-datalist>
             <x-input-error for="count_code">Campo requerido</x-input-error>
@@ -22,25 +22,11 @@
             <x-base-input type="text" id="outRef" label="Referencia" placeholder="NCF u otro referencia"
                 wire:model.defer="ref">
             </x-base-input>
-            <x-input-error for="ref">Campo requerido</x-input-error>
+            <x-input-error for="ref">Revise los datos</x-input-error>
         </div>
     </div>
-    @if ($provider_id == 1)
-        <div class="flex space-x-4 pt-4">
-            <div class="w-full">
-                <x-base-input label="Nombre del proveedor" wire:model.lazy="prov_name" id="provName">
-                </x-base-input>
-
-            </div>
-            <div class="w-full">
-                <x-base-input label="RNC del proveedor" wire:model.defer="prov_rnc" id="provRNC"
-                    wire:keydown.enter.prevent="loadProvFromRNC">
-                </x-base-input>
-                <x-input-error for="form.type">Verifique el campo</x-input-error>
-            </div>
-        </div>
-    @endif
-    @if ($setCost)
+   
+    @if ($setCost )
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">
                 <x-base-input type="number" id="outEfectivo" label="Efectivo" placeholder="Efectivo pagado"
@@ -93,14 +79,5 @@
             <div class="w-full"></div>
         </div>
     @endif
-    @if ($setCost && !isset($hideTax))
-        <div class="flex space-x-4 items-start">
-
-            <div class="w-40 py-4">
-                <x-base-input type="text" id="outDiscount" label="Descuento aplicado"
-                    placeholder="Descuentos aplicados" wire:model.lazy="discount"></x-base-input>
-                <x-input-error for="discount">Campo requerido</x-input-error>
-            </div>
-        </div>
-    @endif
+   
 </div>

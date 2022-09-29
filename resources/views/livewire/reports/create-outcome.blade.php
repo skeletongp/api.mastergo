@@ -1,5 +1,5 @@
 <div>
-    <x-modal  maxWidth="max-w-xl" :listenOpen="true" :fitV="false" title="Registrar nuevo gasto">
+    <x-modal :hideButton="$hideButton" :open="$open"  maxWidth="max-w-xl" :listenOpen="true" :fitV="$payAll" title="Registrar nuevo gasto">
         <x-slot name="button">
             Nuevo gasto
         </x-slot>
@@ -17,7 +17,7 @@
                 
                 <div class="w-1/3">
                     <x-base-input type="number" id="outAmount" label="Monto" placeholder="Ingrese el monto total"
-                        wire:model.defer="amount" disabled>
+                        wire:model="amount" >
                     </x-base-input>
                     <x-input-error for="amount">Campo requerido</x-input-error>
                 </div>
