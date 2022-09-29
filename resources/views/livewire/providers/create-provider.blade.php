@@ -83,6 +83,9 @@
 </div>
 @push('js')
     <script>
+        $('#provider_RNC').formatPhoneNumber({
+                    format: '###-#####-#'
+                })
         $('#provDocType').on('change', function() {
             if ($(this).val() === 'RNC') {
                 $('#provider_RNC').formatPhoneNumber({

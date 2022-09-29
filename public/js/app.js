@@ -2167,7 +2167,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 if (window.removeAccent == null) {
   window.removeAccent = function (string) {
     string = string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    console.log(string);
     return string;
   };
 }

@@ -78,7 +78,15 @@ class DatabaseSeeder extends Seeder
             'rnc' => '000-00000-0',
             'limit' => 0,
         ]);
-       
+        $provider2=$store->providers()->create([
+            'name' => 'AtrionTech Soluciones Digitales EIRL',
+            'lastname' => '',
+            'email' => 'info@atriontechsd.com',
+            'address' => 'Calle Respaldo A, No. 8E, D. N.',
+            'phone' => '(809) 508-6221',
+            'rnc' => '132-48752-4',
+            'limit' => 80000,
+        ]);
        
         $user=User::find(1);
         $store->users()->attach($user);
@@ -114,7 +122,7 @@ class DatabaseSeeder extends Seeder
         $store->roles()->save(Role::find(1));
         $store->roles()->save(Role::find(2));
         $store->roles()->save(Role::find(3));
-        $this->setCounts($place, $provider);
+        $this->setCounts($place, $provider, $provider2);
         $this->call([
             OtherSeeder::class,
             ProductSeeder::class,
@@ -122,7 +130,7 @@ class DatabaseSeeder extends Seeder
         $roles = ['Administrador', 'Super Admin', 'Generico'];
       
     }
-    public function setCounts($place, $provider)
+    public function setCounts($place, $provider, $provider2)
     {
         setContable($place, '100', 'debit', 'Efectivo en Caja General', $place->id);
         setContable($place, '100', 'debit', 'Efectivo en Caja Chica', $place->id);
@@ -141,6 +149,7 @@ class DatabaseSeeder extends Seeder
         setContable($place, '501', 'credit', 'Descuentos en compras', $place->id);
         setContable($place, '300', 'credit', 'Capital Sucrito y Pagado', $place->id);
         setContable($provider, '200', 'credit', $provider->fullname, $place->id);
+        setContable($provider2, '200', 'credit', $provider2->fullname, $place->id);
         setContable($place, '600', 'debit', 'Sueldos y Salarios', $place->id);
         setContable($place, '600', 'debit', 'Atención al Personal', $place->id);
         setContable($place, '600', 'debit', 'Combustible', $place->id);
