@@ -28,6 +28,7 @@ class SendWSCatalogueJob implements ShouldQueue
     public function handle()
     {
         $clients=Client::whereIn('code',$this->codes)->get();
+        
         foreach($clients as $client){
             $client->sendCatalogue();
         }

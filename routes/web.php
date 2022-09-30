@@ -166,6 +166,6 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
 
 Route::get('prueba', function (Request $request) {
-   
+    sendMessage('8298041907','Hola');
     return redirect()->route('invoices.index');
 })->name('prueba');

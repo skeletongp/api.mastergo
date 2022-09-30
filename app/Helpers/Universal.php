@@ -196,7 +196,7 @@ function sendMessage($to, $message){
         'access_token' => env('WHATSAPP_TOKEN'),
     ]);
     
-    $whatsapp_cloud_api->sendTextMessage($phone, $message);
+    dd($whatsapp_cloud_api->sendTextMessage($phone, $message));
 }
 function getBanks(){
     $banks=Cache::get('banks'.env('STORE_ID'));
