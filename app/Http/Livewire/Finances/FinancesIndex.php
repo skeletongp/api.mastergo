@@ -18,7 +18,7 @@ class FinancesIndex extends Component
     {
         $this->componentName = $componentName;
         if ($componentName == 'finances.other-por-cobrar') {
-            return redirect()->route('finances.index', ['componentName' => 'other-por-cobrar']);
+            return redirect()->route('finances.index', ['componentName' => 'finances.other-por-cobrar']);
         } 
     }
 }
