@@ -32,8 +32,8 @@ class CreateComprobante extends Component
     {
         $this->authorize('Crear Comprobantes');
         $this->validate();
-        if($this->form['final']-$this->form['inicial']>500){
-            $this->emit('showAlert','No puede añadir más de 500 comprobantes a la vez','error', 5000);
+        if($this->form['final']-$this->form['inicial']>999){
+            $this->emit('showAlert','No puede añadir más de 1000 comprobantes a la vez','error', 5000);
             return;
         }
         $type=Invoice::TYPES[$this->form['type']];

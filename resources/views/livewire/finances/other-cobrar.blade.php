@@ -6,9 +6,7 @@
 
         <div>
             <form wire:submit.prevent="createTransaction">
-                @php
-                    asort($countMains);
-                @endphp
+              
                 <h1 class="text-lg font-bold uppercase my-2">Débito</h1>
                 <div class="flex space-x-4 items-start">
                     <div class="w-full">
@@ -24,7 +22,6 @@
                         <x-datalist inputId="cDetailDebit_id{{$cDetailCredit_id}}" model="cDetailDebit_id" listName="cDetailDebit_idList{{$cDetailCredit_id}}"
                             label="Cuenta Detalle">
                             @foreach ($countsDebit as $idDebit => $cDebit)
-                                {{ $cDebit }}
                                 <option data-value="{{ $idDebit }}" value="{{ $cDebit }}"></option>
                             @endforeach
                         </x-datalist>

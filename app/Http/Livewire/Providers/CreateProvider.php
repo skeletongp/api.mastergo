@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class CreateProvider extends Component
 {
-    public $form, $provDocType = "RNC";
+    public $form, $provDocType ;
     protected $querystring = ['provDocType'];
 
     public function rules()

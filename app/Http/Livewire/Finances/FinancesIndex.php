@@ -17,5 +17,8 @@ class FinancesIndex extends Component
     public function changeView($componentName)
     {
         $this->componentName = $componentName;
+        if ($componentName == 'finances.other-por-cobrar') {
+            return redirect()->route('finances.index', ['componentName' => 'other-por-cobrar']);
+        } 
     }
 }
