@@ -297,4 +297,4 @@ function getInitials($string){
     }
     $acronym=preg_replace('/[^A-Za-z0-9\-]/', '', $acronym);
     return $acronym;
-}
+} 
