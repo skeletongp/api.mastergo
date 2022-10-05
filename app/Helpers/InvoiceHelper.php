@@ -3,6 +3,7 @@
 use App\Models\Store;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 use Netflie\WhatsAppCloudApi\Message\Media\LinkID;
 
@@ -19,11 +20,9 @@ function setPDFPath($invoice)
         'isRemoteEnabled' => true
     ])->loadView('pages.invoices.letter', $data);
     //delete file if exists
-    if (file_exists( asset('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf'))) {
-        unlink( asset('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf'));
-    }
-    file_put_contents('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf', $pdf->output());
-    $path = asset('storage/invoices/' . $invoice->number . '_' . date('Ymd') . '_letter.pdf');
+    $name = 'files' . getStore()->id . '/invoices/invoice'.$invoice->id.date('His').'.pdf';
+    Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
+    $path = Storage::url($name);
     $pdf = [
         'note' => 'PDF Fact. Nº. ' . $invoice->number,
         'pathLetter' => $path,
