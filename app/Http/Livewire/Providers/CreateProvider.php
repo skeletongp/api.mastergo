@@ -18,9 +18,11 @@ class CreateProvider extends Component
             'form.address' => 'required|string|max:150',
             'form.limit' => 'required|numeric|min:0',
             'form.phone' => 'required|string|max:25',
-
             'provDocType' => 'required',
         ];
+    }
+    public function mount(){
+        $this->form['limit'] = 0;
     }
 
     public function render()
@@ -30,8 +32,9 @@ class CreateProvider extends Component
     public function createProvider()
     {
         if (!array_key_exists('email', $this->form) || $this->form['email'] == "") {
-            $this->form['email'] = "notemail@" . mb_strtolower(getInitials($this->form['name'])) . ".com";
+            $this->form['email'] = uniqid()."@email.com";
         }
+       
         $this->validate([
             'form.rnc' => 'required|string|max:25',
         ]);
