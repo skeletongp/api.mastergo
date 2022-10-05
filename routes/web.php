@@ -162,10 +162,20 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-use Mike42\Escpos\Printer;
+Route::post('whatsapp/webhook', function(){
+    Log::info(request()->all());
+});
+
+use Twilio\Rest\Client as TwilioClient;
 
 Route::get('prueba', function (Request $request) {
-    sendMessage('8298041907','Hola');
-    return redirect()->route('invoices.index');
+    $client= new TwilioClient(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'));
+    $client->messages->create(
+        'whatsapp:+18298041907',
+        [
+            'from' => env('TWILIO_FROM_NUMBER'),
+            'body' => 'Hola mundo',
+        ]
+    );
+
 })->name('prueba');
