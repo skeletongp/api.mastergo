@@ -37,7 +37,7 @@ class CreateInvoice extends Component
         $this->vence = Carbon::now()->format('Y-m-d');
         $this->condition = 'DE CONTADO';
         $this->type = getPreference($place->id)->comprobante_type;
-       $this->number = $place->id . '-' . str_pad(getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
+      
         $this->clients = clientWithCode($store->id);
         $this->products = getProductsWithCode();
         $this->seller = auth()->user()->fullname;

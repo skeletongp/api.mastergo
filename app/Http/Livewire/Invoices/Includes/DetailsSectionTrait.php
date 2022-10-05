@@ -45,6 +45,7 @@ trait DetailsSectionTrait
             $this->authorize('Vender producto fuera de Stock', 'validateAuthorization','confirmedAddItems','data=null','Autorizar');
         } else { */
             $this->confirmedAddItems();
+            $this->number = $place->id . '-' . str_pad(getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
        /*  } */
         $this->emit('focusCode');
     }
