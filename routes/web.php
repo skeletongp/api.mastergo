@@ -50,6 +50,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('auth/login', 'login')->name('login');
     Route::post('auth/login', 'store')->name('login.store');
     Route::get('auth/logout', 'logout')->name('auth.logout');
+    Route::get('prueba', 'prueba')->name('prueba');
 });
 
 
@@ -162,20 +163,8 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::post('whatsapp/webhook', function(){
+Route::post('whatsapp/webhook', function () {
     Log::info(request()->all());
 });
 
 use Twilio\Rest\Client as TwilioClient;
-
-Route::get('prueba', function (Request $request) {
-    $client= new TwilioClient(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'));
-    $client->messages->create(
-        'whatsapp:+18298041907',
-        [
-            'from' => env('TWILIO_FROM_NUMBER'),
-            'body' => 'Hola mundo',
-        ]
-    );
-
-})->name('prueba');
