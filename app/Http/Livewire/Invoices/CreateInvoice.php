@@ -37,7 +37,7 @@ class CreateInvoice extends Component
         $this->vence = Carbon::now()->format('Y-m-d');
         $this->condition = 'DE CONTADO';
         $this->type = getPreference($place->id)->comprobante_type;
-        $this->number = $place->id . '-' . str_pad(getPlaceInvoicesWithTrashed($place->id)->count() + 1, 7, '0', STR_PAD_LEFT);
+       //$this->number = $place->id . '-' . str_pad(getPlaceInvoicesWithTrashed($place->id)->count() + 1, 7, '0', STR_PAD_LEFT);
         $this->clients = clientWithCode($store->id);
         $this->products = getProductsWithCode();
         $this->seller = auth()->user()->fullname;
@@ -47,9 +47,7 @@ class CreateInvoice extends Component
     }
     public function render()
     {
-     /*    $dataFile = file_get_contents(storage_path('app/public/local/details.json'));
-        $data = json_decode($dataFile, true) ?: [];
-        $this->localKeys = array_keys($data); */
+    
         return view('livewire.invoices.create-invoice');
     }
     public function checkCompAmount($store)
