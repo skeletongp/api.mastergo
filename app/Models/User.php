@@ -122,27 +122,7 @@ class User extends Authenticatable implements Searchable
 
     public function getStoreAttribute()
     {
-        $store = Cache::get('store_' . $this->id);
-        if (!is_null($store)) {
-            return $store;
-        }
-        $store = $this->stores()->where('stores.id', env('STORE_ID'))
-            ->with(
-                'clients',
-                'products',
-                'roles',
-                'invoices',
-                'providers',
-                'incomes',
-                'banks',
-                'recursos',
-                'comprobantes',
-                'units',
-                'places'
-            )
-            ->first();
-     
-        Cache::put('store_' . $this->id, $store);
+        $store=getStore();
         return $store;
     }
     public function getPlacesAttribute()

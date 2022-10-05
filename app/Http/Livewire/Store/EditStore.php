@@ -28,7 +28,7 @@ class EditStore extends Component
 
     public function mount()
     {
-        $this->store = auth()->user()->store;
+        $this->store = getStore();
     }
     public function render()
     {
