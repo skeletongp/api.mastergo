@@ -2,6 +2,7 @@
 
 use App\Models\Store;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
@@ -93,6 +94,12 @@ function setPaymentTransaction($invoice, $payment, $client, $bank, $reference)
     setTransaction('Reg. vuelto de cambio', $ref,  $payment->cambio, $creditable, $place->cash(), 'Cobrar Facturas');
     setTransaction('Reg. abono por Cheque', $ref,  $moneys[1], $place->check(), $creditable, 'Cobrar Facturas');
     setTransaction('Reg. abono por Transferencia', $ref . ' | ' . $reference,  $moneys[2], optional($bank)->contable, $creditable, 'Cobrar Facturas');
+}
 
-    
+function getNumberFromInvoice(){
+    $number=Cache::get('number_invoice_'.getPlace()->id);
+    if(!$number){
+        $number=getPlaceInvoicesWithTrashed(getPlace()->id)->count();
+    }
+    return $number;
 }

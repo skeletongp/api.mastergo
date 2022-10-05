@@ -17,6 +17,7 @@ trait GenerateInvoiceTrait
 
     public function createDetails($invoice)
     {
+        
         $gasto = 0;
         $gasto_service = 0;
         $venta=0;
@@ -142,6 +143,7 @@ trait GenerateInvoiceTrait
             $this->instant=true;
             $this->emit('modalOpened');
         }
+        Cache::put('number_invoice_'.getPlace()->id, $invoice->id);
         Cache::forget('place_invoices_with_trashed'.$place->id);
         $this->mount();
     }

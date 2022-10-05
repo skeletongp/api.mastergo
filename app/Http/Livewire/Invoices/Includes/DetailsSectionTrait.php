@@ -39,7 +39,8 @@ trait DetailsSectionTrait
     public function tryAddItems()
     {
         $this->validate(['product' => 'required']);
-
+        $place=getPlace();
+        $this->number =getPlace()->id . '-' . str_pad( getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
         /* if ($this->cant > $this->stock && !auth()->user()->hasPermissionTo('Autorizar') && $this->product['type'] != 'Servicio') {
             $this->authorize('Vender producto fuera de Stock', 'validateAuthorization','confirmedAddItems','data=null','Autorizar');
         } else { */
