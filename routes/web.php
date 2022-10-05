@@ -167,4 +167,3 @@ Route::post('whatsapp/webhook', function () {
     Log::info(request()->all());
 });
 
-use Twilio\Rest\Client as TwilioClient;
