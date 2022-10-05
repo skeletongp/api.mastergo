@@ -109,7 +109,7 @@ class Product extends Model implements Searchable
     public function name() : Attribute
     {
         return new Attribute(
-            set:fn($value)=>preg_replace("/[^A-Za-z0-9- ]/", '', $value)
+            set:fn($value)=>preg_replace("/[^A-Za-z0-9- ]/", '', removeAccent($value))
         );
     }
     public function stock():Attribute
