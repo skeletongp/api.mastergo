@@ -49,4 +49,8 @@ class AuthController extends Controller
         Session::flash('msg', 'success| La sesión ha sido cerrada');
         return redirect()->route('login');
     }
+    public function prueba(){
+        return view('prueba');
+        dd(Cache::get('spatie.permission.cache'));
+    }
 }
