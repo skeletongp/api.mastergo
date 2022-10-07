@@ -109,7 +109,9 @@ class SumProduct extends Component
             ->where('product_id', $added['product_id'])
             ->where('unit_id', $added['unit'])->first();
             $product = Product::find($added['product_id']);
-            $cost=(($unit->pivot->stock*$unit->pivot->cost)+($added['cant']*$added['cost']))/($unit->pivot->stock+$added['cant']);
+            $prevStock=$unit->pivot->stock>0?$unit->pivot->stock:0.00000000001;
+            $prevCost=$unit->pivot->cost>0?$unit->pivot->cost:0.00000000001;
+            $cost=(($prevStock*$prevCost)+($added['cant']*$added['cost']))/abs(($prevStock+$added['cant']));
             $unit->pivot->stock = removeComma($unit->stock) + removeComma($added['cant']);
             
             ($added['cost']+$unit->pivot->cost)/2;
