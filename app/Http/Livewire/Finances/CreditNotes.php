@@ -32,7 +32,7 @@ class CreditNotes extends LivewireDatatable
                 return ellipsis($client, 25);
             })->label('Cliente')->searchable(),
             Column::callback(['invoices.id', 'invoices.number'], function ($invoiceId, $invoiceNumber) {
-                return '<a href="' . route('invoices.show', $invoiceId) . '">' . ltrim(substr($invoiceNumber, strpos($invoiceNumber, '-') + 1), '0') . '</a>';
+                return '<a class="text-blue-600 hover:underline hover:text-blue-300" href="' . route('invoices.show',[$invoiceId, 'includeName' => 'showcredit', 'includeTitle' => 'Nota de Crédito']) . '">' . ltrim(substr($invoiceNumber, strpos($invoiceNumber, '-') + 1), '0') . '</a>';
             })->label('Fact.'),
             Column::name('comprobantes.ncf')->label('NCF')->searchable(),
             Column::name('comps.ncf')->label('NCF Fact.')->searchable(),
