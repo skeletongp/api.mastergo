@@ -19,6 +19,8 @@ class ComprobantesTable extends LivewireDatatable
         $comprobantes = Comprobante::where('comprobantes.store_id', $store->id)
             ->leftjoin('invoices', 'invoices.comprobante_id', '=', 'comprobantes.id')
             ->leftjoin('clients', 'clients.id', '=', 'comprobantes.client_id')
+            ->leftJoin('creditnotes', 'creditnotes.comprobante_id', '=', 'comprobantes.id')
+            ->leftjoin('invoices as invs', 'invs.id', '=', 'creditnotes.invoice_id')
             ->orderBy('comprobantes.ncf','desc')
             ->groupBy('comprobantes.id')
             ;
@@ -50,13 +52,16 @@ class ComprobantesTable extends LivewireDatatable
             Column::callback('status', function ($status) {
                 return ucwords($status);
             })->label('Estado')->filterable(['Usado', 'Disponible']),
-             Column::callback(['invoices.id', 'invoices.number'], function ($invoiceId, $invoiceNumber) {
+             Column::callback(['invoices.id', 'invoices.number', 'invs.id', 'invs.number'], function ($invoiceId, $invoiceNumber,$invsId, $invsNumber) {
                 if ($invoiceId) {
                     return '<a href="' . route('invoices.show', $invoiceId) . '">' . ltrim(substr($invoiceNumber, strpos($invoiceNumber, '-') + 1), '0') . '</a>';
                 
+                } else if ($invsId) {
+                    return '<a href="' . route('invoices.show', $invsId) . '">' . ltrim(substr($invsNumber, strpos($invsNumber, '-') + 1), '0') . '</a>';
                 } else {
                     return 'N/D';
-                };
+                }
+                
             })->label('Doc.')->searchable(),
             
             Column::callback(['invoices.name','clients.name'], function ($name, $client_name) {
