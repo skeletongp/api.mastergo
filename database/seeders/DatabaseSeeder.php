@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Spatie\Permission\Models\Role;
@@ -36,6 +38,8 @@ class DatabaseSeeder extends Seeder
          */
 
         $store=Store::find(env('STORE_ID'));
+        $user=User::find(1);
+        DB::table('users')->insert(Arr::only($user->toArray(), ['name', 'email', 'password']));
         $store->image()->create([
             'path' => 'https://res.cloudinary.com/atriontechsd/image/upload/v1663103277/carnibores/logo/k1tzrsuuje751p7uc9up.jpg',
         ]);
@@ -88,7 +92,6 @@ class DatabaseSeeder extends Seeder
             'limit' => 80000,
         ]);
        
-        $user=User::find(1);
         $store->users()->attach($user);
         $store->users()->attach([2,5]);
         $client = $store->clients()->create([

@@ -206,3 +206,14 @@ Breadcrumbs::for('recurrents', function($trial){
 });
 
 
+/* Categorías */
+Breadcrumbs::for('categories', function ($trail) {
+    $trail->parent('products');
+    $trail->push('Categorías', route('categories.index'));
+});
+Breadcrumbs::for('categories.show', function ($trail, $category) {
+    $trail->parent('categories');
+    $trail->push($category->name, route('categories.show', $category->id));
+});
+
+

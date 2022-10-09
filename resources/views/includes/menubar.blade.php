@@ -90,6 +90,10 @@
                             <x-side-link routeName='products.index' icon='far w-10 text-center fa-layer-group fa-lg'
                                 text='Productos' activeRoute="products.*" :scope="'Productos'" />
                         @endcan
+                        @can('Ver Productos')
+                        <x-side-link routeName='categories.index' icon='far w-10 text-center fa-filter fa-lg'
+                            text='Categorías' activeRoute="categories.*" :scope="'Productos'" />
+                    @endcan
                         @canany(['Ver Recursos', 'Crear Recursos', 'Borrar Recursos', 'Editar Recursos'])
                             <x-side-link routeName='recursos.index' icon='far w-10 text-center fa-warehouse-alt fa-lg'
                                 text='Recursos' activeRoute="recursos.*" :scope="'Recursos'" />
