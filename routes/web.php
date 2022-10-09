@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChequeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ComprobanteController;
@@ -87,6 +88,13 @@ Route::middleware(['auth'])->group(function () {
             Route::get('products/sum', 'sum')->name('products.sum');
             Route::get('products/edit/{product}', 'edit')->name('products.edit');
             Route::get('products/{product}', 'show')->name('products.show');
+        });
+
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('categories', 'index')->name('categories.index');
+            Route::get('categories/create', 'create')->name('categories.create');
+            Route::get('categories/edit/{category}', 'edit')->name('categories.edit');
+            Route::get('categories/{category}', 'show')->name('categories.show');
         });
 
         Route::controller(StoreController::class)->group(function () {

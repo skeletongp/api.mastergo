@@ -16,7 +16,9 @@ protected $connection="mysql";
     protected $fillable = [
         'name',
         'symbol',
-        'store_id'
+        'store_id',
+        'created_by',
+        'updated_by',
     ];
 
     public function store()

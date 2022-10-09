@@ -10,6 +10,7 @@ return[
     'Cotizaciones'=>env('STORE_COTIZACIONES', true),
     'Pedidos'=>env('STORE_PEDIDOS', true),
     'Recursos'=>env('STORE_RECURSOS', true),
+    'Procesos'=>env('STORE_PROCESOS', true),
     'Gastos'=>env('STORE_GASTOS', true),
     'Reportes'=>env('STORE_REPORTES', true),
     'Impuestos'=>env('STORE_IMPUESTOS', true),

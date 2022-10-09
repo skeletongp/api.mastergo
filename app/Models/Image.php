@@ -15,6 +15,9 @@ protected $connection="mysql";
         'path',
         'imageable_id',
         'imageable_type',
+        'created_by',
+        'updated_by',
+        
     ];
 
     public function imageable()
