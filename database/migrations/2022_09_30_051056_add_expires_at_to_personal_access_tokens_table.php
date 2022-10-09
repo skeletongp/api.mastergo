@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('personal_access_tokens', function (Blueprint $table) {
+          if (!Schema::hasColumn('expires_at')) {
             $table->timestamp('expires_at')->nullable();
+          }
         });
     }
 
