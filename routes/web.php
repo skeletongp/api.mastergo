@@ -172,6 +172,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('whatsapp/webhook', function () {
+    dd(request()->all());
     Log::info(request()->all());
 });
 

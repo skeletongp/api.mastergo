@@ -21,7 +21,7 @@ function setPDFPath($invoice)
         'isRemoteEnabled' => true
     ])->loadView('pages.invoices.letter', $data);
     //delete file if exists
-    $name = 'files' . getStore()->id . '/invoices/invoice'.$invoice->id.date('His').'.pdf';
+    $name = 'files' . getStore()->id . '/invoices/invoice' . $invoice->id . date('His') . '.pdf';
     Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
     $path = Storage::url($name);
     $pdf = [
@@ -33,26 +33,41 @@ function setPDFPath($invoice)
         ['fileable_id' => $invoice->id],
         $pdf
     );
-   
+
     $payment = $invoice->payments()->orderBy('id', 'desc')->first();
     $payment->pdf()->updateOrCreate(
         ['fileable_id' => $payment->id],
         $pdf
     );
 }
+
 use Twilio\Rest\Client as TwilioClient;
+
 function sendInvoiceWS($path, $phone, $number)
 {
-    $phone='+1'.preg_replace('/[^0-9]/', '', $phone);
-    $client= new TwilioClient(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'));
-    $client->messages->create(
-        'whatsapp:'.$phone,
-        [
-            'from' => env('TWILIO_FROM_NUMBER'),
-            'body' => '¡Hola!, explora nuestro catálogo de productos.',
-            "mediaUrl" => [$path],
-        ]
-    );
+    $phone = '+1' . preg_replace('/[^0-9]/', '', $phone);
+    $phone2= '+1' . preg_replace('/[^0-9]/', '', auth()->user()->phone);
+    $body='Gracias por comprar en ' . getStore()->name . ' su factura es: ' . $number.PHP_EOL.$path;
+    $body2='Copia de la factura enviada al cliente. FCT. No.: ' . $number.PHP_EOL.$path;
+    try {
+        $client = new TwilioClient(env('TWILIO_ACCOUNT_SID'), env('TWILIO_AUTH_TOKEN'));
+        $client->messages->create(
+            $phone,
+            [
+                'messagingServiceSid' => env('TWILIO_SMS_SID'),
+                "body" => $body,
+            ]
+        );
+        $client->messages->create(
+            $phone2,
+            [
+                'messagingServiceSid' => env('TWILIO_SMS_SID'),
+                "body" => $body2,
+            ]
+        );
+    } catch (\Throwable $th) {
+        dd($th);
+    }
 }
 
 function setIncome($model, $concepto, $amount)
@@ -96,10 +111,11 @@ function setPaymentTransaction($invoice, $payment, $client, $bank, $reference)
     setTransaction('Reg. abono por Transferencia', $ref . ' | ' . $reference,  $moneys[2], optional($bank)->contable, $creditable, 'Cobrar Facturas');
 }
 
-function getNumberFromInvoice(){
-    $number=Cache::get('number_invoice_'.getPlace()->id);
-    if(!$number){
-        $number=getPlaceInvoicesWithTrashed(getPlace()->id)->count();
+function getNumberFromInvoice()
+{
+    $number = Cache::get('number_invoice_' . getPlace()->id);
+    if (!$number) {
+        $number = getPlaceInvoicesWithTrashed(getPlace()->id)->count();
     }
     return $number;
 }
