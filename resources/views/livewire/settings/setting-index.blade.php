@@ -1,12 +1,12 @@
-<div class="w-full flex  items-start" x-data="{showOptions: false}">
+<div class="w-full flex  items-start" x-data="{showOptions: false}" x-cloak>
    
     <div class="  sticky top-24 pt-8 " >
-        <div class="flex justify-end w-[10rem] py-2 bg-red-400" :class="showOptions?'justify-start':'justify-end'">
+        <div class=" py-2 px-4" @click="showOptions= ! showOptions">
             <span class="fas fa-bars right-0">
             </span>
         </div>
         <div :class="showOptions?'translate-x-0':'-translate-x-[10rem] lg:translate-x-0'"
-            class="w-[10rem] lg:w-[16rem] max-w-[16rem] text-xs lg:text-lg font-medium text-gray-900  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white ">
+            class=" lg:w-[16rem] max-w-[16rem] text-xs lg:text-lg font-medium text-gray-900  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-300 ease-linear ">
             <div aria-current="true"
                 class="block w-full px-4 py-2 pb-3 text-gray-800 bg-gray-100  rounded-tl-lg cursor-pointer dark:bg-gray-800 dark:border-gray- text-sm lg:text-xl uppercase text-center font-bold ">
                 Configuración

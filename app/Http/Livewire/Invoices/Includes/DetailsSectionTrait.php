@@ -188,9 +188,9 @@ trait DetailsSectionTrait
     public function updatedProductCode()
     {
         $code = substr($this->product_code, 0, 3);
-        if($this->isScan($this->product_code)){
+       /*  if($this->isScan($this->product_code)){ */
             $this->setProduct($code);
-        }
+       /*  } */
         $this->invoice=null;
     }
     public function updatedProductName()
