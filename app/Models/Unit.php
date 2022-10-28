@@ -68,6 +68,12 @@ protected $connection="mysql";
             get:fn()=> $this->pivot->price_special
         );
     }
+    public function discount() : Attribute
+    {
+        return new Attribute(
+            get:fn()=> $this->pivot->discount
+        );
+    }
     public function cost() : Attribute
     {
         return new Attribute(

@@ -85,6 +85,11 @@
                                 <x-input-error for="unit.{{ $unt->id }}.price_special">Requerido</x-input-error>
                             </div>
                             <div class="max-w-xs w-1/4">
+                                <x-base-input label="Descuento" type="number" id="price{{ $unt->id }}.discount"
+                                    wire:model.defer="unit.{{ $unt->id }}.discount"></x-base-input>
+                                <x-input-error for="unit.{{ $unt->id }}.discount">Requerido</x-input-error>
+                            </div>
+                            <div class="max-w-xs w-1/4">
                                 <x-base-input label="Mínimo" type="number" id="price{{ $unt->id }}.min"
                                     wire:model.defer="unit.{{ $unt->id }}.min"></x-base-input>
                                 <x-input-error for="unit.{{ $unt->id }}.min">Min. 1</x-input-error>

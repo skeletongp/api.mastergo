@@ -65,7 +65,7 @@ class Product extends Model implements Searchable
 
     public function units()
     {
-        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('id','price_menor','price_mayor', 'price_special','min','stock','cost');
+        return $this->belongsToMany(Unit::class, 'product_place_units')->withPivot('id','price_menor','price_mayor', 'price_special','min','stock','cost','discount');
     }
 
     public function places()
