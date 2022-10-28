@@ -47,7 +47,7 @@
         <div class="flex space-x-4 col-span-3">
             <div class="flex space-x-4 w-full">
                 <div class="w-full">
-                    <x-base-select wire:model.defer="form.type" label="Tipo de producto">
+                    <x-base-select wire:model.defer="form.type" label="Tipo de producto" id="product.type">
                         <option value="Producto">Producto</option>
                         <option value="Servicio">Servicio</option>
                     </x-base-select>

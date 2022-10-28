@@ -6,4 +6,13 @@ if (window.removeAccent == null) {
         return string;
     };
 }
-console.log(removeAccent("áéíóú"));
+//detect if is mobile screen
+if (window.isMobile == null) {
+    window.isMobile = function () {
+        return window.innerWidth <= 768;
+    };
+}
+
+$(document).on('focus', 'input', function(e) {
+   document.querySelector('input').scrollIntoView();
+});

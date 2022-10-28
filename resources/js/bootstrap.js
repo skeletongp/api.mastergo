@@ -13,6 +13,7 @@ window.Chart =  require('chart.js/auto').default;;
 window.Swal = require('sweetalert2');
 window.toastr = require('toastr');
 
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

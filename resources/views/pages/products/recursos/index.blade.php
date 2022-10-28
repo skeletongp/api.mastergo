@@ -13,9 +13,7 @@
             @can('Crear Recursos')
                 <livewire:recursos.create-recurso />
             @endcan
-            @can('Crear Cuentas')
-                @livewire('contables.create-count', ['model' => 'App\Models\Recurso', 'codes' => ['104', '500']], key(uniqid()))
-            @endcan
+           
         </div>
     @endslot
 

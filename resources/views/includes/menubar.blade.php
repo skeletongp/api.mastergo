@@ -91,9 +91,13 @@
                                 text='Productos' activeRoute="products.*" :scope="'Productos'" />
                         @endcan
                         @can('Ver Productos')
-                        <x-side-link routeName='categories.index' icon='far w-10 text-center fa-filter fa-lg'
-                            text='Categorías' activeRoute="categories.*" :scope="'Productos'" />
-                    @endcan
+                            <x-side-link routeName='categories.index' icon='far w-10 text-center fa-filter fa-lg'
+                                text='Categorías' activeRoute="categories.*" :scope="'Productos'" />
+                        @endcan
+                        @can('Ver Productos')
+                            <x-side-link routeName='pesadas.index' icon='far w-10 text-center fa-weight fa-lg'
+                                text='Pesadas' activeRoute="pesadas.*" :scope="'Productos'" />
+                        @endcan
                         @canany(['Ver Recursos', 'Crear Recursos', 'Borrar Recursos', 'Editar Recursos'])
                             <x-side-link routeName='recursos.index' icon='far w-10 text-center fa-warehouse-alt fa-lg'
                                 text='Recursos' activeRoute="recursos.*" :scope="'Recursos'" />
@@ -145,7 +149,7 @@
                             <x-side-link routeName='contables.general_daily' icon='far w-10 text-center fa-calendar-day fa-lg'
                                 text='Diario General' activeRoute="home.*" :scope="'Reportes'" />
                         @endcan
-                       {{--  @can('Ver Transacciones')
+                        {{--  @can('Ver Transacciones')
                             <x-side-link routeName='contables.general_mayor' icon='far w-10 text-center fa-calendar-alt fa-lg'
                                 text='Balance General' activeRoute="home.*" :scope="'Reportes'" />
                         @endcan --}}
@@ -168,7 +172,7 @@
                         @can('Ver Transacciones')
                             <x-side-link routeName='contables.report_607' icon='fas w-10 text-center fa-file-upload fa-lg'
                                 text='Reporte 607' activeRoute="contables.*" :scope="'Impuestos'" />
-                                <x-side-link routeName='contables.report_606' icon='fas w-10 text-center fa-file-download fa-lg'
+                            <x-side-link routeName='contables.report_606' icon='fas w-10 text-center fa-file-download fa-lg'
                                 text='Reporte 606' activeRoute="contables.*" :scope="'Impuestos'" />
                         @endcan
                     </x-dropitem>

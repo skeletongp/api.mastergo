@@ -20,13 +20,13 @@ return new class extends Migration
             if (!Schema::hasColumn($table, 'created_by') && $table!='migrations') {
                 Schema::table($table, function (Blueprint $table) {
                     $table->unsignedBigInteger('created_by')->nullable()->default(1);
-                    $table->foreign('created_by')->references('id')->on('users');
+                    $table->foreign('created_by')->references('id')->on('moso_master.users');
                 });
             }
             if (!Schema::hasColumn($table, 'updated_by') && $table!='migrations') {
                 Schema::table($table, function (Blueprint $table) {
                     $table->unsignedBigInteger('updated_by')->nullable()->default(1);
-                    $table->foreign('updated_by')->references('id')->on('users');
+                    $table->foreign('updated_by')->references('id')->on('moso_master.users');
                 });
             }
         }
