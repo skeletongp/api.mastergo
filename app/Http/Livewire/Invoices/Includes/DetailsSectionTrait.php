@@ -16,6 +16,8 @@ trait DetailsSectionTrait
     public function setProduct($product_code)
     {
         $code = str_pad($product_code, 3, '0', STR_PAD_LEFT);
+        //get track of function that is calling this function
+     
         $product = auth()->user()->place->products()->where('code', $code)->first();
         $this->producto = $product;
         if ($product) {
@@ -49,6 +51,7 @@ trait DetailsSectionTrait
        /*  } */
         $this->emit('focusCode');
     }
+   
     public function updatedCant()
     {
         if ($this->producto) {
@@ -170,10 +173,25 @@ trait DetailsSectionTrait
 
         }
     }
+    public function isScan($code)
+    {
+        if(substr($code,0,4)=='scan'){
+            $codeArray=explode('|',$code);
+            $this->setProduct($codeArray[1]);
+            $this->cant=$codeArray[2]; 
+            $this->tryAddItems();
+
+            return true;
+        }
+    }
+   
     public function updatedProductCode()
     {
         $code = substr($this->product_code, 0, 3);
-        $this->setProduct($code);
+        if($this->isScan($this->product_code)){
+            $this->setProduct($code);
+        }
+        $this->invoice=null;
     }
     public function updatedProductName()
     {

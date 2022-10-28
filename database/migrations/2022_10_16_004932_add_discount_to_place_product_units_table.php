@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('product_place_units', function (Blueprint $table) {
-            if (!Schema::hasColumn('place_product_units', 'discount')) {
+            if (!Schema::hasColumn('product_place_units', 'discount')) {
                 $table->decimal('discount', 10, 2)->default(0)->after('price_special');
             }
         });
@@ -28,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('product_place_units', function (Blueprint $table) {
-            $table->dropifExists('discount');
+            $table->dropColumn('discount');
         });
     }
 };

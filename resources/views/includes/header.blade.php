@@ -1,6 +1,6 @@
 <nav
     class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 flex flex-row justify-between items-center ">
-    <div class="flex space-x-2 uppercase items-center">
+    <div class="hidden lg:flex space-x-2 uppercase items-center">
         <a href="{{ route('home') }}">
             <div class="h-12 w-12 bg-contain bg-no-repeat bg-center rounded-full"
                 style="background-image: url({{ getStoreLogo() }})"></div>
@@ -14,7 +14,7 @@
 
     </div>
     <div class="container flex flex-row justify-end items-end mx-auto ">
-        <div class="hidden lg:flex lg:order-2 ml-4">
+        <div class=" lg:flex lg:order-2 ml-4">
             <div class=" hidden lg:block  mr-3 lg:mr-0 w-56">
                 <livewire:general.search-field />
             </div>
@@ -29,7 +29,7 @@
                 @endcan
 
                 @can('Crear Negocios')
-                    <span class="float-element">
+                    <span class="float-element hidden lg:block">
                         <livewire:store.create-store />
                     </span>
                 @endcan
@@ -76,4 +76,7 @@
             </x-slot>
         </x-actions>
     </div>
+
+   
+
 </nav>

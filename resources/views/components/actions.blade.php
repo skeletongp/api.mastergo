@@ -1,4 +1,4 @@
-<ul class=" list-none hidden lg:flex space-x-2 items-center">
+<ul class=" list-none flex space-x-2 items-center">
     {{ $content }}
 </ul>
 

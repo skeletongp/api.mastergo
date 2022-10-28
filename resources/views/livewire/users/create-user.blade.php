@@ -11,35 +11,35 @@
         <div>
             <form wire:submit.prevent="createUser">
                 <div class="pb-6 flex justify-end">
-                    <x-toggle label="Usuario Logueable" value="true" id="usr.loggeable" wire:model="loggeable"></x-toggle>
+                    <x-toggle label="Usuario Logueable" value="true"  id="user.loggeable" wire:model="loggeable"></x-toggle>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-base-input label="Primer nombre" id="name" wire:model.lazy="form.name" />
+                        <x-base-input label="Primer nombre"  id="user.name" wire:model.lazy="form.name" />
                         <x-input-error for="form.name" />
                     </div>
                     <div class="w-full">
-                        <x-base-input label="Apellidos" id="lastname" wire:model.lazy="form.lastname" />
+                        <x-base-input label="Apellidos"  id="user.lastname" wire:model.lazy="form.lastname" />
                         <x-input-error for="form.lastname" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-full">
-                        <x-base-input label="Correo Electrónico" id="email" type="email" wire:model.lazy="form.email" />
+                        <x-base-input label="Correo Electrónico"  id="user.email" type="email" wire:model.lazy="form.email" />
                         <x-input-error for="form.email" />
                     </div>
                     <div class="w-full">
-                        <x-base-input type="tel" label="No. Teléfono" id="phone" wire:model.lazy="form.phone" />
+                        <x-base-input type="tel" label="No. Teléfono"  id="user.phone" wire:model.lazy="form.phone" />
                         <x-input-error for="form.phone" />
                     </div>
                 </div>
                 <div class="  pb-6 flex items-center space-x-3">
                     <div class="w-1/2">
-                        <x-base-input autocomplete="username" label="Nombre de usuario" id="username" wire:model.lazy="form.username" />
+                        <x-base-input autocomplete="username" label="Nombre de usuario"  id="user.username" wire:model.lazy="form.username" />
                         <x-input-error for="form.username" />
                     </div>
                     <div class="w-1/2">
-                        <x-base-input label="Contraseña" autocomplete="new-password" type="password" id="new-password"
+                        <x-base-input label="Contraseña" autocomplete="new-password" type="password"  id="user.new-password"
                             wire:model.lazy="form.password" />
                         <x-input-error for="form.password" />
                     </div>
@@ -48,7 +48,7 @@
                    
                     <div class="w-full pb-0 select2-div">
                         <label for="role">Rol de usuario</label>
-                        <x-select id="frole" wire:model.lazy="role" class=" select2">
+                        <x-select  id="user.frole" wire:model.lazy="role" class=" select2">
                             <option value=""></option>
                             @foreach ($roles as $name)
                                 <option value="{{ $name }}">{{ preg_replace('/[0-9]+/', '',  $name); }}</option>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="w-full pb-0">
                         <label for="place_id">Sucursal Predeterminada</label>
-                        <x-select id="place_id" wire:model.lazy="form.place_id" class="select2">
+                        <x-select  id="user.place_id" wire:model.lazy="form.place_id" class="select2">
                             @foreach ($places as $id=> $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
                             @endforeach
@@ -77,7 +77,7 @@
                                 <span class=" text-sm shadow-sm rounded-xl bg-blue-100  px-4 py-2.5">Tamaño:
                                     {{ formatNumber($avatar->getSize() / 1024) }} KB</span>
                             @endif
-                            <input wire:model="avatar" type="file" class="hidden" name="avatar" id="avatar"
+                            <input wire:model="avatar" type="file" class="hidden" name="avatar"  id="user.avatar"
                                 accept="image/png, image/gif, image/jpeg">
                         </label>
                         <hr>

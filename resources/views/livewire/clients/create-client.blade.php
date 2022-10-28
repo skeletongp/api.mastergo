@@ -12,43 +12,43 @@
         </x-slot>
         <div class="relative pt-12">
             <div class="absolute right-2 flex justify-end space-x-4 items-center left-2 top-0 font-bold text-lg">
-               <div class="w 40">
-                <x-base-select label="" id="cltSpecial" wire:model.defer="form.special">
-                    <option value="0">Normal</option>
-                    <option value="1">Especial</option>
-                </x-base-select>
-               </div>
+                <div class="w 40">
+                    <x-base-select label="" id="cltSpecial" wire:model.defer="form.clt.special">
+                        <option value="0">Normal</option>
+                        <option value="1">Especial</option>
+                    </x-base-select>
+                </div>
                 <span>Cód.: {{ $form['code'] }}</span>
             </div>
-            <form wire:submit.prevent="createClient">
+            <form wire:submit.prevent="createClient" class="mb-282 lg:mb-2">
                 <div class="flex space-x-4">
                     <div class="w-full overflow-hidden">
-
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
-                                <x-base-input label="Nombre del negocio" id="form.name" wire:model.defer="form.name" />
-                                <x-input-error for="form.name" />
+                                <x-base-input label="Nombre del negocio" id="form.clt.name"
+                                    wire:model.defer="form.clt.name" />
+                                <x-input-error for="form.clt.name" />
                             </div>
-
                         </div>
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
                                 <x-base-input label="Correo Electrónico" id="client.email" type="email"
-                                    wire:model.defer="form.email" />
-                                <x-input-error for="form.email" />
+                                    wire:model.defer="form.clt.email" />
+                                <x-input-error for="form.clt.email" />
                             </div>
                         </div>
                         <div class="    pb-6 ">
                             <div class="w-full overflow-hidden">
-                                <x-base-input label="Dirección" id="client.address" wire:model.defer="form.address" />
-                                <x-input-error for="form.address" />
+                                <x-base-input label="Dirección" id="client.address"
+                                    wire:model.defer="form.clt.address" />
+                                <x-input-error for="form.clt.address" />
                             </div>
                         </div>
                     </div>
                     <div class="w-full overflow-hidden">
 
-                        <div class="  pb-6 flex items-start space-x-3">
-                            <div class="w-full overflow-hidden">
+                        <div class=" pb-0  lg:pb-6 flex flex-col lg:flex-row lg:space-y-0 lg:space-x-3 items-start ">
+                            <div class="w-full pb-6 lg:pb-0 overflow-hidden">
                                 <x-base-select class="{{ $cltDocType ? 'text-black' : 'text-gray-300' }}"
                                     label="Tipo de documento" id="cltDocType" wire:model="cltDocType">
                                     <option value="" class="text-gray-300">Elija RNC o Cédula</option>
@@ -57,36 +57,36 @@
                                 </x-base-select>
                                 <x-input-error for="cltDocType">Indique el tipo de documento</x-input-error>
                             </div>
-                            <div class="w-full overflow-hidden {{ $cltDocType != 'RNC' ? 'hidden' : '' }}">
+                            <div class="w-full pb-6 lg:pb-0 overflow-hidden {{ $cltDocType != 'RNC' ? 'hidden' : '' }}">
                                 <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de RNC" id="client_RNC"
-                                    type="text" wire:model.defer="form.rnc"
+                                    type="text" wire:model.defer="form.clt.rnc"
                                     wire:keydown.enter.prevent="loadFromRNC" />
-                                <x-input-error for="form.rnc" />
+                                <x-input-error for="form.clt.rnc" />
 
                             </div>
                             <div class="w-full overflow-hidden {{ $cltDocType != 'Cédula' ? 'hidden' : '' }}">
                                 <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de Cédula"
-                                    id="client_Cedula" type="text" wire:model.defer="form.rnc"
+                                    id="client_Cedula" type="text" wire:model.defer="form.clt.rnc"
                                     wire:keydown.enter.prevent="loadFromRNC" />
-                                <x-input-error for="form.rnc" />
+                                <x-input-error for="form.clt.rnc" />
 
                             </div>
                         </div>
                         <div class="  pb-6 flex items-start space-y-0 space-x-3">
                             <div class="w-full overflow-hidden">
                                 <x-base-input type="tel" label="No. Teléfono" id="client.phone"
-                                    wire:model.defer="form.phone" />
-                                <x-input-error for="form.phone" />
+                                    wire:model.defer="form.clt.phone" />
+                                <x-input-error for="form.clt.phone" />
                             </div>
                             @can('Asignar Créditos')
                                 <div class="w-full overflow-hidden">
                                     <x-base-input label="Balance" placeholder="Límite de crédito" type="number"
-                                        id="client.limit" wire:model.defer="form.limit" />
-                                    <x-input-error for="form.limit" />
+                                        id="client.limit" wire:model.defer="form.clt.limit" />
+                                    <x-input-error for="form.clt.limit" />
                                 </div>
                             @else
-                                <input type="hidden" name="form.limit" wiere.model="form.limit"
-                                    x-bind:value="0.00" id="form.limit">
+                                <input type="hidden" name="form.clt.limit" wiere.model="form.clt.limit"
+                                    x-bind:value="0.00" id="form.clt.limit">
                             @endcan
                         </div>
                         <div class=" flex items-start space-x-3">
@@ -109,26 +109,30 @@
                     </div>
                 </div>
                 <h1 class="text-center uppercase py-4 font-bold text-xl">Persona de Contacto</h1>
-                <div>
+                <div class=" ">
                     <div class="  pb-6 flex items-start space-x-3">
-                        <div class="w-full overflow-hidden">
-                            <x-base-input label="Nombre" id="client.name" wire:model.defer="name" />
-                            <x-input-error for="name" />
+                        <div class="flex w-full flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+                            <div class="w-full overflow-hidden">
+                                <x-base-input label="Nombre" id="client.name" wire:model.defer="name" />
+                                <x-input-error for="name" />
+                            </div>
+                            <div class="w-full overflow-hidden">
+                                <x-base-input label="Apellidos" id="client.lastname" wire:model.defer="lastname" />
+                                <x-input-error for="lastname" />
+                            </div>
                         </div>
-                        <div class="w-full overflow-hidden">
-                            <x-base-input label="Apellidos" id="client.lastname" wire:model.defer="lastname" />
-                            <x-input-error for="lastname" />
-                        </div>
+                        <div class="flex w-full flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+                            <div class="w-full overflow-hidden">
+                                <x-base-input type="tel" label="Nº. Celular" id="client.cellphone"
+                                    wire:model.defer="cellphone" />
+                                <x-input-error for="cellphone" />
+                            </div>
+                            <div class="w-full overflow-hidden">
+                                <x-base-input type="text" label="Cédula Personal" id="contact_cedula"
+                                    wire:model.defer="cedula" />
+                                <x-input-error for="cedula" />
+                            </div>
 
-                        <div class="w-full overflow-hidden">
-                            <x-base-input type="tel" label="Nº. Celular" id="client.cellphone"
-                                wire:model.defer="cellphone" />
-                            <x-input-error for="cellphone" />
-                        </div>
-                        <div class="w-full overflow-hidden">
-                            <x-base-input type="text" label="Cédula Personal" id="contact_cedula"
-                                wire:model.defer="cedula" />
-                            <x-input-error for="cedula" />
                         </div>
 
                     </div>
@@ -143,7 +147,7 @@
 </div>
 @push('js')
     <script>
-        $('#cltDocType').on('change', function () {
+        $('#cltDocType').on('change', function() {
             $('#client_RNC').val(' ');
         });
         $('#client_RNC').formatPhoneNumber({

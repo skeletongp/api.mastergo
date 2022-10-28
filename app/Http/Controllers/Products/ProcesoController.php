@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Products;;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Proceso;
 use App\Models\Production;
@@ -10,19 +12,19 @@ class ProcesoController extends Controller
 {
     public function index()
     {
-        return view('pages.procesos.index');
+        return view('pages.products.procesos.index');
     }
     public function create()
     {
-        return view('pages.procesos.create');
+        return view('pages.products.procesos.create');
     }
     public function formula(Proceso $proceso)
     {
-        return view('pages.procesos.formula-proceso',['proceso'=>$proceso]);
+        return view('pages.products.procesos.formula-proceso',['proceso'=>$proceso]);
     }
     public function show(Proceso $proceso)
     {
-        return view('pages.procesos.show',['proceso'=>$proceso]);
+        return view('pages.products.procesos.show',['proceso'=>$proceso]);
     }
     public function production_show($id)
     {

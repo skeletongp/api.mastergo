@@ -13,7 +13,7 @@
                     </a>
                 </div>
             @endcan
-           {{--  @can('Crear Productos')
+            {{--  @can('Crear Productos')
                 @livewire('contables.create-count', ['model' => 'App\Models\Product', 'codes' => ['104', '500']], key(uniqid()))
             @endcan --}}
             @can('Ver Utilidad')

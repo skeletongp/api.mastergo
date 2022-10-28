@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Products;;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -13,7 +14,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return view('pages.products.index');
+        return view('pages.products.products.index');
     }
     public function report(){
         $place = auth()->user()->place;
@@ -29,25 +30,25 @@ class ProductController extends Controller
             'totalSalida' => $totalSalida,
 
         ];
-        $pdf = $PDF->loadView('pages.products.product-report', $data);
+        $pdf = $PDF->loadView('pages.products.products.product-report', $data);
         return $pdf->download('inventario general.pdf');
     }
     public function create()
     {
-        return view('pages.products.create');
+        return view('pages.products.products.create');
     }
     public function show(Product $product)
     {
-        return view('pages.products.show', compact('product'));
+        return view('pages.products.products.show', compact('product'));
     }
 
     public function edit(Product $product)
     {
-        return view('pages.products.edit', with(['product'=>$product]));
+        return view('pages.products.products.edit', with(['product'=>$product]));
     }
     public function sum()
     {
-        return view('pages.products.sum');
+        return view('pages.products.products.sum');
     }
     public function catalogue(){
          $place = auth()->user()->place;
@@ -59,11 +60,11 @@ class ProductController extends Controller
             'products' => $products,
     
         ];
-        $pdf = $PDF->loadView('pages.products.catalogue', $data);
+        $pdf = $PDF->loadView('pages.products.products.catalogue', $data);
         $name = 'files' . $store->id . '/catálogo/catalogo de productos.pdf';
         Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
         $url = Storage::url($name);
         Cache::put('productCatalogue_'.env('STORE_ID'), $url);
-        return view('pages.products.view-catalogue', compact('url'));
+        return view('pages.products.products.view-catalogue', compact('url'));
     }
 }

@@ -13,11 +13,11 @@
         x-transition:enter-start="-translate-y-full opacity-0" x-transition:enter-end="opacity-100 -translate-y-0"
         x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 -translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-full" @if($clickAway) @click.away="open = false" @endif
-        class="w-full z-50 flex justify-center items-center bg-gray-900 bg-opacity-5  h-full lg:inset-0 {{$fitV?'':$minHeight}} mx-auto absolute " style="z-index: {{$zindex}}">
+        class="w-full z-50 flex justify-center items-center bg-gray-900 bg-opacity-5  h-full inset-0 {{$fitV?'':$minHeight}} mx-auto absolute " style="z-index: {{$zindex}}">
 
         {{-- Modal Container --}}
         <div
-            class=" bg-white rounded-lg flex flex-col p-4 mx-auto w-full {{ $maxWidth }} shadow-sm shadow-blue-500 dark:bg-gray-700 border border-blue-500 overflow-hidden" {{-- @click.away="open=false" --}}>
+            class=" bg-white rounded-lg flex flex-col p-4 mx-auto w-full {{ $maxWidth }} shadow-sm shadow-blue-500 dark:bg-gray-700 border border-blue-500 overflow-hidden overflow-y-scroll" {{-- @click.away="open=false" --}}>
 
             {{-- Modal Header --}}
             <div class="flex justify-between ">

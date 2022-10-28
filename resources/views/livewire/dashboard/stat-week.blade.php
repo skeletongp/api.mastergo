@@ -1,4 +1,4 @@
-<div class=" w-full col-span-2">
+<div class=" w-full ">
     <div style="height: 22rem" class="p-4 shadow-xl">
         <canvas id="myChart2" ></canvas>
     </div>

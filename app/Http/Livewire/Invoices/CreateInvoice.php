@@ -68,11 +68,7 @@ class CreateInvoice extends Component
 
         }
     }
-    public function updatedProductCode()
-    {
-        $this->setProduct($this->product_code);
-        $this->invoice = null;
-    }
+   
 
 
 

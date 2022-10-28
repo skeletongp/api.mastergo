@@ -1,7 +1,7 @@
 <div>
     <x-modal maxWidth="max-w-lg" :fitV="false">
         <x-slot name="button">
-            <span> Añadir</span>
+            <span> Crear</span>
         </x-slot>
         <x-slot name="title">Registrar recurso/Condimento</x-slot>
 
