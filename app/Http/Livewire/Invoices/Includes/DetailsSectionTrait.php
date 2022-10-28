@@ -151,6 +151,7 @@ trait DetailsSectionTrait
                 $this->form['price_type'] = 'mayor';
             } else {
                 $this->price = $unit->pivot->price_menor;
+                $this->discount = $unit->pivot->discount;
                 $this->form['price_type'] = 'detalle';
             }
 
