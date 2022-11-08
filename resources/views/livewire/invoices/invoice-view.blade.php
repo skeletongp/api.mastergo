@@ -1,17 +1,17 @@
-   <div class="w-full flex  items-start">
-       <div class="w-3/5 pb-6 relative">
+   <div class="w-full flex flex-col lg:flex-row  items-start">
+       <div class="w-full lg:w-3/5 pb-6 relative">
            <div
                class="w-full text-lg font-medium text-gray-900 bg-white  rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                <livewire:invoices.invoice-list />
            </div>
        </div>
 
-       <div class="w-3/5 h-full  pl-0" x-data="{ open: true }">
+       <div class="w-full lg:w-3/5 h-full  pl-0" x-data="{ open: true }">
            @if ($currentInvoice)
                <div class="mx-auto ">
                    <div
                        class="flex justify-end relative items-center pb-2 pt-1 space-x-4 bg-gray-100 pr-4 rounded-tr-lg">
-                       <div class="absolute left-2 overflow-hidden overflow-ellipsis whitespace-nowrap  w-[22rem] ">
+                       <div class="absolute hidden lg:flex left-2 overflow-hidden overflow-ellipsis whitespace-nowrap  w-[22rem] ">
                            <span class="font-bold uppercase text-xl ">
                                {{ ellipsis($currentInvoice->name ?: ($currentInvoice->client->name ?: $currentInvoice->client->contact->fullname), 17) }}
                                →{{ $currentInvoice->number }} →
@@ -46,9 +46,10 @@
                    </div>
                    <div class=" mx-auto relative w-full">
                        @if ($invoice->pdf)
-                           <iframe src="{{ $invoice->pdf->pathLetter }}#view=FitH" width="700" height="700"
+                           <iframe src="https://docs.google.com/gview?url={{ $invoice->pdf->pathLetter }}&embedded=true" class="w-full lg:w-[700px] h-[700px]"  frameborder="0"
                                type="application/pdf">
                            </iframe>
+                           
                        @endif
                    </div>
                </div>

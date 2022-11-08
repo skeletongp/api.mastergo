@@ -1,5 +1,5 @@
 <div>
-    {{-- <button wire:click="$set('product_code','scan|030|10')">Test scan {{$product_code}}</button> --}}
+    <button wire:click="$set('product_code','scan|030|10')">Test scan {{$product_code}}</button>
     <table class="w-max border-collapse border-2 text-sm text-left text-gray-900 dark:text-gray-400 table-auto">
         <thead class="text-sm text-gray-800 uppercase  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -59,7 +59,6 @@
                 </td>
                 <td class=" pt-0 border-gray-200 border">
                     <div class="w-16">
-
                         <x-base-input id="cant" class="uppercase border-none text-center bg-transparent " type="number"
                             placeholder="Cant." wire:keydown.enter="tryAddItems" wire:model.lazy="cant" label=""></x-base-input>
                     </div>

@@ -199,7 +199,7 @@
             z-index: 2000;
         }
     </style>
-    <div class="flex p-4 justify-between fixed bottom-0">
+    <div class="hidden lg:flex p-4 justify-between fixed bottom-0">
         <x-button type="button" onclick="history.back();" id="hBack">
             <small class="flex items-center space-x-1">
                 <span class="fas fa-angle-left text-xl"></span>

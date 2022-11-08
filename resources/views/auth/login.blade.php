@@ -13,36 +13,35 @@
 </head>
 
 <body>
-    <div class="flex items-center min-h-screen bg-gray-50 select-none">
-        <div class="flex-1 h-full lg:max-h-[30rem] max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
-            <div class="flex flex-col lg:flex-row ">
-                <div class="h-full lg:h-auto lg:w-1/2 bg-teal-700 text-gray-100 grid grid-cols-2 gap-6 p-6">
-                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
-                        <span class="fas fa-chart-bar text-7xl"></span>
+        <div class="flex h-[90vh] lg:h-screen items-center justify-center w-full  mx-auto overflow-hidden bg-cyan-400 rounded-lg shadow-xl">
+            <div class=" lg:flex flex-col lg:flex-row lg:max-h-[30rem] w-full mx-auto max-w-sm sm:max-w-4xl bg-white">
+                <div class="hidden order-2 lg:order-1 h-full w-full lg:h-auto lg:w-1/2 bg-teal-700 text-gray-100 lg:grid grid-cols-2 gap-6 p-6">
+                    <div class="flex items-center justify-between h-[3.5rem] lg:h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-chart-bar text-4xl lg:text-7xl"></span>
                         Estadísticas
                     </div>
-                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
-                        <span class="fas fa-cash-register text-7xl"></span>
+                    <div class="flex items-center justify-between h-[3.5rem] lg:h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-cash-register text-4xl lg:text-7xl"></span>
                         Contabilidad
                     </div>
-                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
-                        <span class="fas fa-file-invoice-dollar text-7xl"></span>
+                    <div class="flex items-center justify-between h-[3.5rem] lg:h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-file-invoice-dollar text-4xl lg:text-7xl"></span>
                         Facturación
                     </div>
-                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
-                        <span class="fas fa-cogs text-7xl"></span>
+                    <div class="flex items-center justify-between h-[3.5rem] lg:h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-cogs text-4xl lg:text-7xl"></span>
                         Gestión
                     </div>
-                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
-                        <span class="fas fa-users-cog text-7xl"></span>
+                    <div class="flex items-center justify-between h-[3.5rem] lg:h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-users-cog text-4xl lg:text-7xl"></span>
                         Personas
                     </div>
-                    <div class="flex items-center justify-between h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
-                        <span class="fas fa-layer-group text-7xl"></span>
+                    <div class="flex items-center justify-between h-[3.5rem] lg:h-[6.5rem] flex-col space-y-2 font-bold text-xl uppercase">
+                        <span class="fas fa-layer-group text-4xl lg:text-7xl"></span>
                         Inventario
                     </div>
                 </div>
-                <div class="flex items-center justify-center p-6 sm:p-12 lg:w-1/2">
+                <div class="order-1 lg:order-2 flex items-center justify-center p-6 sm:p-12 lg:w-1/2">
                     <form class="w-full" id="formLogin" action="{{ route('login.store') }}" method="POST">
                         @csrf
 
@@ -95,10 +94,8 @@
                 </div>
             </div>
         </div>
-    </div>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
          $('button').on('click', function() {
             $('#generalLoad').removeClass('hidden');
