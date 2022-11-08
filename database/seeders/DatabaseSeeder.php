@@ -45,14 +45,9 @@ class DatabaseSeeder extends Seeder
         ]);
       
         $units=[
-            ['name'=>'Libra','symbol'=>'LB'],
+            ['name'=>'Servicio','symbol'=>'Serv'],
             ['name'=>'Unidad','symbol'=>'UND'],
-            ['name'=>'Metro3','symbol'=>'MT3'],
-            ['name'=>'Rollo','symbol'=>'RLL'],
-            ['name'=>'Funda','symbol'=>'FDA'],
-            ['name'=>'Cubeta','symbol'=>'CBT'],
-            ['name'=>'Galón','symbol'=>'GAL'],
-            ['name'=>'Quintal','symbol'=>'QTL']
+            ['name'=>'Yarda','symbol'=>'YD'],
         ];
         foreach($units as $unit){
             $store->units()->create($unit);
