@@ -32,9 +32,10 @@
                 value = $(this).val();
                 list = '{{ $listName }}';
                 model = '{{ $model }}';
-                setValue = $('#' + list + ' [value="' + value.replace(/"/g, '&quot;') + '"]').data('value');
+                setValue = $('#' + list + ' [value="' + value+ '"]').data('value');
                 if (model) {
                     @this.set(model, setValue);
+                   console.log(model, input, id, setValue, list, value);
                 }
             })
             input.on('keypress', function(e) {

@@ -20,20 +20,20 @@
         <x-base-input wire:keydown.enter.prevent='rncEnter' wire:model.defer="name" placeholder="Cliente Genérico" class="py-1" label="Nombre/RNC" id="clt.inv.name">
         </x-base-input>
     <div class="w-full  ">
-        <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.address"
+        <x-base-input class="text-base uppercase" inputClass="py-1" disabled wire:model.defer="client.address"
             id="clt.address" label="Dirección"></x-base-input>
     </div>
     <div class="flex space-x-2 ">
         <div class="w- ">
-            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.phone"
+            <x-base-input class="text-base uppercase" inputClass="py-1" disabled wire:model.defer="client.phone"
                 id="clt.phone" label="Nº. Teléfono" type="tel"></x-base-input>
         </div>
         <div class="w-2/5">
-            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.rnc"
+            <x-base-input class="text-base uppercase" inputClass="py-1" disabled wire:model.defer="client.rnc"
                 id="clt.rnc" label="RNC/CÉD."></x-base-input>
         </div>
         <div class="w-2/5">
-            <x-base-input class="text-base uppercase" inputClass="py-0" disabled wire:model.defer="client.balance"
+            <x-base-input class="text-base uppercase" inputClass="py-1" disabled wire:model.defer="client.balance"
                 id="clt.balance" label="Deuda"></x-base-input>
         </div>
     </div>

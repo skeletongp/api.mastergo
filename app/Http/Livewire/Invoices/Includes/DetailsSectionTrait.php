@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Invoices\Includes;
 
+use function PHPUnit\Framework\never;
 trait DetailsSectionTrait
 {
+    public $oldPrice;
     public $producto;
     public $product, $product_code, $product_name, $products=[], $stock, $unit, $open = false;
 
@@ -40,6 +42,7 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
+        $this->setManualDiscount($this->oldPrice, $this->price);
         $this->validate(['product' => 'required']);
         $place=getPlace();
         $this->number =getPlace()->id . '-' . str_pad( getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
@@ -154,7 +157,9 @@ trait DetailsSectionTrait
                 $this->form['price_type'] = 'mayor';
             } else {
                 $this->price = $unit->pivot->price_menor;
-                $this->discount = $unit->pivot->discount;
+                if($this->discount<1){
+                    $this->discount = $unit->pivot->discount;
+                }
                 $this->form['price_type'] = 'detalle';
             }
 
@@ -183,14 +188,15 @@ trait DetailsSectionTrait
 
             return true;
         }
+        return false;
     }
    
     public function updatedProductCode()
     {
         $code = substr($this->product_code, 0, 3);
-       /*  if($this->isScan($this->product_code)){ */
+        if(!$this->isScan($this->product_code)){
             $this->setProduct($code);
-       /*  } */
+        }
         $this->invoice=null;
     }
     public function updatedProductName()
@@ -204,9 +210,13 @@ trait DetailsSectionTrait
     }
     public function updatingPrice($newPrice)
     {
-        $oldPrice = floatVal($this->price) ?: 0.0001;
-        $this->freshUnitId();
+        $this->oldPrice = $this->price;
+        
 
+        $oldPrice = floatVal($this->price) ?: 0.0001;
+        
+        
+        $this->freshUnitId();
 
         $pr = removeComma($newPrice);
         $sub = removeComma(formatNumber((floatVal($this->cant)  * $pr) * (1 - ($this->discount / 100))));
@@ -216,7 +226,18 @@ trait DetailsSectionTrait
             $this->checkStock();
         }
         $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
-        $this->price = $newPrice;
+        $this->setManualDiscount($oldPrice, $newPrice);
+        
+    }
+    public function updatedPrice($oldPrice){
+    }
+
+    public function setManualDiscount($oldPrice, $newPrice){
+        if($oldPrice>$newPrice){
+            $this->discount = ($oldPrice - $newPrice) / $oldPrice * 100;
+           $this->price=$oldPrice;
+            
+        }
     }
 
     public function updatingDiscount($desc)

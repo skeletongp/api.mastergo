@@ -60,6 +60,9 @@
             <x-loading></x-loading>
         </div>
     </div>
+    <div class="lg:hidden">
+        @include('livewire.invoices.create-mobile')
+    </div>
     {{-- Mobile view --}}
     
     @include('livewire.invoices.includes.invoice-js')
