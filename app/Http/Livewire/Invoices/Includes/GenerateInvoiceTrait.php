@@ -73,6 +73,9 @@ trait GenerateInvoiceTrait
 
     public function trySendInvoice()
     {
+        if(!$this->number){
+            $this->number =getPlace()->id . '-' . str_pad( getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
+        }
         $condition = $this->condition != 'De Contado' && $this->condition != 'Contra Entrega'
          && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
 
