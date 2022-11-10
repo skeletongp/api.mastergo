@@ -98,6 +98,7 @@ trait DetailsSectionTrait
 
         array_push($this->details, $this->form);
         $this->emit('focusCode');
+
         $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name', 'taxTotal');
     }
     public function removeItem($id)
@@ -211,8 +212,6 @@ trait DetailsSectionTrait
     public function updatingPrice($newPrice)
     {
         $this->oldPrice = $this->price;
-        
-
         $oldPrice = floatVal($this->price) ?: 0.0001;
         
         

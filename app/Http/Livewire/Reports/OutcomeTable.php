@@ -33,7 +33,7 @@ class OutcomeTable extends LivewireDatatable
     {
       
         return [
-            DateColumn::name('outcomes.created_at')->format('d/m/Y')->label('Fecha'),
+            DateColumn::name('outcomes.created_at')->format('d/m/Y')->label('Fecha')->searchable(),
             Column::callback('users.fullname', function($user){
                 return ellipsis($user, 20);
             })->label('Usuario')->searchable(),
