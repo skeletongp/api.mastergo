@@ -66,19 +66,38 @@ class PaymentsFromInvoice extends LivewireDatatable
         if ($user->hasRole(['Super Admin', 'Admin'])) {
             $place = getPlace();
             $payment = Payment::with('payable.client', 'payer')->whereId($id)->first();
-            $firstPayment = Payment::where('payable_id', $payment->payable_id)->where('payable_type', $payment->payable_type)->orderBy('id', 'asc')->first();
-            if ($firstPayment->id == $payment->id) {
-                $this->emit('showAlert', 'No se puede eliminar el primer pago de la factura','error');
+            $moreRecents = Payment::where('payable_id', $payment->payable_id)->where('payable_type', $payment->payable_type)->where('id', '>', $id)->count();
+
+            if ($moreRecents) {
+                $this->emit('showAlert', 'No se puede eliminar el pago porque tiene pagos posteriores');
                 return;
             }
+
+            $firstPayment = Payment::where('payable_id', $payment->payable_id)->where('payable_type', $payment->payable_type)->orderBy('id', 'asc')->first();
+
             $this->backToInvoice($payment->payable, $payment->payed - $payment->cambio);
             setTransaction('Reversión pago de ' . $payment->payer->name, $payment->payable->number, $payment->payed - $payment->cambio, $payment->payer->contable, $place->cash());
-            $payment->delete();
-            $this->emit('showAlert', 'El pago ha sido eliminado','success');
+            //check if payment´s payable has payments more recents than this payment   
+
+            if ($firstPayment->id == $payment->id) {
+                $payment->update([
+                    'rest' => $payment->payable->rest,
+                    'cambio' => 0,
+                    'efectivo' => 0,
+                    'transferencia' => 0,
+                    'payed' => 0,
+                    'tarjeta' => 0,
+
+                ]);
+                $this->emit('showAlert', 'El pago ha sido eliminado', 'success');
+                return;
+            } else {
+                $payment->delete();
+                $this->emit('showAlert', 'El pago ha sido eliminado', 'success');
+            }
         } else {
             $this->emit('showAlert', 'No puede eliminar pagos', 'error');
         }
-        
     }
     public function backToInvoice($invoice, $payed)
     {
