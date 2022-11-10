@@ -7,7 +7,7 @@
             icon: 'error'
         }).then((result) => {
             if (result.isConfirmed) {
-                location.href='/');
+                location.href='/';
             }
         })
     </script>
