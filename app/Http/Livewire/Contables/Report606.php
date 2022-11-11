@@ -37,8 +37,9 @@ class Report606 extends Component
             ->where('payments.payable_type','App\Models\Outcome')
             ->leftJoin('providers','outcomes.outcomeable_id','=','providers.id')
             ->where('outcomes.outcomeable_type','App\Models\Provider')
-            ->selectRaw('outcomes.*, providers.rnc as rnc, outcomes.updated_at as day, sum(payments.efectivo) as efectivo, payments.tarjeta, sum(payments.transferencia) as transferencia, sum(payments.tax) as tax, providers.fullname as provider')
+            ->selectRaw('outcomes.*, providers.rnc as rnc, outcomes.updated_at as day, payments.efectivo as efectivo, payments.tarjeta, payments.transferencia as transferencia, payments.tax as tax, providers.fullname as provider')
             ->groupBy('outcomes.id')
+            ->orderBy('payments.id')
             ->get();
 
         $data = get_defined_vars();
