@@ -176,6 +176,7 @@ trait DetailsSectionTrait
             }
             $this->total =removeComma(formatNumber($sub + $this->taxTotal)  );
             $this->pivot_id = $unit->pivot->id;
+            dd($this);
 
         }
     }
