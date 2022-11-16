@@ -252,10 +252,18 @@
                         ${{ formatNumber($outcome->propina) }}
                     </td>
                     <td style=" text-align:left; ">
-                        {{ $outcome->efectivo>0 && $outcome->transferencia>0?'Mixto':
-                        ($outcome->efectivo>0?'Efectivo':
-                        ($outcome->transferencia>0?'Transferencia':
-                        'Mixto')) }}
+                        @if ($outcome->efectivo>0 && $outcome->transferencia>0)
+                            Mixto
+                        @elseif($outcome->rest>0 && ($outcome->efectivo>0 || $outcome->transferencia>0))
+                            Mixto
+                        @elseif($outcome->efectivo>0)
+                            Efectivo
+                        @elseif($outcome->transferencia>0)
+                            Transferencia
+                        @elseif($outcome->rest>0)
+                            Crédito
+
+                        @endif
                     </td>
                    
                 </tr>
