@@ -167,15 +167,21 @@
     <table>
         <thead>
             <tr>
-                <th style="text-align: left">RNC/Cédula</th>
-                <th style="text-align: left">Tipo ID</th>
-                <th style="text-align: left">Tipo Bienes</th>
+                <th style="text-align: left">RNC</th>
+                <th style="text-align: left">ID</th>
+                <th style="text-align: left">Tipo Gasto</th>
                 <th style="text-align: left">NCF</th>
                 <th style="text-align: left">NCF Mod.</th>
                 <th style="text-align: left">F. Compr.</th>
                 <th style="text-align: left">F. Pago</th>
+                <th style="text-align: left">Servicios</th>
+                <th style="text-align: left">Bienes</th>
                 <th style="text-align: left">Monto</th>
                 <th style="text-align: left">ITBIS</th>
+                <th style="text-align: left">Selectivo</th>
+                <th style="text-align: left">ITBIS Ret.</th>
+                <th style="text-align: left">Otros</th>
+                <th style="text-align: left">Propina</th>
                 <th style="text-align: left">Forma Pago</th>
                
             </tr>
@@ -205,7 +211,7 @@
                         {{ strlen($docId) == 9 ? 1 : 2 }}
                     </td>
                     <td style="width:8%;  text-align: left">
-                        1
+                        {{$outcome->type}}
                     </td>
                     <td style="  text-align: left">
                         {{ $outcome->ncf }}
@@ -222,13 +228,31 @@
                         {{ \Carbon\Carbon::parse($outcome->day)->format('Ymd') }}
                     </td>
                     <td style=" text-align: left;  font-weight:bold">
-                        ${{ formatNumber($outcome->amount) }}
+                        ${{ formatNumber($outcome->services) }}
+                    </td>
+                    <td style=" text-align: left;  font-weight:bold">
+                        ${{ formatNumber($outcome->products) }}
+                    </td>
+                    <td style=" text-align: left;  font-weight:bold">
+                        ${{ formatNumber($outcome->services+$outcome->products) }}
                     </td>
                     <td style=" text-align: left">
-                        ${{ formatNumber($outcome->tax) }}
+                        ${{ formatNumber($outcome->itbis) }}
+                    </td>
+                    <td style=" text-align: left">
+                        ${{ formatNumber($outcome->selectivo) }}
+                    </td>
+                    <td style=" text-align: left">
+                        ${{ formatNumber($outcome->retenido) }}
+                    </td>
+                    <td style=" text-align: left;  font-weight:bold">
+                        ${{ formatNumber($outcome->other) }}
+                    </td>
+                    <td style=" text-align: left;  font-weight:bold">
+                        ${{ formatNumber($outcome->propina) }}
                     </td>
                     <td style=" text-align:left; ">
-                        {{ $outcome->rest>0?'Mixto':
+                        {{ $outcome->efectivo>0 && $outcome->transferencia>0?'Mixto':
                         ($outcome->efectivo>0?'Efectivo':
                         ($outcome->transferencia>0?'Transferencia':
                         'Mixto')) }}

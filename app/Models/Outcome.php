@@ -9,10 +9,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Outcome extends Model
 {
     use HasFactory, SoftDeletes;
-protected $connection="mysql";
+    protected $connection = "mysql";
 
-    protected $guarded=[
-        
+    protected $guarded = [];
+
+    const TYPES = [
+        '1' => 'Gasto de Personal',
+        "2" => " Gastos por trabajos, suministros y servicios",
+        "3" => " Arrendamientos",
+        "4" => " Gastos de activos fijos",
+        "5" => " Gastos de representación",
+        "6" => " Otras deducciones admitidas",
+        "7" => " Gastos financieros",
+        "8" => " Gastos extraordinarios",
+        "9" => " Compras y gastos que formarán parte del costo de venta",
+        "10" => " Adquisiciones de activos",
+        "11" => " Gastos de seguros",
     ];
 
     public function outcomeable()
