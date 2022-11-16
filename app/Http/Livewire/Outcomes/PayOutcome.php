@@ -53,6 +53,7 @@ class PayOutcome extends Component
     public function payOutcome(){
         $this->validateData();
         $outcome=$this->outcome;
+        $provider=Provider::find($outcome->outcomeable_id);
         $payed=$this->efectivo+$this->tarjeta+$this->transferencia;
         $payment=$this->createPayment($outcome, $payed);
         $outcome->update([
@@ -63,7 +64,6 @@ class PayOutcome extends Component
         $result->place->preference=getPreference(getPlace()->id);
         $result->store=getStore();
         $this->emit('printPayment', $result);
-        $provider=Provider::find($outcome->outcomeable_id);
         $this->setTransaction($outcome, $provider, $payment);
         $provider->update([
             'limit'=>$provider->limit+($payment->payed-$payment->rest)
@@ -96,7 +96,7 @@ class PayOutcome extends Component
     public function setTransaction($outcome, $provider, $payment){
         $place=getPlace();
        
-        $cash=$place->findCount($this->efectivoCode);
+        $cash=$place->counts()->whereId($this->efectivoCode)->first();
         $bank=$this->bank_id?Bank::find($this->bank_id):null;
         setTransaction('Pago cuenta en efectivo',$outcome->ncf?:$outcome->code, $this->efectivo, $provider->contable, $cash, 'Pagar Gastos');
         setTransaction('Pago cuenta por transferencia',$outcome->ncf?:$outcome->code, $this->transferencia, $provider->contable, optional($bank)->contable, 'Pagar Gastos');
