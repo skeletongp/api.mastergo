@@ -18,7 +18,8 @@ class ProductDetails extends LivewireDatatable
     public function builder()
     {
         
-         return $this->product->details()->with('unit','detailable.client');
+         return $this->product->details()->with('unit','detailable.client')
+         ->where('detailable_type','App\Models\Invoice');
     }
 
     public function columns()
