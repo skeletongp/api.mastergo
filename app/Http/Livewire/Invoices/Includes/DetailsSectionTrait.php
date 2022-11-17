@@ -42,7 +42,7 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
-        $this->setManualDiscount($this->oldPrice, $this->price);
+        
         $this->validate(['product' => 'required']);
         $place=getPlace();
         $this->number =getPlace()->id . '-' . str_pad( getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
@@ -176,7 +176,6 @@ trait DetailsSectionTrait
             }
             $this->total =removeComma(formatNumber($sub + $this->taxTotal)  );
             $this->pivot_id = $unit->pivot->id;
-            dd($this);
 
         }
     }
@@ -226,7 +225,8 @@ trait DetailsSectionTrait
             $this->checkStock();
         }
         $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
-        $this->setManualDiscount($oldPrice, $newPrice);
+        //$this->setManualDiscount($oldPrice, $newPrice);
+        
         
     }
     public function updatedPrice($oldPrice){

@@ -131,7 +131,7 @@
         tfoot {
             display: table-footer-group;
         }
-        @page { size: a2 portrait; } 
+        @page { size: a1 portrait; } 
     </style>
 </head>
 
