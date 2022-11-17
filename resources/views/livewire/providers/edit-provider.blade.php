@@ -19,10 +19,10 @@
                             <div class="  pb-6 flex items-start space-x-3">
                                 <div class="w-full overflow-hidden">
                                     <x-base-input label="Nombre Completo" id="provider.{{ $provider_id }}.name"
-                                        wire:model.defer="provider.fullname" />
-                                    <x-input-error for="provider.fullname" />
+                                        wire:model.defer="provider.name" />
+                                    <x-input-error for="provider.name" />
                                 </div>
-                               
+
                             </div>
                             <div class="  pb-6 flex items-start space-x-3">
                                 <div class="w-full overflow-hidden">
@@ -43,11 +43,11 @@
                         <div class="w-full overflow-hidden">
                             <div class="  pb-6 flex items-start space-x-3">
                                 <div class="w-full overflow-hidden">
-                                    <x-base-select label="Tipo de documento" id="provDocType{{ $provider_id }}"
-                                        wire:model.defer="provDocType">
+                                    <x-base-select class=" provDocType" label="Tipo de documento"
+                                        id="provDocType{{ $provider_id }}" wire:model.defer="provDocType">
                                         <option value=""></option>
-                                        <option {{ strlen($provider['rnc']) === 12 ? 'selected' : '' }}">RNC</option>
-                                        <option {{ strlen($provider['rnc']) === 13 ? 'selected' : '' }}">Cédula</option>
+                                        <option {{ strlen($provider['rnc']) === 11 ? 'selected' : '' }}">RNC</option>
+                                        <option {{ strlen($provider['rnc']) === 12 ? 'selected' : '' }}">Cédula</option>
                                     </x-base-select>
                                     <x-input-error for="provDocType">Indique el tipo de documento</x-input-error>
                                 </div>
@@ -89,22 +89,28 @@
     <script>
         $(document).ready(function() {
             $("input[type=tel]").formatPhoneNumber({
-                    format: '(###) ###-####'
+                format: '(###) ###-####'
+            })
+            var provider_id = @this.provider_id;
+
+            $(`.provDocType`).each(function() {
+                console.log(this.id)
+                $(this).on('change', function() {
+                    console.log($(this).val());
+                    if ($(this).val() === 'RNC') {
+                        $(`#provider_${provider_id}_rnc`).formatPhoneNumber({
+                            format: '###-#####-#'
+                        })
+
+                    } else {
+                        $(`#provider_${provider_id}_rnc`).formatPhoneNumber({
+                            format: '###-#######-#'
+                        })
+                    }
+                    $(`#provider_${provider_id}_rnc`).val('');
+
                 })
+            });
         });
-        $("#provDocType{{ $provider_id }}").on('change', function() {
-            if ($(this).val() === 'RNC') {
-                $("#provider_{{ $provider_id }}_rnc").formatPhoneNumber({
-                    format: '###-#####-#'
-                })
-
-            } else {
-                $("#provider_{{ $provider_id }}_rnc").formatPhoneNumber({
-                    format: '###-#######-#'
-                })
-            }
-            $("#provider_{{ $provider_id }}_rnc").val('');
-
-        })
     </script>
 @endpush

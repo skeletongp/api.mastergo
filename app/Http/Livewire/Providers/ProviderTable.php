@@ -4,18 +4,25 @@ namespace App\Http\Livewire\Providers;
 
 use App\Models\Provider;
 use Carbon\Carbon;
-use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;
+use App\Http\Classes\NumberColumn;
+use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ProviderTable extends LivewireDatatable
 {
     public $padding="px-2 ";
     public $headTitle="Lista de Suplidores";
+    public $hideable='select';
     public function builder()
     {
         $store=auth()->user()->store;
         $providers=
         Provider::where('providers.store_id', $store->id)
         ->leftjoin('moso_master.stores', 'stores.id', '=', 'providers.store_id')
+        ->rightjoin('counts', 'counts.contable_id', '=', 'providers.id')
+        ->where('counts.contable_type', 'App\Models\Provider')
+        ->where('counts.count_main_id','12')
+        ->where('counts.deleted_at', null)
         ->select('providers.*','stores.name as storeName')
         ->orderBy('providers.name');
         ;
@@ -27,13 +34,12 @@ class ProviderTable extends LivewireDatatable
     public function columns()
     {
         return [
+            Column::index($this)->label('ID')->searchable(),
             Column::name('fullname')->label('Nombre'),
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
-            Column::callback(['limit'], function($limit){
-                return '$'. formatNumber($limit);
-            })->label('Crédito')->searchable()->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Doc.')->searchable()->headerAlignCenter(),
+            Column::raw('CONCAT(counts.code,"-",counts.name) AS count')->label('Cuenta')->searchable()->hide(),
             $this->editColumn(),
             $this->deleteColumn(),
         ];
