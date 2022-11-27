@@ -79,11 +79,9 @@ trait GenerateInvoiceTrait
         $condition = $this->condition != 'De Contado' && $this->condition != 'Contra Entrega'
          && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
 
-        if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
-            $this->authorize('El cliente ha superado su crédito', 'validateAuthorization','sendInvoice','data=null','Autorizar');
-        } else {
+       
+      
             $this->sendInvoice();
-        }
     }
 
     public function sendInvoice()

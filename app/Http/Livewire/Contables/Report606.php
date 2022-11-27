@@ -37,12 +37,16 @@ class Report606 extends Component
             ->where('payments.payable_type','App\Models\Outcome')
             ->leftJoin('providers','outcomes.outcomeable_id','=','providers.id')
             ->where('outcomes.outcomeable_type','App\Models\Provider')
-            ->selectRaw('outcomes.*, providers.rnc as rnc, payments.updated_at as day, payments.efectivo, payments.tarjeta, payments.transferencia, payments.tax as tax, providers.fullname as provider')
+            ->selectRaw('outcomes.*, providers.rnc as rnc, MAX(payments.created_at) as day')
+            ->groupBy('outcomes.id')
+            ->orderBy('payments.id','desc')
             ->get();
+
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
 
         $pdf = $PDF->loadView('pages.contables.pdf-606', $data);
+        $pdf->download();
         $name = 'files' . $store->id . '/reporte 606/report' . Carbon::parse($this->start_at)->format('Ym') . '.pdf';
         Storage::disk('digitalocean')->put($name, $pdf->output(), 'public');
         $url = Storage::url($name);

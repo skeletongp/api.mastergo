@@ -221,7 +221,7 @@
                             <td colspan="2" style="border-bottom: .3px solid #ccc; ">
                                 <div style="text-align:right; ">
                                     <b>{{ 'DIRIGIDA A:' }}</b> <br>
-                                    {{ $invoice->name ?: ($invoice->client->name ?: $invoice->client->contact->fullname) }}<br />
+                                   {{$invoice->client->code}} {{ $invoice->name ?: ($invoice->client->name ?: $invoice->client->contact->fullname) }}<br />
                                     {!! $invoice->rnc ?'<b>RNC /CED:</b> ' .$invoice->rnc: ($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
                                     <b>TEL:</b> {{ $invoice->client->phone }} <br>
                                     {{ $invoice->client->address ?: 'Dirección N/D' }}
@@ -392,7 +392,7 @@
                 </tr>
             @endif
             @if ($invoice->rest > 0)
-                <tr class="total" style="font-weight: bold; color:red ">
+                <tr class="total" style="font-weight: bold; color:red; font-size:large ">
                     <td colspan="2"></td>
                     <td class="td-total text-right" style="text-align: right; padding-top:10px">
                         <b>PENDIENTE</b>

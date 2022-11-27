@@ -23,6 +23,7 @@ class CreateProvider extends Component
     }
     public function mount(){
         $this->form['limit'] = 0;
+        $this->form['rnc'] = null;
     }
 
     public function render()
@@ -54,9 +55,11 @@ class CreateProvider extends Component
     }
     public function loadFromRNC()
     {
+        $this->validateOnly('form.rnc');
         $provider = Provider::whereRnc($this->form['rnc'])->first();
         if ($provider) {
             $this->form = $provider->toArray();
+            $this->form['name'] = $provider->fullname;
             return;
         }
         $url = 'contribuyentes/' . str_replace('-', '', $this->form['rnc']);

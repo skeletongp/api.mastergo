@@ -13,12 +13,12 @@
         <div class="relative pt-12">
             <div class="absolute right-2 flex justify-end space-x-4 items-center left-2 top-0 font-bold text-lg">
                 <div class="w 40">
-                    <x-base-select label="" id="cltSpecial" wire:model.defer="cliente.special">
+                    <x-base-select label="" id="cltSpecial" wire:model.defer="client.special">
                         <option value="0">Normal</option>
                         <option value="1">Especial</option>
                     </x-base-select>
                 </div>
-                <span>Cód.: {{ $cliente['code'] }}</span>
+                <span>Cód.: {{ $client['code'] }}</span>
             </div>
          
             <form wire:submit.prevent="createClient" class="mb-282 lg:mb-2">
@@ -26,23 +26,23 @@
                     <div class="w-full overflow-hidden">
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
-                                <x-base-input label="Nombre del negocio" id="cliente.name"
-                                    wire:model.defer="cliente.name" />
-                                <x-input-error for="cliente.name" />
+                                <x-base-input label="Nombre del negocio" id="client.name"
+                                    wire:model.defer="client.name" />
+                                <x-input-error for="client.name" />
                             </div>
                         </div>
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
                                 <x-base-input label="Correo Electrónico" id="client.email" type="email"
-                                    wire:model.defer="cliente.email" />
-                                <x-input-error for="cliente.email" />
+                                    wire:model.defer="client.email" />
+                                <x-input-error for="client.email" />
                             </div>
                         </div>
                         <div class="    pb-6 ">
                             <div class="w-full overflow-hidden">
                                 <x-base-input label="Dirección" id="client.address"
-                                    wire:model.defer="cliente.address" />
-                                <x-input-error for="cliente.address" />
+                                    wire:model.defer="client.address" />
+                                <x-input-error for="client.address" />
                             </div>
                         </div>
                     </div>
@@ -60,34 +60,34 @@
                             </div>
                             <div class="w-full pb-6 lg:pb-0 overflow-hidden {{ $cltDocType != 'RNC' ? 'hidden' : '' }}">
                                 <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de RNC" id="client_RNC"
-                                    type="text" wire:model.defer="cliente.rnc"
+                                    type="text" wire:model.defer="client.rnc"
                                     wire:keydown.enter.prevent="loadFromRNC" />
-                                <x-input-error for="cliente.rnc" />
+                                <x-input-error for="client.rnc" />
 
                             </div>
                             <div class="w-full overflow-hidden {{ $cltDocType != 'Cédula' ? 'hidden' : '' }}">
                                 <x-base-input label="No. Documento" placeholder="Ingrese el Nº. de Cédula"
-                                    id="client_Cedula" type="text" wire:model.defer="cliente.rnc"
+                                    id="client_Cedula" type="text" wire:model.defer="client.rnc"
                                     wire:keydown.enter.prevent="loadFromRNC" />
-                                <x-input-error for="cliente.rnc" />
+                                <x-input-error for="client.rnc" />
 
                             </div>
                         </div>
                         <div class="  pb-6 flex items-start space-y-0 space-x-3">
                             <div class="w-full overflow-hidden">
                                 <x-base-input type="tel" label="No. Teléfono" id="client.phone"
-                                    wire:model.defer="cliente.phone" />
-                                <x-input-error for="cliente.phone" />
+                                    wire:model.defer="client.phone" />
+                                <x-input-error for="client.phone" />
                             </div>
                             @can('Asignar Créditos')
                                 <div class="w-full overflow-hidden">
                                     <x-base-input label="Balance" placeholder="Límite de crédito" type="number"
-                                        id="client.limit" wire:model.defer="cliente.limit" />
-                                    <x-input-error for="cliente.limit" />
+                                        id="client.limit" wire:model.defer="client.limit" />
+                                    <x-input-error for="client.limit" />
                                 </div>
                             @else
-                                <input type="hidden" name="cliente.limit" wiere.model="cliente.limit"
-                                    x-bind:value="0.00" id="cliente.limit">
+                                <input type="hidden" name="client.limit" wiere.model="client.limit"
+                                    x-bind:value="0.00" id="client.limit">
                             @endcan
                         </div>
                         <div class=" flex items-start space-x-3">
@@ -143,6 +143,8 @@
                 </div>
             </form>
         </div>
+
+       
 
     </x-modal>
 </div>

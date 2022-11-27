@@ -58,7 +58,7 @@ function setContable($model, String $code, String $origin, $name = null, $place_
         $model->contable()->save($count);
     }
 }
-function setTransaction($concept, $ref, $amount, $debitable, $creditable, $otherPermission = null)
+function setTransaction($concept, $ref="ND", $amount, $debitable, $creditable, $otherPermission = null)
 {
     $user = auth()->user() ?: User::find(1);
     $canCreate = $user->hasPermissionTo('Registrar Asientos');
