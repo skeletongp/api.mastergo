@@ -11,7 +11,8 @@
                <div class="mx-auto ">
                    <div
                        class="flex justify-end relative items-center pb-2 pt-1 space-x-4 bg-gray-100 pr-4 rounded-tr-lg">
-                       <div class="absolute hidden lg:flex left-2 overflow-hidden overflow-ellipsis whitespace-nowrap  w-[22rem] ">
+                       <div
+                           class="absolute hidden lg:flex left-2 overflow-hidden overflow-ellipsis whitespace-nowrap  w-[22rem] ">
                            <span class="font-bold uppercase text-xl ">
                                {{ ellipsis($currentInvoice->name ?: ($currentInvoice->client->name ?: $currentInvoice->client->contact->fullname), 17) }}
                                →{{ $currentInvoice->number }} →
@@ -46,10 +47,12 @@
                    </div>
                    <div class=" mx-auto relative w-full">
                        @if ($invoice->pdf)
-                           <iframe src="https://docs.google.com/gview?url={{ $invoice->pdf->pathLetter }}&embedded=true" class="w-full lg:w-[700px] h-[700px]"  frameborder="0"
-                               type="application/pdf">
+                           <iframe class="lg:hidden"
+                               src="https://docs.google.com/gview?url={{ $invoice->pdf->pathLetter }}&embedded=true"
+                               class="w-full lg:w-[700px] h-[700px]" frameborder="0" type="application/pdf">
                            </iframe>
-                           
+                           <iframe class="hidden lg:block" src="{{ $invoice->pdf->pathLetter }}#view=FitH" width="700" height="700" frameborder="0" type="application/pdf">
+                           </iframe>
                        @endif
                    </div>
                </div>

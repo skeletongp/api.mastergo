@@ -115,6 +115,7 @@ class DatabaseSeeder extends Seeder
         setContable($tax, '203', 'credit', 'ITBIS por Pagar', $place->id);
         setContable($tax, '203', 'credit', 'ISR por Pagar', $place->id);
         setContable($tax, '103', 'debit', $tax->name . ' por Cobrar', $place->id);
+        setContable($tax, '103', 'debit', 'Impuesto Selectivo por Cobrar', $place->id);
         $user->assignRole('Super Admin');
         $user->assignRole('Administrador');
         $store->roles()->save(Role::find(1));
@@ -148,6 +149,7 @@ class DatabaseSeeder extends Seeder
         setContable($place, '300', 'credit', 'Capital Sucrito y Pagado', $place->id);
         setContable($provider, '200', 'credit', $provider->fullname, $place->id);
         setContable($provider2, '200', 'credit', $provider2->fullname, $place->id);
+        setContable($place, '204', 'credit', 'ITBIS Retenido', $place->id);
         setContable($place, '600', 'debit', 'Sueldos y Salarios', $place->id);
         setContable($place, '600', 'debit', 'Atención al Personal', $place->id);
         setContable($place, '600', 'debit', 'Combustible', $place->id);

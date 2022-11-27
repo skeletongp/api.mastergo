@@ -16,7 +16,7 @@ trait OrderConfirmTrait
         
         if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
            
-            $this->authorize('Fiar factura de contado o a Genérico', 'validateAuthorization','payInvoice','data=null','Autorizar');
+            $this->authorize('Fiar factura de contado a Genérico', 'validateAuthorization','payInvoice','data=null','Autorizar');
         } else {
             $this->payInvoice();
         }

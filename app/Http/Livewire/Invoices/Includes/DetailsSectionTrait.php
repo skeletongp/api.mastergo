@@ -42,7 +42,7 @@ trait DetailsSectionTrait
     }
     public function tryAddItems()
     {
-        $this->setManualDiscount($this->oldPrice, $this->price);
+        
         $this->validate(['product' => 'required']);
         $place=getPlace();
         $this->number =getPlace()->id . '-' . str_pad( getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
@@ -98,6 +98,7 @@ trait DetailsSectionTrait
 
         array_push($this->details, $this->form);
         $this->emit('focusCode');
+
         $this->reset('form', 'product', 'cant', 'product_code', 'price', 'discount', 'total', 'product_name', 'taxTotal');
     }
     public function removeItem($id)
@@ -211,8 +212,6 @@ trait DetailsSectionTrait
     public function updatingPrice($newPrice)
     {
         $this->oldPrice = $this->price;
-        
-
         $oldPrice = floatVal($this->price) ?: 0.0001;
         
         
@@ -226,7 +225,8 @@ trait DetailsSectionTrait
             $this->checkStock();
         }
         $this->total = str_replace(',', '', formatNumber($sub + $this->taxTotal));
-        $this->setManualDiscount($oldPrice, $newPrice);
+        //$this->setManualDiscount($oldPrice, $newPrice);
+        
         
     }
     public function updatedPrice($oldPrice){
