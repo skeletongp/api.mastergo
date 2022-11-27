@@ -10,11 +10,11 @@ use Livewire\WithFileUploads;
 
 class CreateClient extends Component
 {
-    public $form=[], $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
+    public $client=[], $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
     use WithFileUploads;
     protected $listeners=['modalOpened'];
     public function mount(){
-        $this->form['code']=0;
+        $this->client['code']=0;
     }
 
     public function render()
@@ -23,23 +23,24 @@ class CreateClient extends Component
         return view('livewire.clients.create-client');
     }
     public function modalOpened(){
-        $this->form['special']=0;
+        $this->client['special']=0;
+        $this->client['limit']=0;
         $store = auth()->user()->store;
         if(!Cache::get('clientCount'.env('STORE_ID'))){
             Cache::put('clientCount'.env('STORE_ID'),$store->clients()->withTrashed()->count());
         }
         $num = Cache::get('clientCount'.env('STORE_ID')) + 1;
         $code = str_pad($num, 3, '0', STR_PAD_LEFT);
-        $this->form['code'] = $code;
+        $this->client['code'] = $code;
     }
     protected $rules = [
-        'form.name' => 'max:50',
-        'form.email' => 'required|email|max:100|unique:clients,email',
-        'form.address' => 'required|string|max:100',
-        'form.limit' => 'required|numeric|min:0',
-        'form.phone' => 'required|string|max:25',
-        'form.rnc' => 'required|string|max:25',
-        'form.special' => 'required',
+        'client.name' => 'max:50',
+        'client.email' => 'required|email|max:100|unique:clients,email',
+        'client.address' => 'required|string|max:100',
+        'client.limit' => 'required|numeric|min:0',
+        'client.phone' => 'required|string|max:25',
+        'client.rnc' => 'required|string|max:25',
+        'client.special' => 'required',
         'name' => 'required|string|max:50',
         'lastname' => 'required|string|max:75',
         'cellphone' => 'required|string|max:25',
@@ -47,21 +48,21 @@ class CreateClient extends Component
     ];
     public function createClient()
     {
-        if (empty($this->form['limit'])) {
-            $this->form['limit'] = 0.00;
+        if (empty($this->client['limit'])) {
+            $this->client['limit'] = 0.00;
         }
-        if (!array_key_exists('name', $this->form) || empty($this->form['name'])) {
-            $this->form['name'] = strtoupper(strtok($this->name, ' ').' '.strtok($this->lastname, ' '));
+        if (!array_key_exists('name', $this->client) || empty($this->client['name'])) {
+            $this->client['name'] = strtoupper(strtok($this->name, ' ').' '.strtok($this->lastname, ' '));
         }
         $store = auth()->user()->store;
         $this->validate();
-        $client = $store->clients()->create($this->form);
+        $client = $store->clients()->create($this->client);
             $client->contact()->create([
                 'name' => $this->name,
                 'lastname' => $this->lastname,
                 'cellphone' => $this->cellphone,
                 'cedula' => $this->cedula,
-                'phone'=>$this->form['phone'],
+                'phone'=>$this->client['phone'],
             ]);
         if ($this->photo_path) {
             $client->image()->create([
@@ -88,13 +89,13 @@ class CreateClient extends Component
     }
     function loadFromRNC()
     {
-        if (array_key_exists('rnc', $this->form)) {
-            $rnc=str_replace('-', '', $this->form['rnc']);
+        if (array_key_exists('rnc', $this->client)) {
+            $rnc=str_replace('-', '', $this->client['rnc']);
             $client = getApi('contribuyentes/' . $rnc);
             if ($client && array_key_exists('model', $client)) {
                 $client = $client['model'];
                 if (strlen($rnc) == 9){
-                    $this->form['name'] = $client['name'];
+                    $this->client['name'] = $client['name'];
                 } else {
                     $this->name = strtok($client['name'], ' ');
                     $this->lastname=substr($client['name'],strlen($this->name));
