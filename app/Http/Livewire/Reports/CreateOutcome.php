@@ -21,8 +21,9 @@ class CreateOutcome extends Component
     public $hideButton = false, $open = false, $payAll = false;
     public $efectivo = 0, $tarjeta = 0, $transferencia = 0, $banks = [], $bank_id, $ref_bank, $tax = 0, $rate = 18;
     public $setCost = true, $hideTax = true, $prov_name, $prov_rnc;
-    public $itbis = 0, $selectivo=0, $propina = 0, $other = 0, $retenido = 0, $type = 2, $total = 0;
-    public $products=0, $services=0, $date;
+    public $itbis = 0, $selectivo = 0, $propina = 0, $other = 0, $retenido = 0, $type = 2, $total = 0;
+    public $products = 0, $services = 0, $date;
+    public $inPercent = true;
 
     protected $listeners = ['modalOpened'];
 
@@ -57,22 +58,36 @@ class CreateOutcome extends Component
 
     public function updatedProducts()
     {
+       if($this->products){
         $this->amount = $this->products + $this->services;
-        $this->updated();
+        $this->updated('products');
+       }
     }
     public function updatedServices()
     {
-        $this->amount = $this->products + $this->services;
-        $this->updated();
+        if($this->services){
+            $this->amount = $this->products + $this->services;
+            $this->updated('services');
+        } 
     }
-    public function updated()
+
+    public function updated($field)
     {
         $amount = $this->amount;
-        $total = $amount;
-        $itbis = $total * ($this->itbis / 100);
+        $total = $amount > 0 ? $amount : 0.000000001;
+
+        if ($this->inPercent) {
+            $itbis = $total * ($this->itbis / 100);
+        } else {
+            $itbis = $this->itbis;
+        }
         $propina = $total * ($this->propina / 100);
         $other = $total * ($this->other / 100);
         $this->total = $total + $itbis + $propina + $other;
+
+        if($this->itbis>100 && $field=='itbis'){
+            $this->emit('showAlert', 'El ITBIS se registrará en monto y no en porcentaje', 'info');
+        }
     }
 
     protected $rules = [
@@ -84,7 +99,7 @@ class CreateOutcome extends Component
         'tarjeta' => 'required',
         'transferencia' => 'required',
         'tax' => 'required',
-        'itbis' => 'required|numeric|min:0|max:100',
+        'itbis' => 'required|numeric|min:0',
         'selectivo' => 'required|numeric|min:0',
         'propina' => 'required|numeric|min:0|max:100',
         'other' => 'required|numeric|min:0|max:100',
@@ -171,15 +186,15 @@ class CreateOutcome extends Component
     {
         $payed = $this->efectivo + $this->transferencia + $this->tarjeta;
         $payer = $provider ?: auth()->user();
-        $itbis= $this->amount * ($this->itbis / 100);
+        $itbis = $this->amount * ($this->itbis / 100);
         $selectivo = $this->amount * ($this->selectivo / 100);
-        $other= $this->amount * ($this->other / 100);
+        $other = $this->amount * ($this->other / 100);
         $data = [
             'ncf' => $outcome->ncf,
             'day' => date('Y-m-d'),
             'amount' => $this->amount,
             'discount' => 0,
-            'tax' => $itbis + $other+ $selectivo,
+            'tax' => $itbis + $other + $selectivo,
             'total' => $this->total,
             'payed' => $payed,
             'efectivo' => $this->efectivo,
@@ -211,7 +226,7 @@ class CreateOutcome extends Component
         $place = auth()->user()->place;
         $debitable = $place->findCount($this->count_code);
         $itbis = $place->findCount('103-01');
-        $selectivo= $place->counts()->whereName('Impuesto Selectivo por Cobrar')->first();
+        $selectivo = $place->counts()->whereName('Impuesto Selectivo por Cobrar')->first();
         $hasTax = $this->tax == 1 ? true : false;
         /* Registro de asiento sin impuestos */
         $efectivo = $place->counts()->whereId($this->efectivoCode)->first();
@@ -249,13 +264,18 @@ class CreateOutcome extends Component
             $ITBIS = $this->amount * ($this->itbis / 100);
 
             /* Asiento de retenido */
-            $reten=$place->counts()->whereName('ITBIS Retenido')->first();
-            setTransaction('ITBIS Retenido', $code, $ITBIS*($this->retenido/100), $reten ,$itbis, 'Crear Gastos');
+            $reten = $place->counts()->whereName('ITBIS Retenido')->first();
+            setTransaction('ITBIS Retenido', $code, $ITBIS * ($this->retenido / 100), $reten, $itbis, 'Crear Gastos');
         }
     }
     public function getBruto($amount, $hasTax)
     {
-        $itbis = $this->amount * ($this->itbis / 100);
+        if (!$this->inPercent) {
+            $itbis = $this->itbis / $this->amount;
+        } else {
+            $itbis = $this->itbis / 100;
+        }
+        $itbis = $this->amount * ($itbis);
         $other = $this->amount * ($this->other / 100);
         $propina = $this->amount * ($this->propina / 100);
         $itbisRate = $itbis / $this->total;
@@ -269,12 +289,17 @@ class CreateOutcome extends Component
     }
     public function getTax($amount, $tax = false)
     {
+        if (!$this->inPercent) {
+            $itbis = $this->itbis / $this->amount;
+        } else {
+            $itbis = $this->itbis / 100;
+        }
 
         //get the part of the amount that is itbis, propina and other
-        $itbis = $this->amount * ($this->itbis / 100);
+        $itbis = $this->amount * ($itbis);
         $other = $this->amount * ($this->other / 100);
         $propina = $this->amount * ($this->propina / 100);
-        $selectivo= $this->amount * ($this->selectivo / 100);
+        $selectivo = $this->amount * ($this->selectivo / 100);
         $itbisRate = $itbis / $this->total;
         $selectivoRate = $selectivo / $this->total;
         $otherRate = $other / $this->total;
@@ -285,5 +310,4 @@ class CreateOutcome extends Component
         $selectivoAmount = $amount * $selectivoRate;
         return [$taxAmount, $selectivoAmount, $otherAmount, $propinaAmount];
     }
-   
 }

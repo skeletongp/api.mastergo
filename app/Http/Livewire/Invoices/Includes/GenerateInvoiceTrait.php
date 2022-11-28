@@ -110,6 +110,9 @@ trait GenerateInvoiceTrait
             $comprobantes->forget($comprobante->id);
             Cache::put($this->type.'_comprobantes_'.env('STORE_ID'), $comprobantes);
         }
+        if(!$this->name){
+            $this->name = $this->client['name'];
+        }
         $invoice = $user->store->invoices()->create(
             [
                 'day' => date('Y-m-d'),

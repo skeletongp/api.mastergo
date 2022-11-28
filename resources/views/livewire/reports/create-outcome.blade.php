@@ -7,7 +7,8 @@
         <div>
             <div class="flex justify-between items-center space-x-4">
                 <x-toggle label="¿Comprobante?" value="1" wire:model="tax" id="taxToggle"></x-toggle>
-                <x-base-input class="py-0" type="date" id="outDate" label="" wire:model.lazy="date"></x-base-input>
+                <x-base-input class="py-0" type="date" id="outDate" label="" wire:model.lazy="date">
+                </x-base-input>
             </div>
             <div class="flex space-x-4 items-start pt-4 -mb-8">
 
@@ -34,8 +35,14 @@
             @if ($tax)
                 <div class="flex space-x-4 items-start mt-8">
                     <div class="w-full">
-                        <x-base-input type="number" id="outITBIS" label="ITBIS (%)" placeholder="ITBIS"
-                            wire:model.lazy="itbis"></x-base-input>
+                        <x-base-input type="number" id="outITBIS" placeholder="ITBIS" wire:model.lazy="itbis">
+                            <x-slot name="label">
+                                <span>ITBIS</span>
+                                <span>({{ $inPercent ? '%' : '$' }})</span>
+                                <input type="checkbox" id="itbisInpercent" wire:model="inPercent"
+                                    class="ml-2 rounded-full">
+                            </x-slot>
+                        </x-base-input>
                         <x-input-error for="itbis">Revise el campo</x-input-error>
                     </div>
                     <div class="w-full">
@@ -44,8 +51,8 @@
                         <x-input-error for="selectivo">Revise el campo</x-input-error>
                     </div>
                     <div class="w-full">
-                        <x-base-input type="number" id="outPropina" label="Propina (%)"
-                            placeholder="Propina Legal" wire:model.lazy="propina"></x-base-input>
+                        <x-base-input type="number" id="outPropina" label="Propina (%)" placeholder="Propina Legal"
+                            wire:model.lazy="propina"></x-base-input>
                         <x-input-error for="propina">Revise el campo</x-input-error>
                     </div>
                     <div class="w-full">
@@ -57,15 +64,15 @@
                 <div class="flex space-x-4 items-start mt-8">
 
                     <div class="w-1/3">
-                        <x-base-input type="number" id="outRetenido" label="ITBIS Retenido (%)" placeholder="Tasa retenida "
-                            wire:model="retenido">
+                        <x-base-input type="number" id="outRetenido" label="ITBIS Retenido (%)"
+                            placeholder="Tasa retenida " wire:model="retenido">
                         </x-base-input>
                         <x-input-error for="retenido">Revise el campo</x-input-error>
                     </div>
                     <div class="w-full">
                         <x-base-select label="Tipo de Gasto" id="outType" wire:model="type">
-                            @foreach (App\Models\Outcome::TYPES as $number=> $typ)
-                                <option value="{{$number}}">{{$typ}}</option>
+                            @foreach (App\Models\Outcome::TYPES as $number => $typ)
+                                <option value="{{ $number }}">{{ $typ }}</option>
                             @endforeach
                         </x-base-select>
                         <x-input-error for="type">Campo requerido</x-input-error>
@@ -73,7 +80,7 @@
                 </div>
             @endif
             <div class="py-4 text-xl font-bold flex justify-end gap-4">
-               Total ${{formatNumber($total)}}
+                Total ${{ formatNumber($total) }}
             </div>
             <div class="flex justify-end py-4">
                 <x-button wire:click.prevent="createOutcome">Guardar</x-button>

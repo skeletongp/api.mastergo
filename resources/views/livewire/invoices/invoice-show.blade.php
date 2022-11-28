@@ -47,7 +47,8 @@
                         <span class="lg:text-lg">Cajero</span>
                     </div>
                 </x-button>
-                <a href="{{route('invoices.show', [$invoice->id, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos'])}}">
+                <a
+                    href="{{ route('invoices.show', [$invoice->id, 'includeName' => 'showpayments', 'includeTitle' => 'Pagos']) }}">
                     <x-button wire:click="setIncludeElement('showpayments','Pagos')"
                         class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                         <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
@@ -63,15 +64,15 @@
                         <span class="lg:text-lg">Adjunto</span>
                     </div>
                 </x-button>
-                    @if ($invoice->payment->ncf)
-                        <x-button wire:click="setIncludeElement('showcredit','Nota de Crédito')"
-                            class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
-                            <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
-                                <span class="w-6 text-left far fa-coins"></span>
-                                <span class="lg:text-lg">Nota de Crédito</span>
-                            </div>
-                        </x-button>
-                    @endif
+                @if ($invoice->payment->ncf)
+                    <x-button wire:click="setIncludeElement('showcredit','Nota de Crédito')"
+                        class="w-full text-xl bg-gray-200 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
+                        <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
+                            <span class="w-6 text-left far fa-coins"></span>
+                            <span class="lg:text-lg">Nota de Crédito</span>
+                        </div>
+                    </x-button>
+                @endif
                 <x-button wire:click="setIncludeElement('showhistory','Historial')"
                     class="w-full text-xl bg-gray-100 bg-opacity-20 rounded-none text-black hover:text-gray-100 hover:bg-gray-900">
                     <div class="flex space-x-2 lg:space-x-6 items-center lg:text-lg">
@@ -79,6 +80,7 @@
                         <span class="lg:text-lg">Historial</span>
                     </div>
                 </x-button>
+               
             </div>
         </div>
         @include('livewire.invoices.includes.invoice-js')
@@ -115,9 +117,11 @@
                 @case('showhistory')
                     @include('livewire.invoices.showincludes.' . $includeName)
                 @break
+
                 @case('showresume')
                     @include('livewire.invoices.showincludes.' . $includeName)
                 @break
+
             @endswitch
         </div>
     </div>

@@ -15,8 +15,8 @@ class ProductionResult extends LivewireDatatable
     {   
         $this->perPage=5;
         $title="<div class='flex justify-between items-center'>
-            <span> Productos Terminados</span>
-            <span>".date('d-m-Y')." </span>
+            <span> Productos Terminados </span>
+            <span> ".'/'.date('d-m-Y')." </span>
         </div>";
         $this->headTitle=$title;
         $products=$this->production->products()

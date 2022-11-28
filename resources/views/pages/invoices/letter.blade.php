@@ -208,7 +208,14 @@
                         <tr>
                             <td colspan="2" style="border-right: .3px solid #ccc; border-bottom: .3px solid #ccc; ">
                                 <div>
-                                    {!! $payment->ncf ? '<b>NCF: ' . $payment->ncf . '</b> <br />' : '' !!}
+                                    @if ($invoice->comprobante && $invoice->comprobante->status == 'usado')
+                                        <b>NCF: {{ $invoice->comprobante->ncf }}
+                                        </b> <br />
+                                    @elseif ($invoice->comprobante && $invoice->comprobante->status == 'anulado')
+                                        <b style="text-decoration: line-through">NCF: {{ $invoice->comprobante->ncf }}
+                                        </b> <br />
+                                    @endif
+                                   
                                     <b>Fact. Nº. </b>{{ $invoice->number }}<br />
                                     <b>Fecha:</b> {{ date_format(date_create($invoice->day), 'd/m/Y') }}<br />
                                     <b>Vence:</b>
@@ -221,8 +228,13 @@
                             <td colspan="2" style="border-bottom: .3px solid #ccc; ">
                                 <div style="text-align:right; ">
                                     <b>{{ 'DIRIGIDA A:' }}</b> <br>
-                                   {{$invoice->client->code}} {{ $invoice->name ?: ($invoice->client->name ?: $invoice->client->contact->fullname) }}<br />
-                                    {!! $invoice->rnc ?'<b>RNC /CED:</b> ' .$invoice->rnc: ($invoice->client->rnc ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />' : '') !!}
+                                    {{ $invoice->client->code }}
+                                    {{ $invoice->name ?: ($invoice->client->name ?: $invoice->client->contact->fullname) }}<br />
+                                    {!! $invoice->rnc
+                                        ? '<b>RNC /CED:</b> ' . $invoice->rnc
+                                        : ($invoice->client->rnc
+                                            ? '<b>RNC /CED:</b> ' . $invoice->client->rnc . '<br />'
+                                            : '') !!}
                                     <b>TEL:</b> {{ $invoice->client->phone }} <br>
                                     {{ $invoice->client->address ?: 'Dirección N/D' }}
                                 </div>
@@ -266,7 +278,7 @@
                         <span>{{ formatNumber($detail->cant) }} <span
                                 style="font-size: xx-small">{{ $detail->unit->symbol }}</span></span>
                     </td>
-                    <td style=" width:45%;">{{ellipsis( $detail->product->name,25) }}</td>
+                    <td style=" width:45%;">{{ ellipsis($detail->product->name, 25) }}</td>
                     <td style=" width: 20%; text-align:right;">${{ \formatNumber($detail->price) }}</td>
                     <td style="width: 20%; text-align:right">${{ formatNumber($detail->discount) }}</td>
                     <td style=" width: 25%; text-align:right;">

@@ -10,19 +10,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comprobante extends Model
 {
     use HasFactory, SoftDeletes;
-protected $connection="mysql";
-protected $guarded=[
-       
-];
-    
-    
+    protected $connection = "mysql";
+    protected $guarded = [];
+
+    const MOTIVOS = [
+        1 => 'Deterioro de factura impresa',
+        2 => 'Errores de impresión (factura preimpresa)',
+        3 => 'Impresión defectuosa',
+        4 => 'Corrección de la información',
+        5 => 'Cambio de productos',
+        6 => 'Devolución de productos',
+        7 => 'Omisión de productos',
+        8 => 'Errores en secuencia de NCF',
+        9 => 'Por cese de operaciones',
+        10 => 'Pérdida o hurto de talonario',
+    ];
+
+
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->ncf = $model->prefix.$model->number;
+            $model->ncf = $model->prefix . $model->number;
         });
-       
     }
     public function invoice()
     {

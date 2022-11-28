@@ -21,7 +21,9 @@ class CreateProduction extends Component
     ];
     function mount($proceso)
     {
-        $this->units=auth()->user()->place->units()->pluck('name','units.id');
+        $place=getPlace();
+        $store=getStore();
+        $this->units=$store->units()->pluck('name','units.id');
         $this->proceso=$proceso;
         $this->unit_id=$proceso->unit_id;
     }
