@@ -95,8 +95,8 @@
                                 text='Categorías' activeRoute="categories.*" :scope="'Productos'" />
                         @endcan
                         @can('Ver Productos')
-                            <x-side-link routeName='pesadas.index' icon='far w-10 text-center fa-weight fa-lg'
-                                text='Pesadas' activeRoute="pesadas.*" :scope="'Productos'" />
+                            <x-side-link routeName='pesadas.index' icon='far w-10 text-center fa-weight fa-lg' text='Pesadas'
+                                activeRoute="pesadas.*" :scope="'Productos'" />
                         @endcan
                         @canany(['Ver Recursos', 'Crear Recursos', 'Borrar Recursos', 'Editar Recursos'])
                             <x-side-link routeName='recursos.index' icon='far w-10 text-center fa-warehouse-alt fa-lg'
@@ -170,10 +170,10 @@
                                 text='Catalógo de Ctas.' activeRoute="contables.*" :scope="'Impuestos'" />
                         @endcan
                         @can('Ver Transacciones')
-                            <x-side-link routeName='contables.report_607' icon='fas w-10 text-center fa-file-upload fa-lg'
-                                text='Reporte 607' activeRoute="contables.*" :scope="'Impuestos'" />
+
                             <x-side-link routeName='contables.report_606' icon='fas w-10 text-center fa-file-download fa-lg'
-                                text='Reporte 606' activeRoute="contables.*" :scope="'Impuestos'" />
+                                text='Formatos' activeRoute="contables.*" :scope="'Impuestos'" />
+                           
                         @endcan
                     </x-dropitem>
                 @endcanany

@@ -47,7 +47,7 @@ class TableProceso extends LivewireDatatable
                 return 'N/D';
               }
               return array_sum(array_column($result['productions'], 'setted'));
-            })->label('Esperados'),
+            })->label('Invertido'),
             Column::callback(['deleted_at','id'], function($deleted, $id) use ($procesos){
                 $result=arrayFind($procesos, 'id', $id);
                 if(!$result['productions']){

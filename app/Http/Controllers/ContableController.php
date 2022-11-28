@@ -110,14 +110,19 @@ class ContableController extends Controller
         'pathLetter'=> $path,
        ]);
     }
-    public function report_607()
-    {
-        return view('pages.contables.report-607');
-    }
     public function report_606()
     {
         return view('pages.contables.report-606');
     }
+    public function report_607()
+    {
+        return view('pages.contables.report-607');
+    }
+    public function report_608()
+    {
+        return view('pages.contables.report-608');
+    }
+   
     public function countview($code)
     {
         $count = CountMain::whereCode($code)->first();

@@ -82,8 +82,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('catalogue', 'catalogue')->name('contables.catalogue');
             Route::get('view_catalogue', 'view_catalogue')->name('contables.view_catalogue');
             Route::get('results', 'results')->name('contables.results');
-            Route::get('report_607', 'report_607')->name('contables.report_607');
             Route::get('report_606', 'report_606')->name('contables.report_606');
+            Route::get('report_607', 'report_607')->name('contables.report_607');
+            Route::get('report_608', 'report_608')->name('contables.report_608');
             Route::get('countview/{code}', 'countview')->name('contables.countview');
             Route::get('counttrans/{id}', 'counttrans')->name('contables.counttrans');
         });
