@@ -1,14 +1,11 @@
-<div class="max-w-lg md:max-w-7xl">
+<div class="w-full max-w-sm md:max-w-[768px] lg:max-w-[1024px] xl:max-w-7xl">
     @includeIf($beforeTableSlot)
-    <div class="relative">
-        <div class="flex items-center justify-between mb-1">
+    <div class="relative  ">
+        <div class="flex  items-center justify-between mb-1">
             @if ($this->searchableColumns()->count())
-                <div class="flex items-center h-10">
-                    <div class="flex rounded-lg  shadow-sm w-48 lg:w-[24rem]">
+                <div class="flex items-center h-10 w-full">
+                    <div class="flex rounded-lg  shadow-sm w-full lg:w-[24rem]">
                         <div class="relative flex-grow focus-within:z-10">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <span class="fas fa-search text-xl text-gray-300"></span>
-                            </div>
                             <input wire:model.debounce.500ms="search"
                                 class="block w-full py-3 px-10 text-sm border-gray-300 leading-4 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none"
                                 placeholder="{{ ellipsis($this->searchableColumns()->map->label->join(', '), 30) }}"
@@ -23,18 +20,17 @@
                     </div>
                 </div>
             @endif
-
-
-
-            <div class="flex flex-wrap items-center space-x-1">
+            <div class="flex  items-center  space-x-1">
                 <div wire:loading>
                     <x-loading />
                 </div>
 
                 @if ($this->activeFilters)
                     <button wire:click="clearAllFilters"
-                        class="flex items-center px-3 text-xs font-medium tracking-wider text-red-500 uppercase bg-white border border-red-400 space-x-2 rounded-md leading-4 hover:bg-red-200 focus:outline-none"><span>{{ __('Reset') }}</span>
-                        <x-icons.x-circle class="m-2" />
+                        class="flex items-center px-3 py-2.5 text-xs font-medium tracking-wider text-red-500 uppercase bg-white border border-red-400 lg:space-x-2 rounded-md leading-4 hover:bg-red-200 focus:outline-none"><span class="hidden lg:block">{{ __('Reset') }}</span>
+                        <div class="">
+                            <span class="far text-lg px-x fa-times-circle"></span>
+                        </div>
                     </button>
                 @endif
 
@@ -108,16 +104,12 @@
         @endif
 
         <div wire:loading.class="opacity-50"
-            class="rounded-lg mt-4 @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg bg-white max-w-screen overflow-x-scroll border-2 @if ($this->activeFilters) border-blue-500 @else border-transparent @endif @if ($complex) border-b-0 @endif">
+            class="rounded-lg mt-4 @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg bg-white max-w-screen overflow-x-scroll border-2  border-transparent @if ($complex) border-b-0 @endif">
             <div>
                 <div
-                    class="p-4 uppercase text-left flex justify-between items-center w-full font-bold text-xl select-none">
+                    class="p-4 uppercase text-left flex justify-between items-center w-full font-bold text-lg lg:text-xl select-none">
                     @isset($headTitle)
-                        {!! $headTitle !!}
-                    @else
-                        <div>
-
-                        </div>
+                       <div class="overflow-hidden overflow-ellipsis whitespace-nowrap pr-4"> {!! $headTitle !!}</div>
                     @endisset
                     <span wire:click="$emit('refreshLivewireDatatable')"
                         class="fas fa-sync-alt hover:text-blue-500 cursor-pointer"></span>
@@ -207,7 +199,7 @@
                                     @include('datatables::label')
                                 @else
                                     <div
-                                        class="table-cell {{ isset($padding) ? $padding : 'py-4 px-6 ' }} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
+                                        class="table-cell text-xs whitespace-nowrap lg:text-sm {{ isset($padding) ? $padding : 'py-4 px-6 ' }} @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if ($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }} align-middle">
                                         
                                         {!! $row->{$column['name']} !!}
                                     </div>
@@ -245,7 +237,7 @@
 
         @unless($this->hidePagination)
             <div
-                class="max-w-screen bg-white @unless($complex) rounded-b-lg @endunless border-4 border-t-0 border-b-0 @if ($this->activeFilters) border-blue-500 @else border-transparent @endif">
+                class="max-w-screen bg-white @unless($complex) rounded-b-lg @endunless border-4 border-t-0 border-b-0 border-transparent ">
                 <div class="items-center justify-between py-2 sm:flex">
                     {{-- check if there is any data --}}
                     @if (count($this->results))

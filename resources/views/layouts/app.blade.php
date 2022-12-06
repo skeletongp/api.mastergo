@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title >
+    <title>
         @if (isset($title))
-            {{ env('APP_NAME') . ' | ' .$title }}
+            {{ env('APP_NAME') . ' | ' . $title }}
         @else
             {{ env('APP_NAME') . ' | ' . getStore()->name }}
         @endif
@@ -29,6 +29,8 @@
 
     @livewireStyles
     @stack('css')
+    @laravelPWA
+
 </head>
 
 <body class=" antialised ">
@@ -40,13 +42,15 @@
             </div>
             <header class="sticky top-[4.5rem] z-50 w-full mx-auto py-2 bg-white">
                 @include('includes.header')
-                <div class=" w-full bg-gray-50 py-1 px-4 flex justify-between items-center">
-                    @if (isset($bread))
-                        {{ $bread }}
-                    @endif
-                    <div class="z-50">
+                <div class=" w-full bg-gray-50  px-4 flex justify-between items-center">
+                    <div class="hidden lg:flex lg:py-1">
+                        @if (isset($bread))
+                            {{ $bread }}
+                        @endif
+                    </div>
+                    <div class="!z-30 ">
                         @if (isset($rightButton))
-                            <div class="">
+                            <div class="py-1">
                                 {{ $rightButton }}
                             </div>
                         @endif
@@ -58,6 +62,7 @@
                 <div class="hidden" id="generalLoad">
                     <x-loading></x-loading>
                 </div>
+               
                 <section class=" w-full mx-auto max-w-7xl bg-white ">
                     {{ $slot }}
                 </section>
@@ -68,10 +73,9 @@
             </footer>
         </div>
     </div>
-    
+
     @livewireScripts
     <script src="{{ asset('js/printer-script.js') }}"></script>
-
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
@@ -175,14 +179,14 @@
             $('#generalLoad').removeClass('hidden');
         })
         id = parseInt({{ auth()->user()->place_id }});
-       /*  var channel = Echo.private(`invoices.${id}`);
-        channel.listen("NewInvoice", function(data) {
-            store_id = parseInt({{ optional(auth()->user()->store)->id }});
-            if (data.invoice.store_id == store_id) {
-                Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
-            }
+        /*  var channel = Echo.private(`invoices.${id}`);
+         channel.listen("NewInvoice", function(data) {
+             store_id = parseInt({{ optional(auth()->user()->store)->id }});
+             if (data.invoice.store_id == store_id) {
+                 Livewire.emit('showAlert', 'Nuevo pedido pendiente', 'success')
+             }
 
-        }); */
+         }); */
         window.onbeforeunload = function() {
             $('#generalLoad').removeClass('hidden');
         }
@@ -239,7 +243,7 @@
             conn.imprimirEnImpresora(preference.printer)
                 .then(respuestaAlImprimir => {
                     if (respuestaAlImprimir === true) {
-                        console.log("Impreso correctamente");
+                       0
                     } else {
                         console.log("Error. La respuesta es: " + respuestaAlImprimir);
                     }

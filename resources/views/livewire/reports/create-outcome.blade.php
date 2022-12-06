@@ -13,13 +13,13 @@
             <div class="flex space-x-4 items-start pt-4 -mb-8">
 
                 <div class="w-1/3">
-                    <x-base-input type="number" id="outProducts" label="Gasto en Bienes" placeholder="Monto Bruto"
+                    <x-base-input type="number" id="outProducts" label="Bienes" placeholder="Monto Bruto"
                         wire:model.lazy="products">
                     </x-base-input>
                     <x-input-error for="products">Campo requerido</x-input-error>
                 </div>
                 <div class="w-1/3">
-                    <x-base-input type="number" id="outServices" label="Gasto en Servicios" placeholder="Monto Bruto"
+                    <x-base-input type="number" id="outServices" label="Servicios" placeholder="Monto Bruto"
                         wire:model.lazy="services">
                     </x-base-input>
                     <x-input-error for="services">Campo requerido</x-input-error>

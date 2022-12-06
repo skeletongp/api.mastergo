@@ -98,9 +98,9 @@ class PayOutcome extends Component
        
         $cash=$place->counts()->whereId($this->efectivoCode)->first();
         $bank=$this->bank_id?Bank::find($this->bank_id):null;
-        setTransaction('Pago cuenta en efectivo',$outcome->ncf?:$outcome->code, $this->efectivo, $provider->contable, $cash, 'Pagar Gastos');
-        setTransaction('Pago cuenta por transferencia',$outcome->ncf?:$outcome->code, $this->transferencia, $provider->contable, optional($bank)->contable, 'Pagar Gastos');
-        setTransaction('Pago cuenta por cheque',$outcome->ncf?:$outcome->code, $this->tarjeta, $provider->contable, $place->check(), 'Pagar Gastos');
-        setTransaction('Devolución de vuelto',$outcome->ncf?:$outcome->code, $payment->cambio, $place->cash(), $provider->contable, 'Pagar Gastos');
+        setTransaction('Pago cuenta en efectivo',$outcome->ncf?:date('dmY'), $this->efectivo, $provider->contable, $cash, 'Pagar Gastos');
+        setTransaction('Pago cuenta por transferencia',$outcome->ncf?:date('dmY'), $this->transferencia, $provider->contable, optional($bank)->contable, 'Pagar Gastos');
+        setTransaction('Pago cuenta por cheque',$outcome->ncf?:date('dmY'), $this->tarjeta, $provider->contable, $place->check(), 'Pagar Gastos');
+        setTransaction('Devolución de vuelto',$outcome->ncf?:date('dmY'), $payment->cambio, $place->cash(), $provider->contable, 'Pagar Gastos');
     }
 }

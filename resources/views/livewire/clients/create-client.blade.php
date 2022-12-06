@@ -21,7 +21,7 @@
                 <span>Cód.: {{ $client['code'] }}</span>
             </div>
          
-            <form wire:submit.prevent="createClient" class="mb-282 lg:mb-2">
+            <form wire:submit.prevent="createClient" class="mb-2">
                 <div class="flex space-x-4">
                     <div class="w-full overflow-hidden">
                         <div class="  pb-6 flex items-start space-x-3">
@@ -47,7 +47,6 @@
                         </div>
                     </div>
                     <div class="w-full overflow-hidden">
-
                         <div class=" pb-0  lg:pb-6 flex flex-col lg:flex-row lg:space-y-0 lg:space-x-3 items-start ">
                             <div class="w-full pb-6 lg:pb-0 overflow-hidden">
                                 <x-base-select class="{{ $cltDocType ? 'text-black' : 'text-gray-300' }}"

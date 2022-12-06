@@ -1,11 +1,7 @@
 <aside class=" h-full    " aria-label="Sidebar">
-    <div class="h-full max-w-7xl relative py-4 px-3 pl-4 bg-gray-50 rounded dark:bg-gray-800">
-        <div class="absolute lg:hidden top-2 right-2">
-            <x-button id="btnToggleMenu">
-                <span id="spanToggleMenu" class="fas fa-bars"></span>
-            </x-button>
-        </div>
-        <ul class=" h-full  space-y-0 flex justify-between space-x-4">
+    <div class="h-full max-w-7xl relative py-4 px-3 pl-4 bg-gray-50 rounded flex items-center justify-between">
+       
+        <ul class=" h-full lg:w-full space-y-0 flex justify-between items-center space-x-4">
             <div>
                 <li>
                     <x-dropdown alignmentClasses="left">
@@ -180,7 +176,12 @@
 
 
             </ul>
-        </ul>
+        </ul> 
+        <div class=" lg:hidden top-2 right-2">
+            <x-button id="btnToggleMenu">
+                <span id="spanToggleMenu" class="fas fa-bars"></span>
+            </x-button>
+        </div>
     </div>
     @push('js')
         <script>

@@ -35,7 +35,7 @@
                         <div class=" pt-10 bottom-0">
                             <x-button class="flex space-x-4" wire:loading.disabled>
                                 <span>
-                                    Cobrar
+                                    Pagar
                                 </span>
                             </x-button>
                         </div>

@@ -212,18 +212,18 @@
             <div class="flex space-x-2 my-0 py-0 items-end">
                 <div class="w-[4.5rem]">
                     <x-base-input placeholder="" class=" border-none" type="text"
-                        id="codeInput{{ $index }}" label="Artículos" disabled
+                        id="codeInput{{ $index }}" label="Arts." disabled
                         value="{{ count($details) }}">
                     </x-base-input>
                 </div>
                 <div class="w-full text-xl">
-                    <x-base-input placeholder="" class=" border-none !text-2xl font-bold" type="text"
+                    <x-base-input placeholder="" class=" border-none  font-bold" type="text"
                         id="codeInput{{ $index }}" label="Descuento" disabled
                         value="${{ formatNumber(array_sum(array_column($details, 'discount'))) }}">
                     </x-base-input>
                 </div>
                 <div class="w-full text-xl">
-                    <x-base-input placeholder="" class=" border-none !text-2xl font-bold" type="text"
+                    <x-base-input placeholder="" class=" border-none e font-bold" type="text"
                         id="codeInput{{ $index }}" label="Total" disabled
                         value="${{ formatNumber(array_sum(array_column($details, 'total'))) }}">
                     </x-base-input>
