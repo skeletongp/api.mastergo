@@ -33,19 +33,19 @@ class OutcomeTable extends LivewireDatatable
     {
       
         return [
-            DateColumn::name('outcomes.created_at')->format('d/m/Y')->label('Fecha')->searchable(),
+            DateColumn::name('outcomes.created_at')->format('d/m/Y')->label('Fecha')->filterable(),
             Column::callback('users.fullname', function($user){
                 return ellipsis($user, 20);
             })->label('Usuario')->searchable(),
             Column::callback('providers.fullname', function($provider){
                 return ellipsis($provider, 30);
             })->label('Suplidor')->searchable(),
-            NumberColumn::name('amount')->label('Monto')->formatear('money'),
-            NumberColumn::raw('sum(payments.efectivo) AS efectivo')->label('Efectivo')->formatear('money')->hide(),
-            NumberColumn::raw('sum(payments.transferencia) AS transferencia')->label('Transferencia')->formatear('money')->hide(),
-            NumberColumn::raw('sum(payments.tarjeta) AS tarjeta')->label('Otros')->formatear('money')->hide(),
-            NumberColumn::raw('sum(payments.payed) AS pagado')->label('Pagado')->formatear('money'),
-            NumberColumn::name('outcomes.rest')->label('Resta')->formatear('money'),
+            NumberColumn::name('amount')->label('Monto')->formatear('money')->enableSummary(),
+            NumberColumn::raw('sum(payments.efectivo) AS efectivo')->label('Efectivo')->formatear('money')->hide()->enableSummary(),
+            NumberColumn::raw('sum(payments.transferencia) AS transferencia')->label('Transferencia')->formatear('money')->hide()->enableSummary(),
+            NumberColumn::raw('sum(payments.tarjeta) AS tarjeta')->label('Otros')->formatear('money')->hide()->enableSummary(),
+            NumberColumn::raw('sum(payments.payed) AS pagado')->label('Pagado')->formatear('money')->enableSummary(),
+            NumberColumn::name('outcomes.rest')->label('Resta')->formatear('money')->enableSummary(),
             Column::callback(['outcomes.concepto'], function($concepto){
                 return ellipsis($concepto, 30);
             })->label('Concepto')->searchable(),
@@ -60,5 +60,20 @@ class OutcomeTable extends LivewireDatatable
             })->label('Acciones')->contentAlignCenter()
             
         ];
+    }
+    public function summarize($column)
+    {
+        
+        $results = json_decode(json_encode($this->results->items()), true);
+        foreach ($results as $key => $value) {
+            $val = json_decode(json_encode($value), true);
+            $results[$key][$column] = preg_replace("/[^0-9 .]/", '', $val[$column]);
+        }
+        try {
+
+            return "<h1 class='font-bold text-right'>" . '$' . formatNumber(array_sum(array_column($results, $column))) . "</h1>";;
+        } catch (\TypeError $e) {
+            return '';
+        }
     }
 }

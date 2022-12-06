@@ -19,9 +19,11 @@ class CountTrans extends LivewireDatatable
     {
         $count=Count::whereId($this->count_id)->first();
         $this->headTitle=$count->name.' - $'.formatNumber($count->balance);
-        $transactions=Transaction::where('debitable_id',$count->id)
+        $transactions=Transaction::where(function($query) use ($count){
+            $query->where('debitable_id',$count->id)
+            ->orWhere('creditable_id',$count->id);
+        })
         ->withTrashed()
-        ->orWhere('creditable_id',$count->id)
         ->leftJoin('counts as debits', 'debits.id', '=', 'transactions.debitable_id')
         ->leftJoin('counts as credits', 'credits.id', '=', 'transactions.creditable_id')
         ->selectRaw('transactions.*, debits.name as debitable_name, credits.name as creditable_name, debits.code as debitable_code, credits.code as creditable_code, debits.id as debitable_id, credits.id as creditable_id')
@@ -32,14 +34,14 @@ class CountTrans extends LivewireDatatable
     public function columns()
     {
         return [
-            DateColumn::name('created_at')->label('Fecha')->format('d/m/Y H:i')->searchable(),
+            DateColumn::name('created_at')->label('Fecha')->format('d/m/Y H:i')->filterable(),
             Column::callback('concepto', function($concepto){
                 return ellipsis($concepto,30);
-            })->label('Concepto'),
+            })->label('Concepto')->searchable(),
             Column::name('ref')->label('Referencia')->hide(),
             Column::callback(['debits.code','debits.name'], function($code, $name){
                 return $code.' - '.ellipsis($name,25);
-            })->label('Debe'),
+            })->label('Debe')->searchable(),
             Column::callback(['credits.code','credits.name'], function($code, $name){
                 return $code.' - '.ellipsis($name,25);
             })->label('Haber')->searchable(),

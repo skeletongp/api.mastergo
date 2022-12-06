@@ -109,6 +109,7 @@ class CuadreController extends Controller
             'cobro' => 0,
             'egreso' => 0,
             'inicial' => $inicial,
+            'final' => $inicial,
             'day' => $day,
         ]);
     }

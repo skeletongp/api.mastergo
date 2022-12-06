@@ -1,7 +1,7 @@
 <div x-data class="flex flex-col">
-    <div class="w-full relative flex">
+    <div class="w-full lg:w-[9.75rem] relative flex">
         <input x-ref="start"
-            class="w-full pr-8 m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="w-full lg:pr-[1.75rem] m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
             type="date" wire:change="doDateFilterStart('{{ $index }}', $event.target.value)"
             style="padding-bottom: 5px" />
         <div class="absolute inset-y-0 right-0 pr-2 flex items-center">
@@ -12,9 +12,9 @@
         </div>
     </div>
     @if (!isset($uniqueDate))
-        <div class="w-full relative flex items-center">
+        <div class="w-full lg:w-[9.75rem] relative flex items-center">
             <input x-ref="end"
-                class="w-full pr-8 m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                class="w-full pr-[1.75rem] m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 type="date" wire:change="doDateFilterEnd('{{ $index }}', $event.target.value)"
                 style="padding-bottom: 5px" />
             <div class="absolute inset-y-0 right-0 pr-2 flex items-center">
@@ -25,5 +25,10 @@
             </div>
         </div>
     @endif
-   
+
 </div>
+<style>
+    ::-webkit-calendar-picker-indicator {
+        margin-left: 0px;
+    }
+</style>

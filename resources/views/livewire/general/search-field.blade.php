@@ -1,10 +1,10 @@
-    <div class="absolute h-max top-3 w-56" x-data="{ open: true }" style="z-index: 1600">
+    <div class=" h-max w-56" x-data="{ open: true }" style="z-index: 1600">
         <div @click.away="open= false">
-            <x-input label="Buscar" wire:model.debounce.500ms="search" class="relative w-56 max-w-xs" @focus="open=true" type="search">
+            <x-base-input icon="fas fa-search" placeholder="Buscar..."  wire:model.debounce.500ms="search" class="relative lg:py-1 lg:pb-1.5  w-56 max-w-xs" @focus="open=true" type="search">
                 {{-- <x-slot name="icon">
                     <span class="fas fa-search text-gray-500"></span>
                 </x-slot> --}}
-            </x-input>
+            </x-base-input>
             @if ($searchResults)
                 <div class="bg-white   shadow-xl text-sm" x-show="open">
                     @foreach ($searchResults->groupByType() as $type => $modelSearchResults)

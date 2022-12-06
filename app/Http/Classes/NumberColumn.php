@@ -23,7 +23,7 @@ class NumberColumn extends LivewireDatatablesNumberColumn{
                 # code...
                 break;
         }
-        
+        $this->unwrap();
         return $this;
     }
  

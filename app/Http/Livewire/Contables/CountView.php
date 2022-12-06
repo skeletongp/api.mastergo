@@ -17,7 +17,6 @@ class CountView extends LivewireDatatable
         $count = CountMain::where('code', $this->code)->first();
         $this->headTitle = $count->name;
         $counts = Count::where('count_main_id', $count->id)
-            ->orderBy('counts.code')
             ->groupby('counts.id');
         return $counts;
     }
@@ -30,7 +29,7 @@ class CountView extends LivewireDatatable
                     'url' => route('contables.counttrans', $id),
                 ]);
             }),
-            Column::name('code')->label('Código'),
+            Column::name('code')->label('Código')->searchable()->defaultSort(),
             Column::callback(['name'], function ($name) {
                 return ellipsis($name, 30);
             })->label('Nombre de la cuenta')->searchable(),

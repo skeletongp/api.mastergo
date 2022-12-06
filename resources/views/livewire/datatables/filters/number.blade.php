@@ -1,10 +1,10 @@
-<div class="flex flex-col">
-    <div x-data class="relative flex">
+<div class="pr-2">
+    <div x-data class="relative w-24">
         <input
             x-ref="min"
             type="number"
             wire:input.debounce.500ms="doNumberFilterStart('{{ $index }}', $event.target.value)"
-            class="w-full pr-8 m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="w-full pr-4 m-1 text-sm leading-4  rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             placeholder="{{ __('MIN') }}"
         />
         <div class="absolute inset-y-0 right-0 pr-2 flex items-center">
@@ -14,12 +14,12 @@
         </div>
     </div>
 
-    <div x-data class="relative flex">
+    <div x-data class="relative w-24">
         <input
             x-ref="max"
             type="number"
             wire:input.debounce.500ms="doNumberFilterEnd('{{ $index }}', $event.target.value)"
-            class="w-full pr-8 m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="w-full pr-4 m-1 text-sm leading-4 block rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             placeholder="{{ __('MAX') }}"
         />
         <div class="absolute inset-y-0 right-0 pr-2 flex items-center">

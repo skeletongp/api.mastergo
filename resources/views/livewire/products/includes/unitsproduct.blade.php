@@ -1,5 +1,5 @@
-<form action="" id="form2" wire:submit.prevent="addUnit" class="mt-4 flex space-x-4 max-w-5xl mx-auto">
-    <div class="w-1/2">
+<form action="" id="form2" wire:submit.prevent="addUnit" class="mt-4 flex flex-col lg:flex-rows space-x-4 max-w-5xl mx-auto">
+    <div class="w-full">
         <div class="flex space-x-4 items-end">
             <div class="w-full">
                 <label for="unit_id">Precio por Medida</label>
@@ -25,12 +25,12 @@
                 <x-input-error for="unit_cost">Verifique el costo</x-input-error>
             </div>
             <div class="pt-4 w-1/4">
-                <x-base-input type="number" label="Precio Mayor" type="number" step="any" min="0" id="unit_price_mayor"
+                <x-base-input type="number" label="X Mayor" type="number" step="any" min="0" id="unit_price_mayor"
                     name="unit_price_mayor" wire:model.lazy="unit_price_mayor"></x-base-input>
                 <x-input-error for="unit_price_mayor">Verifique el precio</x-input-error>
             </div>
             <div class="pt-4 w-1/4">
-                <x-base-input type="number" label="Precio Detalle" type="number" step="any" min="0" id="unit_price_menor"
+                <x-base-input type="number" label="A Detalle" type="number" step="any" min="0" id="unit_price_menor"
                     name="unit_price_menor" wire:model.lazy="unit_price_menor"></x-base-input>
                 <x-input-error for="unit_price_menor">Verifique el precio</x-input-error>
             </div>
@@ -51,7 +51,7 @@
         </div>
         <x-input-error for="unitSelected">Añada por lo menos un precio por medida</x-input-error>
     </div>
-    <div class="mt-4 w-1/2">
+    <div class="mt-4 w-full">
         @if (count($unitSelected))
             <div class="" x-data="{ open: false }" x-cloak>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

@@ -140,6 +140,10 @@ class CreateOutcome extends Component
         /* $outcome = setOutcome($this->amount, $this->concept, $this->tax>0?$codeProv:$code, null, $this->tax>0?$code:null); */
         $itbis = $this->amount * ($this->itbis / 100);
         $selectivo = $this->amount * ($this->selectivo / 100);
+        if($this->total < 1){
+            $this->emit('showAlert', 'El monto total no puede ser 0', 'error');
+            return;
+        }
         $outcome = Outcome::create([
             'concepto' => $this->concept,
             'amount' => $this->total,

@@ -1,6 +1,6 @@
 <form action="" wire:submit.prevent="createProduct" id="form1" class="max-w-5xl mx-auto w-full">
     <div class="grid grid-cols-5 gap-4 items center w-full max-w-6xl">
-        <div class="col-span-2">
+        <div class="col-span-5 lg:col-span-2 ">
             <div class="flex space-x-2 items-end">
                 <div class="w-full">
                     <x-base-input required maxLength="30" label="Nombre del producto" id="form.product.name"
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div>
-                <div class="space-y-2 pt-7">
+                <div class="space-y-2 pt-2 lg:pt-7">
                     <label class="font-medium">Descripción del producto</label>
                     <textarea rows="2"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 resize-none"
@@ -21,7 +21,7 @@
                 <x-input-error for="form.description"></x-input-error>
             </div>
         </div>
-        <div class="space-y-4 col-span-3">
+        <div class="space-y-4 col-span-5  lg:col-span-3">
             <h1 class="uppercase text-xl font-bold">Impuestos</h1>
             <div class="w-full grid grid-cols-4 gap-6 ">
                 @foreach ($taxes as $id => $tax)
@@ -32,7 +32,7 @@
                 @endforeach
             </div>
             <hr>
-            <div class="w-full grid grid-cols-1 gap-6 ">
+            <div class="w-full col-span-5  lg:col-span-1 grid grid-cols-1 gap-6 ">
                 <h1 class="uppercase text-xl font-bold">Sucursales</h1>
                 @foreach ($places as $id => $place)
                     <div>
@@ -44,17 +44,17 @@
             </div>
             <hr>
         </div>
-        <div class="flex space-x-4 col-span-3">
+        <div class="flex flex-col lg:flex-row space-x-4 col-span-5  lg:col-span-3">
             <div class="flex space-x-4 w-full">
                 <div class="w-full">
-                    <x-base-select wire:model.defer="form.type" label="Tipo de producto" id="product.type">
+                    <x-base-select wire:model.defer="form.type" label="Tipo" id="product.type">
                         <option value="Producto">Producto</option>
                         <option value="Servicio">Servicio</option>
                     </x-base-select>
                     <x-input-error for="form.type"></x-input-error>
                 </div>
                 <div class="w-full">
-                    <x-base-select wire:model.defer="form.origin" label="Origen del producto">
+                    <x-base-select wire:model.defer="form.origin" label="Origen">
                         <option value="Comprado">Comprado</option>
                         <option value="Procesado">Procesado</option>
                     </x-base-select>

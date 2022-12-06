@@ -1,9 +1,9 @@
 @props(['maxWidth' => 'max-w-md', 'open'=>false, 'fitV'=>true, 'title', 'hideButton'=>false, 'zindex'=>'1800', 'minHeight'=>'min-h-[85vh]', 'listenOpen'=>false, 'clickAway'=>true])
 <div class="w-full " x-data="{ open: {{$open?'true':'false'}} }" x-cloak @keydown.escape.window="open = false">
     {{-- Modal Main Button --}}
-    <div class="{{$hideButton?'hidden':''}}">
+    <div class="{{$hideButton?'hidden':''}} w-full">
         <button id="btn{{$attributes['id']}}" type="button" @if ($listenOpen) wire:click="modalOpened" @endif x-on:click="open = ! open"
-            class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
+            class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center flex items-center  w-full">
             {{ $button }}
         </button>
 
@@ -21,14 +21,14 @@
 
             {{-- Modal Header --}}
             <div class="flex justify-between ">
-                <h1 class="font-bold my-4 uppercase text-lg  text-left">{{ $title }}</h1>
+                <h1 class="font-bold my-2 lg:my-4 uppercase text-lg  text-left">{{ $title }}</h1>
                 <div class="flex space-x-4 items-center text-red-600 cursor-pointer " x-on:click.prevent="open = ! open">
                     <small>Cerrar</small>
                     <span class="fas fa-times " ></span>
                 </div>
             </div>
             {{-- Modal Body --}}
-            <div class="w-full mt-4">
+            <div class="w-full lg:mt-4">
                 {{ $slot }}
             </div>
         </div>

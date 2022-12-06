@@ -1,8 +1,11 @@
 <div x-data="{ show: false }" class="flex flex-col items-center">
     <div class="flex flex-col items-center relative">
         <button x-on:click="show = !show" class="px-3 py-2 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">
-            <div class="flex items-center h-5">
-                {{ __('Mostrar / Ocultar')}}
+            <div class="hidden lg:flex items-center h-5 ">
+                {{ __('Mostrar')}}
+            </div>
+            <div class="flex lg:hidden items-center h-5 ">
+                <span class="fas fa-lg fa-eye"></span>
             </div>
         </button>
         <div x-show="show" x-on:click.away="show = false" class="z-50 absolute mt-16 -mr-4 shadow-2xl top-100 bg-white w-96 right-0 rounded max-h-select overflow-y-auto" x-cloak>

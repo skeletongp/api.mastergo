@@ -275,6 +275,14 @@
         </tr>
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:10px">
+                RETIRADO =>
+            </td>
+            <td colspan="2" style="padding-top:10px">
+               ${{ formatNumber(($cuadre->retirado)) }} 
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px">
                 SALDO FINAL =>
             </td>
             <td colspan="2" style="padding-top:10px">
