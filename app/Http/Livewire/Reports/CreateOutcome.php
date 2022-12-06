@@ -124,7 +124,7 @@ class CreateOutcome extends Component
         }
         if ($this->tax > 0) {
             $this->rules = array_merge($this->rules, ['rate' => 'required']);
-            $this->rules = array_merge($this->rules, ['ref' => 'required|regex:/(B)([0-9]{2})([0-9]{8})$/']);
+            $this->rules = array_merge($this->rules, ['ref' => 'required']);
         }
         if (!$this->amount) {
             $this->amount = floatVal($this->efectivo) + floatVal($this->tarjeta) + floatVal($this->transferencia);
@@ -176,7 +176,7 @@ class CreateOutcome extends Component
     public function check($provider): bool
     {
         $payed = $this->efectivo + $this->tarjeta + $this->transferencia;
-        if ($payed > $this->amount) {
+        if ($payed > $this->total) {
             $this->emit('showAlert', 'El monto pagado no puede ser mayor al monto del gasto', 'error', 5000);
             return false;
         }
@@ -190,7 +190,12 @@ class CreateOutcome extends Component
     {
         $payed = $this->efectivo + $this->transferencia + $this->tarjeta;
         $payer = $provider ?: auth()->user();
-        $itbis = $this->amount * ($this->itbis / 100);
+        $itbis = 0;
+        if ($this->itbis > 100) {
+            $itbis = $this->itbis;
+        } else {
+            $this->amount * ($this->itbis / 100);
+        }
         $selectivo = $this->amount * ($this->selectivo / 100);
         $other = $this->amount * ($this->other / 100);
         $data = [

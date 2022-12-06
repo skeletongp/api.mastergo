@@ -37,7 +37,8 @@ class Report606 extends Component
             ->where('payments.payable_type','App\Models\Outcome')
             ->leftJoin('providers','outcomes.outcomeable_id','=','providers.id')
             ->where('outcomes.outcomeable_type','App\Models\Provider')
-            ->selectRaw('outcomes.*, providers.rnc as rnc, MAX(payments.created_at) as day')
+            ->selectRaw('outcomes.*, providers.rnc as rnc, MAX(payments.created_at) as day, SUM(payments.efectivo-payments.cambio) as efectivo,
+            SUM(payments.transferencia) as transferencia')
             ->groupBy('outcomes.id')
             ->orderBy('payments.id','desc')
             ->get();

@@ -262,8 +262,8 @@
                             Transferencia
                         @elseif($outcome->rest>0)
                             Crédito
-
                         @endif
+                        
                     </td>
                    
                 </tr>
