@@ -1,6 +1,6 @@
 <aside class=" h-full    " aria-label="Sidebar">
     <div class="h-full max-w-7xl relative py-4 px-3 pl-4 bg-gray-50 rounded flex items-center justify-between">
-       
+
         <ul class=" h-full lg:w-full space-y-0 flex justify-between items-center space-x-4">
             <div>
                 <li>
@@ -28,16 +28,23 @@
                             @can('Crear Permisos')
                                 <x-side-link routeName='prueba' icon='far w-10 text-center fa-user-tie fa-lg' text='Prueba'
                                     activeRoute="prueba.*" :scope="''" />
-                            @endcan
-                            <form action="{{ route('auth.logout') }}" method="GET">
-                                @csrf
-                                <x-button class=" bg-transparent text-black flex space-x-3 items-center">
-                                    <span class="far fa-sign-out-alt  text-xl"></span>
-                                    <span> Cerrar sesión</span>
-                                </x-button>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
+                    <li>
+                        <a id="clearCache"
+                            class="flex load items-center mt-2 p-2 text-base font-normal  border-b-2 border-gray-200  hover:bg-gray-300 hover:text-gray-700  ">
+                            <span class="far w-10 text-center fa-lg fas fa-sync-alt text-xl"></span>
+                            <span class="ml-3">Clear Caché</span>
+                        </a>
+                    </li>
+                @endcan
+                <form action="{{ route('auth.logout') }}" method="GET">
+                    @csrf
+                    <x-button class=" bg-transparent text-black flex space-x-3 items-center">
+                        <span class="far fa-sign-out-alt  text-xl"></span>
+                        <span> Cerrar sesión</span>
+                    </x-button>
+                </form>
+                </x-slot>
+                </x-dropdown>
                 </li>
 
             </div>
@@ -166,17 +173,15 @@
                                 text='Catalógo de Ctas.' activeRoute="contables.*" :scope="'Impuestos'" />
                         @endcan
                         @can('Ver Transacciones')
-
                             <x-side-link routeName='contables.report_606' icon='fas w-10 text-center fa-file-download fa-lg'
                                 text='Formatos' activeRoute="contables.*" :scope="'Impuestos'" />
-                           
                         @endcan
                     </x-dropitem>
                 @endcanany
 
 
             </ul>
-        </ul> 
+        </ul>
         <div class=" lg:hidden top-2 right-2">
             <x-button id="btnToggleMenu">
                 <span id="spanToggleMenu" class="fas fa-bars"></span>
@@ -189,6 +194,10 @@
                 $('#btnToggleMenu').click(function() {
                     $('#ulToggleMenu').toggle('translate-x-96');
                     $('#spanToggleMenu').toggleClass('fa-times fa-bars');
+                });
+
+                $('#clearCache').click(function() {
+                    window.location = window.location
                 });
             });
         </script>
