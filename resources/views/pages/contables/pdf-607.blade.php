@@ -307,7 +307,16 @@
                     </td>
                 </tr>
             @endforelse
+            <tr>
+                <td colspan="7">
+
+                </td>
+                <td style=" text-align: left;  font-weight:bold">
+                    ${{ formatNumber($comprobantes->sum('amount')) }}
+                </td>
+            </tr>
         </tbody>
+        
     </table>
     <hr>
     <script type="text/php">if ( isset($pdf) ) {

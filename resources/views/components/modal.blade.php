@@ -13,7 +13,7 @@
         x-transition:enter-start="-translate-y-full opacity-0" x-transition:enter-end="opacity-100 -translate-y-0"
         x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 -translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-full" @if($clickAway) @click.away="open = false" @endif
-        class="w-full z-50 flex justify-center items-center bg-gray-900 bg-opacity-5  h-full inset-0 {{$fitV?'':$minHeight}} mx-auto absolute " style="z-index: {{$zindex}}">
+        class="w-full z-50 flex justify-center items-center bg-gray-900 bg-opacity-5  h-full inset-0 {{$fitV?'':$minHeight}} mx-auto fixed overflow-hidden" style="z-index: {{$zindex}}">
 
         {{-- Modal Container --}}
         <div
@@ -23,7 +23,7 @@
             <div class="flex justify-between ">
                 <h1 class="font-bold my-2 lg:my-4 uppercase text-lg  text-left">{{ $title }}</h1>
                 <div class="flex space-x-4 items-center text-red-600 cursor-pointer " x-on:click.prevent="open = ! open">
-                    <small>Cerrar</small>
+                    <span>Cerrar</span>
                     <span class="fas fa-times " ></span>
                 </div>
             </div>

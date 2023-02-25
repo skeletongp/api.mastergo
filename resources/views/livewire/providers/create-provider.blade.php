@@ -11,7 +11,7 @@
             <span> Proveedor</span>
         </x-slot>
         <div class="relative pt-8">
-           
+
             <form wire:submit.prevent="createProvider">
                 <div class="flex space-x-4">
                     <div class="w-full overflow-hidden">
@@ -20,7 +20,7 @@
                                 <x-base-input label="Nombre Completo" id="provider.name" wire:model.defer="form.name" />
                                 <x-input-error for="form.name" />
                             </div>
-                            
+
                         </div>
                         <div class="  pb-6 flex items-start space-x-3">
                             <div class="w-full overflow-hidden">
@@ -83,7 +83,7 @@
 </div>
 @push('js')
     <script>
-        $('#provider_RNC').formatPhoneNumber({
+        /* $('#provider_RNC').formatPhoneNumber({
                     format: '###-#####-#'
                 })
         $('#provDocType').on('change', function() {
@@ -97,7 +97,7 @@
                     format: '###-#######-#'
                 })
             }
-            $('#provider_RNC').val('');
+            $('#provider_RNC').val(''); */
         })
     </script>
 @endpush

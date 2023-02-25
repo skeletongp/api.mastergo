@@ -4,3 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* make scrollbar thinner */
+::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
+}
+/* set color scrollbar indicator */
+::-webkit-scrollbar-thumb {
+  @apply bg-sky-600;
+}
+
+
