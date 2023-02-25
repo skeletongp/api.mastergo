@@ -13,7 +13,18 @@ class Provision extends Model
     protected $guarded = [];
     const LETTER = ['A', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     protected $appends=['total'];
-    
+
+    static function boot(){
+        parent::boot();
+        static::creating(function ($model) {
+            $model->created_by = auth()->user()->id;
+            $model->updated_by = auth()->user()->place->id;
+        });
+
+        static::updating(function ($model) {
+            $model->updated_by = auth()->user()->id;
+        });
+    }
     public static function code(): string
     {
         $place_id = 1;

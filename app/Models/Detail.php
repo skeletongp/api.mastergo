@@ -37,10 +37,10 @@ class Detail extends Model
     {
         parent::boot();
         self::created(function ($model) {
-          
-         
+
+
         });
-        
+
     }
 
     public function detailable()

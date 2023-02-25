@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Products;
 
 use Illuminate\Support\Facades\DB;
-use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Http\Classes\Column;
+use Mediconesystems\LivewireDatatables\DateColumn;
+use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class ProductProvisions extends LivewireDatatable
 {
@@ -26,6 +28,7 @@ class ProductProvisions extends LivewireDatatable
                 Column::callback('code', function($code){
                     return $code;
                 })->label('Cod.'),
+                  DateColumn::name('provisions.created_at')->label('Fecha'),
                 Column::callback(['cant','id'], function($cant, $id) use ($provisions){
                     $result=arrayFind($provisions, 'id',$id);
                     return formatNumber($result['cant']);

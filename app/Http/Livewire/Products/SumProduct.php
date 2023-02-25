@@ -21,7 +21,6 @@ class SumProduct extends Component
     public $setCost = false, $total=0, $open=false;
 
     protected $listeners = ['getUnits'];
-    protected $queryString = ['productAdded', 'setCost', 'total','discount'];
     public function mount()
     {
         $place = auth()->user()->place;
@@ -35,7 +34,6 @@ class SumProduct extends Component
         $this->banks = $store->banks()->select(DB::raw('CONCAT(bank_name," ",bank_number) AS name, id'))->pluck('name', 'banks.id');
         $count=$place->counts()->where('code',$this->count_code)->first();
             $this->code_name=$count->code.'-'.ellipsis($count->name,27);
-            
     }
 
     protected $rules1 = [
@@ -43,7 +41,7 @@ class SumProduct extends Component
         'form.cant' => 'required|numeric|min:1',
         'form.unit' => 'required|numeric|exists:units,id',
         'form.cost' => 'required|numeric',
-        
+
     ];
     protected $rules = [
         'productAdded' => 'required|min:1',
@@ -100,9 +98,9 @@ class SumProduct extends Component
 
     public function sumCant()
     {
-        
+
         $this->validate();
-        
+
         $code = Provision::code();
         foreach ($this->productAdded as $added) {
             $unit = auth()->user()->place->units()
@@ -113,15 +111,15 @@ class SumProduct extends Component
             $prevCost=$unit->pivot->cost>0?$unit->pivot->cost:0.00000000001;
             $cost=(($prevStock*$prevCost)+($added['cant']*$added['cost']))/abs(($prevStock+$added['cant']));
             $unit->pivot->stock = removeComma($unit->stock) + removeComma($added['cant']);
-            
+
             ($added['cost']+$unit->pivot->cost)/2;
             $unit->pivot->cost=$cost;
             $unit->pivot->save();
-           
+
             $this->createProvision($product, $added['cant'], $code, $added['unit'],  $added['cost']);
         }
         $this->print($code);
-        
+
         if ($this->setCost) {
            $this->open=true;
            $this->emit('modelOpened');
@@ -131,8 +129,8 @@ class SumProduct extends Component
             $this->emit('showAlert', 'Productos añadidos al stock', 'success');
             $this->reset('form', 'productAdded', 'count_code');
         }
-        
-        
+
+
 
     }
     public function getUnits()

@@ -1,6 +1,6 @@
 <div>
-    <x-modal :fitV="false" maxWidth="max-w-2xl" minHeight="min-h-[65vh]" :listenOpen="true">
-            
+    <x-modal :fitV="true" maxWidth="max-w-2xl" minHeight="min-h-[65vh]" :listenOpen="true">
+
         <x-slot name="title">
             <span> Editar registro</span>
         </x-slot>
@@ -10,13 +10,13 @@
             <x-tooltip id="editId{{$client_id}}">Editar registro</x-tooltip>
         </x-slot>
         <form wire:submit.prevent="updateClient" class="space-y-8 pt-12 relative">
-            
+
             <div class="absolute top-0 right-2">
                 <x-base-select label="Tipo" id="client.{{$client_id}}special" wire:model="client.special">
                     <option value="0">Normal</option>
                     <option value="1">Especial</option>
                 </x-base-select>
-                
+
             </div>
             <div class="   flex items-end space-x-3">
                 <div class="w-full">
@@ -30,15 +30,15 @@
                 </div>
             </div>
             <div class="   flex items-end space-x-3">
-                
+
                 <div class="w-full">
                     <x-input label="Dirección" id="client.{{$client_id}}address" wire:model.defer="client.address" />
                     <x-input-error for="client.address" />
                 </div>
 
             </div>
-           
-           
+
+
             <div class="   flex items-end space-x-3">
                 <div class="w-full max-w-sm">
                     <x-input label="RNC/Cédula" id="client.{{$client_id}}RNC" type="text" wire:model.defer="client.rnc" />
@@ -57,7 +57,7 @@
                     <x-input-error for="client.phone" />
                 </div>
             </div>
-          
+
             <div class="     ">
                 <div class="w-full">
                     <label for="client_avatar{{$client_id}}" class="flex items-center space-x-4 pb-4 cursor-pointer">
@@ -75,7 +75,7 @@
                 </div>
                 <div class="py-3 flex justify-between items-center">
                     <div>
-                      
+
                         <div class="">
                             <x-button class="space-x-2 z-50 text-sm flex items-center" wire:target="avatar"
                                 wire:loading>

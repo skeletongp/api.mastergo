@@ -9,7 +9,7 @@ class PrintProvision extends Component
 {
     public $provision_code;
 
-    
+
     public function render()
     {
         return view('livewire.provisions.print-provision');
