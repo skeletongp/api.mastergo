@@ -8,7 +8,8 @@ use App\Models\Invoice;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Http\Classes\Column;use Mediconesystems\LivewireDatatables\DateColumn;
+use App\Http\Classes\Column;
+use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class InvoiceHistorial extends LivewireDatatable
@@ -21,7 +22,7 @@ class InvoiceHistorial extends LivewireDatatable
 
     public function builder()
     {
-       
+
         $place = auth()->user()->place;
         $invoices =
             Payment::where('invoices.place_id', $place->id)
@@ -34,9 +35,9 @@ class InvoiceHistorial extends LivewireDatatable
             ->groupBy('invoices.id');
         return $invoices;
     }
-    
+
     public function bindClasses(){
-       
+
     }
     public function columns()
     {
@@ -82,7 +83,7 @@ class InvoiceHistorial extends LivewireDatatable
 
     public function summarize($column)
     {
-      
+
         $results = json_decode(json_encode($this->results->items()), true);
         foreach ($results as $key => $value) {
             $val = json_decode(json_encode($value), true);
@@ -95,5 +96,5 @@ class InvoiceHistorial extends LivewireDatatable
             return '';
         }
     }
-   
+
 }

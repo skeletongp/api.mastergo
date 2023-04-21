@@ -8,6 +8,7 @@ Route::controller(InvoiceController::class)->group(function () {
     Route::get('invoices', 'index')->name('invoices.index');
     Route::get('invoices/create', 'create')->name('invoices.create');
     Route::get('invoices/orders', 'orders')->name('orders');
+    Route::get('invoices/deleteds', 'deleteds')->name('deleteds');
     Route::get('invoices/show/{invoice}', 'show')->name('invoices.show');
 });
 

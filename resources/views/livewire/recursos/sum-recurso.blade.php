@@ -58,7 +58,7 @@
                         ${{ formatNumber($total) }}
                     </div>
                 </div>
-              
+
                 <div class="flex w-full my-4 justify-between items-center">
                     <div>
                         <x-toggle label="Generar Gasto" id="setCost" wire:model="setCost" value="true">
@@ -80,7 +80,7 @@
                     <div class="w-full">
                         <x-base-select id="outProvider" label="Proveedor" wire:model="provider_id">
                             <option class="text-gray-300"> Elija un proveedor</option>
-                            @foreach ($providers as $idProv => $prov)
+                            @foreach ($providers->sort() as $idProv => $prov)
                                 <option value="{{ $idProv }}">{{ $prov }}</option>
                             @endforeach
                         </x-base-select>

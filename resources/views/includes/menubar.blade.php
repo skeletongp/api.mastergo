@@ -83,6 +83,10 @@
                             <x-side-link routeName='orders' icon='far w-10 text-center fa-copy fa-lg' text='Pedidos'
                                 activeRoute="orders" :scope="'Pedidos'" />
                         @endcan
+                        @can('Ver Borradas')
+                        <x-side-link routeName='deleteds' icon='far w-10 text-center fa-trash-alt fa-lg' text='Borradas'
+                            activeRoute="deleteds" :scope="'Facturas'" />
+                    @endcan
                     </x-dropitem>
                 @endcanany
 

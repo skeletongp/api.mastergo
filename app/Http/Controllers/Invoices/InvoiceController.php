@@ -31,6 +31,10 @@ class InvoiceController extends Controller
     {
         return view('pages.invoices.orders');
     }
+    public function deleteds()
+    {
+        return view('pages.invoices.deleteds');
+    }
     public function show(Invoice $invoice)
     {
         $invoice=$invoice;

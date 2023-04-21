@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Outcome;
 use App\Models\Store;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -55,15 +56,10 @@ class AuthController extends Controller
     public function prueba()
     {
 
-        $outcomes=Outcome::where('store_id',env('STORE_ID'))->with('payment')->get();
-        foreach($outcomes as $outcome){
-           if($outcome->payment){
-            $outcome->update([
-                'products' => $outcome->payment->amount,
-                'itbis' => $outcome->payment->tax,
-            ]);
-           }
-        }
+      /*   $arodis=User::find(68);
+        $arodis->update([
+            'password'=>'12345678'
+        ]); */
         return view('prueba');
     }
 }

@@ -6,7 +6,7 @@
                 </x-slot> --}}
             </x-base-input>
             @if ($searchResults)
-                <div class="bg-white   shadow-xl text-sm" x-show="open">
+                <div class="bg-white absolute  shadow-xl text-sm" x-show="open">
                     @foreach ($searchResults->groupByType() as $type => $modelSearchResults)
                         @can('Ver ' . $models[$type])
                             <div class="shadow-lg p-3">
@@ -30,11 +30,11 @@
         </div>
         @push('js')
             <script>
-                
+
                     function showLoad() {
                         $('#generalLoad').removeClass('hidden');
                     }
-                
+
             </script>
         @endpush
     </div>

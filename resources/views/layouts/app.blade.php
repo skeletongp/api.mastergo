@@ -62,7 +62,7 @@
                 <div class="hidden" id="generalLoad">
                     <x-loading></x-loading>
                 </div>
-               
+
                 <section class=" w-full mx-auto max-w-7xl bg-white ">
                     {{ $slot }}
                 </section>
@@ -141,7 +141,7 @@
                 type = 'info';
             }
             Swal.fire({
-                title: `<div class="p-4 mb-4 text-lg uppercase ${colors[type]['text']} ${colors[type]['bg']} 
+                title: `<div class="p-4 mb-4 text-lg uppercase ${colors[type]['text']} ${colors[type]['bg']}
                 rounded-lg font-bold role="alert"> ${alert} </div>`,
                 icon: type,
                 showConfirmButton: false,
@@ -164,7 +164,7 @@
             }
             console.log(message)
             Swal.fire({
-                title: `<div class="p-4 mb-4 text-lg uppercase text-red-700 bg-red-100 
+                title: `<div class="p-4 mb-4 text-lg uppercase text-red-700 bg-red-100
                 rounded-lg font-bold role="alert"> ${msg} </div>`,
                 icon: 'error',
                 showConfirmButton: true,
@@ -176,7 +176,10 @@
             }
         })
         $('a').on('click', function() {
-            $('#generalLoad').removeClass('hidden');
+           console.log($(this).attr('download'))
+            if (!$(this).attr('download') ) {
+                $('#generalLoad').removeClass('hidden');
+            }
         })
         id = parseInt({{ auth()->user()->place_id }});
         /*  var channel = Echo.private(`invoices.${id}`);

@@ -23,11 +23,12 @@ class ProviderTable extends LivewireDatatable
         ->where('counts.contable_type', 'App\Models\Provider')
         ->where('counts.deleted_at', null)
         ->select('providers.*','stores.name as storeName')
+        ->orderBy('providers.name', 'asc')
         ;
 
         return $providers;
     }
-   
+
 
     public function columns()
     {

@@ -15,13 +15,12 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 class ProductDetails extends LivewireDatatable
 {
 
-    use UniqueDateTrait;
     public $product;
     public $headTitle='Historial de ventas ';
     public $padding='px-2';
     public function builder()
     {
-        
+
         $details=Detail::where('product_id',$this->product->id)
         ->join('units','details.unit_id','units.id')
         ->join('invoices','details.detailable_id','invoices.id')
@@ -40,7 +39,7 @@ class ProductDetails extends LivewireDatatable
             Column::callback(['invoices.id','invoices.number'], function ($id,$number) {
                 return "<a class='text-blue-500 hover:underline hover:font-bold' href=".route('invoices.show',$id)."> Fact. ".ltrim(substr($number, strpos($number, '-') + 1), '0')."</a>";
             })->label('Factura'),
-           
+
         ];
     }
     public function summarize($column)
@@ -51,7 +50,7 @@ class ProductDetails extends LivewireDatatable
             $results[$key][$column]=preg_replace("/[^0-9 .]/", '', $val[$column]);
         }
         try {
-           
+
             return "<h1 class='font-bold text-right'>". formatNumber(array_sum(array_column($results, $column)))."</h1>";;
         } catch (\TypeError $e) {
             return '';
