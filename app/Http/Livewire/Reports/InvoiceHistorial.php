@@ -83,7 +83,6 @@ class InvoiceHistorial extends LivewireDatatable
 
     public function summarize($column)
     {
-
         $results = json_decode(json_encode($this->results->items()), true);
         foreach ($results as $key => $value) {
             $val = json_decode(json_encode($value), true);
@@ -96,5 +95,4 @@ class InvoiceHistorial extends LivewireDatatable
             return '';
         }
     }
-
 }

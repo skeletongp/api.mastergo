@@ -20,7 +20,6 @@ class ProductDetails extends LivewireDatatable
     public $padding='px-2';
     public function builder()
     {
-
         $details=Detail::where('product_id',$this->product->id)
         ->join('units','details.unit_id','units.id')
         ->join('invoices','details.detailable_id','invoices.id')
@@ -39,7 +38,6 @@ class ProductDetails extends LivewireDatatable
             Column::callback(['invoices.id','invoices.number'], function ($id,$number) {
                 return "<a class='text-blue-500 hover:underline hover:font-bold' href=".route('invoices.show',$id)."> Fact. ".ltrim(substr($number, strpos($number, '-') + 1), '0')."</a>";
             })->label('Factura'),
-
         ];
     }
     public function summarize($column)

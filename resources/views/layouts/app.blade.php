@@ -62,7 +62,6 @@
                 <div class="hidden" id="generalLoad">
                     <x-loading></x-loading>
                 </div>
-
                 <section class=" w-full mx-auto max-w-7xl bg-white ">
                     {{ $slot }}
                 </section>

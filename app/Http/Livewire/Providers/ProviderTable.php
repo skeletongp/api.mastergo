@@ -30,6 +30,7 @@ class ProviderTable extends LivewireDatatable
     }
 
 
+
     public function columns()
     {
         return [

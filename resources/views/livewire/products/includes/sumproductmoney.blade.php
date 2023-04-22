@@ -25,7 +25,6 @@
             <x-input-error for="ref">Revise los datos</x-input-error>
         </div>
     </div>
-
     @if ($setCost )
         <div class="flex space-x-4 items-start mt-8">
             <div class="w-full">
