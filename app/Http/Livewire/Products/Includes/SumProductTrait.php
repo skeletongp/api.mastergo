@@ -26,12 +26,12 @@ trait SumProductTrait
             'place_id' => $place->id,
             'user_id' => auth()->user()->id,
         ]);
-        
+
     }
     public function print($code)
     {
         $provisions=Provision::whereCode($code)->with('provider','provisionable','atribuible', 'place.store','place.preference', 'user')->get();
-        
+
         $this->emit('printProvision',$provisions);
 
     }
@@ -73,9 +73,10 @@ trait SumProductTrait
     public function loadProvFromRNC()
     {
         if ($this->prov_rnc) {
-            $url = 'contribuyentes/' . $this->prov_rnc;
-            $prov = getApi($url);
-            if (array_key_exists('model', $prov)) {
+            $url = 'contribuyentes' ;
+            $prov = getApi($url, $this->prov_rnc);
+            if (count($prov)>0) {
+                $prov=$prov[0];
                 $this->prov_name = $prov['model']['name'];
             }
         }

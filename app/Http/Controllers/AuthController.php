@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Detail;
 use App\Models\Outcome;
+use App\Models\Product;
+use App\Models\ProductPlaceUnit;
+use App\Models\Provision;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,10 +60,8 @@ class AuthController extends Controller
     public function prueba()
     {
 
-      /*   $arodis=User::find(68);
-        $arodis->update([
-            'password'=>'12345678'
-        ]); */
+
+        dd($products);
         return view('prueba');
     }
 }

@@ -17,7 +17,7 @@ class GeneralDailyTable extends LivewireDatatable
 {
     use AuthorizesRequests, UniqueDateTrait;
     public $perPage = 5;
-   
+
     public $headTitle="Transacciones realizadas";
     public $padding='px-2';
     public function builder()
@@ -60,7 +60,7 @@ class GeneralDailyTable extends LivewireDatatable
             })->searchable(),
             Column::name('ref')->label('Referencia')->headerAlignCenter()->searchable(),
             Column::name('income')->callback('income', function ($debe) {
-                return " 
+                return "
                 <div class='leading'>
                     <h1 class='text-left'> $" . formatNumber($debe) . "</h1>
                     <h1 class='text-center'></h2>
@@ -72,7 +72,7 @@ class GeneralDailyTable extends LivewireDatatable
                 return  "$" . formatNumber($debe);
             })->searchable(),
             Column::name('outcome')->callback(['outcome'], function ($haber) {
-                return " 
+                return "
                 <div class='leading'>
                     <br>
                     <h1 class='text-right mt-4'> $" . formatNumber($haber) . "</h1>

@@ -28,6 +28,14 @@ class ProductPlaceUnit extends Pivot
             get:fn($value)=>$value
         );
     }
+
+    public function provisions() {
+        return $this->hasMany(Provision::class, 'provisionable_id','product_id');
+    }
+
+    public function details() {
+        return $this->hasMany(Detail::class, 'product_id','product_id');
+    }
     public function product()
     {
         return $this->belongsTo(Product::class);

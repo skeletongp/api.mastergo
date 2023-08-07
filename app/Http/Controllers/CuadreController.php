@@ -29,7 +29,8 @@ class CuadreController extends Controller
             ->join('invoices', 'invoices.id', '=', 'payments.payable_id')
             ->join('clients', 'clients.id', '=', 'payments.payer_id')
             ->join('moso_master.users', 'users.id', '=', 'payments.contable_id')
-            ->orderBy('payments.created_at', 'desc')
+            ->orderBy('payments.transferencia', 'desc')
+            ->orderBy('payments.efectivo', 'desc')
             ->select('payments.*', 'invoices.name as name', 'invoices.number', 'clients.name as client_name')
             ->with('payer', 'payable')->get();
             $efectivoSaldo=0;
@@ -61,7 +62,7 @@ class CuadreController extends Controller
             'efectivos' => $efectivos,
             'efectivoSaldo'=>$efectivoSaldo,
         ];
-        
+
         $pdf = $PDF->loadView('pages.cuadres.pdf-cuadre', $data);
         file_put_contents('storage/cuadres/' . 'cuadre_diario_' . $date . $place->id . '.pdf', $pdf->output());
         $path = asset('storage/cuadres/' . 'cuadre_diario_' . $date . $place->id . '.pdf');

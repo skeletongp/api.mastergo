@@ -20,7 +20,7 @@
                 </div>
                 <span>Cód.: {{ $client['code'] }}</span>
             </div>
-         
+
             <form wire:submit.prevent="createClient" class="mb-2">
                 <div class="flex space-x-4">
                     <div class="w-full overflow-hidden">
@@ -143,23 +143,8 @@
             </form>
         </div>
 
-       
+
 
     </x-modal>
 </div>
-@push('js')
-    <script>
-        $('#cltDocType').on('change', function() {
-            $('#client_RNC').val(' ');
-        });
-        $('#client_RNC').formatPhoneNumber({
-            format: '###-#####-#'
-        })
-        $('#client_Cedula').formatPhoneNumber({
-            format: '###-#######-#'
-        })
-        $('#contact_cedula').formatPhoneNumber({
-            format: '###-#######-#'
-        })
-    </script>
-@endpush
+

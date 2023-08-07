@@ -7,6 +7,9 @@ use App\Http\Helper\Universal;
 use App\Models\Product;
 use App\Models\Unit;
 use App\Http\Classes\Column;
+use App\Models\Detail;
+use App\Models\ProductPlaceUnit;
+use App\Models\Provision;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
@@ -17,13 +20,26 @@ class TableProduct extends LivewireDatatable
     public $hideable = 'select';
     public function builder()
     {
-       $sortField=$this->sortField ?? 'code';
+        $sortField = $this->sortField ?? 'code';
+        $this->updateStock();
         $products = auth()->user()->place->products()->with('units')->whereNull('deleted_at')
-        /* ->orderBy($sortField, $this->direction ? 'asc' : 'desc') */;
-        ;
+            /* ->orderBy($sortField, $this->direction ? 'asc' : 'desc') */;;
+
         return $products;
     }
 
+    public function updateStock()
+    {
+        $products = Product::get();
+        foreach ($products as $product) {
+            $provisions = Provision::where('provisionable_id', $product->id)->where('provisionable_type', Product::class)->sum('cant');
+            $details = Detail::where('product_id', $product->id)->sum('cant');
+            $ppUnit = ProductPlaceUnit::where('product_id', $product->id)->first();
+            $ppUnit->update([
+                'stock' => $provisions - $details
+            ]);
+        }
+    }
     public function columns()
     {
         $products = $this->builder()->get()->toArray();
@@ -32,11 +48,11 @@ class TableProduct extends LivewireDatatable
         return [
             Column::callback(['id', 'deleted_at'], function ($id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
-                $photo=env('NO_IMAGE');
-                if($result['image']){
-                    $photo=$result['image']['path'];
+                $photo = env('NO_IMAGE');
+                if ($result['image']) {
+                    $photo = $result['image']['path'];
                 }
-                return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $photo, 'ide'=> $id]);
+                return view('components.avatar', ['url' => route('products.show', $id), 'avatar' => $photo, 'ide' => $id]);
             })->label('Ver')->unsortable(),
             Column::name('code')->label('Cód.')->searchable()->defaultSort(true),
             Column::name('name')->label('Nombre')->searchable(),
@@ -55,7 +71,7 @@ class TableProduct extends LivewireDatatable
                 }
                 return $data;
             })->label('Stock'),
-            $user->hasPermissionTo('Ver Utilidad')?$this->getCosto($products):null,
+            $user->hasPermissionTo('Ver Utilidad') ? $this->getCosto($products) : null,
             Column::callback(['store_id', 'id'], function ($created, $id) use ($products) {
                 $result = arrayFind($products, 'id', $id);
                 $data = '';
@@ -79,8 +95,9 @@ class TableProduct extends LivewireDatatable
             Column::delete()->label('Eliminar')
         ];
     }
-    public function getCosto($products){
-        return Column::callback(['description','id'], function ($desc, $id) use ($products) {
+    public function getCosto($products)
+    {
+        return Column::callback(['description', 'id'], function ($desc, $id) use ($products) {
             $result = arrayFind($products, 'id', $id);
             $data = '';
             foreach ($result['units'] as $unit) {

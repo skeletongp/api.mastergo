@@ -82,7 +82,7 @@ function formatDate($date, $format)
 {
     return Carbon::parse($date)->format($format);
 }
-function getApi($endPoint)
+function getApi($endPoint, $rnc)
 {
     $url = null;
     if (strpos($endPoint, 'api')) {
@@ -90,12 +90,15 @@ function getApi($endPoint)
     } else {
         $url = env('BASE_URL') . $endPoint;;
     }
+    $url=$url."?select=*&rnc=eq.".$rnc;
     $response = Http::withHeaders([
         'Accept' => 'application/json',
+        'apikey'=>env('TOKEN')
 
-    ])->withToken(env('TOKEN'))
+        ])
+        ->withToken(env('TOKEN'))
         ->get($url);
-    return $response->json();
+        return $response->json();
 }
 function ellipsis($string, $maxLength)
 {

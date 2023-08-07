@@ -28,7 +28,9 @@ class SumProduct extends Component
         $this->efectivoCode = '100-02';
         $this->efectivos=$place->counts()->where('code','like','100%')->pluck('name','id');
         $this->providers = $store->providers()->pluck('fullname', 'providers.id');
-        $this->products = $place->products()->where('type','Producto')->pluck('name', 'products.id');
+        $this->products = $place->products()->where('type','Producto')
+        ->select('products.id', DB::raw('CONCAT(products.code," ",products.name) AS name'))
+        ->pluck('name', 'products.id');
         $this->units = $place->units()->pluck('name', 'units.id');
         $this->counts = $place->counts()->where('code', 'like', '104%')->pluck('name', 'counts.code');
         $this->banks = $store->banks()->select(DB::raw('CONCAT(bank_name," ",bank_number) AS name, id'))->pluck('name', 'banks.id');

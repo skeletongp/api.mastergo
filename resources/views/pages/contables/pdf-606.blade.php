@@ -131,7 +131,10 @@
         tfoot {
             display: table-footer-group;
         }
-        @page { size: a1 portrait; } 
+
+        @page {
+            size: a1 portrait;
+        }
     </style>
 </head>
 
@@ -183,11 +186,11 @@
                 <th style="text-align: left">Otros</th>
                 <th style="text-align: left">Propina</th>
                 <th style="text-align: left">Forma Pago</th>
-               
+
             </tr>
         </thead>
         <tbody class="cuerpo">
-           {{--  <tr>
+            {{--  <tr>
                 <td colspan="9">
                     <hr>
                     <div
@@ -198,20 +201,20 @@
             </tr> --}}
             @forelse ($outcomes as $ind=>  $outcome)
                 @php
-                    $docId = $outcome->rnc ;
-                    $docId=str_replace('-', '',$docId);
-                    $docId=='0000000000'?$docId=ellipsis($outcome->provider,15):$docId=$docId;
+                    $docId = $outcome->rnc;
+                    $docId = str_replace('-', '', $docId);
+                    $docId == '0000000000' ? ($docId = ellipsis($outcome->provider, 15)) : ($docId = $docId);
                 @endphp
-                <tr style="font-size: normal; {{ fmod($ind+1, 2) == 0 ? 'background-color:#EEE' : '' }}">
+                <tr style="font-size: normal; {{ fmod($ind + 1, 2) == 0 ? 'background-color:#EEE' : '' }}">
                     <td style=" text-align: left">
-                        {{ $docId }} 
+                        {{ $docId }}
                     </td>
 
                     <td style="width:5%;  text-align: left">
                         {{ strlen($docId) == 9 ? 1 : 2 }}
                     </td>
                     <td style="width:8%;  text-align: left">
-                        {{$outcome->type}}
+                        {{ $outcome->type }}
                     </td>
                     <td style="  text-align: left">
                         {{ $outcome->ncf }}
@@ -220,7 +223,7 @@
                     <td style=" text-align: left">
                         {{ '-' }}
                     </td>
-                    
+
                     <td style=" text-align: left">
                         {{ \Carbon\Carbon::parse($outcome->created_at)->format('Ymd') }}
                     </td>
@@ -234,7 +237,7 @@
                         ${{ formatNumber($outcome->products) }}
                     </td>
                     <td style=" text-align: left;  font-weight:bold">
-                        ${{ formatNumber($outcome->services+$outcome->products) }}
+                        ${{ formatNumber($outcome->services + $outcome->products) }}
                     </td>
                     <td style=" text-align: left">
                         ${{ formatNumber($outcome->itbis) }}
@@ -252,20 +255,20 @@
                         ${{ formatNumber($outcome->propina) }}
                     </td>
                     <td style=" text-align:left; ">
-                        @if ($outcome->efectivo>0 && $outcome->transferencia>0)
+                        @if ($outcome->efectivo > 0 && $outcome->transferencia > 0)
                             Mixto
-                        @elseif($outcome->rest>0 && ($outcome->efectivo>0 || $outcome->transferencia>0))
+                        @elseif($outcome->rest > 0 && ($outcome->efectivo > 0 || $outcome->transferencia > 0))
                             Mixto
-                        @elseif($outcome->efectivo>0)
+                        @elseif($outcome->efectivo > 0)
                             Efectivo
-                        @elseif($outcome->transferencia>0)
+                        @elseif($outcome->transferencia > 0)
                             Transferencia
-                        @elseif($outcome->rest>0)
+                        @elseif($outcome->rest > 0)
                             Crédito
                         @endif
-                        
+
                     </td>
-                   
+
                 </tr>
             @empty
                 <tr>
@@ -279,6 +282,48 @@
         </tbody>
     </table>
     <hr>
+    <table style="width: 40%; margin-top:35px; float: right; line-height:10px">
+        <tr>
+            <td colspan="6">
+                <div
+                    style="text-transform: uppercase; font-weight:bold; font-size:large; width:100%; text-align:center; margin-top: 30px">
+                    DETALLES DE TRIBUTACIÓN
+                </div>
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+                GASTO EN PRODUCTOS:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($totals["products"]) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+                GASTO EN SERVICIOS:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($totals["services"]) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+               TOTAL EN GASTOS:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($totals["total"]) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+               TOTAL GRAVADO:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($totals["itbis"]) }}
+            </td>
+        </tr>
+    </table>
     <script type="text/php">if ( isset($pdf) ) {
                                             $font = $fontMetrics->get_font("helvarialetica", "bold");
                                             $pdf->page_text(18, 18, auth()->user()->store->name.". Página: {PAGE_NUM} de {PAGE_COUNT}  ", $font, 12, array(0,0,0));
@@ -288,7 +333,7 @@
     @if ($outcomes->count() > (18 * $outcomes->count()) / 2 + 2)
         <div style="page-break-after: always"></div>
     @endif
-   
+
 </body>
 
 </html>

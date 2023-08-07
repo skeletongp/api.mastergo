@@ -127,11 +127,7 @@
                     <div class="w-full">
                         <x-base-select id="outProvider" label="Proveedor" wire:model="provider_id">
                             <option class="text-gray-300"> Elija un proveedor</option>
-<<<<<<< HEAD
                             @foreach ($providers->sort() as $idProv => $prov)
-=======
-                            @foreach ($providers as $idProv => $prov)
->>>>>>> 7af05642e1478ce99e47f2e6c79e21f22c8762b2
                                 <option value="{{ $idProv }}">{{ $prov }}</option>
                             @endforeach
                         </x-base-select>

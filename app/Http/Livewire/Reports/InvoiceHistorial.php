@@ -18,7 +18,6 @@ class InvoiceHistorial extends LivewireDatatable
     public $headTitle = "Historial de facturas";
     public $padding = "px-2";
     public $hideable='select';
-    use UniqueDateTrait;
 
     public function builder()
     {
@@ -54,7 +53,7 @@ class InvoiceHistorial extends LivewireDatatable
                 $number = ltrim(substr($number, strpos($number, '-') + 1), '0');
                 return $number;
             })->label('Nro.')->searchable(),
-            DateColumn::name('invoices.created_at')->label('Fecha')->format('d/m/Y h:i A')->searchable()->filterable(),
+            DateColumn::name('invoices.day')->label('Fecha')->format('d/m/Y h:i A')->searchable()->filterable(),
             Column::callback(['clients.name', 'invoices.name'], function ($client, $name) {
                 return ellipsis($name ?: $client, 20);
             })->label('Cliente')->searchable(),

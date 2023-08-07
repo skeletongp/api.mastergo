@@ -17,11 +17,11 @@ trait GenerateInvoiceTrait
 
     public function createDetails($invoice)
     {
-        
+
         $gasto = 0;
         $gasto_service = 0;
-        $venta=0;
-        $venta_service=0;
+        $venta = 0;
+        $venta_service = 0;
         foreach ($this->details as $ind => $detail) {
             unset($this->details[$ind]['product_name']);
             unset($this->details[$ind]['unit_name']);
@@ -29,34 +29,34 @@ trait GenerateInvoiceTrait
             $detail['detailable_id'] = $invoice->id;
             $detail['detailable_type'] = Invoice::class;
             $taxes = empty($detail['taxes']) ? [] : $detail['taxes'];
-                $detail['total'] = $detail['subtotal'] - $detail['discount'];
-            $det = Detail::create(Arr::except($detail, 'taxes','product_name','unit_name'));
+            $detail['total'] = $detail['subtotal'] - $detail['discount'];
+            $det = Detail::create(Arr::except($detail, 'taxes', 'product_name', 'unit_name'));
             if ($invoice->type != 'B00' && $invoice->type != 'B14') {
                 $det->taxes()->sync($taxes);
                 $det->taxtotal = $det->taxes->sum('rate') * $det->subtotal;
             }
             $det->save();
-           
-           
+
+
             $product = $det->product;
-            if ($product->type=='Producto') {
-                $venta += $det->subtotal-$det->discount;
+            if ($product->type == 'Producto') {
+                $venta += $det->subtotal - $det->discount;
             } else {
                 $det->update([
-                    'cost_service'=>$det->cost,
-                    'cost'=>0,
+                    'cost_service' => $det->cost,
+                    'cost' => 0,
                 ]);
-                $venta_service += $det->subtotal-$det->discount;
+                $venta_service += $det->subtotal - $det->discount;
             }
             $gasto += $det->cant * $det->cost;
             $gasto_service += $det->cant * $det->cost_service;
             $this->restStock($detail['unit_pivot_id'], $detail['cant'], $product);
+
         }
         $invoice->update(['gasto' => $gasto]);
         $invoice->update(['venta' => $venta]);
         $invoice->update(['gasto_service' => $gasto_service]);
         $invoice->update(['venta_service' => $venta_service]);
-        
     }
     public function setFromScan()
     {
@@ -73,21 +73,25 @@ trait GenerateInvoiceTrait
 
     public function trySendInvoice()
     {
-        if(!$this->number){
-            $this->number =getPlace()->id . '-' . str_pad( getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
-        }
-        $condition = $this->condition != 'De Contado' && $this->condition != 'Contra Entrega'
-         && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
-
-       
-      
+        try {
+            if (!$this->number) {
+                $this->number = getPlace()->id . '-' . str_pad(getNumberFromInvoice() + 1, 7, '0', STR_PAD_LEFT);
+            }
+            $condition = $this->condition != 'De Contado' && $this->condition != 'Contra Entrega'
+                && array_sum(array_column($this->details, 'total')) > $this->client['limit'];
+            DB::beginTransaction();
             $this->sendInvoice();
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     public function sendInvoice()
     {
-        $store=getStore();
-        $place=optional(auth()->user())->place?:$store->places->first();
+        $store = getStore();
+        $place = optional(auth()->user())->place ?: $store->places->first();
         $this->checkCompAmount($store);
         if (!count($this->details)) {
             return;
@@ -95,22 +99,22 @@ trait GenerateInvoiceTrait
         $total = array_sum(array_column($this->details, 'subtotal'));
         $user = auth()->user();
         $comp_id = null;
-        if ($this->type != 'B00' ) {
+        if ($this->type != 'B00') {
             $comp_id = $this->comprobante_id;
             $comprobante = Comprobante::whereId($comp_id)->first();
             $comprobante->update([
                 'status' => 'usado',
-                'period'=>date('Ym'),
-                'user_id'=>$user->id,
-                'place_id'=>$user->place->id,
-                'client_id'=>$this->client['id'],
+                'period' => date('Ym'),
+                'user_id' => $user->id,
+                'place_id' => $user->place->id,
+                'client_id' => $this->client['id'],
             ]);
-            $comprobantes=getComprobantes($this->type);
-            $comprobantes=$comprobantes->keyBy('id');
+            $comprobantes = getComprobantes($this->type);
+            $comprobantes = $comprobantes->keyBy('id');
             $comprobantes->forget($comprobante->id);
-            Cache::put($this->type.'_comprobantes_'.env('STORE_ID'), $comprobantes);
+            Cache::put($this->type . '_comprobantes_' . env('STORE_ID'), $comprobantes);
         }
-        if(!$this->name){
+        if (!$this->name) {
             $this->name = $this->client['name'];
         }
         $invoice = $user->store->invoices()->create(
@@ -139,16 +143,16 @@ trait GenerateInvoiceTrait
         event(new NewInvoice($invoice));
         $this->reset('form', 'details', 'producto', 'price', 'client', 'client_code', 'product_code', 'product_name', 'name');
         $this->invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
-        if (getPreference($place->id)->print_order=='yes') {
+        if (getPreference($place->id)->print_order == 'yes') {
             $this->emit('printOrder', $this->invoice);
         }
         $this->deleteLocal();
-        if(getPreference($place->id)->instant=='yes'){
-            $this->instant=true;
+        if (getPreference($place->id)->instant == 'yes') {
+            $this->instant = true;
             $this->emit('modalOpened');
         }
-        Cache::put('number_invoice_'.getPlace()->id, $invoice->id);
-        Cache::forget('place_invoices_with_trashed'.$place->id);
+        Cache::put('number_invoice_' . getPlace()->id, $invoice->id);
+        Cache::forget('place_invoices_with_trashed' . $place->id);
         $this->mount();
     }
     public function createPayment($invoice)
@@ -160,7 +164,7 @@ trait GenerateInvoiceTrait
             $tax = array_sum(array_column($this->details, 'taxTotal'));
         }
         $total = $subtotal - $discount + $tax;
-        if ($invoice->condition == "De Contado" || $invoice->condition=='Contra Entrega') {
+        if ($invoice->condition == "De Contado" || $invoice->condition == 'Contra Entrega') {
             $forma = 'contado';
         } else {
             $forma = 'credito';
@@ -189,8 +193,9 @@ trait GenerateInvoiceTrait
         if ($product->type == 'Producto') {
             $user = auth()->user();
             $unit = $user->place->units()->wherePivot('id', $pivotUnitId)->first();
-            $unit->pivot->stock =floatVal(str_replace(',','',$unit->stock)) - $cant;
+            $unit->pivot->stock = floatVal(str_replace(',', '', $unit->stock)) - floatVal($cant);
             $unit->pivot->save();
+            Log::info([$unit->pivot]);
         }
     }
     public function verifyCredit($amount, $credit)

@@ -21,7 +21,7 @@
                     </div>
                     @if (auth()->user()->store->banks->count())
                         <div>
-                            <x-base-input status="{{ $cobrable ? '' : 'disabled' }}" onfocus="clrInput(event)"
+                            <x-base-input onfocus="clrInput(event)"
                                 onblur="restoreInput(event)" class="text-xl font-bold" type="number"
                                 wire:model.lazy="payment.transferencia" label="Transferencia" id="payment.transferencia">
                             </x-base-input>

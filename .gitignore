@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 worker.log
 *.log
+/error_log

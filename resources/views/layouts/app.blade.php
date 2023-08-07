@@ -48,7 +48,7 @@
                             {{ $bread }}
                         @endif
                     </div>
-                    <div class="!z-30 ">
+                    <div class=" ">
                         @if (isset($rightButton))
                             <div class="py-1">
                                 {{ $rightButton }}

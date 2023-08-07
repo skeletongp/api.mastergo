@@ -104,7 +104,7 @@ class EditDetail extends Component
         $this->setTaxes($invoice);
         dispatch(new CreatePDFJob($invoice))->onConnection('sync');
 
-        $this->emit('showAlert', 'Detalle actualizado', 'success');
+        $this->emit('showAlert', 'Detalle actualizado', 'success',1000);
         $this->emitUp('reloadEdit');
     }
     public function updatePrice($invoice)
@@ -130,7 +130,10 @@ class EditDetail extends Component
         $this->detail->save();
         $this->detail->taxes()->detach($this->prevTaxes);
         $this->detail->taxes()->attach($this->product->taxes()->pluck('taxes.id')->toArray());
+         $this->emit('showAlert', 'Detalle actualizado', 'success',1000);
+        $this->emitUp('reloadEdit');
         return $this->detail->detailable->details()->get();
+        
     }
     public function updateUnit()
     {
@@ -140,6 +143,8 @@ class EditDetail extends Component
         $unit = $this->place->units()->wherePivot('id', $this->unit->pivot['id'])->first();
         $unit->pivot->stock = $unit->pivot->stock - $this->detail->cant;
         $unit->pivot->save();
+         $this->emit('showAlert', 'Detalle actualizado', 'success',1000);
+        $this->emitUp('reloadEdit');
         return $unit;
     }
     public function updatePayment($invoice, $details)
@@ -162,6 +167,8 @@ class EditDetail extends Component
         $this->diffPayment = $total-$payment->total;
         $invoice->update(['rest' => $payment->rest]);
         $this->updateClientLimit($this->prevRest, $invoice->client, $payment);
+         $this->emit('showAlert', 'Detalle actualizado', 'success',1000);
+        $this->emitUp('reloadEdit');
     }
     public function updateClientLimit($prevRest, $client, $payment)
     {

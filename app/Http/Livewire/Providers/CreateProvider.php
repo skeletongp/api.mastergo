@@ -18,7 +18,6 @@ class CreateProvider extends Component
             'form.address' => 'required|string|max:150',
             'form.limit' => 'required|numeric|min:0',
             'form.phone' => 'required|string|max:25',
-            'provDocType' => 'required',
         ];
     }
     public function mount(){
@@ -35,10 +34,8 @@ class CreateProvider extends Component
         if (!array_key_exists('email', $this->form) || $this->form['email'] == "") {
             $this->form['email'] = uniqid()."@email.com";
         }
-       
-        $this->validate([
-            'form.rnc' => 'required|string|max:25',
-        ]);
+
+
         $this->validate();
         $store = auth()->user()->store;
         if ($this->form['rnc'] == '000-00000-0') {
@@ -62,9 +59,11 @@ class CreateProvider extends Component
             $this->form['name'] = $provider->fullname;
             return;
         }
-        $url = 'contribuyentes/' . str_replace('-', '', $this->form['rnc']);
-        $prov = getApi($url);
-        if (array_key_exists('model', $prov)) {
+        $url = 'contribuyentes/';
+        $rnc= str_replace('-', '', $this->form['rnc']);
+        $prov = getApi($url, $rnc);
+        if (count($prov)>0) {
+            $prov=$prov[0];
             $this->form['name'] = $prov['model']['name'];
         }
     }

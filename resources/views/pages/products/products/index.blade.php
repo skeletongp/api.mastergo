@@ -7,24 +7,22 @@
             @can('Sumar Productos')
                 <div class="flex justify-end pb-2">
                     <a href="{{ route('products.sum') }}"
-                        class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
+                        class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2  flex items-center ">
                         <span class="fas fa-plus text-xl"></span>
                         <span>Sumar</span>
                     </a>
                 </div>
             @endcan
-            {{--  @can('Crear Productos')
-                @livewire('contables.create-count', ['model' => 'App\Models\Product', 'codes' => ['104', '500']], key(uniqid()))
-            @endcan --}}
+
             @can('Ver Utilidad')
                 <a href="{{ route('products.report') }}"
-                    class=" right-2 load cursor-pointer  rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
+                    class=" right-2 load cursor-pointer  rounded-full h-8 w-max px-3 py-1 space-x-2  flex items-center ">
                     <span class="fas fa-file-pdf text-xl"></span>
                     <span>Reporte</span>
                 </a>
                 <div class="flex justify-end pb-2">
                     <a href="{{ route('products.catalogue') }}"
-                        class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2 shadow xl flex items-center ">
+                        class=" right-2 load rounded-full h-8 w-max px-3 py-1 space-x-2  flex items-center ">
                         <span class="fas fa-layer-group text-xl"></span>
                         <span>Catálogo</span>
                     </a>

@@ -10,26 +10,28 @@ use Livewire\WithFileUploads;
 
 class CreateClient extends Component
 {
-    public $client=[], $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
+    public $client = [], $avatar, $photo_path, $store_id, $role, $cltDocType, $name, $lastname, $cellphone, $cedula;
     use WithFileUploads;
-    protected $listeners=['modalOpened'];
-    public function mount(){
-        $this->client['code']=0;
+    protected $listeners = ['modalOpened'];
+    public function mount()
+    {
+        $this->client['code'] = 0;
     }
 
     public function render()
     {
-       
+
         return view('livewire.clients.create-client');
     }
-    public function modalOpened(){
-        $this->client['special']=0;
-        $this->client['limit']=0;
+    public function modalOpened()
+    {
+        $this->client['special'] = 0;
+        $this->client['limit'] = 0;
         $store = auth()->user()->store;
-        if(!Cache::get('clientCount'.env('STORE_ID'))){
-            Cache::put('clientCount'.env('STORE_ID'),$store->clients()->withTrashed()->count());
+        if (!Cache::get('clientCount' . env('STORE_ID'))) {
+            Cache::put('clientCount' . env('STORE_ID'), $store->clients()->withTrashed()->count());
         }
-        $num = Cache::get('clientCount'.env('STORE_ID')) + 1;
+        $num = Cache::get('clientCount' . env('STORE_ID')) + 1;
         $code = str_pad($num, 3, '0', STR_PAD_LEFT);
         $this->client['code'] = $code;
     }
@@ -52,35 +54,35 @@ class CreateClient extends Component
             $this->client['limit'] = 0.00;
         }
         if (!array_key_exists('name', $this->client) || empty($this->client['name'])) {
-            $this->client['name'] = strtoupper(strtok($this->name, ' ').' '.strtok($this->lastname, ' '));
+            $this->client['name'] = strtoupper(strtok($this->name, ' ') . ' ' . strtok($this->lastname, ' '));
         }
         $store = auth()->user()->store;
         $this->validate();
         $client = $store->clients()->create($this->client);
-            $client->contact()->create([
-                'name' => $this->name,
-                'lastname' => $this->lastname,
-                'cellphone' => $this->cellphone,
-                'cedula' => $this->cedula,
-                'phone'=>$this->client['phone'],
-            ]);
+        $client->contact()->create([
+            'name' => $this->name,
+            'lastname' => $this->lastname,
+            'cellphone' => $this->cellphone,
+            'cedula' => $this->cedula,
+            'phone' => $this->client['phone'],
+        ]);
         if ($this->photo_path) {
             $client->image()->create([
                 'path' => $this->photo_path
             ]);
         }
-        setContable($client, '101', 'debit', $client->contact->fullname.'-'.$client->name, null, true);
+        setContable($client, '101', 'debit', $client->contact->fullname . '-' . $client->name, null, true);
         $this->emit('realoadClients');
 
         $this->reset();
         $this->render();
-        Cache::forget('clientCount'.env('STORE_ID'));
-        Cache::forget('clientsWithCode_'.env('STORE_ID'));
+        Cache::forget('clientCount' . env('STORE_ID'));
+        Cache::forget('clientsWithCode_' . env('STORE_ID'));
         $this->emit('showAlert', 'Cliente registrado exitosamente', 'success');
         $this->emit('refreshLivewireDatatable');
         $this->modalOpened();
     }
-    
+
     public function updatedAvatar()
     {
         $ext = pathinfo($this->avatar->getFileName(), PATHINFO_EXTENSION);
@@ -90,17 +92,17 @@ class CreateClient extends Component
     function loadFromRNC()
     {
         if (array_key_exists('rnc', $this->client)) {
-            $rnc=str_replace('-', '', $this->client['rnc']);
-            $client = getApi('contribuyentes/' . $rnc);
-            if ($client && array_key_exists('model', $client)) {
-                $client = $client['model'];
-                if (strlen($rnc) == 9){
-                    $this->client['name'] = $client['name'];
-                } else {
-                    $this->name = strtok($client['name'], ' ');
-                    $this->lastname=substr($client['name'],strlen($this->name));
-                }
-                
+            $rnc = str_replace('-', '', $this->client['rnc']);
+            $client = getApi('companies', $rnc);
+            if (count($client) > 0) {
+                $client = $client[0];
+                $this->client['name'] = $client['name'];
+                $this->name = strtok($client['name'], ' ');
+                $this->lastname = substr($client['name'], strlen($this->name));
+            } else{
+                $this->client['name'] ="";
+                $this->name ="";
+                $this->lastname = "";
             }
         }
     }

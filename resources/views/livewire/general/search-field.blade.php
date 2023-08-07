@@ -1,4 +1,4 @@
-    <div class=" h-max w-56" x-data="{ open: true }" style="z-index: 1600">
+    <div class=" h-max w-56" x-data="{ open: true }" style="z-index: 1900 !important">
         <div @click.away="open= false">
             <x-base-input icon="fas fa-search" placeholder="Buscar..."  wire:model.debounce.500ms="search" class="relative lg:py-1 lg:pb-1.5  w-56 max-w-xs" @focus="open=true" type="search">
                 {{-- <x-slot name="icon">
@@ -6,7 +6,7 @@
                 </x-slot> --}}
             </x-base-input>
             @if ($searchResults)
-                <div class="bg-white absolute  shadow-xl text-sm" x-show="open">
+                <div class=" absolute  shadow-xl text-sm bg-white !z-50" x-show="open" >
                     @foreach ($searchResults->groupByType() as $type => $modelSearchResults)
                         @can('Ver ' . $models[$type])
                             <div class="shadow-lg p-3">

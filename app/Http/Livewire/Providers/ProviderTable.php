@@ -35,11 +35,11 @@ class ProviderTable extends LivewireDatatable
     {
         return [
             Column::index($this)->label('No.')->searchable(),
-            Column::name('fullname')->label('Nombre')->defaultSort(),
+            Column::name('fullname')->label('Nombre')->defaultSort()->searchable(),
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Doc.')->searchable()->headerAlignCenter(),
-            Column::raw('CONCAT(counts.code,"-",counts.name) AS count')->label('Cuenta')->searchable()->hide(),
+            Column::raw('CONCAT(counts.code," | ",counts.balance) AS count')->label('Cuenta')->searchable()->hide(),
             $this->editColumn(),
             $this->deleteColumn(),
         ];

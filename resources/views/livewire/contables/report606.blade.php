@@ -21,8 +21,7 @@
         </div>
         <div class=" mx-auto relative w-full">
             @if ($url)
-                <iframe src="{{ $url }}#view=FitH" width="100%" height="700" type="application/pdf">
-                </iframe>
+            <object class="mx-auto" data="data:application/pdf;base64,{{$url}}" type="application/pdf" width="700" height="700"></object>
             @endif
         </div>
     </div>

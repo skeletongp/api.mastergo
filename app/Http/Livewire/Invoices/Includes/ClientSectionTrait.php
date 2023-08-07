@@ -12,10 +12,10 @@ trait ClientSectionTrait
 
     public function changeClient()
     {
-       
+
         $code = str_pad($this->client_code, 4, '0', STR_PAD_LEFT);
         $client = Client::where('code', $code)->first();
-        
+
 
         if ($client) {
             $this->client = [
@@ -59,7 +59,8 @@ trait ClientSectionTrait
     }
     public function rncEnter()
     {
-        $url='contribuyentes/'.$this->name;
+        $url='contribuyentes';
+        $rnc=$this->name;
         $client=Client::whereRaw("REPLACE(rnc,'-','')=?", [$this->name])
         ->orWhere('name',$this->name)->first();
         if ($client) {
@@ -68,7 +69,7 @@ trait ClientSectionTrait
             $this->name=null;
             return;
         }
-        $client=getApi($url);
+        $client=getApi($url, $rnc);
         if (array_key_exists('model', $client)) {
             $this->loadFromRNC($client['model']);
         }

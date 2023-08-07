@@ -17,8 +17,8 @@ class Provision extends Model
     static function boot(){
         parent::boot();
         static::creating(function ($model) {
-            $model->created_by = auth()->user()->id;
-            $model->updated_by = auth()->user()->place->id;
+            $model->created_by =1;
+            $model->updated_by = 1;
         });
 
         static::updating(function ($model) {

@@ -53,7 +53,7 @@
                     @endif
                 @endcan
 
-                    <div class="  mr-3 lg:mr-0 w-56">
+                    <div class="  mr-3 lg:mr-0 w-56 z-50">
                         <livewire:general.search-field />
                     </div>
             </x-slot>

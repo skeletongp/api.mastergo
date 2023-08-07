@@ -14,7 +14,7 @@ trait OrderConfirmTrait
         $invoice = Invoice::whereId($this->form['id'])->first();
         $condition = ($this->form['condition'] == 'De Contado'|| $this->form['client']['id']==1) && $this->form['rest'] > 0;
         
-        if ($condition && !auth()->user()->hasPermissionTo('Autorizar')) {
+        if ($condition && !auth()->user()->hasPermissionTo('Fiar Facturas')) {
            
             $this->authorize('Fiar factura de contado a Genérico', 'validateAuthorization','payInvoice','data=null','Autorizar');
         } else {

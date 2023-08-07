@@ -32,16 +32,17 @@ class Report607 extends Component
     public function make607()
     {
         $store = auth()->user()->store;
-        $start_at = $this->start_at;
+        $start_at=Carbon::parse($this->start_at)->format('Y-m-d 00:00:00');
+        $end_at=Carbon::parse($this->end_at)->format('Y-m-d 23:59:59');
 
 
-        $comprobantes = $this->getComprobantes($start_at);
+        $comprobantes = $this->getComprobantes($start_at, $end_at);
 
-        $resumen = $this->getResumen($start_at);
+        $resumen = $this->getResumen($start_at, $end_at);
 
         $props=$this->getOtherData($resumen, $comprobantes);
-        
-        $creditnotes = $this->getCreditNotes($start_at);
+
+        $creditnotes = $this->getCreditNotes($start_at, $end_at);
         $data = get_defined_vars();
         $PDF = App::make('dompdf.wrapper');
 
@@ -56,17 +57,17 @@ class Report607 extends Component
     {
         $this->make607();
     }
-    public function getComprobantes($start_at)
+    public function getComprobantes($start_at, $end_at)
     {
         $comprobantes = Comprobante::where('comprobantes.status', 'usado')
             ->where('invoices.deleted_at', null)
             ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
-            ->whereBetween('invoices.day', [$start_at, $this->end_at])
+            ->whereBetween('invoices.day', [$start_at, $end_at])
             ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
             ->where('payments.payable_type', 'App\Models\Invoice')
             ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
-            ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc,comprobantes.ncf as ncf, invoices.day as day, 
-           if(invoices.status!="anulada",payments.total,50) as amount,   
+            ->selectRaw('clients.rnc as rnc, invoices.rnc as invRnc,comprobantes.ncf as ncf, invoices.day as day,
+           if(invoices.status!="anulada",payments.total,50) as amount,
            payments.tax as tax, if(invoices.status!="anulada",payments.efectivo-payments.cambio,50) as efectivo,
           if(invoices.status!="anulada", payments.transferencia+payments.tarjeta,0) as transferencia, payments.rest
            as rest, invoices.number as number')
@@ -80,18 +81,18 @@ class Report607 extends Component
             ->get();
         return $comprobantes;
     }
-    public function getResumen($start_at)
+    public function getResumen($start_at, $end_at)
     {
         $resumen = Comprobante::where('comprobantes.status', 'usado')
             ->where('invoices.deleted_at', null)
             ->leftJoin('invoices', 'comprobantes.id', '=', 'invoices.comprobante_id')
-            ->whereBetween('invoices.day', [$start_at, $this->end_at])
+            ->whereBetween('invoices.day', [$start_at, $end_at])
             ->leftJoin('payments', 'invoices.id', '=', 'payments.payable_id')
             ->where('payments.payable_type', 'App\Models\Invoice')
             ->leftJoin('clients', 'invoices.client_id', '=', 'clients.id')
-            ->selectRaw('if(invoices.status!="anulada",payments.payed+payments.rest-payments.cambio,50) as amount,   
+            ->selectRaw('if(invoices.status!="anulada",payments.payed+payments.rest-payments.cambio,50) as amount,
             payments.tax as tax, if(invoices.status!="anulada",payments.efectivo-payments.cambio,50) as efectivo,
-           if(invoices.status!="anulada", payments.transferencia+payments.tarjeta,0) as transferencia, 
+           if(invoices.status!="anulada", payments.transferencia+payments.tarjeta,0) as transferencia,
            if(invoices.status!="anulada",payments.rest,50) as rest, if(invoices.status!="anulada",payments.cambio,50) as cambio')
             ->where('comprobantes.prefix', '=', 'B02')
             ->where('payments.amount', '<=', 250000)
@@ -99,19 +100,19 @@ class Report607 extends Component
             ->groupBy('comprobantes.id')
             ->get();
 
-           
+
         return $resumen;
     }
-    public function getCreditNotes($start_at)
+    public function getCreditNotes($start_at, $end_at)
     {
         $creditnotes =
-            Creditnote::whereBetween('modified_at', [$start_at, $this->end_at])
+            Creditnote::whereBetween('modified_at', [$start_at, $end_at])
             ->leftJoin('invoices', 'creditnotes.invoice_id', '=', 'invoices.id')
             ->leftJoin('comprobantes', 'invoices.comprobante_id', '=', 'comprobantes.id')
             ->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
             ->selectRaw(
-                'clients.rnc as rnc, invoices.rnc as invRnc, comprobantes.ncf as invNcf ,creditnotes.modified_ncf as ncf, 
-           invoices.day as invDay, creditnotes.modified_at as day, creditnotes.amount as amount, 
+                'clients.rnc as rnc, invoices.rnc as invRnc, comprobantes.ncf as invNcf ,creditnotes.modified_ncf as ncf,
+           invoices.day as invDay, creditnotes.modified_at as day, creditnotes.amount as amount,
             creditnotes.tax as tax'
             )
             ->groupBy('creditnotes.id')

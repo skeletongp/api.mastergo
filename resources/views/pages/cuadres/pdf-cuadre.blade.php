@@ -188,7 +188,7 @@
             </tr>
             @forelse ($payments as $ind=>  $payment)
                 <tr
-                    style="font-size: small; {{ fmod($ind, 2) == 0 ? 'background-color:#EEE' : '' }} {{ $payment->payed > 0 ? '' : 'color:red' }}">
+                    style="font-size: small; {{ fmod($ind, 2) == 0 ? 'background-color:#EEE' : '' }}">
                     <td style="width:10%;  text-align: left">
                         {{ $payment->payable->number ? ltrim(substr($payment->payable->number, strpos($payment->payable->number, '-') + 1), '0') : $payment->payable->ref }}
                     </td>
@@ -256,7 +256,7 @@
 
 
 
-      
+
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:25px">
                 SALDO INICIAL =>
@@ -270,7 +270,7 @@
                 BALANCE =>
             </td>
             <td colspan="2" style="padding-top:10px">
-               ${{ formatNumber(($efectivoSaldo)) }} 
+               ${{ formatNumber(($efectivoSaldo)) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -278,7 +278,7 @@
                 RETIRADO =>
             </td>
             <td colspan="2" style="padding-top:10px">
-               ${{ formatNumber(($cuadre->retirado)) }} 
+               ${{ formatNumber(($cuadre->retirado)) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -341,7 +341,7 @@
                 ${{ formatNumber($efectivoSaldo + $payments->sum('transferencia') + $payments->sum('tarjeta')+$invoices->sum('rest')) }}
             </td>
         </tr>
-       
+
         <tr>
             <td colspan="6">
                 <hr>

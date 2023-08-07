@@ -23,10 +23,7 @@ class OutcomeTable extends LivewireDatatable
             ->where('outcomeable_type', 'App\Models\Provider')
             ->leftJoin('payments', 'payments.payable_id', 'outcomes.id')
             ->where('payable_type', 'App\Models\Outcome')
-            ->where(function ($query) {
-                $query->whereNotNull('payments.ncf')
-                      ->orWhere('outcomes.ref', 'like', 'B01%');
-            })
+            
             ->groupBy('outcomes.id');
 
         return $outcomes;

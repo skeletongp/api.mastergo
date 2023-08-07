@@ -17,7 +17,7 @@ class InvoicePorCobrar extends LivewireDatatable
     public function builder()
     {
         $place = getPlace();
-        $invoices = 
+        $invoices =
         Invoice::where('invoices.place_id', $place->id)
         ->where('status', '=', 'cerrada')
         ->where('invoices.rest','>',0)
@@ -31,7 +31,7 @@ class InvoicePorCobrar extends LivewireDatatable
 
     public function columns()
     {
-       
+
         return [
             Column::callback(['id','rest'], function($id, $rest){
                     return "  <a href=".route('invoices.show', [$id,'includeName'=>'showpayments','includeTitle'=>'Pagos']).
@@ -40,7 +40,7 @@ class InvoicePorCobrar extends LivewireDatatable
             Column::callback(['number'], function ($number) {
                 return $number;
             })->label('Nro.')->searchable(),
-            DateColumn::name('invoices.created_at')->label('Fecha')->format('d/m/Y h:i A')->filterable(),  
+            DateColumn::name('invoices.day')->label('Fecha')->format('d/m/Y h:i A')->filterable(),
             Column::callback(['invoices.name','clients.name'], function ($name, $client)  {
                 return ellipsis($name ?:$client, 20);
             })->label('Cliente')->searchable(),
@@ -53,7 +53,7 @@ class InvoicePorCobrar extends LivewireDatatable
             NumberColumn::raw('SUM(payments.tarjeta) AS tarjeta')->label('Otros')->formatear('money'),
             NumberColumn::raw('SUM(payments.payed-payments.cambio) AS payed')->label('Pagado')->formatear('money',' font-bold'),
             NumberColumn::raw('invoices.rest AS rest')->label('Resta')->formatear('money', 'text-red-500')->filterable(),
-           
+
         ];
     }
 }
