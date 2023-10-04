@@ -266,11 +266,11 @@
                         {{ strlen($docId) == 9 ? 1 : 2 }}
                     </td>
                     <td style="  text-align: left">
-                        {{ $creditnote->invNcf }}
+                        {{ $creditnote->ncf }}
                     </td>
 
                     <td style=" text-align: left">
-                        {{ $creditnote->ncf }}
+                        {{ $creditnote->invNcf }}
                     </td>
                     <td style="width:5%;  text-align: left">
                         1
@@ -316,7 +316,7 @@
                 </td>
             </tr>
         </tbody>
-        
+
     </table>
     <hr>
     <script type="text/php">if ( isset($pdf) ) {
@@ -469,9 +469,9 @@
                 ${{ formatNumber($resumen->sum('rest')) }}
             </td>
         </tr>
-      
+
     </table>
-    
+
 </body>
 
 </html>

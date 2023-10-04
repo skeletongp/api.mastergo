@@ -19,7 +19,7 @@ class InvoiceList extends LivewireDatatable
     public function builder()
     {
         $place=auth()->user()->place;
-        $invoices = 
+        $invoices =
         Payment::where('invoices.place_id', $place->id)
         ->orderBy('invoices.created_at', 'desc')
         ->join('invoices', 'payments.payable_id', '=', 'invoices.id')
@@ -33,7 +33,7 @@ class InvoiceList extends LivewireDatatable
     public function columns()
     {
         return [
-            
+
             Column::callback(['invoices.number','invoices.rest'], function ($number, $rest){
                 $number = ltrim(substr($number, strpos($number, '-') + 1), '0');
                 $debe = " <span class='fas fa-times text-red-400 pr-2'></span>";

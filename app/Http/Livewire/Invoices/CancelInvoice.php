@@ -12,7 +12,7 @@ class CancelInvoice extends Component
     public $invoice_id, $rTax = 0;
     protected $listeners = ['cancelInvoice', 'validateAuthorization'];
     public $gastoGeneral, $gastoTerminado;
-    
+
     public function render()
     {
         return view('livewire.invoices.cancel-invoice');
@@ -24,8 +24,8 @@ class CancelInvoice extends Component
         $comprobante = $invoice->comprobante;
         $details = $invoice->details;
 
-        if ($comprobante && $comprobante->status == 'reportado') {
-            $this->emit('showAlert', 'Esta factura no puede anularse porque ya está reportada', 'warning');
+        if ($comprobante ) {
+            $this->emit('showAlert', 'Esta factura no puede anularse. Debe emitir una nota de crédito', 'warning');
             return false;
         }
 
@@ -41,7 +41,7 @@ class CancelInvoice extends Component
         ]);
         $this->emit('showAlert', 'Factura ajustada correctamente', 'success');
         $this->emit('refreshLivewireDatatable');
-       
+
     }
 
     public function deleteTaxes($invoice)

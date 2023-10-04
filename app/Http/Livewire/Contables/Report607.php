@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Contables;
 
 use App\Models\Comprobante;
+use App\Models\Credit;
 use App\Models\Creditnote;
+use App\Models\Invoice;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -76,6 +78,7 @@ class Report607 extends Component
                     ->orWhere('payments.amount', '>', 250000);
             })
             ->where('comprobantes.prefix', '!=', 'B14')
+            ->where('invoices.status','cerrada')
             ->orderBy('payments.id')
             ->groupBy('comprobantes.id')
             ->get();
@@ -96,6 +99,7 @@ class Report607 extends Component
            if(invoices.status!="anulada",payments.rest,50) as rest, if(invoices.status!="anulada",payments.cambio,50) as cambio')
             ->where('comprobantes.prefix', '=', 'B02')
             ->where('payments.amount', '<=', 250000)
+            ->where('invoices.status','cerrada')
             ->orderBy('payments.id')
             ->groupBy('comprobantes.id')
             ->get();
@@ -106,16 +110,17 @@ class Report607 extends Component
     public function getCreditNotes($start_at, $end_at)
     {
         $creditnotes =
-            Creditnote::whereBetween('modified_at', [$start_at, $end_at])
-            ->leftJoin('invoices', 'creditnotes.invoice_id', '=', 'invoices.id')
-            ->leftJoin('comprobantes', 'invoices.comprobante_id', '=', 'comprobantes.id')
+            Credit::whereBetween('modified_at', [$start_at, $end_at])
+            ->where('creditable_type', Invoice::class)
+            ->leftJoin('invoices', 'credits.creditable_id', '=', 'invoices.id')
             ->leftjoin('clients', 'invoices.client_id', '=', 'clients.id')
             ->selectRaw(
-                'clients.rnc as rnc, invoices.rnc as invRnc, comprobantes.ncf as invNcf ,creditnotes.modified_ncf as ncf,
-           invoices.day as invDay, creditnotes.modified_at as day, creditnotes.amount as amount,
-            creditnotes.tax as tax'
+                'clients.rnc as rnc, invoices.rnc as invRnc, credits.modified_ncf as invNcf ,credits.ncf as ncf,
+           invoices.day as invDay, credits.modified_at as day, credits.amount as amount,
+           credits.itbis as tax'
             )
-            ->groupBy('creditnotes.id')
+            ->where('invoices.status','cerrada')
+            ->groupBy('credits.id')
             ->get();
         return $creditnotes;
     }

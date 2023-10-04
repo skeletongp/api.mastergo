@@ -2,68 +2,68 @@
 
 namespace App\Http\Livewire\Invoices\ShowIncludes;
 
+use App\Models\Invoice;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait ShowCredit
 {
-    public $modified_ncf, $modified_at, $comment, $creditComprobantes, $comprobanteCredit, $amount, $tax;
+    public $creditComprobantes, $comprobanteCredit;
+    public $credit;
+
+    public function modalOpened()
+    {
+
+    }
 
     public function createCreditnote()
     {
-        if ($this->invoice->creditnote) {
-            $this->emit('showAlert', 'La factura ya tiene una nota de crédito', 'error', 3200);
-            return;
-        }
-        if ($this->amount>$this->invoice->rest && $this->amount>$this->invoice->payments->sum('payed')) {
-            $this->emit('showAlert', 'Monto inválido. Favor revisar', 'error', 3200);
-            return;
-        }
         $this->validate([
-            'modified_ncf' => 'required',
-            'modified_at' => 'required',
-            'comment' => 'required',
-            'tax' => 'required|numeric|min:0',
-            'amount' => 'required|numeric|min:1|gte:tax',
+            'credit.modified_ncf' => 'required',
+            'credit.modified_at' => 'required',
+            'credit.comment' => 'required',
+            'credit.itbis' => 'required|numeric|min:0',
+            'credit.propina' => 'required|numeric|min:0',
+            'credit.selectivo' => 'required|numeric|min:0',
+            'credit.amount' => 'required|numeric|min:1|lte:invoice.payment.total|gte:credit.itbis|gte:credit.propina|gte:credit.selectivo',
         ]);
-        $this->closeComprobante();
+        DB::beginTransaction();
+        try {
+            $this->closeComprobante();
 
-        $this->invoice->creditnote()->create([
-            'modified_ncf' => $this->modified_ncf,
-            'modified_at' => $this->modified_at,
-            'comment' => $this->comment,
-            'amount' => $this->amount,
-            'tax' => $this->tax,
-            'place_id' => auth()->user()->place->id,
-            'user_id' => auth()->user()->id,
-            'comprobante_id' => $this->comprobanteCredit->id,
-        ]);
-        if ($this->invoice->rest >= $this->amount) {
-            $payment = $this->invoice->payments->last();
-            $payment->update([
-                'rest' => $payment->rest - $this->amount,
-               
-            ]);
-            $this->invoice->update([
-                'rest' => $this->invoice->rest - $this->amount,
-            ]);
-        } else {
-            $payment = $this->invoice->payments->last();
-            $payment->update([
-                'cambio' => $payment->cambio + $this->amount,
-            ]);
+            $this->invoice->credits()->create(
+                $this->credit
+            );
+            if ($this->invoice->rest >= $this->credit['amount']) {
+                $payment = $this->invoice->payments->last();
+                $payment->update([
+                    'rest' => $payment->rest - $this->credit['amount'],
+
+                ]);
+                $this->invoice->update([
+                    'rest' => $this->invoice->rest - $this->credit['amount'],
+                ]);
+            } else {
+                $payment = $this->invoice->payments->last();
+                $payment->update([
+                    'cambio' => $payment->cambio + $this->credit['amount'],
+                ]);
+            }
+
+            $this->setCreditTransaction($this->credit['amount'], $this->credit['itbis']);
+            DB::commit();
+            $this->initCreditnote();
+            $this->emit('showAlert', 'Nota de crédito creada con éxito', 'success');
+            $this->render();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
-        $this->invoice->payment->update([
-            'tax' => $this->invoice->payment->tax - $this->tax,
-            'total' => $this->invoice->payment->total - $this->amount,
-        ]);
-        $this->setCreditTransaction($this->amount, $this->tax);
-        $this->emit('showAlert', 'Nota de crédito creada con éxito', 'success');
-        $this->render();
     }
     public function closeComprobante()
     {
         $store = auth()->user()->store;
-        $this->comprobanteCredit = $store->comprobantes()->where('ncf', $this->modified_ncf)
+        $this->comprobanteCredit = $store->comprobantes()->where('ncf', $this->credit['ncf'])
             ->where('status', 'disponible')->orderBy('number')
             ->first();
         $this->comprobanteCredit->update([
@@ -76,29 +76,39 @@ trait ShowCredit
         ]);
     }
 
+    public function updated($field){
+        if($field==="credit.amount" && $this->invoice->payment->tax>0){
+            $posibleITBIS=$this->credit['amount']-($this->credit['amount']/1.18);
+            $this->credit['itbis']=round($posibleITBIS, 2);
+        }
+    }
+
     public function initCreditnote()
     {
         $store = auth()->user()->store;
         $comprobante = $store->comprobantes()->where('prefix', 'B04')
             ->where('status', 'disponible')->orderBy('number')
             ->first();
-        $this->modified_ncf = optional($comprobante)->ncf;
-        $this->modified_at = date('Y-m-d');
-        if ($this->invoice->creditnote) {
-            $this->modified_ncf = $this->invoice->creditnote->modified_ncf;
-            $this->modified_at = Carbon::parse($this->invoice->creditnote->modified_at)->format('Y-m-d');
-            $this->comment = $this->invoice->creditnote->comment;
-            $this->amount = $this->invoice->creditnote->amount;
-            $this->tax = $this->invoice->creditnote->tax;
-        }
+            $this->credit=[
+                "itbis"=>0,
+                "selectivo"=>0,
+                "propina"=>0,
+                "creditable_type"=>Invoice::class,
+                "creditable_id"=>$this->invoice->id,
+                "user_id"=>auth()->user()->id,
+                'place_id' => auth()->user()->place->id,
+                "ncf"=>optional($comprobante)->ncf,
+                "modified_at"=>Carbon::now()->format('Y-m-d'),
+                "modified_ncf"=>$this->invoice->comprobante->ncf
+            ];
     }
     public function printCreditNote()
     {
         $invoice = $this->invoice;
-        $invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
+        $invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.itbises', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
         $this->emit('changeInvoice', $invoice, true, true);
     }
-    public function setCreditTransaction($mount, $tax)
+    public function setCreditTransaction($mount, $itbis)
     {
         $place = auth()->user()->place;
         $desc_dev_ventas = $place->findCount('401-01');
@@ -106,12 +116,12 @@ trait ShowCredit
         $itbis = $place->findCount('203-01');
         $client= $this->invoice->client->contable;
         if ($this->invoice->rest>=$mount) {
-            setTransaction('Dev. Nota de crédito', $this->modified_ncf, $mount - $tax, $desc_dev_ventas, $client, 'Editar Facturas');
-            setTransaction('Dev. Nota de crédito ITBIS', $this->modified_ncf, $tax, $itbis, $client, 'Editar Facturas');
+            setTransaction('Dev. Nota de crédito', $this->credit['modified_ncf'], $mount - $this->credit['itbis'], $desc_dev_ventas, $client, 'Editar Facturas');
+            setTransaction('Dev. Nota de crédito ITBIS', $this->credit['modified_ncf'], $this->credit['itbis'], $itbis, $client, 'Editar Facturas');
         } else {
-            setTransaction('Dev. Nota de crédito', $this->modified_ncf, $mount - $tax, $desc_dev_ventas, $cash, 'Editar Facturas');
-            setTransaction('Dev. Nota de crédito ITBIS', $this->modified_ncf, $tax, $itbis, $cash, 'Editar Facturas');
+            setTransaction('Dev. Nota de crédito', $this->credit['modified_ncf'], $mount - $this->credit['itbis'], $desc_dev_ventas, $cash, 'Editar Facturas');
+            setTransaction('Dev. Nota de crédito ITBIS', $this->credit['modified_ncf'], $this->credit['itbis'], $itbis, $cash, 'Editar Facturas');
         }
-        
+
     }
 }

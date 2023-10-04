@@ -68,7 +68,7 @@ class CreateOutcome extends Component
         if($this->services){
             $this->amount = $this->products + $this->services;
             $this->updated('services');
-        } 
+        }
     }
 
     public function updated($field)
@@ -83,7 +83,7 @@ class CreateOutcome extends Component
         }
         $propina = $total * ($this->propina / 100);
         $other = $total * ($this->other / 100);
-        $this->total = $total + $itbis + $propina + $other;
+        $this->total = $total + $itbis + $propina + $other-($itbis* ($this->retenido / 100));
 
         if($this->itbis>100 && $field=='itbis'){
             $this->emit('showAlert', 'El ITBIS se registrará en monto y no en porcentaje', 'info');
@@ -274,7 +274,7 @@ class CreateOutcome extends Component
 
             /* Asiento de retenido */
             $reten = $place->counts()->whereName('ITBIS Retenido')->first();
-            setTransaction('ITBIS Retenido', $code, $ITBIS * ($this->retenido / 100), $reten, $itbis, 'Crear Gastos');
+            setTransaction('ITBIS Retenido', $code, $ITBIS * ($this->retenido / 100), $itbis, $reten, 'Crear Gastos');
         }
     }
     public function getBruto($amount, $hasTax)

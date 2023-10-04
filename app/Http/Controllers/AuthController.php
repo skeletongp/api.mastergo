@@ -61,7 +61,6 @@ class AuthController extends Controller
     {
 
 
-        dd($products);
         return view('prueba');
     }
 }

@@ -25,13 +25,13 @@ public $primaryKey  = 'id';
             if ($model->payment->total>$model->rest) {
                 $model->isEditable = 0;
             }
-            
+
         });
     }
     public function getSearchResult(): SearchResult
     {
        $url = route('invoices.show', $this->id);
-    
+
        $client=$this->name?:($this->client->name?:$this->client->contact->fullname);
         return new SearchResult(
            $this,
@@ -39,7 +39,7 @@ public $primaryKey  = 'id';
            $url
         );
     }
-   
+
     const TYPES = [
         'COMPROBANTE DE CRÉDITO FISCAL' => 'B01',
         'COMPROBANTE DE CONSUMIDOR FINAL' => 'B02',
@@ -127,5 +127,9 @@ public $primaryKey  = 'id';
     {
         return $this->hasOne(Creditnote::class);
     }
-   
+
+    public function credits(){
+        return $this->morphMany(Credit::class,"creditable");
+    }
+
 }

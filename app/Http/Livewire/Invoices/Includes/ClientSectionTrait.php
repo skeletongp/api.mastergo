@@ -59,7 +59,7 @@ trait ClientSectionTrait
     }
     public function rncEnter()
     {
-        $url='contribuyentes';
+        $url='companies';
         $rnc=$this->name;
         $client=Client::whereRaw("REPLACE(rnc,'-','')=?", [$this->name])
         ->orWhere('name',$this->name)->first();
@@ -70,8 +70,8 @@ trait ClientSectionTrait
             return;
         }
         $client=getApi($url, $rnc);
-        if (array_key_exists('model', $client)) {
-            $this->loadFromRNC($client['model']);
+        if (count($client)>0) {
+            $this->loadFromRNC($client[0]);
         }
     }
     public function loadFromRNC($client)

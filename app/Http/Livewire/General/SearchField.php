@@ -7,10 +7,7 @@ use App\Models\Invoice;
 use App\Models\Proceso;
 use App\Models\Product;
 use App\Models\Recurso;
-use App\Models\Store;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Searchable\Search;
@@ -61,7 +58,7 @@ class SearchField extends Component
           $clients=$store->clients()->pluck('clients.id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('clients.name')
-          
+
           ->whereIn('clients.id', $clients);
         })
         ->registerModel(Proceso::class, function(ModelSearchAspect $modelSearchAspect) use ($place){
@@ -82,6 +79,7 @@ class SearchField extends Component
           ->addSearchableAttribute('number')
           ->whereIn('id', $invoices);
         })
+        ->limitAspectResults(10)
         ->search($this->search);
       } else {
         $this->searchResults=null;

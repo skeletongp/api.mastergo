@@ -80,7 +80,7 @@
                         <span class="lg:text-lg">Historial</span>
                     </div>
                 </x-button>
-               
+
             </div>
         </div>
         @include('livewire.invoices.includes.invoice-js')
@@ -111,7 +111,11 @@
                 @break
 
                 @case('showcredit')
-                    @include('livewire.invoices.showincludes.' . $includeName)
+                    <div class="relative h-full flex flex-col items-end">
+                        <div class="w-24">
+                            @include('livewire.invoices.showincludes.' . $includeName)
+                        </div>
+                    </div>
                 @break
 
                 @case('showhistory')
@@ -121,7 +125,6 @@
                 @case('showresume')
                     @include('livewire.invoices.showincludes.' . $includeName)
                 @break
-
             @endswitch
         </div>
     </div>
