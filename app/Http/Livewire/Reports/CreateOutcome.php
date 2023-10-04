@@ -284,6 +284,7 @@ class CreateOutcome extends Component
         } else {
             $itbis = $this->itbis / 100;
         }
+        $itbis=$itbis*(1-($this->retenido/100));
         $itbis = $this->amount * ($itbis);
         $other = $this->amount * ($this->other / 100);
         $propina = $this->amount * ($this->propina / 100);
@@ -303,6 +304,7 @@ class CreateOutcome extends Component
         } else {
             $itbis = $this->itbis / 100;
         }
+        $itbis=$itbis*(1-($this->retenido/100));
 
         //get the part of the amount that is itbis, propina and other
         $itbis = $this->amount * ($itbis);

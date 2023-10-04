@@ -119,10 +119,7 @@ class GeneralDailyTable extends LivewireDatatable
     {
         $this->authorize('Borrar Transacciones');
         $transaction = Transaction::find($id)->load('debe', 'haber');
-        if (!$transaction->deleteable) {
-            $this->emit('showAlert','No se puede eliminar la transacción','error');
-            return;
-        }
+
         $debe=$transaction->debe;
         $haber=$transaction->haber;
         if($debe->origin=='debit'){
