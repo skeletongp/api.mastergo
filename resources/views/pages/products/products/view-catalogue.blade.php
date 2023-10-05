@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class=" py-2 w-full mx-auto min-h-max h-full relative ">
-            <iframe src="{{$url}}#view=FitH" width="900" height="700" type="application/pdf"> </iframe>
+            <iframe src="{{$url}}" width="900" height="700" type="application/pdf"> </iframe>
         </div>
     </div>
 

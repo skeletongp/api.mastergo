@@ -13,7 +13,6 @@ trait ShowCredit
 
     public function modalOpened()
     {
-
     }
 
     public function createCreditnote()
@@ -76,10 +75,11 @@ trait ShowCredit
         ]);
     }
 
-    public function updated($field){
-        if($field==="credit.amount" && $this->invoice->payment->tax>0){
-            $posibleITBIS=$this->credit['amount']-($this->credit['amount']/1.18);
-            $this->credit['itbis']=round($posibleITBIS, 2);
+    public function updated($field)
+    {
+        if ($field === "credit.amount" && $this->invoice->payment->tax > 0) {
+            $posibleITBIS = $this->credit['amount'] - ($this->credit['amount'] / 1.18);
+            $this->credit['itbis'] = round($posibleITBIS, 2);
         }
     }
 
@@ -89,18 +89,20 @@ trait ShowCredit
         $comprobante = $store->comprobantes()->where('prefix', 'B04')
             ->where('status', 'disponible')->orderBy('number')
             ->first();
-            $this->credit=[
-                "itbis"=>0,
-                "selectivo"=>0,
-                "propina"=>0,
-                "creditable_type"=>Invoice::class,
-                "creditable_id"=>$this->invoice->id,
-                "user_id"=>auth()->user()->id,
+        if ($this->invoice->comprobante) {
+            $this->credit = [
+                "itbis" => 0,
+                "selectivo" => 0,
+                "propina" => 0,
+                "creditable_type" => Invoice::class,
+                "creditable_id" => $this->invoice->id,
+                "user_id" => auth()->user()->id,
                 'place_id' => auth()->user()->place->id,
-                "ncf"=>optional($comprobante)->ncf,
-                "modified_at"=>Carbon::now()->format('Y-m-d'),
-                "modified_ncf"=>$this->invoice->comprobante->ncf
+                "ncf" => optional($comprobante)->ncf,
+                "modified_at" => Carbon::now()->format('Y-m-d'),
+                "modified_ncf" => $this->invoice->comprobante->ncf
             ];
+        }
     }
     public function printCreditNote()
     {
@@ -114,14 +116,13 @@ trait ShowCredit
         $desc_dev_ventas = $place->findCount('401-01');
         $cash = $place->findCount('101-01');
         $itbis = $place->findCount('203-01');
-        $client= $this->invoice->client->contable;
-        if ($this->invoice->rest>=$mount) {
+        $client = $this->invoice->client->contable;
+        if ($this->invoice->rest >= $mount) {
             setTransaction('Dev. Nota de crédito', $this->credit['modified_ncf'], $mount - $this->credit['itbis'], $desc_dev_ventas, $client, 'Editar Facturas');
             setTransaction('Dev. Nota de crédito ITBIS', $this->credit['modified_ncf'], $this->credit['itbis'], $itbis, $client, 'Editar Facturas');
         } else {
             setTransaction('Dev. Nota de crédito', $this->credit['modified_ncf'], $mount - $this->credit['itbis'], $desc_dev_ventas, $cash, 'Editar Facturas');
             setTransaction('Dev. Nota de crédito ITBIS', $this->credit['modified_ncf'], $this->credit['itbis'], $itbis, $cash, 'Editar Facturas');
         }
-
     }
 }
