@@ -73,12 +73,13 @@ class SearchField extends Component
           ->addSearchableAttribute('name')
           ->whereIn('id', $recursos);
         })
-        ->registerModel(Invoice::class, function(ModelSearchAspect $modelSearchAspect) use ($place){
+       /*  ->registerModel(Invoice::class, function(ModelSearchAspect $modelSearchAspect) use ($place){
           $invoices=$place->invoices()->pluck('invoices.id')->toArray();
           $modelSearchAspect
           ->addSearchableAttribute('number')
+          ->addSearchableAttribute('name')
           ->whereIn('id', $invoices);
-        })
+        }) */
         ->limitAspectResults(10)
         ->search($this->search);
       } else {
