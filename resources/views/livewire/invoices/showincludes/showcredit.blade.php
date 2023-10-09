@@ -1,14 +1,19 @@
-<div >
+<div class="flex items-center space-x-2 ">
+
     <x-modal :fitV='false' maxWidth="max-w-2xl mx-auto" :listenOpen="true">
         <x-slot name="title">
             <div class="flex justify-between items-center">
                 <span> Registrar Nota de Crédito</span>
             </div>
         </x-slot>
-        <x-slot name="button">
-            <span class="fas w-6 text-center fa-plus mr-2"></span>
-            <span> Añadir</span>
-        </x-slot>
+        <div >
+            <x-slot name="button">
+                <span class="fas w-6 text-center fa-plus mr-2"></span>
+                <span> Añadir</span>
+            </x-slot>
+
+
+        </div>
         <div class="relative">
             <form action="" wire:submit.prevent="createCreditnote">
                 <div class="w-full max-w-xl space-y-4">
@@ -67,16 +72,16 @@
                 </div>
 
             </form>
-            {{--  @if ($invoice->creditnote)
-                <div class="flex justify-end max-w-xl py-4">
-                    <x-button wire:click="printCreditNote">Imprimir</x-button>
-                </div>
-            @endif --}}
+
 
         </div>
 
 
 
     </x-modal>
+    @if (count($invoice->credits))
+    <div class="flex justify-end max-w-xl py-4">
+        <x-button wire:click="printCreditNote">Imprimir</x-button>
+    </div>
+@endif
 </div>
-

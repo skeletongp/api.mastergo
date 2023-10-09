@@ -115,6 +115,7 @@
                         <div class="w-24">
                             @include('livewire.invoices.showincludes.' . $includeName)
                         </div>
+                        <livewire:invoices.credit-invoice :invoice="$invoice" />
                     </div>
                 @break
 

@@ -13,7 +13,6 @@ trait ShowCredit
 
     public function modalOpened()
     {
-
     }
 
     public function createCreditnote()
@@ -30,12 +29,16 @@ trait ShowCredit
         DB::beginTransaction();
         try {
             $this->closeComprobante();
-
+            $totalCredits = $this->invoice->credits()->sum('amount');
             $this->invoice->credits()->create(
                 $this->credit
             );
+            $payment = $this->invoice->payments->last();
+            if ($totalCredits + $this->credit["amount"] > $payment->total) {
+                $this->emit('showAlert', 'El monto sobrepasa la venta', 'arror', 4500);
+                return;
+            }
             if ($this->invoice->rest >= $this->credit['amount']) {
-                $payment = $this->invoice->payments->last();
                 $payment->update([
                     'rest' => $payment->rest - $this->credit['amount'],
 
@@ -44,7 +47,6 @@ trait ShowCredit
                     'rest' => $this->invoice->rest - $this->credit['amount'],
                 ]);
             } else {
-                $payment = $this->invoice->payments->last();
                 $payment->update([
                     'cambio' => $payment->cambio + $this->credit['amount'],
                 ]);
@@ -54,6 +56,7 @@ trait ShowCredit
             DB::commit();
             $this->initCreditnote();
             $this->emit('showAlert', 'Nota de crédito creada con éxito', 'success');
+            $this->emit('refreshLivewireDatatable');
             $this->render();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -76,36 +79,32 @@ trait ShowCredit
         ]);
     }
 
-    public function updated($field){
-        if($field==="credit.amount" && $this->invoice->payment->tax>0){
-            $posibleITBIS=$this->credit['amount']-($this->credit['amount']/1.18);
-            $this->credit['itbis']=round($posibleITBIS, 2);
-        }
-    }
+
 
     public function initCreditnote()
     {
         $store = auth()->user()->store;
+        $this->invoice = $this->invoice->load('credits');
         $comprobante = $store->comprobantes()->where('prefix', 'B04')
             ->where('status', 'disponible')->orderBy('number')
             ->first();
-            $this->credit=[
-                "itbis"=>0,
-                "selectivo"=>0,
-                "propina"=>0,
-                "creditable_type"=>Invoice::class,
-                "creditable_id"=>$this->invoice->id,
-                "user_id"=>auth()->user()->id,
-                'place_id' => auth()->user()->place->id,
-                "ncf"=>optional($comprobante)->ncf,
-                "modified_at"=>Carbon::now()->format('Y-m-d'),
-                "modified_ncf"=>$this->invoice->comprobante->ncf
-            ];
+        $this->credit = [
+            "itbis" => 0,
+            "selectivo" => 0,
+            "propina" => 0,
+            "creditable_type" => Invoice::class,
+            "creditable_id" => $this->invoice->id,
+            "user_id" => auth()->user()->id,
+            'place_id' => auth()->user()->place->id,
+            "ncf" => optional($comprobante)->ncf,
+            "modified_at" => Carbon::now()->format('Y-m-d'),
+            "modified_ncf" => $this->invoice->comprobante->ncf
+        ];
     }
     public function printCreditNote()
     {
         $invoice = $this->invoice;
-        $invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.itbises', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
+        $invoice = $invoice->load('seller', 'contable', 'client', 'details.product.units', 'details.taxes', 'details.unit', 'payment', 'store.image', 'payments.pdf', 'comprobante', 'pdf', 'place.preference');
         $this->emit('changeInvoice', $invoice, true, true);
     }
     public function setCreditTransaction($mount, $itbis)
@@ -114,14 +113,13 @@ trait ShowCredit
         $desc_dev_ventas = $place->findCount('401-01');
         $cash = $place->findCount('101-01');
         $itbis = $place->findCount('203-01');
-        $client= $this->invoice->client->contable;
-        if ($this->invoice->rest>=$mount) {
+        $client = $this->invoice->client->contable;
+        if ($this->invoice->rest >= $mount) {
             setTransaction('Dev. Nota de crédito', $this->credit['modified_ncf'], $mount - $this->credit['itbis'], $desc_dev_ventas, $client, 'Editar Facturas');
             setTransaction('Dev. Nota de crédito ITBIS', $this->credit['modified_ncf'], $this->credit['itbis'], $itbis, $client, 'Editar Facturas');
         } else {
             setTransaction('Dev. Nota de crédito', $this->credit['modified_ncf'], $mount - $this->credit['itbis'], $desc_dev_ventas, $cash, 'Editar Facturas');
             setTransaction('Dev. Nota de crédito ITBIS', $this->credit['modified_ncf'], $this->credit['itbis'], $itbis, $cash, 'Editar Facturas');
         }
-
     }
 }
