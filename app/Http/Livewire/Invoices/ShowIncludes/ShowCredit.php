@@ -80,7 +80,6 @@ trait ShowCredit
     }
 
 
-
     public function initCreditnote()
     {
         $store = auth()->user()->store;
@@ -88,18 +87,20 @@ trait ShowCredit
         $comprobante = $store->comprobantes()->where('prefix', 'B04')
             ->where('status', 'disponible')->orderBy('number')
             ->first();
-        $this->credit = [
-            "itbis" => 0,
-            "selectivo" => 0,
-            "propina" => 0,
-            "creditable_type" => Invoice::class,
-            "creditable_id" => $this->invoice->id,
-            "user_id" => auth()->user()->id,
-            'place_id' => auth()->user()->place->id,
-            "ncf" => optional($comprobante)->ncf,
-            "modified_at" => Carbon::now()->format('Y-m-d'),
-            "modified_ncf" => $this->invoice->comprobante->ncf
-        ];
+        if ($this->invoice->comprobante) {
+            $this->credit = [
+                "itbis" => 0,
+                "selectivo" => 0,
+                "propina" => 0,
+                "creditable_type" => Invoice::class,
+                "creditable_id" => $this->invoice->id,
+                "user_id" => auth()->user()->id,
+                'place_id' => auth()->user()->place->id,
+                "ncf" => optional($comprobante)->ncf,
+                "modified_at" => Carbon::now()->format('Y-m-d'),
+                "modified_ncf" => $this->invoice->comprobante->ncf
+            ];
+        }
     }
     public function printCreditNote()
     {

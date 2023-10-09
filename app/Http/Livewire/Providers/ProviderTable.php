@@ -19,9 +19,8 @@ class ProviderTable extends LivewireDatatable
         $providers=
         Provider::where('providers.store_id', $store->id)
         ->leftjoin('moso_master.stores', 'stores.id', '=', 'providers.store_id')
-        ->rightjoin('counts', 'counts.contable_id', '=', 'providers.id')
-        ->where('counts.contable_type', 'App\Models\Provider')
-        ->where('counts.deleted_at', null)
+    
+        
         ->select('providers.*','stores.name as storeName')
         ->orderBy('providers.name', 'asc')
         ;
@@ -39,7 +38,7 @@ class ProviderTable extends LivewireDatatable
             Column::name('email')->label('Correo Electrónico')->searchable()->headerAlignCenter(),
             Column::name('phone')->label('Teléfono')->searchable()->headerAlignCenter(),
             Column::name('RNC')->label('No. Doc.')->searchable()->headerAlignCenter(),
-            Column::raw('CONCAT(counts.code," | ",counts.balance) AS count')->label('Cuenta')->searchable()->hide(),
+            
             $this->editColumn(),
             $this->deleteColumn(),
         ];

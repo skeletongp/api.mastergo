@@ -51,7 +51,7 @@
                                src="https://docs.google.com/gview?url={{ $invoice->pdf->pathLetter }}&embedded=true"
                                class="w-full lg:w-[700px] h-[700px]" frameborder="0" type="application/pdf">
                            </iframe>
-                           <iframe class="hidden lg:block" src="{{ $invoice->pdf->pathLetter }}#view=FitH" width="700" height="700" frameborder="0" type="application/pdf">
+                           <iframe class="hidden lg:block" src="{{ $invoice->pdf->pathLetter }}" width="700" height="700" frameborder="0" type="application/pdf">
                            </iframe>
                        @endif
                    </div>

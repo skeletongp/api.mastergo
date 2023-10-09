@@ -5,7 +5,7 @@
 
     <div class="w-full bg-gray-50  mx-auto ">
         <div class=" py-2 w-max mx-auto min-h-max h-full relative ">
-            <iframe src="{{$pdf}}#view=FitH" width="700" height="700" type="application/pdf"> </iframe>
+            <iframe src="{{$pdf}}" width="700" height="700" type="application/pdf"> </iframe>
         </div>
     </div>
 
