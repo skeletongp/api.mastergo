@@ -13,7 +13,6 @@ class CotizeTable extends LivewireDatatable
 
     public $padding="px-2";
     public $headTitle="Cotizaciones realizadas";
-    use UniqueDateTrait;
     public function builder()
     {
         $place=auth()->user()->place;
@@ -32,11 +31,12 @@ class CotizeTable extends LivewireDatatable
     public function columns()
     {
         return [
-            DateColumn::name('created_at')->label('Fecha'),
+            DateColumn::name('created_at')->label('Fecha')->filterable(),
             Column::callback('clients.name', function($client){
                 return ellipsis($client, 30);
-            })->label('Cliente'),
+            })->label('Cliente')->searchable(),
             Column::name('users.fullname')->label('Usuario'),
+            NumberColumn::name('id')->label('Nro')->searchable(),
             NumberColumn::name('amount')->label('Subtotal')->formatear('money'),
             NumberColumn::name('discount')->label('Descuento')->formatear('money'),
             NumberColumn::raw('SUM(details.taxtotal) AS tax')->label('Imp.')->formatear('money'),
