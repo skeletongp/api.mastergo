@@ -30,14 +30,14 @@ trait ShowCredit
         try {
             $this->closeComprobante();
             $totalCredits = $this->invoice->credits()->sum('amount');
-            $this->invoice->credits()->create(
-                $this->credit
-            );
             $payment = $this->invoice->payments->last();
             if ($totalCredits + $this->credit["amount"] > $payment->total) {
                 $this->emit('showAlert', 'El monto sobrepasa la venta', 'arror', 4500);
                 return;
             }
+            $this->invoice->credits()->create(
+                $this->credit
+            );
             if ($this->invoice->rest >= $this->credit['amount']) {
                 $payment->update([
                     'rest' => $payment->rest - $this->credit['amount'],

@@ -1,12 +1,14 @@
 <div class="w-full">
     <div class="flex space-x-4 items-start pt-12">
         <div class="w-full">
-            <x-base-select id="outProvider" label="Proveedor" wire:model="provider_id">
-                <option class="text-gray-300"> Elija un proveedor</option>
-                @foreach ($providers as $idProv => $prov)
-                    <option value="{{ $idProv }}">{{ $prov }}</option>
-                @endforeach
-            </x-base-select>
+            <x-datalist label="Suplidor" model="provider_id" inputId="provider_id"
+            listName="providerList">
+            <option value=""></option>
+            @foreach ($providers as $idProv => $prov)
+                <option data-value="{{ $idProv }}" value="{{ $prov }}"></option>
+            @endforeach
+        </x-datalist>
+
             <x-input-error for="provider_id">Campo requerido</x-input-error>
         </div>
         <div class="w-full">

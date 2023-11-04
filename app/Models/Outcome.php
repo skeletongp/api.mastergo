@@ -43,4 +43,8 @@ class Outcome extends Model
     {
         return $this->morphMany(Payment::class, 'payable');
     }
+    public function credits(){
+        return $this->morphMany(Credit::class,"creditable");
+    }
+
 }

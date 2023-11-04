@@ -31,6 +31,7 @@ class DeleteOutcome extends Component
     {
 
         $outcome = Outcome::find($this->outcome['id']);
+        $outcome->credits()->delete();
         $outcome->delete();
         $this->emit('refreshLivewireDatatable');
     }

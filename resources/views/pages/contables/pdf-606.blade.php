@@ -176,6 +176,7 @@
                 <th style="text-align: left">NCF</th>
                 <th style="text-align: left">NCF Mod.</th>
                 <th style="text-align: left">F. Compr.</th>
+                <th style="text-align: left">F. Mod.</th>
                 <th style="text-align: left">F. Pago</th>
                 <th style="text-align: left">Servicios</th>
                 <th style="text-align: left">Bienes</th>
@@ -228,6 +229,9 @@
                         {{ \Carbon\Carbon::parse($outcome->created_at)->format('Ymd') }}
                     </td>
                     <td style=" text-align: left">
+                        -
+                    </td>
+                    <td style=" text-align: left">
                         {{ \Carbon\Carbon::parse($outcome->day)->format('Ymd') }}
                     </td>
                     <td style=" text-align: left;  font-weight:bold">
@@ -277,7 +281,73 @@
                     </td>
                 </tr>
             @endforelse
+            @forelse ($creditnotes as $indi=>  $creditnote)
+                @php
+                    $docId = $creditnote->rnc;
+                    $docId = str_replace('-', '', $docId);
+                @endphp
+                <tr style="font-size: normal; {{ fmod($indi + 1, 2) == 0 ? 'background-color:#EEE' : '' }}">
+                    <td style=" text-align: left">
+                        {{ $docId }}
+                    </td>
 
+                    <td style="width:3%;  text-align: left">
+                       -
+                    </td>
+                    <td style="width:3%;  text-align: left">
+                       -
+                    </td>
+                    <td style="  text-align: left">
+                        {{ $creditnote->ncf }}
+                    </td>
+
+                    <td style=" text-align: left">
+                        {{ $creditnote->outNcf }}
+                    </td>
+                    <td style="width:5%;  text-align: left">
+                        {{ \Carbon\Carbon::parse($creditnote->outDat)->format('Ymd') }}
+                    </td>
+                    <td style=" text-align: left">
+                        {{ \Carbon\Carbon::parse($creditnote->day)->format('Ymd') }}
+                    </td>
+                    <td style=" text-align: left">
+                        -
+                    </td>
+                    <td style=" text-align: left">
+                        -
+                    </td>
+                    <td style=" text-align: left">
+                        -
+                    </td>
+                    <td style=" text-align: left;  font-weight:bold">
+                        ${{ formatNumber($creditnote->amount) }}
+                    </td>
+                    <td style=" text-align: left">
+                        ${{ formatNumber($creditnote->tax) }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                    <td style=" text-align:center; ">
+                        {{ '-' }}
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7">
+
+                    </td>
+                </tr>
+            @endforelse
 
         </tbody>
     </table>
@@ -296,7 +366,7 @@
                 GASTO EN PRODUCTOS:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($totals["products"]) }}
+                ${{ formatNumber($totals['products']) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
@@ -304,23 +374,39 @@
                 GASTO EN SERVICIOS:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($totals["services"]) }}
+                ${{ formatNumber($totals['services']) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:10px; text-transform:uppercase">
-               TOTAL EN GASTOS:
+                TOTAL EN GASTOS:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($totals["total"]) }}
+                ${{ formatNumber($totals['total']) }}
             </td>
         </tr>
         <tr style="font-weight: bold">
             <td colspan="4" style="padding-top:10px; text-transform:uppercase">
-               TOTAL GRAVADO:
+                TOTAL GRAVADO:
             </td>
             <td colspan="2" style="padding-top:10px">
-                ${{ formatNumber($totals["itbis"]) }}
+                ${{ formatNumber($totals['itbis']) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+                TOTAL NOTA DE CRÉDITO:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($creditnotes->sum('amount')) }}
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4" style="padding-top:10px; text-transform:uppercase">
+                TOTAL NETO:
+            </td>
+            <td colspan="2" style="padding-top:10px">
+                ${{ formatNumber($totals['total']-$creditnotes->sum('amount')) }}
             </td>
         </tr>
     </table>

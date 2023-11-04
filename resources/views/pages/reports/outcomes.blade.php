@@ -4,7 +4,11 @@
     @endslot
     @slot('rightButton')
         @can('Crear Gastos')
+          <div class="flex items-center space-x-3">
             @livewire('reports.create-outcome', key(uniqid()))
+            @livewire('outcomes.newcreditoutcome', key(uniqid()))
+
+          </div>
         @endcan
     @endslot
     <div class=" w-full ">

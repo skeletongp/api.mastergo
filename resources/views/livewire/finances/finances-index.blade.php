@@ -10,7 +10,7 @@
                     'chooseModel' => true,
                     'codes' => App\Models\CountMain::get()->pluck('code')->toArray(),
                 ],
-                key(uniqid()),
+                key(uniqid())
             )
         </div>
     @endslot
@@ -63,12 +63,19 @@
                 <hr>
             </div>
 
-            <div wire:click="changeView('finances.credit-notes')" id="divCreditNotes"
-            class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.credit-notes' ? 'bg-blue-100' : '' }}">
-            <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
-            <span class=" text-lg">Notas de Crédito</span>
-            <hr>
-        </div>
+            <div wire:click="changeView('finances.credit-notes-ventas')" id="divCreditNotes"
+                class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.credit-notes-ventas' ? 'bg-blue-100' : '' }}">
+                <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
+                <span class=" text-lg">NC Ventas</span>
+                <hr>
+            </div>
+
+            <div wire:click="changeView('finances.credit-notes-compras')" id="divCreditNotes"
+                class="flex flex-row items-center space-x-2 relative w-full px-4 my-2 py-3 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 leading-3 {{ $componentName == 'finances.credit-notes-compras' ? 'bg-blue-100' : '' }}">
+                <span class="far  fa-money-check-alt text-xl w-8 text-center"></span>
+                <span class=" text-lg">NC Compras</span>
+                <hr>
+            </div>
         </div>
     </div>
     <div class="w-full h-full relative  p-4" x-data="{ open: true }">
@@ -98,11 +105,12 @@
                     @livewire($componentName)
                 </div>
             @break
+
             @case('finances.other-por-cobrar')
-            <div class=" mx-auto">
-                @livewire($componentName)
-            </div>
-        @break
+                <div class=" mx-auto">
+                    @livewire($componentName)
+                </div>
+            @break
 
             @case('finances.por-pagar')
                 <div class=" mx-auto">
@@ -115,11 +123,19 @@
                     @livewire($componentName)
                 </div>
             @break
-            @case('finances.credit-notes')
-            <div class=" mx-auto">
-                @livewire($componentName)
-            </div>
-        @break
+
+            @case('finances.credit-notes-ventas')
+                <div class=" mx-auto">
+                    @livewire($componentName)
+                </div>
+            @break
+
+            @case('finances.credit-notes-compras')
+                <div class=" mx-auto">
+                    @livewire($componentName)
+                </div>
+            @break
+
             @default
         @endswitch
     </div>
