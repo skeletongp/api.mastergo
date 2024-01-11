@@ -130,48 +130,59 @@ class CreateOutcome extends Component
             $this->amount = floatVal($this->efectivo) + floatVal($this->tarjeta) + floatVal($this->transferencia);
         }
         $this->validate();
-        $provider = Provider::whereId($this->provider_id)->first();
-        if (!$this->check($provider)) {
-            return;
+        DB::beginTransaction();
+        try {
+            $provider = Provider::whereId($this->provider_id)->first();
+            if (!$this->check($provider)) {
+                return;
+            }
+            $codeProv = Provision::LETTER[rand(0, 25)] . date('His');
+            $code = $this->ref ?: $codeProv;
+            $place = getPlace();
+            /* $outcome = setOutcome($this->amount, $this->concept, $this->tax>0?$codeProv:$code, null, $this->tax>0?$code:null); */
+            if ($this->inPercent) {
+                $itbis = ($this->itbis/100) * $this->amount;
+            } else {
+                $itbis = $this->itbis;
+            }
+            $selectivo = $this->amount * ($this->selectivo / 100);
+            if($this->total < 1){
+                $this->emit('showAlert', 'El monto total no puede ser 0', 'error');
+                return;
+            }
+            $outcome = Outcome::create([
+                'concepto' => $this->concept,
+                'amount' => $this->total,
+                'ncf' => $this->tax > 0 ? $code : null,
+                'ref' => $this->tax > 0 ? $codeProv : $code,
+                'user_id' => auth()->user()->id,
+                'store_id' => $place->store_id,
+                'place_id' => $place->id,
+                'outcomeable_id' => $provider->id,
+                'outcomeable_type' => Provider::class,
+                'type' => $this->type,
+                'itbis' => $itbis,
+                'selectivo' => $selectivo,
+                'propina' => $this->amount * ($this->propina / 100),
+                'other' => $this->amount * ($this->other / 100),
+                'retenido' => $itbis * ($this->retenido / 100),
+                'products' => $this->products,
+                'services' => $this->services,
+                'created_at' => $this->date,
+                'updated_at' => $this->date,
+            ]);
+            if ($provider) {
+                $provider->outcomes()->save($outcome);
+            }
+            $this->createPayment($outcome, $code, $provider);
+            DB::commit();
+            $this->emit('refreshLivewireDatatable');
+            $this->reset('amount', 'efectivo', 'tarjeta', 'transferencia', 'concept', 'provider_id', 'count_code', 'bank_id', 'ref_bank', 'tax', 'ref');
+            $this->emit('showAlert', 'Gasto registrado exitosamente', 'success');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
-        $codeProv = Provision::LETTER[rand(0, 25)] . date('His');
-        $code = $this->ref ?: $codeProv;
-        $place = getPlace();
-        /* $outcome = setOutcome($this->amount, $this->concept, $this->tax>0?$codeProv:$code, null, $this->tax>0?$code:null); */
-        $itbis = $this->amount * ($this->itbis / 100);
-        $selectivo = $this->amount * ($this->selectivo / 100);
-        if($this->total < 1){
-            $this->emit('showAlert', 'El monto total no puede ser 0', 'error');
-            return;
-        }
-        $outcome = Outcome::create([
-            'concepto' => $this->concept,
-            'amount' => $this->total,
-            'ncf' => $this->tax > 0 ? $code : null,
-            'ref' => $this->tax > 0 ? $codeProv : $code,
-            'user_id' => auth()->user()->id,
-            'store_id' => $place->store_id,
-            'place_id' => $place->id,
-            'outcomeable_id' => $provider->id,
-            'outcomeable_type' => Provider::class,
-            'type' => $this->type,
-            'itbis' => $itbis,
-            'selectivo' => $selectivo,
-            'propina' => $this->amount * ($this->propina / 100),
-            'other' => $this->amount * ($this->other / 100),
-            'retenido' => $itbis * ($this->retenido / 100),
-            'products' => $this->products,
-            'services' => $this->services,
-            'created_at' => $this->date,
-            'updated_at' => $this->date,
-        ]);
-        if ($provider) {
-            $provider->outcomes()->save($outcome);
-        }
-        $this->createPayment($outcome, $code, $provider);
-        $this->emit('refreshLivewireDatatable');
-        $this->reset('amount', 'efectivo', 'tarjeta', 'transferencia', 'concept', 'provider_id', 'count_code', 'bank_id', 'ref_bank', 'tax', 'ref');
-        $this->emit('showAlert', 'Gasto registrado exitosamente', 'success');
     }
     public function check($provider): bool
     {
@@ -194,7 +205,7 @@ class CreateOutcome extends Component
         if ($this->itbis > 100) {
             $itbis = $this->itbis;
         } else {
-            $this->amount * ($this->itbis / 100);
+           $itbis= $this->amount * ($this->itbis / 100);
         }
         $selectivo = $this->amount * ($this->selectivo / 100);
         $other = $this->amount * ($this->other / 100);

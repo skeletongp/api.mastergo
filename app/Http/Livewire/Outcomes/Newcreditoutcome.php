@@ -95,7 +95,7 @@ class Newcreditoutcome extends Component
     {
         $place = auth()->user()->place;
         $desc_dev_compras = $place->findCount('501-02');
-        $cash = $place->findCount('101-01');
+        $cash = $place->findCount('100-01');
         $itbis = $place->findCount('103-01');
         $provider = $this->outcome->outcomeable->contable;
         if ($this->outcome->rest >= $mount) {

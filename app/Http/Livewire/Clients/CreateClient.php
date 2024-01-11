@@ -94,6 +94,7 @@ class CreateClient extends Component
         if (array_key_exists('rnc', $this->client)) {
             $rnc = str_replace('-', '', $this->client['rnc']);
             $client = getApi('companies', $rnc);
+
             if (count($client) > 0) {
                 $client = $client[0];
                 $this->client['name'] = $client['name'];

@@ -76,7 +76,7 @@ trait ClientSectionTrait
     }
     public function loadFromRNC($client)
     {
-       $this->rnc=$client['id'];
+       $this->rnc=$client['rnc'];
        $this->name=$client['name'];
        $this->render();
     }
